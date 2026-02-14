@@ -1,8 +1,8 @@
 # Software Development Agent Skills
 
-[![License](https://img.shields.io/github/license/KentoShimizu/sw-agent-skills)](../LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](../LICENSE)
 
-オープンな `SKILL.md` 形式に基づく、ポータブルな Agent Skills リポジトリです。
+オープンな `SKILL.md` 形式に基づく、ソフトウェア開発向け Agent Skills リポジトリです。
 
 [English](../README.md) | [中国語](README.zh-CN.md)
 

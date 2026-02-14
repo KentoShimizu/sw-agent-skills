@@ -1,6 +1,6 @@
 # Software Development Agent Skills
 
-[![License](https://img.shields.io/github/license/KentoShimizu/sw-agent-skills)](../LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](../LICENSE)
 
 这是一个基于开放 `SKILL.md` 格式的可移植 Agent Skills 仓库。
 
