@@ -1,0 +1,46 @@
+---
+name: design-system-foundations
+description: "Design system foundation workflow for defining reusable component foundations, patterns, and ownership boundaries. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+---
+
+# Design System Foundations
+
+## Trigger Boundary
+- Use when reusable foundation elements are missing or fragmented.
+- Do not use for token schema design; use `design-tokens`.
+- Do not use for page-level navigation structure; use `information-architecture`.
+
+## Goal
+Create a coherent and maintainable design system foundation.
+
+## Shared Design Contract (Canonical)
+- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
+- Track foundation elements with `DSN-SYS-*` IDs.
+- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+
+## Inputs
+- Existing UI inventory and inconsistency map
+- Product surface priorities
+- Engineering implementation constraints
+
+## Outputs
+- Foundation map with `DSN-SYS-*` IDs
+- Pattern ownership and lifecycle definitions
+- Component adoption roadmap
+
+## Workflow
+1. Audit current components and usage fragmentation.
+2. Define foundational primitives and composition boundaries.
+3. Specify ownership and lifecycle state per foundation item.
+4. Align foundation patterns with implementation constraints.
+5. Publish adoption plan with migration sequence.
+
+## Quality Gates
+- Foundation scope is complete for target product surfaces.
+- Ownership and lifecycle are explicit for each item.
+- Patterns are implementable without hidden dependencies.
+- Accessibility requirements are part of foundation definitions.
+
+## Failure Handling
+- Stop when foundation boundaries overlap ambiguously.
+- Escalate when ownership model cannot be established.

@@ -1,0 +1,17 @@
+{
+  "artifact_id": "ARC-PRN-001",
+  "state": "accepted",
+  "approvers": [
+    "Architecture Owner",
+    "Security Reviewer"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "personal_data_processed": false,
+    "eu_high_risk_processing": false,
+    "system_type": "greenfield",
+    "greenfield_no_fallback": true,
+    "failure_exposure_criteria": "SLO breach over 15 minutes",
+    "redecision_trigger": "three consecutive incident reviews"
+  }
+}

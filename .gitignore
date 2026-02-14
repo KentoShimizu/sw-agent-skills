@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+
+# JavaScript
+node_modules/
+
+# IDE and editor
+.idea/
+.vscode/
+
+# Logs and temp files
+*.log
+tmp/
+temp/
+
+# Local environment files
+.env
+.env.*

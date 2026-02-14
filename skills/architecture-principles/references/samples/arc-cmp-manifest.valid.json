@@ -1,0 +1,27 @@
+{
+  "artifact_id": "ARC-CMP-20260214-001",
+  "state": "approved",
+  "approvers": [
+    "Architecture Owner",
+    "Security Reviewer",
+    "Privacy Reviewer"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "personal_data_processed": true,
+    "eu_high_risk_processing": false,
+    "system_type": "brownfield",
+    "rollback_trigger_condition": "deployment error budget burn > 5%",
+    "rollback_runbook_link": "runbooks/rollback-architecture.md"
+  },
+  "compliance_evidence": {
+    "lawful_basis": "contract",
+    "data_categories": "customer profile and usage metadata",
+    "data_residency_map": "data-residency/eu-jp-us.md",
+    "cross_border_transfer_control": "scc-and-transfer-impact-assessment",
+    "retention_and_deletion_policy": "retention/architecture-logs-365d.md",
+    "encryption_and_key_management": "kms-managed-keys-rotation-90d",
+    "access_control_and_audit_log_location": "siem/architecture-access-audit",
+    "data_subject_rights_process": "privacy/dsr-runbook.md"
+  }
+}

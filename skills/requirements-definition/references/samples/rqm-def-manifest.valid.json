@@ -1,0 +1,41 @@
+{
+  "artifact_id": "RQM-DEF-20260214-001",
+  "state": "approved",
+  "approvers": [
+    "Product Owner",
+    "Engineering Owner"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "traceability_verified": true,
+    "decision_owner_assigned": true,
+    "unresolved_conflicts_absent": true,
+    "compliance_constraints_captured": true,
+    "handles_personal_data": false,
+    "regulated_jurisdiction_impact": false
+  },
+  "linked_ids": {
+    "requirements": [
+      "REQ-AUTH-001",
+      "REQ-BILLING-002"
+    ],
+    "nfr": [
+      "NFR-REQ-AUTH-001-01"
+    ],
+    "acceptance_criteria": [
+      "AC-REQ-AUTH-001-01"
+    ],
+    "risks": [
+      "RSK-REQ-AUTH-001-01"
+    ],
+    "interviews": [
+      "INT-20260210-01"
+    ],
+    "user_research": [
+      "UR-20260211-01"
+    ],
+    "evidence": [
+      "EVD-SUPPORT_LOG-001"
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "artifact_id": "RQM-CMP-20260214-001",
+  "state": "approved",
+  "approvers": [
+    "Product Owner",
+    "Engineering Owner",
+    "Privacy Reviewer",
+    "Legal Reviewer"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "traceability_verified": true,
+    "decision_owner_assigned": true,
+    "unresolved_conflicts_absent": true,
+    "compliance_constraints_captured": true,
+    "handles_personal_data": true,
+    "regulated_jurisdiction_impact": true
+  },
+  "linked_ids": {
+    "requirements": [
+      "REQ-ACCOUNT-003"
+    ],
+    "evidence": [
+      "EVD-DPIA-004"
+    ]
+  },
+  "privacy_evidence": {
+    "lawful_basis_or_consent": "Legitimate interest documented in DPIA-004",
+    "pii_data_inventory": "Email, account identifier, and consent timestamp",
+    "data_minimization_decision": "No optional profile fields required for onboarding",
+    "retention_and_deletion_policy": "Retention policy RP-REQ-2026-04",
+    "cross_border_transfer_control": "EU SCCs and JP APPI transfer addendum in place",
+    "data_subject_rights_process": "Handled through privacy request runbook PRV-REQ-12",
+    "redaction_and_access_control": "Raw notes stored in restricted vault with role audit"
+  },
+  "compliance_evidence": {
+    "jurisdiction_scope": "US, JP, EU",
+    "lawful_basis_summary": "Per-jurisdiction lawful basis documented and approved",
+    "retention_policy_reference": "RP-REQ-2026-04",
+    "cross_border_transfer_control": "SCC + contractual safeguards + transfer impact assessment",
+    "data_subject_rights_path": "DSR workflow mapped in runbook PRV-REQ-12",
+    "audit_log_location": "SIEM index req-governance-audit"
+  }
+}
