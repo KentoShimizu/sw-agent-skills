@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](../LICENSE)
 
-这是一个基于开放 `SKILL.md` 格式的可移植 Agent Skills 仓库。
+面向软件开发的 Agent Skills。
 
 [英文](../README.md) | [日文](README.ja.md)
 

@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](../LICENSE)
 
-オープンな `SKILL.md` 形式に基づく、ソフトウェア開発向け Agent Skills リポジトリです。
+ソフトウェア開発向けの Agent Skills です。
 
 [English](../README.md) | [中国語](README.zh-CN.md)
 
