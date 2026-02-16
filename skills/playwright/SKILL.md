@@ -1,53 +1,52 @@
 ---
 name: playwright
-description: "Playwright CLI workflow for browser-level user-journey verification. Use when web flows require executable browser evidence (traces, screenshots, reproducible command logs) before merge or release; do not use for pure unit/API-only checks."
+description: "Playwright browser verification workflow for user-journey evidence with deterministic replay artifacts. Use when web flows require executable browser evidence (trace/screenshot/replay logs) before merge or release; do not use for pure unit/API-only checks."
 ---
 
 # Playwright
 
-## Trigger Boundary
-- Use when the core need is browser-level flow verification with artifacts.
-- Typical requests:
-  - `主要ユーザーフローをブラウザ実行で再現証跡付きで確認したい`
-  - `DOM更新後の要素参照ミスを防いでE2Eを安定させたい`
-  - `失敗時にtrace/screenshot付きで報告したい`
-- Do not use when:
-  - API契約のみの検証（`testing-contract`）
-  - 関数単位のロジック検証（`testing-unit`）
+## Overview
+Use this skill to validate browser-level behavior with reproducible artifacts that engineers can replay exactly.
 
-## Goal
-Produce deterministic browser evidence for functional and UX flow validation.
+## Shared References
+- Trigger examples:
+  - `references/trigger-and-examples.md`
+- Replay determinism rules:
+  - `references/replay-determinism-rules.md`
 
-## Inputs
-- Target URLs and critical flow definition
-- Credentials/fixtures from environment variables or secret store
-- Artifact requirements (`trace`, `screenshot`, `video` if needed)
+## Templates And Assets
+- Test plan template:
+  - `assets/playwright-test-plan-template.md`
+- Command profile template:
+  - `assets/playwright-command-profile-template.md`
+- Artifact checklist:
+  - `assets/playwright-artifact-checklist.md`
 
-## Outputs
-- Reproducible Playwright command sequence
-- playwright execution package with artifacts and replay steps
-- Findings list with exact replay references
+## Inputs To Gather
+- Critical flows and acceptance expectations.
+- Target browsers/devices and environment constraints.
+- Auth/test-data setup and security constraints.
+- Required artifacts for failure triage.
+
+## Deliverables
+- Browser test scenario plan.
+- Local-fast and CI-full command profiles.
+- Trace/screenshot/video evidence for failures.
+- Residual flakiness and ownership log.
 
 ## Workflow
-1. Clarify decision question, existing project testing policy, and non-negotiable constraints for browser-level flow verification with artifacts.
-2. Map risks to required test depth and execution tiers (fast gate vs full gate).
-3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
-4. Select one strategy and document why alternatives were not chosen.
-5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
-6. Execute verification and capture reproducible evidence using step-by-step browser run evidence with deterministic replay.
-7. Publish residual risks, follow-up actions, and owner accountability.
+1. Define scenarios with `assets/playwright-test-plan-template.md`.
+2. Define command profiles in `assets/playwright-command-profile-template.md`.
+3. Apply deterministic execution rules from `references/replay-determinism-rules.md`.
+4. Execute and capture artifacts.
+5. Validate evidence completeness via `assets/playwright-artifact-checklist.md`.
 
-## Quality Gates
-- Trigger fit is explicit, and alternative testing levels were consciously considered.
-- Decision rationale is evidence-based, not preference-based.
-- Assumptions, unknowns, and confidence level are documented.
-- Evidence is reproducible with exact commands/artifacts.
-- Residual risks include owner, due date, and verification plan.
-- Release gating criteria and rollback signals are explicit for production-impacting changes.
+## Quality Standard
+- Browser evidence is replayable without hidden steps.
+- Artifacts map to explicit scenarios and failures.
+- Critical flows include happy/edge/failure coverage.
 
-## Failure Handling
-- Stop when automation prerequisites are missing or secure credential injection is unavailable.
-- Escalate when external instability prevents deterministic replay despite retries.
-
-## Bundled Resources
-- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.
+## Failure Conditions
+- Stop when prerequisites for deterministic replay are missing.
+- Stop when artifacts cannot reproduce observed failures.
+- Escalate when external instability prevents reliable browser evidence.

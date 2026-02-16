@@ -1,52 +1,54 @@
 ---
 name: pytest-workflow
-description: "Pytest verification workflow for Python code changes. Use when Python modules need executable pytest evidence (fixtures, parametrization, unit/integration behavior, regression checks) before merge; do not use for browser-level E2E or non-Python test tooling decisions."
+description: "Pytest verification workflow for Python changes with deterministic fixtures, explicit case strategy, and CI-ready evidence. Use when Python modules need executable pytest evidence before merge; do not use for browser-level E2E or non-Python test tooling decisions."
 ---
 
 # Pytest Workflow
 
-## Trigger Boundary
-- Use when the core need is pytest-based verification in Python.
-- Typical requests:
-  - `fixture設計を整理してpytestを安定化したい`
-  - `parametrizeで境界ケースを重複なく増やしたい`
-  - `遅いpytest群の実行戦略を見直したい`
-- Do not use when:
-  - JS/TSのJest運用（`jest-testing-workflow`）
-  - ブラウザE2E導線の検証（`playwright`）
+## Overview
+Use this skill to design pytest suites that are fast enough for daily feedback and stable enough for CI gates.
 
-## Goal
-Create fast, reliable, and debuggable pytest suites aligned with change risk.
+## Shared References
+- Trigger examples:
+  - `references/trigger-and-examples.md`
+- Fixture boundary rules:
+  - `references/fixture-boundary-rules.md`
+- Determinism rules:
+  - `references/pytest-determinism-rules.md`
 
-## Inputs
-- Change scope and affected Python modules
-- Fixture graph and environment/data setup constraints
-- CI/runtime constraints and marker policy
+## Templates And Assets
+- Test plan template:
+  - `assets/pytest-test-plan-template.md`
+- Fixture stability checklist:
+  - `assets/pytest-fixture-stability-checklist.md`
+- Command profile template:
+  - `assets/pytest-command-profile-template.md`
 
-## Outputs
-- pytest plan with fixture/marker/parametrization strategy
-- Case matrix for happy/edge/failure paths
-- Command set for local-fast and CI-full runs
+## Inputs To Gather
+- Change scope and risk profile.
+- Fixture graph and dependency constraints.
+- Marker strategy and CI runtime limits.
+- Known flakiness hotspots.
+
+## Deliverables
+- Pytest test strategy and case matrix.
+- Fixture and parametrization policy.
+- Local-fast and CI-full command profiles.
+- Residual risk and follow-up actions.
 
 ## Workflow
-1. Clarify decision question, existing project testing policy, and non-negotiable constraints for pytest-based verification in Python.
-2. Map risks to required test depth and execution tiers (fast gate vs full gate).
-3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
-4. Select one strategy and document why alternatives were not chosen.
-5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
-6. Execute verification and capture reproducible evidence using reproducible pytest commands for local and CI environments.
-7. Publish residual risks, follow-up actions, and owner accountability.
+1. Build case strategy with `assets/pytest-test-plan-template.md`.
+2. Apply fixture rules from `references/fixture-boundary-rules.md`.
+3. Validate determinism using `references/pytest-determinism-rules.md`.
+4. Define execution profiles in `assets/pytest-command-profile-template.md`.
+5. Finalize with `assets/pytest-fixture-stability-checklist.md`.
 
-## Quality Gates
-- Trigger fit is explicit, and alternative testing levels were consciously considered.
-- Decision rationale is evidence-based, not preference-based.
-- Assumptions, unknowns, and confidence level are documented.
-- Evidence is reproducible with exact commands/artifacts.
-- Residual risks include owner, due date, and verification plan.
+## Quality Standard
+- Fixtures are explicit, scoped, and deterministic.
+- Case coverage includes happy/edge/failure paths.
+- Command profiles are reproducible across local and CI.
 
-## Failure Handling
-- Stop when fixtures produce non-deterministic or hidden shared state behavior.
+## Failure Conditions
+- Stop when fixture design causes hidden shared state behavior.
+- Stop when test determinism cannot be achieved for critical flows.
 - Escalate when runtime cost blocks practical feedback loops.
-
-## Bundled Resources
-- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.
