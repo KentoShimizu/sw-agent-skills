@@ -1,12 +1,15 @@
 ---
 name: api-error-handling
-description: API failure-contract design for status mapping, stable error codes, retryability semantics, and traceable error payloads across sync and async transports. Use when failure behavior or retry decisions are changing; do not use for full resource/schema modeling or version-channel policy definition.
+description: API failure-contract design for status mapping, stable error codes, retryability semantics, and traceable error payloads across sync and async transports. Trigger when error behavior, retry semantics, or debuggability fields change in specs or source, or when those rules remain implicit. Do not use for full resource/schema modeling or version-channel policy definition.
 ---
 
 # API Error Handling
 
 ## Trigger Boundary
 - Use when API error taxonomy, response schemas, and status mapping are being created or changed.
+- Use proactively when failure handling is implicit, inconsistent, or incident learning needs to be codified in the contract.
+- Use proactively when error payload or status-mapping diffs are detected without explicit retry/backoff policy.
+- Use when retry/backoff behavior affects client correctness or operational stability.
 - Do not use for transport-independent incident handling policy; use `incident-postmortem` or runbook skills.
 - Do not use for storage internals; use `db-*`.
 

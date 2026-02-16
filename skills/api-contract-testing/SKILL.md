@@ -1,12 +1,14 @@
 ---
 name: api-contract-testing
-description: "Consumer-provider contract testing and release-gate design for compatibility matrices, contract assertions, and CI blocking rules across versions and transports. Use when validating producer-consumer integration compatibility; do not use for first-pass API interface design."
+description: "Consumer-provider contract testing and release-gate design for compatibility matrices, contract assertions, and CI blocking rules across versions and transports. Trigger when API contract diffs are detected but compatibility evidence is missing or stale (contract test pass, consumer-impact mapping, or compatibility matrix update), or when multiple consumers, versions, or transports must be protected by automated gates. Do not use for first-pass API interface design."
 ---
 
 # API Contract Testing
 
 ## Trigger Boundary
 - Use when API compatibility must be continuously validated between producers and consumers.
+- Use proactively when schema/endpoint/protocol diffs exist but executable compatibility evidence is missing.
+- Use when compatibility judgment is currently human-only and needs codified CI gates.
 - Do not use for API schema design from scratch; use `api-design-*`.
 - Do not use for end-to-end UI validation.
 
@@ -54,6 +56,6 @@ Catch contract drift before deployment impacts consumers.
 - Consumer matrix remains current as new integrations are added.
 
 ## Failure Handling
-- Stop release when compatibility-breaking changes are unapproved.
-- Stop release when required consumer coverage is missing for supported versions.
+- Stop integration/deployment gates when compatibility-breaking changes are unapproved.
+- Stop integration/deployment gates when required consumer coverage is missing for supported versions.
 - Escalate when contract ownership is ambiguous.

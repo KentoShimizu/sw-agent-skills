@@ -1,12 +1,14 @@
 ---
 name: api-design-graphql
-description: GraphQL schema and resolver contract design for type boundaries, nullability, authz, and query-cost safety. Use when authoring or changing GraphQL SDL/resolvers; do not use for REST/OpenAPI endpoint design, API version lifecycle governance, or standalone error taxonomy design.
+description: GraphQL schema and resolver contract design for type boundaries, nullability, authz, and query-cost safety. Trigger when SDL, resolver behavior, field contracts, or query safety controls are added/changed, and their contract impact is not yet explicitly specified. Do not use for REST/OpenAPI endpoint design, API version lifecycle governance, or standalone error taxonomy design.
 ---
 
 # API Design GraphQL
 
 ## Trigger Boundary
 - Use when GraphQL schema boundaries, resolver contracts, and query safety must be defined.
+- Use proactively when GraphQL SDL/resolver diffs appear in specs, manifests, or source.
+- Use when clients need flexible field selection but query safety and authz boundaries are not yet explicit.
 - Do not use for REST-first endpoint design; use `api-design-rest`.
 - Do not use for storage internals; use `db-*`.
 

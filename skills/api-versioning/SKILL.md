@@ -1,12 +1,14 @@
 ---
 name: api-versioning
-description: API version lifecycle governance for breaking-change classification, deprecation windows, migration planning, and support matrix management across internal and external consumers. Use when planning or reviewing version transitions; do not use for first-pass endpoint/schema design.
+description: API version lifecycle governance for breaking-change classification, deprecation windows, migration planning, and support matrix management across internal and external consumers. Trigger when contract diffs may break consumers (for example required-field removal, semantic change, or channel change), when deprecation/sunset planning is required, or when multiple consumer cohorts must be supported in parallel. Do not use for first-pass endpoint/schema design.
 ---
 
 # API Versioning
 
 ## Trigger Boundary
 - Use when compatibility policy, deprecation lifecycle, or version transition strategy is in scope.
+- Use proactively when API diffs alter semantics, required fields, response shape, or transport guarantees.
+- Use when internal and external consumers have different support windows or migration constraints.
 - Do not use for first-pass endpoint/schema design without change impact context.
 - Do not use for storage internals; use `db-*`.
 

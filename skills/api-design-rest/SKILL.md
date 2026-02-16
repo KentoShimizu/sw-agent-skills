@@ -1,12 +1,14 @@
 ---
 name: api-design-rest
-description: Resource-oriented REST/OpenAPI contract design for URI/method semantics, idempotency, pagination, and HTTP status behavior. Use when designing or changing REST endpoints; do not use for GraphQL schema authoring, error-taxonomy-only changes, version lifecycle governance, or consumer-provider contract test implementation.
+description: Resource-oriented REST/OpenAPI contract design for URI/method semantics, idempotency, pagination, and HTTP status behavior. Trigger when REST contract diffs are detected in paths, methods, schemas, or status semantics, or when request-response transport choice is still unresolved before implementation. Do not use for GraphQL schema authoring, error-taxonomy-only changes, version lifecycle governance, or consumer-provider contract test implementation.
 ---
 
 # API Design REST
 
 ## Trigger Boundary
 - Use when REST resources, URI structures, and HTTP behavior are being designed or changed.
+- Use proactively when route, method, status, or schema diffs appear in specs, manifests, or source.
+- Use when request-response transport options are being compared and REST is a candidate.
 - Do not use for GraphQL-first schema work; use `api-design-graphql`.
 - Do not use for storage internals; use `db-*`.
 
