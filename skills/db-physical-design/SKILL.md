@@ -1,41 +1,44 @@
 ---
 name: db-physical-design
-description: Specialized workflow for storage layout, partitioning, and engine-specific performance controls. Trigger when data growth and workload patterns require explicit physical design decisions (partitioning, clustering, storage/index layout) to meet latency, throughput, and maintenance targets; do not use for API boundary design or infrastructure provisioning.
+description: "Design physical storage layout, partitioning, and engine-specific settings to meet scale and latency objectives. Use when logical schema is stable and runtime behavior depends on storage organization; do not use for conceptual domain modeling or requirement prioritization."
 ---
 
-# Db Physical Design
+# DB Physical Design
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to translate logical schema into engine-aware physical design that sustains target scale.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Inputs To Gather
+- Logical schema and query workload profile.
+- Data growth forecast and retention policy.
+- Engine capabilities/limits (partitioning, compression, storage classes).
+- Backup/recovery and maintenance window constraints.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for storage layout, partitioning, and engine-specific performance controls
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Partitioning and storage layout strategy.
+- Hot/cold data placement policy.
+- Maintenance strategy (vacuum/reorg/compaction where applicable).
+- Capacity-risk plan with growth triggers.
 
-## Outputs
-- Physical storage design specification
-- Decision log for storage layout, partitioning, and engine-specific performance controls
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- Partition large event table by month and tenant key.
+- Keep last 90 days on fast storage, archive older partitions to cheaper tier.
+- Define partition pruning expectation for key analytics queries.
+
+## Quality Standard
+- Layout choices are tied to workload and growth evidence.
+- Partition key supports both write distribution and dominant queries.
+- Maintenance overhead is budgeted and operationally feasible.
+- Recovery objectives remain achievable under chosen layout.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for storage layout, partitioning, and engine-specific performance controls.
-2. Produce options and select an approach for storage layout, partitioning, and engine-specific performance controls.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using I/O and storage footprint profiling under target workloads.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Profile workload and growth characteristics.
+2. Evaluate storage/partition options supported by engine.
+3. Select layout with capacity and performance tradeoffs.
+4. Define maintenance and archival operations.
+5. Validate expected behavior with representative queries.
 
-## Quality Gates
-- Scope and assumptions for storage layout, partitioning, and engine-specific performance controls are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when storage layout cannot sustain expected load or growth.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when physical design conflicts with recovery requirements.
+- Stop when partitioning strategy cannot avoid hotspotting.
+- Escalate when capacity risk exceeds planned expansion horizon.

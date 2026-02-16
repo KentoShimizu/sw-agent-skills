@@ -1,41 +1,47 @@
 ---
 name: db-migration-strategy
-description: Specialized workflow for schema migration sequencing, rollout safety, and rollback viability. Trigger when schema changes require online migration planning, compatibility windows, and explicit rollback or forward-only decisions across environments; do not use for API boundary design or infrastructure provisioning.
+description: "Plan safe schema and data migrations with rollout sequencing, backfill controls, and rollback viability. Use when database changes must ship without service disruption across versions; do not use for first-pass conceptual schema modeling."
 ---
 
-# Db Migration Strategy
+# DB Migration Strategy
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to design migration sequences that remain safe under rolling deployments and partial-version coexistence.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Inputs To Gather
+- Current and target schema versions.
+- Application rollout model (rolling, blue/green, canary).
+- Data volume and backfill cost.
+- Downtime tolerance and rollback constraints.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for schema migration sequencing, rollout safety, and rollback viability
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Migration sequence (expand -> migrate/backfill -> contract).
+- Compatibility matrix by app version and schema state.
+- Backfill execution/monitoring plan.
+- Rollback strategy and decision triggers.
 
-## Outputs
-- Migration execution plan with stage gates
-- Decision log for schema migration sequencing, rollout safety, and rollback viability
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- Add non-null column:
+  1. Add nullable column with default handling in code.
+  2. Deploy app that writes both old/new fields.
+  3. Backfill historical rows in batches.
+  4. Enforce non-null constraint.
+  5. Remove old field usage after full cutover.
+
+## Quality Standard
+- Sequence avoids breaking running old/new versions.
+- Backfill is throttled, observable, and resumable.
+- Contract phase occurs only after compatibility is proven.
+- Rollback path is tested for each irreversible step.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for schema migration sequencing, rollout safety, and rollback viability.
-2. Produce options and select an approach for schema migration sequencing, rollout safety, and rollback viability.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using dry-run migration and rollback rehearsal.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Classify migration risk and compatibility constraints.
+2. Design phased sequence with explicit guardrails.
+3. Define backfill strategy (batch size, throttling, retries).
+4. Validate sequence in staging with production-like scale.
+5. Execute progressively with rollback checkpoints.
 
-## Quality Gates
-- Scope and assumptions for schema migration sequencing, rollout safety, and rollback viability are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when rollback path is undefined for destructive or high-risk steps.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when migration step is not backward/forward compatible as required.
+- Stop when rollback path is undefined for high-risk phase.
+- Escalate when backfill duration threatens release windows or SLOs.

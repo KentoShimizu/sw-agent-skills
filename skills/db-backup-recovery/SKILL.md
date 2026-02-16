@@ -1,41 +1,44 @@
 ---
 name: db-backup-recovery
-description: Specialized workflow for backup retention, restore reliability, and recovery time objectives. Trigger when data protection policy, RPO/RTO targets, or restore runbooks must be designed, changed, or validated before release or operational sign-off; do not use for API boundary design or infrastructure provisioning.
+description: "Design and verify database backup/restore strategy against explicit RPO/RTO targets. Use when data durability, retention, and disaster recovery readiness must be proven with restore evidence; do not use for query tuning or schema modeling tasks."
 ---
 
-# Db Backup Recovery
+# DB Backup Recovery
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to ensure backups are not only taken but also restorable within required recovery objectives.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Inputs To Gather
+- RPO/RTO targets by system criticality.
+- Data retention/legal constraints.
+- Backup mechanisms (snapshot, logical dump, incremental, WAL/binlog).
+- Recovery environments and access controls.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for backup retention, restore reliability, and recovery time objectives
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Backup policy (frequency, retention, encryption, storage locations).
+- Restore runbook with role responsibilities.
+- Restore-test evidence and objective compliance report.
+- Gap list with remediation priorities.
 
-## Outputs
-- Backup and recovery verification matrix
-- Decision log for backup retention, restore reliability, and recovery time objectives
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- Target: `RPO <= 15 min`, `RTO <= 60 min`.
+- Plan: nightly full + 5-min incremental log shipping.
+- Verification: monthly restore drill to isolated environment; measure actual RPO/RTO.
+
+## Quality Standard
+- Backup policy maps directly to RPO/RTO targets.
+- Restore process is scripted/runbooked and repeatedly tested.
+- Integrity verification includes checksum and application-level sanity checks.
+- Access and key-management controls protect backup artifacts.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for backup retention, restore reliability, and recovery time objectives.
-2. Produce options and select an approach for backup retention, restore reliability, and recovery time objectives.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using periodic restore drills with RPO/RTO evidence.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define recovery objectives and compliance constraints.
+2. Select backup pattern and retention schedule.
+3. Define restore procedure and required dependencies.
+4. Run restore drills and record measured outcomes.
+5. Close objective gaps with concrete remediation actions.
 
-## Quality Gates
-- Scope and assumptions for backup retention, restore reliability, and recovery time objectives are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when restore procedures are untested or RPO/RTO targets are unmet.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when restore evidence is missing or stale.
+- Stop when measured RPO/RTO misses required objectives.
+- Escalate when backups are inaccessible, unencrypted, or unverifiable.

@@ -1,41 +1,44 @@
 ---
 name: db-query-optimization
-description: Specialized workflow for query rewrite, plan stability, and latency reduction on hot paths. Trigger when critical queries miss SLOs, execution plans are unstable, or resource usage is excessive and query-level remediation must be chosen before release; do not use for API boundary design or infrastructure provisioning.
+description: "Optimize query behavior through rewrites, plan analysis, and access-path adjustments for hot workloads. Use when query latency, throughput, or plan instability blocks SLO targets and concrete query-level fixes are required; do not use for broad schema governance decisions."
 ---
 
-# Db Query Optimization
+# DB Query Optimization
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to reduce query cost and stabilize execution plans for high-impact workloads.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Inputs To Gather
+- Problem queries with actual latency/resource data.
+- Current execution plans and row-estimation quality.
+- Relevant schema/index metadata.
+- Workload context (concurrency, parameter distribution, cache effects).
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for query rewrite, plan stability, and latency reduction on hot paths
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Query rewrite and plan-improvement recommendations.
+- Root-cause map (scan amplification, bad join order, misestimation, etc.).
+- Validation plan with baseline vs post-change metrics.
+- Regression watchpoints for future plan drift.
 
-## Outputs
-- Query optimization report with before/after benchmarks
-- Decision log for query rewrite, plan stability, and latency reduction on hot paths
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- Symptom: parameter-sensitive plan regression.
+- Fix options: query shape stabilization, statistics refresh, targeted hint/pattern change.
+- Verification: p95 latency and buffer reads across representative parameter sets.
+
+## Quality Standard
+- Recommendations are rooted in measured plan evidence.
+- Optimization preserves functional correctness.
+- Parameter variability and data skew are explicitly considered.
+- Success criteria include latency and resource metrics.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for query rewrite, plan stability, and latency reduction on hot paths.
-2. Produce options and select an approach for query rewrite, plan stability, and latency reduction on hot paths.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using query plan and latency benchmark comparison.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Establish baseline metrics and capture representative plans.
+2. Diagnose dominant cost driver per query.
+3. Propose rewrite/index/statistics changes.
+4. Test across realistic parameter and concurrency ranges.
+5. Publish optimized form and monitoring guardrails.
 
-## Quality Gates
-- Scope and assumptions for query rewrite, plan stability, and latency reduction on hot paths are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when critical query latency remains above agreed thresholds.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when no representative workload evidence is available.
+- Stop when optimization changes semantics or correctness.
+- Escalate when plan instability persists across realistic parameter sets.

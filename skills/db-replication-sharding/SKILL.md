@@ -1,41 +1,46 @@
 ---
 name: db-replication-sharding
-description: Specialized workflow for replication topology, shard strategy, and consistency trade-offs. Trigger when availability, scale, or regional requirements require selecting replication/sharding topology with explicit consistency, failover, and rebalancing tradeoffs; do not use for API boundary design or infrastructure provisioning.
+description: "Design replication topology and sharding strategy with explicit consistency, failover, and rebalancing policies. Use when scale, availability, or geo-distribution requires multi-node data architecture decisions; do not use for single-instance query micro-optimization."
 ---
 
-# Db Replication Sharding
+# DB Replication Sharding
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to choose replication and sharding patterns that scale safely without hidden consistency failures.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Inputs To Gather
+- Availability and latency targets by region/tenant.
+- Read/write distribution and growth trajectory.
+- Consistency requirements (strong/eventual/per-operation).
+- Failover and operational maturity constraints.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for replication topology, shard strategy, and consistency trade-offs
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Replication topology and consistency policy.
+- Shard key strategy and rebalancing approach.
+- Failure/failover behavior expectations.
+- Operational checklist for lag, split-brain, hotspot, and rebalance risk.
 
-## Outputs
-- Replication and sharding topology decision
-- Decision log for replication topology, shard strategy, and consistency trade-offs
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- Multi-tenant SaaS with uneven tenant sizes:
+  - initial shard key: `tenant_id`.
+  - hotspot mitigation: heavy-tenant isolation plan.
+  - replication: primary + read replicas with lag guardrails.
+  - failover: promote replica only when lag < threshold.
+
+## Quality Standard
+- Topology matches consistency and latency requirements.
+- Shard key avoids predictable hotspotting under projected growth.
+- Failover policy is explicit and tested.
+- Rebalancing/migration plan minimizes customer impact.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for replication topology, shard strategy, and consistency trade-offs.
-2. Produce options and select an approach for replication topology, shard strategy, and consistency trade-offs.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using failover and rebalance simulations.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define consistency and availability requirements.
+2. Evaluate replication and shard strategy options.
+3. Choose topology with explicit tradeoffs.
+4. Define failover, lag handling, and rebalance procedures.
+5. Validate with failure simulations and load distribution tests.
 
-## Quality Gates
-- Scope and assumptions for replication topology, shard strategy, and consistency trade-offs are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when consistency guarantees or failover behavior are undefined.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when consistency expectations conflict with selected topology.
+- Stop when shard key cannot scale without hotspot collapse.
+- Escalate when failover behavior is undefined or untested.

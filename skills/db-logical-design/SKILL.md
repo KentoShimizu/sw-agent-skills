@@ -1,41 +1,44 @@
 ---
 name: db-logical-design
-description: Specialized workflow for table structure, keys, constraints, and relational consistency. Trigger when entities and relationships must be translated into relational tables with enforceable keys, constraints, and integrity rules before migration or implementation; do not use for API boundary design or infrastructure provisioning.
+description: "Design logical schema (tables, keys, constraints, relationships) from approved conceptual models and access requirements. Use when relational consistency and integrity rules must be codified before implementation; do not use for engine-specific storage tuning or deployment topology design."
 ---
 
-# Db Logical Design
+# DB Logical Design
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to produce a schema that preserves business invariants while remaining queryable and maintainable.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Inputs To Gather
+- Approved conceptual model.
+- Access patterns (read/write paths and join paths).
+- Integrity requirements (uniqueness, referential constraints, domain rules).
+- Change tolerance for future schema evolution.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for table structure, keys, constraints, and relational consistency
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Logical schema definition (tables, columns, PK/FK, constraints).
+- Data integrity policy per entity relationship.
+- Rationale for nullable vs non-nullable columns.
+- Compatibility notes for future evolution.
 
-## Outputs
-- Logical schema specification with key and constraint definitions
-- Decision log for table structure, keys, constraints, and relational consistency
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- `orders(order_id PK, customer_id FK, status, created_at)`.
+- `payments(payment_id PK, order_id FK UNIQUE, state, amount)`.
+- Constraint: one active payment record per order if business rule requires 1:1.
+
+## Quality Standard
+- Keys and constraints enforce domain invariants directly.
+- Nullability decisions are intentional and justified.
+- Relationship integrity is enforced with FK or equivalent policy.
+- Naming is consistent and semantically clear.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for table structure, keys, constraints, and relational consistency.
-2. Produce options and select an approach for table structure, keys, constraints, and relational consistency.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using schema rule checks for integrity and referential consistency.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Map conceptual entities to logical tables.
+2. Define keys, relationships, and integrity constraints.
+3. Validate schema against core query/update paths.
+4. Review nullability/default semantics for correctness.
+5. Publish schema with rationale and open risks.
 
-## Quality Gates
-- Scope and assumptions for table structure, keys, constraints, and relational consistency are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when key constraints or integrity rules are missing.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when critical invariants are not enforceable by schema rules.
+- Stop when table responsibilities overlap ambiguously.
+- Escalate when access paths require contradictory integrity choices.

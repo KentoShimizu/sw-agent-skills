@@ -1,41 +1,44 @@
 ---
 name: db-conceptual-modeling
-description: Specialized workflow for domain entities, relationships, and bounded context boundaries. Trigger when domain concepts, ownership boundaries, and relationship semantics must be clarified before logical schema or integration contracts are finalized; do not use for API boundary design or infrastructure provisioning.
+description: "Model domain entities, relationships, and bounded data responsibilities before logical table design. Use when business concepts, ownership boundaries, or relationship semantics are unclear and must be defined to avoid schema drift; do not use for index tuning or physical storage optimization."
 ---
 
-# Db Conceptual Modeling
+# DB Conceptual Modeling
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to build a domain-aligned conceptual model that stabilizes later logical and physical design decisions.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Inputs To Gather
+- Core business concepts and terminology.
+- Ownership boundaries across teams/domains.
+- Critical workflows and invariants.
+- Reporting/analytics requirements that influence relationship shape.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for domain entities, relationships, and bounded context boundaries
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Entity relationship concept map.
+- Definition of ownership and source-of-truth per concept.
+- Invariant list requiring transactional consistency.
+- Open ambiguity list that blocks logical design.
 
-## Outputs
-- Conceptual domain model with entity relationship map
-- Decision log for domain entities, relationships, and bounded context boundaries
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- Concept split: `Order` vs `Payment`.
+- Decision: `Order` owns fulfillment lifecycle; `Payment` owns authorization/capture/refund lifecycle.
+- Integration: explicit reference by immutable IDs, not shared mutable fields.
+
+## Quality Standard
+- Entities reflect business language, not implementation artifacts.
+- Ownership boundaries are explicit and non-overlapping.
+- Relationship cardinality and optionality are defined.
+- Invariants are identified before table-level design.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for domain entities, relationships, and bounded context boundaries.
-2. Produce options and select an approach for domain entities, relationships, and bounded context boundaries.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using domain walkthrough with conflict and ambiguity checks.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Normalize terminology with domain stakeholders.
+2. Define entities, relationships, and ownership boundaries.
+3. Identify invariants and consistency-sensitive flows.
+4. Validate conceptual model against major use cases.
+5. Publish model and unresolved domain questions.
 
-## Quality Gates
-- Scope and assumptions for domain entities, relationships, and bounded context boundaries are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when core entities or relationships remain ambiguous.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when core terms have conflicting meanings.
+- Stop when ownership boundaries remain ambiguous.
+- Escalate when invariants conflict across domains without arbitration.
