@@ -1,41 +1,47 @@
 ---
 name: sre-sli-slo
-description: Specialized workflow for SLI definition, SLO target setting, and error budget policy. Trigger when service reliability objectives must be formalized into measurable SLIs/SLOs with error-budget policy and escalation actions for operational decision-making; do not use for business-feature implementation logic.
+description: "SRE SLI/SLO workflow for reliability target definition, measurable telemetry mapping, and error-budget policy. Use when service reliability objectives must be formalized with escalation actions; do not use for business-feature implementation logic."
 ---
 
 # Sre Sli Slo
 
-## Trigger Boundary
-- Use when production visibility, reliability targets, or incident response workflows are needed.
-- Do not use for feature-level functional spec writing; use `requirements-*`.
-- Do not use for pure code-style conformance checks.
+## Overview
+Use this skill to define reliability goals that directly drive operational decisions.
 
-## Goal
-Maintain production reliability through measurable operational controls.
+## Shared References
+- SLO target setting rules:
+  - `references/slo-target-setting-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for SLI definition, SLO target setting, and error budget policy
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- SLI/SLO catalog template:
+  - `assets/sli-slo-catalog-template.csv`
+- Error budget policy template:
+  - `assets/error-budget-policy-template.md`
 
-## Outputs
-- SLI/SLO catalog with error-budget rules
-- Decision log for SLI definition, SLO target setting, and error budget policy
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Service criticality and user-impact expectations.
+- Available telemetry quality and coverage.
+- Historical reliability and incident patterns.
+- Operational response and escalation constraints.
+
+## Deliverables
+- SLI/SLO catalog with ownership.
+- Error budget policy with action triggers.
+- Reliability governance and review cadence.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for SLI definition, SLO target setting, and error budget policy.
-2. Produce options and select an approach for SLI definition, SLO target setting, and error budget policy.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using historical data fit and burn-rate simulation.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define SLI/SLO set in `assets/sli-slo-catalog-template.csv`.
+2. Set targets using `references/slo-target-setting-rules.md`.
+3. Define burn-rate actions in `assets/error-budget-policy-template.md`.
+4. Validate measurability from telemetry.
+5. Publish ownership and escalation policy.
 
-## Quality Gates
-- Scope and assumptions for SLI definition, SLO target setting, and error budget policy are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- SLO targets are measurable and risk-aligned.
+- Error budget actions are explicit and owned.
+- Reliability decisions are traceable to telemetry.
 
-## Failure Handling
-- Stop when SLO targets are not measurable from available telemetry.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when SLOs cannot be measured reliably.
+- Stop when error budget actions are undefined.
+- Escalate when reliability risk exceeds accepted policy.

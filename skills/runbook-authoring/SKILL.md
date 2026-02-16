@@ -1,41 +1,47 @@
 ---
 name: runbook-authoring
-description: Specialized workflow for operational procedure clarity for on-call responders. Trigger when operational procedures (incident response, rollback, failover, maintenance) must be documented as executable runbooks for responders before production use; do not use for writing production feature logic unless documenting already-approved outcomes.
+description: "Runbook authoring workflow for clear, executable operational procedures for on-call responders. Use when incident response, rollback, failover, or maintenance steps must be documented before production use; do not use for production feature logic design."
 ---
 
 # Runbook Authoring
 
-## Trigger Boundary
-- Use when production visibility, reliability targets, or incident response workflows are needed.
-- Do not use for feature-level functional spec writing; use `requirements-*`.
-- Do not use for pure code-style conformance checks.
+## Overview
+Use this skill to produce runbooks responders can execute reliably under incident pressure.
 
-## Goal
-Maintain production reliability through measurable operational controls.
+## Shared References
+- Runbook usability rules:
+  - `references/runbook-usability-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for operational procedure clarity for on-call responders
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Runbook template:
+  - `assets/runbook-template.md`
+- Drill checklist:
+  - `assets/runbook-drill-checklist.md`
 
-## Outputs
-- Runbook with decision tree and execution steps
-- Decision log for operational procedure clarity for on-call responders
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Operational scenario and trigger conditions.
+- System dependencies, permissions, and tooling constraints.
+- Recovery and rollback expectations.
+- Escalation and communication policy.
+
+## Deliverables
+- Executable runbook with decision points.
+- Drill validation evidence.
+- Escalation and ownership mapping.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for operational procedure clarity for on-call responders.
-2. Produce options and select an approach for operational procedure clarity for on-call responders.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using tabletop drill for runbook usability.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Draft procedure using `assets/runbook-template.md`.
+2. Apply usability guidance from `references/runbook-usability-rules.md`.
+3. Validate steps with `assets/runbook-drill-checklist.md`.
+4. Refine ambiguous actions and missing prerequisites.
+5. Publish runbook with owner and review cadence.
 
-## Quality Gates
-- Scope and assumptions for operational procedure clarity for on-call responders are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Steps are actionable, ordered, and unambiguous.
+- Rollback and escalation paths are explicit.
+- Runbook works for responders beyond original author.
 
-## Failure Handling
-- Stop when runbook steps are ambiguous or missing rollback actions.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when steps require hidden assumptions.
+- Stop when rollback actions are undefined.
+- Escalate when drill validation fails for critical scenarios.
