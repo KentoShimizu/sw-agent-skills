@@ -1,0 +1,4 @@
+control_area,control,scope,status,owner,verification
+rbac,least-privilege roles,namespace,planned,platform-team,policy review
+network,default deny + allow rules,namespace,planned,platform-team,network policy test
+secrets,external secret source,cluster,planned,security-team,rotation check

@@ -1,41 +1,49 @@
 ---
 name: kubernetes-security
-description: Specialized workflow for cluster hardening, workload isolation, and policy enforcement. Trigger when Kubernetes workloads or clusters need explicit security controls (RBAC, network policy, pod security, secret handling, admission policy) before production exposure; do not use for API contract design or requirement prioritization.
+description: "Kubernetes security workflow for cluster hardening, workload isolation, and policy enforcement. Use when RBAC, network policy, pod security, secret handling, or admission controls must be defined before production exposure; do not use for API contract design or requirement prioritization."
 ---
 
 # Kubernetes Security
 
-## Trigger Boundary
-- Use when runtime packaging, orchestration, or infrastructure controls must be defined.
-- Do not use for product requirement decomposition; use `requirements-*` or `user-story-writing`.
-- Do not use for post-incident review output; use `incident-postmortem`.
+## Overview
+Use this skill to implement enforceable Kubernetes security controls that reduce blast radius and privilege misuse.
 
-## Goal
-Establish reproducible, secure, and operable runtime platforms.
+## Shared References
+- RBAC and NetworkPolicy baselines:
+  - `references/rbac-networkpolicy-baselines.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for cluster hardening, workload isolation, and policy enforcement
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Security control matrix:
+  - `assets/security-control-matrix-template.csv`
+- Pod security checklist:
+  - `assets/pod-security-checklist.md`
 
-## Outputs
-- Kubernetes security control matrix
-- Decision log for cluster hardening, workload isolation, and policy enforcement
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Workload trust boundaries and risk profile.
+- Access requirements by service account/namespace.
+- East-west network communication requirements.
+- Secret lifecycle and policy constraints.
+
+## Deliverables
+- Kubernetes security control matrix with ownership.
+- Pod-level hardening decisions.
+- RBAC and network isolation policy definitions.
+- Verification evidence for applied controls.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for cluster hardening, workload isolation, and policy enforcement.
-2. Produce options and select an approach for cluster hardening, workload isolation, and policy enforcement.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using policy and runtime security control verification.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Build control matrix in `assets/security-control-matrix-template.csv`.
+2. Define RBAC and network policy using `references/rbac-networkpolicy-baselines.md`.
+3. Validate workload hardening with `assets/pod-security-checklist.md`.
+4. Verify secret and policy enforcement behavior.
+5. Publish accepted risks and remediation backlog.
 
-## Quality Gates
-- Scope and assumptions for cluster hardening, workload isolation, and policy enforcement are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Access controls follow least-privilege principles.
+- Network paths are explicit and deny-by-default where feasible.
+- Pod security posture is consistent and reviewable.
+- Secret handling minimizes exposure in runtime and config.
 
-## Failure Handling
-- Stop when critical workloads run without required isolation or policy guards.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when critical workloads run without required isolation controls.
+- Stop when privilege model cannot be audited from manifests/policies.
+- Escalate when required controls conflict with runtime constraints.

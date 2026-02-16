@@ -1,54 +1,49 @@
 ---
 name: localization-qa
-description: "Localization quality assurance workflow for validating language correctness, layout resilience, and locale-specific UX behavior. Trigger when localized UI/content must be verified across target locales for translation quality, truncation/layout issues, formatting rules, and locale behavior before release; do not use for backend data-model or deployment pipeline decisions."
+description: "Localization QA workflow for language correctness, layout resilience, and locale-specific behavior validation before release. Use when localized UI/content must be verified across target locales; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Localization Qa
 
-## Trigger Boundary
-- Use when localized UI must be validated before release.
-- Do not use for translation creation workflows.
-- Do not use for global navigation IA redesign; use `information-architecture`.
+## Overview
+Use this skill to verify that localized experiences remain correct, usable, and release-safe across required locales.
 
-## Goal
-Ensure localized experiences are accurate, usable, and visually stable.
+## Shared References
+- Localization defect severity rules:
+  - `references/localization-defect-severity-rules.md`
 
-## Project Rule Policy
-- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
-- If no existing rule is available, define a lightweight project default and mark it as provisional.
-- Treat example IDs in this skill as non-binding guidance.
-- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+## Templates And Assets
+- Locale QA report template:
+  - `assets/localization-qa-report-template.csv`
+- Localization regression checklist:
+  - `assets/localization-regression-checklist.md`
 
-## Inputs
-- Localized strings and glossary references
-- Target locales required by product scope or project policy
-- UI builds covering target locales
+## Inputs To Gather
+- Required locale list and release scope.
+- Localized strings, glossary, and style rules.
+- UI builds/config for locale switching.
+- Critical flows and compliance-sensitive copy.
 
-## Outputs
-- Locale-by-locale QA report with project-defined IDs (example: `LQA-*` when no existing policy is available)
-- Truncation, overflow, and semantic mismatch findings
-- Release recommendation with blocking issues
+## Deliverables
+- Locale-by-locale defect report with severity and ownership.
+- Regression verification evidence for critical flows.
+- Release recommendation with blocker summary.
+- Follow-up retest plan for unresolved issues.
 
 ## Workflow
-1. Validate locale coverage and explicit missing-locale failure behavior.
-2. Check text correctness and terminology consistency.
-3. Stress-test expansion, truncation, and wrapping behavior.
-4. Validate date, time, number, and currency formatting.
-5. Publish defects by severity and locale impact with contract validation evidence.
+1. Confirm locale coverage and build readiness.
+2. Validate language and terminology correctness.
+3. Stress-test layout expansion/truncation/wrapping behavior.
+4. Validate locale formatting and directional behavior.
+5. Record findings in `assets/localization-qa-report-template.csv` and close with `assets/localization-regression-checklist.md`.
 
-6. Compare at least two feasible approaches and explain why one is preferred.
-7. Record key assumptions, unknowns, confidence, and rollback considerations.
-
-## Quality Gates
-- Required locales are fully tested.
-- No blocking truncation or semantic errors remain.
-- Critical user flows pass in every required locale.
+## Quality Standard
+- Required locales are fully covered.
+- Critical flows pass with no blocker-level localization defects.
+- Severity reflects user/business impact across locales.
 - Defect ownership and retest status are explicit.
-- Policy-required approvers and privacy controls are explicitly recorded.
 
-- Decision rationale and trade-offs are explicit.
-- Assumptions, unknowns, and confidence are explicitly documented.
-
-## Failure Handling
+## Failure Conditions
 - Stop release recommendation when required locale coverage is incomplete.
-- Escalate when locale-specific blockers remain unresolved.
+- Stop when blocker-level semantic or layout defects remain unresolved.
+- Escalate when localization defects affect legal/compliance-critical content.

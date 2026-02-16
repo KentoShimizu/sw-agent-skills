@@ -1,41 +1,49 @@
 ---
 name: kubernetes-basics
-description: Specialized workflow for workload deployment, service discovery, and cluster resource basics. Trigger when applications must run on Kubernetes and teams need concrete decisions on workload manifests, service exposure, namespace/resource setup, and cluster primitives before deployment; do not use for API contract design or requirement prioritization.
+description: "Kubernetes fundamentals workflow for workload deployment, service discovery, and baseline cluster primitives. Use when teams need concrete namespace/workload/service/probe decisions before deployment; do not use for API contract design or requirement prioritization."
 ---
 
 # Kubernetes Basics
 
-## Trigger Boundary
-- Use when runtime packaging, orchestration, or infrastructure controls must be defined.
-- Do not use for product requirement decomposition; use `requirements-*` or `user-story-writing`.
-- Do not use for post-incident review output; use `incident-postmortem`.
+## Overview
+Use this skill to define a deployable Kubernetes baseline that is reproducible and operationally verifiable.
 
-## Goal
-Establish reproducible, secure, and operable runtime platforms.
+## Shared References
+- Service discovery and probe rules:
+  - `references/service-discovery-and-probe-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for workload deployment, service discovery, and cluster resource basics
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Baseline workload manifest:
+  - `assets/workload-baseline-template.yaml`
+- Basics verification checklist:
+  - `assets/k8s-basics-checklist.md`
 
-## Outputs
-- Kubernetes workload baseline manifest set
-- Decision log for workload deployment, service discovery, and cluster resource basics
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Target workloads and service exposure model.
+- Namespace and resource-boundary requirements.
+- Health signal requirements and dependency expectations.
+- Rollout and rollback expectations.
+
+## Deliverables
+- Baseline workload/service manifest set.
+- Probe and discovery policy aligned with runtime behavior.
+- Namespace/resource boundary decisions.
+- Deployment verification checklist and evidence.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for workload deployment, service discovery, and cluster resource basics.
-2. Produce options and select an approach for workload deployment, service discovery, and cluster resource basics.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using cluster deployment and health probe checks.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define workload/service baseline using `assets/workload-baseline-template.yaml`.
+2. Apply probe and discovery guidance from `references/service-discovery-and-probe-rules.md`.
+3. Align namespace/resource boundaries with ownership and blast radius.
+4. Validate deployment behavior via `assets/k8s-basics-checklist.md`.
+5. Publish residual risks and follow-up actions.
 
-## Quality Gates
-- Scope and assumptions for workload deployment, service discovery, and cluster resource basics are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Baseline manifests are declarative and reviewable.
+- Service routing and probe semantics are explicit.
+- Readiness reflects true traffic-safety conditions.
+- Rollback path is clear before production rollout.
 
-## Failure Handling
-- Stop when baseline workloads cannot be deployed reliably on target clusters.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when baseline workloads cannot be deployed reliably on target cluster.
+- Stop when probes do not represent meaningful application health.
+- Escalate when namespace/resource boundaries remain ambiguous.

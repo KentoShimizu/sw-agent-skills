@@ -1,41 +1,49 @@
 ---
 name: kubernetes-workload-design
-description: Specialized workflow for resource sizing, rollout behavior, and workload resilience design. Trigger when Kubernetes workload specs need concrete sizing, autoscaling, availability, and rollout strategy decisions to meet reliability and performance targets; do not use for API contract design or requirement prioritization.
+description: "Kubernetes workload design workflow for resource sizing, autoscaling behavior, and safe rollout strategy. Use when workload specs need concrete sizing and resilience decisions to meet reliability/performance targets; do not use for API contract design or requirement prioritization."
 ---
 
 # Kubernetes Workload Design
 
-## Trigger Boundary
-- Use when runtime packaging, orchestration, or infrastructure controls must be defined.
-- Do not use for product requirement decomposition; use `requirements-*` or `user-story-writing`.
-- Do not use for post-incident review output; use `incident-postmortem`.
+## Overview
+Use this skill to design Kubernetes workloads that scale predictably and roll out safely under real traffic behavior.
 
-## Goal
-Establish reproducible, secure, and operable runtime platforms.
+## Shared References
+- Autoscaling and rollout decision rules:
+  - `references/autoscaling-and-rollout-decision-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for resource sizing, rollout behavior, and workload resilience design
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Workload sizing template:
+  - `assets/workload-sizing-template.md`
+- Rollout strategy checklist:
+  - `assets/rollout-strategy-checklist.md`
 
-## Outputs
-- Workload design spec with scaling and rollout controls
-- Decision log for resource sizing, rollout behavior, and workload resilience design
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Traffic profile and latency/SLO targets.
+- CPU/memory/concurrency characteristics.
+- Rollout risk tolerance and availability requirements.
+- Observability signals for scaling and rollback decisions.
+
+## Deliverables
+- Workload sizing and scaling plan.
+- Rollout strategy with guardrails and rollback triggers.
+- Resilience assumptions and saturation behavior notes.
+- Verification plan for load and deployment behavior.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for resource sizing, rollout behavior, and workload resilience design.
-2. Produce options and select an approach for resource sizing, rollout behavior, and workload resilience design.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using autoscaling and rollout behavior tests.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define resource and scaling assumptions in `assets/workload-sizing-template.md`.
+2. Choose scaling/rollout strategy using `references/autoscaling-and-rollout-decision-rules.md`.
+3. Validate rollout readiness via `assets/rollout-strategy-checklist.md`.
+4. Run representative load and rollout verification.
+5. Publish residual capacity and rollout risks with owners.
 
-## Quality Gates
-- Scope and assumptions for resource sizing, rollout behavior, and workload resilience design are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Resource sizing reflects measured workload behavior.
+- Autoscaling avoids oscillation and delayed recovery.
+- Rollout controls match service criticality.
+- Rollback criteria are objective and monitored.
 
-## Failure Handling
+## Failure Conditions
 - Stop when workload design lacks safe rollout or capacity guarantees.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when autoscaling signals do not correlate with user impact.
+- Escalate when saturation risk remains unmitigated.
