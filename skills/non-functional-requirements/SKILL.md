@@ -1,46 +1,47 @@
 ---
 name: non-functional-requirements
-description: "Quality attribute specification after functional requirements are defined. Trigger when approved functional requirements need measurable quality targets (performance, reliability, security, operability, compliance) and explicit risk constraints before implementation planning; do not use for initial requirement elicitation or sprint task breakdown."
+description: "Quality attribute specification workflow after functional requirements are defined. Use when approved functional requirements need measurable performance/reliability/security/operability/compliance targets before implementation planning; do not use for initial requirement elicitation or sprint task breakdown."
 ---
 
 # Non Functional Requirements
 
-## Trigger Boundary
-- Use when functional `REQ-*` baseline exists and quality constraints must be formalized.
-- Do not use to discover functional scope; use `requirements-definition`.
-- Do not use to write pass/fail implementation checks; use `acceptance-criteria-design`.
+## Overview
+Use this skill to define measurable quality constraints that are enforceable before release.
 
-## Goal
-Define measurable quality gates that are enforceable before release.
+## Shared References
+- NFR threshold definition rules:
+  - `references/nfr-threshold-definition-rules.md`
 
-## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
-- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- NFR specification template:
+  - `assets/nfr-spec-template.csv`
+- NFR observability mapping template:
+  - `assets/nfr-observability-mapping-template.md`
 
-## Inputs
-- Approved `REQ-*` baseline
-- Workload assumptions and operating context
-- Security, legal, and compliance obligations
+## Inputs To Gather
+- Approved functional requirement baseline.
+- Workload assumptions and operating context.
+- Security/legal/compliance obligations.
+- Existing telemetry and operational response capabilities.
 
-## Outputs
-- `NFR-*` set with metric, threshold, and unit
-- Validation method and runtime signal per NFR
-- Owner and escalation policy for threshold breaches
+## Deliverables
+- Measurable NFR set with owners and linked requirements.
+- Signal/alert/runbook mapping for release-blocking NFRs.
+- Threshold rationale and escalation policy.
 
 ## Workflow
-1. Enumerate quality attributes relevant to the system context.
-2. Create measurable `NFR-*` statements linked to `REQ-*` IDs.
-3. Attach workload assumptions and measurement method.
-4. Define observability signals, alert conditions, and runbook references.
-5. Mark release-blocking NFRs and review with owners.
+1. Define NFR set with `assets/nfr-spec-template.csv`.
+2. Apply threshold rules from `references/nfr-threshold-definition-rules.md`.
+3. Map each NFR to telemetry and runbooks via `assets/nfr-observability-mapping-template.md`.
+4. Mark release-blocking NFRs and owner accountability.
+5. Publish review-ready NFR baseline.
 
-## Quality Gates
-- Every NFR has metric, threshold, unit, and owner.
-- Every NFR maps to an observable production signal.
-- Jurisdictional obligations are represented as enforceable constraints.
-- Runbook link exists for every release-blocking NFR.
+## Quality Standard
+- Every NFR is measurable with unit, threshold, and owner.
+- Release-blocking NFRs are observable in production.
+- Threshold choices reflect user/business risk.
 
-## Failure Handling
-- Stop when NFRs are qualitative or non-measurable.
-- Stop when required telemetry or legal controls are unavailable.
+## Failure Conditions
+- Stop when NFRs are qualitative and non-measurable.
+- Stop when required telemetry/runbook coverage is missing.
+- Escalate when legal/compliance constraints cannot be operationalized.

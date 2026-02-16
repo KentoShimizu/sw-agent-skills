@@ -1,41 +1,49 @@
 ---
 name: nextjs-app-router
-description: "Next.js App Router implementation workflow. Trigger when Next.js App Router behavior (route structure, server/client components, data fetching, rendering/caching strategy, navigation state) must be implemented or changed; do not use for repository-wide architecture governance or release management policy."
+description: "Next.js App Router implementation workflow for route structure, server/client boundaries, and caching/revalidation behavior. Use when App Router architecture or data/rendering behavior must be implemented or changed; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Nextjs App Router
 
-## Trigger Boundary
-- Use when implementing or refactoring Next.js App Router (`app/`) architecture.
-- Do not use for legacy Pages Router migration planning only.
-- Do not use for backend-only API concerns outside Next.js runtime.
+## Overview
+Use this skill to design App Router implementations that are predictable in rendering, caching, and navigation behavior.
 
-## Goal
-Deliver predictable route composition and data fetching behavior in Next.js App Router projects.
+## Shared References
+- Server/client and cache rules:
+  - `references/server-client-and-cache-rules.md`
 
-## Inputs
-- Route structure and nested layout requirements
-- Server/client component boundaries
-- Caching, revalidation, and SEO constraints
+## Templates And Assets
+- App Router architecture template:
+  - `assets/app-router-architecture-template.md`
+- App Router verification checklist:
+  - `assets/app-router-checklist.md`
 
-## Outputs
-- Route and layout map with rendering strategy
-- Data-fetching and cache-control plan
-- Error/loading boundary checklist
+## Inputs To Gather
+- Route hierarchy, layout composition, and navigation requirements.
+- Server/client interaction boundaries.
+- Freshness, SEO, and caching constraints.
+- Error/loading behavior requirements.
+
+## Deliverables
+- Route/layout map with rendering strategy.
+- Data-fetch and cache/revalidation policy.
+- Error/loading/not-found boundary plan.
+- Verification evidence for transition and consistency behavior.
 
 ## Workflow
-1. Define route groups, nested layouts, and shared UI boundaries.
-2. Decide server vs client component ownership by interaction needs.
-3. Configure fetch caching and revalidation per route criticality.
-4. Implement loading, error, and not-found boundaries explicitly.
-5. Validate route transitions and data consistency under navigation.
+1. Define route/layout architecture in `assets/app-router-architecture-template.md`.
+2. Apply server/client boundary rules from `references/server-client-and-cache-rules.md`.
+3. Configure fetch/cache/revalidation policy per route criticality.
+4. Implement explicit loading/error/not-found boundaries.
+5. Validate with `assets/app-router-checklist.md`.
 
-## Quality Gates
-- Route tree is explicit and maintainable.
-- Server/client boundaries are intentional and minimal.
-- Cache/revalidation settings match freshness requirements.
-- All user flows have explicit loading and error states.
+## Quality Standard
+- Route tree and ownership are explicit.
+- Server/client boundaries are minimal and intentional.
+- Cache policy matches data freshness requirements.
+- Navigation preserves data consistency across transitions.
 
-## Failure Handling
-- Stop when server/client responsibilities are mixed without rationale.
-- Escalate when route data consistency cannot be guaranteed.
+## Failure Conditions
+- Stop when boundaries between server and client are ambiguous.
+- Stop when caching strategy risks stale or inconsistent user state.
+- Escalate when critical route behavior cannot be made deterministic.

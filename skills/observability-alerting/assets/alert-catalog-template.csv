@@ -1,0 +1,2 @@
+alert_id,signal,severity,threshold,owner,routing,runbook
+ALT-001,error_rate,p1,>2% for 5m,oncall-team,pager,link

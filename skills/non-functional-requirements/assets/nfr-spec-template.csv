@@ -1,0 +1,2 @@
+nfr_id,linked_req_id,quality_attribute,metric,threshold,unit,owner,release_blocking
+NFR-001,REQ-001,latency,p95_response_time,500,ms,platform-team,true

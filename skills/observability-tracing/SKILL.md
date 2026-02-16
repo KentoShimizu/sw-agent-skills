@@ -1,41 +1,47 @@
 ---
 name: observability-tracing
-description: Specialized workflow for distributed trace coverage and critical path latency diagnosis. Trigger when cross-service request paths need trace instrumentation or analysis to localize latency/error bottlenecks and dependency failure propagation; do not use for business-feature implementation logic.
+description: "Observability tracing workflow for distributed trace coverage and critical-path diagnosis. Use when cross-service request paths need instrumentation or analysis to localize latency/error bottlenecks; do not use for business-feature implementation logic."
 ---
 
 # Observability Tracing
 
-## Trigger Boundary
-- Use when production visibility, reliability targets, or incident response workflows are needed.
-- Do not use for feature-level functional spec writing; use `requirements-*`.
-- Do not use for pure code-style conformance checks.
+## Overview
+Use this skill to make critical request flows traceable end-to-end for latency and failure diagnosis.
 
-## Goal
-Maintain production reliability through measurable operational controls.
+## Shared References
+- Span attribute and sampling rules:
+  - `references/span-attribute-and-sampling-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for distributed trace coverage and critical path latency diagnosis
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Trace coverage map template:
+  - `assets/trace-coverage-map-template.md`
+- Trace quality checklist:
+  - `assets/trace-quality-checklist.md`
 
-## Outputs
-- Trace instrumentation map for critical flows
-- Decision log for distributed trace coverage and critical path latency diagnosis
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Critical cross-service user flows.
+- Current instrumentation and propagation gaps.
+- Sampling constraints and storage budget.
+- Incident diagnosis requirements.
+
+## Deliverables
+- Trace coverage map for critical paths.
+- Span attribute conventions and sampling policy.
+- Validation evidence for trace queryability.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for distributed trace coverage and critical path latency diagnosis.
-2. Produce options and select an approach for distributed trace coverage and critical path latency diagnosis.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using trace completeness and span attribute validation.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define coverage targets in `assets/trace-coverage-map-template.md`.
+2. Apply span/sampling policy from `references/span-attribute-and-sampling-rules.md`.
+3. Validate quality via `assets/trace-quality-checklist.md`.
+4. Fix missing spans/attributes on critical paths.
+5. Publish tracing baseline and ownership.
 
-## Quality Gates
-- Scope and assumptions for distributed trace coverage and critical path latency diagnosis are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Critical flows are traceable end-to-end.
+- Span attributes are consistent for diagnosis queries.
+- Sampling preserves incident usability.
 
-## Failure Handling
-- Stop when critical request paths are not traceable end-to-end.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when critical paths remain untraceable.
+- Stop when trace context propagation is inconsistent.
+- Escalate when tracing gaps block root-cause isolation.
