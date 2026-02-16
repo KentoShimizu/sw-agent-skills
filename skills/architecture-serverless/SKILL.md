@@ -18,6 +18,14 @@ Design a production-safe serverless architecture with clear boundaries and const
 - Validate all IDs, lifecycle states, and gate rules against the canonical contract.
 - Do not define local ID formats or alternate state machines.
 
+## Project-Specific Decision Calibration (Mandatory)
+- Use `skills/architecture-principles/references/project-calibration-framework.md` to derive decision criteria from project evidence.
+- Derive no-go conditions from current requirements, existing implementation constraints, and user/stakeholder direction collected in this task.
+- Do not hardcode universal no-go rules; represent them as falsifiable, project-scoped checks with evidence links.
+- Define threshold types before values (for example latency budget, consistency tolerance, recovery objective, ownership capacity, and cost volatility).
+- For each threshold, document rationale, measurement method, observation window, and re-decision trigger.
+- If evidence is incomplete, record explicit assumptions and decision confidence.
+
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Enforce least privilege IAM for function and managed-service access.
 - Define residency, encryption, and cross-border transfer constraints.
@@ -44,9 +52,11 @@ Design a production-safe serverless architecture with clear boundaries and const
 - Function boundaries align with domain use cases.
 - Timeouts and retries are explicit and workload-appropriate.
 - `ARC-CMP-*` evidence package is complete and approved.
+- Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
 
 ## Failure Handling
 - Stop when critical flows exceed platform execution constraints.
 - Stop when canonical contract validation fails.
+- Stop when no-go checks or threshold values are copied from generic defaults without project evidence.
 - Escalate when IAM and secret boundaries are not explicit.

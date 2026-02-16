@@ -18,6 +18,14 @@ Define event model, schema governance, and runtime guarantees for asynchronous s
 - Validate all IDs, lifecycle states, and gate rules against the canonical contract.
 - Do not define local ID formats or alternate state machines.
 
+## Project-Specific Decision Calibration (Mandatory)
+- Use `skills/architecture-principles/references/project-calibration-framework.md` to derive decision criteria from project evidence.
+- Derive no-go conditions from current requirements, existing implementation constraints, and user/stakeholder direction collected in this task.
+- Do not hardcode universal no-go rules; represent them as falsifiable, project-scoped checks with evidence links.
+- Define threshold types before values (for example latency budget, consistency tolerance, recovery objective, ownership capacity, and cost volatility).
+- For each threshold, document rationale, measurement method, observation window, and re-decision trigger.
+- If evidence is incomplete, record explicit assumptions and decision confidence.
+
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Classify event payload sensitivity and minimize personal data fields.
 - Enforce retention and replay policy under jurisdictional constraints.
@@ -44,9 +52,11 @@ Define event model, schema governance, and runtime guarantees for asynchronous s
 - Every event has owner, schema, and versioning policy.
 - Consumers can handle duplicates and out-of-order messages.
 - `ARC-CMP-*` evidence package is complete and approved.
+- Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
 
 ## Failure Handling
 - Stop when event ownership or schema governance is undefined.
 - Stop when canonical contract validation fails.
+- Stop when no-go checks or threshold values are copied from generic defaults without project evidence.
 - Escalate when consistency gaps cannot be compensated safely.

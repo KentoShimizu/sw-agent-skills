@@ -50,7 +50,7 @@ Use this guide when authoring manifests validated by `skills/architecture-princi
 All `compliance_evidence` fields must be non-empty strings.
 
 ## Authoring workflow
-1. Start from sample manifests under `skills/architecture-principles/references/samples/`.
+1. Start from sample manifests under `skills/architecture-principles/assets/`.
 2. Fill `checks` first, then validate required approvers.
 3. For `ARC-CMP-*`, complete all `compliance_evidence` fields.
 4. Run: `python3 skills/architecture-principles/scripts/validate_architecture_contract.py --manifest <path>`.

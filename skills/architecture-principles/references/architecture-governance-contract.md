@@ -108,8 +108,8 @@ Each `ARC-CMP-*` package must include all required fields:
   - `data_subject_rights_process`
 
 ### Valid Manifest Samples
-- `skills/architecture-principles/references/samples/arc-prn-manifest.valid.json`
-- `skills/architecture-principles/references/samples/arc-cmp-manifest.valid.json`
+- `skills/architecture-principles/assets/arc-prn-manifest.valid.json`
+- `skills/architecture-principles/assets/arc-cmp-manifest.valid.json`
 - Field-level guidance: `skills/architecture-principles/references/manifest-field-guide.md`
 
 ## Gate Policy
