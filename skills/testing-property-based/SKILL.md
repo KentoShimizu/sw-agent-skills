@@ -1,52 +1,49 @@
 ---
 name: testing-property-based
-description: "Property-based testing workflow for invariant validation over wide input spaces. Use when correctness depends on rules that must hold for many generated/randomized inputs beyond hand-picked examples; do not use for narrow deterministic unit examples only."
+description: "Property-based testing workflow for invariant validation over broad input spaces. Use when correctness depends on rules that must hold across many generated inputs; do not use for narrow deterministic examples only."
 ---
 
-# Testing Property Based
+# Testing Property-Based
+
+## Overview
+Use this skill to validate invariants beyond hand-picked test cases by combining generators, shrinking, and reproducible seeds.
 
 ## Trigger Boundary
-- Use when the core need is invariant validation with generated inputs.
+- Use when input space is large and example-based tests are insufficient.
 - Typical requests:
-  - `入力空間が広く、例ベースだけでは漏れが怖い`
-  - `エンコード/デコードの恒等性を保証したい`
-  - `集約ロジックの不変条件を乱択で検証したい`
+  - `Verify encode/decode roundtrip invariants for arbitrary inputs.`
+  - `Stress aggregate invariants with generated data.`
+  - `Catch edge cases that fixed examples miss.`
 - Do not use when:
-  - 固定ケースのみで十分な小規模ロジック（`testing-unit` を使う）
-  - UI導線検証（`testing-e2e` / `playwright` を使う）
-
-## Goal
-Build sufficient, risk-aligned verification evidence to prevent regressions.
+  - A small deterministic unit test set is sufficient (`testing-unit`).
+  - The primary scope is UI journey validation (`testing-e2e`).
 
 ## Inputs
-- Change scope, risk profile, and release constraints
-- Domain evidence for invariant validation with generated inputs
-- Existing test assets, toolchain constraints, and known failure modes
+- Invariants and domain constraints
+- Generator strategy and seed reproducibility requirements
+- Runtime budget and flaky-risk tolerance
 
 ## Outputs
-- property specification and generator strategy
-- Decision record including alternatives and selected strategy
-- Verification checklist with measurable pass/fail criteria
+- Property definitions and generator coverage strategy
+- Decision record for shrinking and seed policy
+- Verification checklist with failing-case reproduction guidance
 
 ## Workflow
-1. Clarify decision question, existing project testing policy, and non-negotiable constraints for invariant validation with generated inputs.
-2. Map risks to required test depth and execution tiers (fast gate vs full gate).
-3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
-4. Select one strategy and document why alternatives were not chosen.
-5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
-6. Execute verification and capture reproducible evidence using property runs with shrinking traces for failing cases.
-7. Publish residual risks, follow-up actions, and owner accountability.
+1. Formalize invariants and invalid-state assumptions.
+2. Design generators that reflect realistic and adversarial inputs.
+3. Compare generation/shrinking strategies and choose one.
+4. Run property tests with reproducible seeds.
+5. Triages failures with shrunk counterexamples and publish fixes.
 
 ## Quality Gates
-- Trigger fit is explicit, and alternative testing levels were consciously considered.
-- Decision rationale is evidence-based, not preference-based.
-- Assumptions, unknowns, and confidence level are documented.
-- Evidence is reproducible with exact commands/artifacts.
-- Residual risks include owner, due date, and verification plan.
+- Core invariants are explicit and testable.
+- Generators cover edge and adversarial shapes.
+- Failures are reproducible via seed and shrunk case.
+- Residual unknowns are documented.
 
 ## Failure Handling
-- Stop when core invariants are undefined or repeatedly violated without diagnosis.
-- Escalate when generator quality prevents meaningful domain coverage.
+- Stop when invariants are undefined or contradictory.
+- Escalate when generator quality is too weak for meaningful coverage.
 
 ## Bundled Resources
-- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.

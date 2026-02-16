@@ -1,22 +1,22 @@
 # Testing Unit Trigger And Examples
 
 ## Positive Trigger Signals
-- User request implies isolated deterministic unit behavior.
-- User asks for merge/release confidence from executable evidence, not only narrative discussion.
-- User needs explicit test-level decision with traceable rationale.
+- Fast deterministic feedback is required.
+- Core branch/error/edge logic needs isolated coverage.
+- Failure localization and debug speed are priorities.
 
 ## Non-Matching Signals
-- サービス間互換性確認（`testing-contract` / `testing-integration`）
-- UI導線の実ブラウザ検証（`testing-e2e` / `playwright`）
+- Cross-service compatibility is the main risk.
+- Full UI journey validation is required.
 
 ## Example Requests That Should Trigger This Skill
-- `ドメインロジックの境界条件を高速に固めたい`
-- `例外系や分岐網羅をユニットで担保したい`
-- `依存を分離して原因局所化したい`
+- `Add fast deterministic tests for edge and failure logic.`
+- `Increase unit coverage for branch-heavy domain rules.`
+- `Isolate dependencies to speed up debugging.`
 
 ## Minimal Deliverable Example
-1. Decision question and constraints
-2. Alternatives considered with trade-offs
-3. Selected strategy and why
-4. Executed evidence (commands/artifacts)
-5. Residual risks and follow-up actions
+1. Unit boundary and constraints
+2. Isolation strategy alternatives
+3. Selected unit-test strategy
+4. Deterministic execution evidence
+5. Residual coverage risks and follow-up actions

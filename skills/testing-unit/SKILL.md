@@ -5,48 +5,45 @@ description: "Deterministic unit-test strategy for isolated logic and fast feedb
 
 # Testing Unit
 
-## Trigger Boundary
-- Use when the core need is isolated deterministic unit behavior.
-- Typical requests:
-  - `ドメインロジックの境界条件を高速に固めたい`
-  - `例外系や分岐網羅をユニットで担保したい`
-  - `依存を分離して原因局所化したい`
-- Do not use when:
-  - サービス間互換性確認（`testing-contract` / `testing-integration`）
-  - UI導線の実ブラウザ検証（`testing-e2e` / `playwright`）
+## Overview
+Use this skill to validate small-scope logic quickly and deterministically with strong failure localization.
 
-## Goal
-Build sufficient, risk-aligned verification evidence to prevent regressions.
+## Trigger Boundary
+- Use when correctness can be validated within isolated units.
+- Typical requests:
+  - `Harden branch and edge-case logic with fast deterministic tests.`
+  - `Verify exception paths and guard-rail behavior.`
+  - `Isolate dependencies to pinpoint failure causes.`
+- Do not use when:
+  - Cross-service compatibility is the core risk (`testing-contract`/`testing-integration`).
+  - Full UI journey behavior is needed (`testing-e2e`/`playwright`).
 
 ## Inputs
-- Change scope, risk profile, and release constraints
-- Domain evidence for isolated deterministic unit behavior
-- Existing test assets, toolchain constraints, and known failure modes
+- Unit boundaries and behavior expectations
+- Mock/stub strategy and dependency seams
+- Runtime constraints for fast feedback loops
 
 ## Outputs
-- unit suite with isolation and fixture strategy
-- Decision record including alternatives and selected strategy
-- Verification checklist with measurable pass/fail criteria
+- Unit suite with fixture and isolation strategy
+- Decision record for scope and assertion depth
+- Verification checklist for edge/failure coverage
 
 ## Workflow
-1. Clarify decision question, existing project testing policy, and non-negotiable constraints for isolated deterministic unit behavior.
-2. Map risks to required test depth and execution tiers (fast gate vs full gate).
-3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
-4. Select one strategy and document why alternatives were not chosen.
-5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
-6. Execute verification and capture reproducible evidence using fast deterministic runs covering happy/edge/failure branches.
-7. Publish residual risks, follow-up actions, and owner accountability.
+1. Identify unit boundaries and observable contracts.
+2. Define edge and failure conditions before implementation.
+3. Compare isolation strategies and choose one with rationale.
+4. Implement deterministic tests with explicit assertions.
+5. Publish residual risks and uncovered dependency behaviors.
 
 ## Quality Gates
-- Trigger fit is explicit, and alternative testing levels were consciously considered.
-- Decision rationale is evidence-based, not preference-based.
-- Assumptions, unknowns, and confidence level are documented.
-- Evidence is reproducible with exact commands/artifacts.
-- Residual risks include owner, due date, and verification plan.
+- Unit scope is explicit and dependency control is intentional.
+- Edge and failure cases are covered for critical logic.
+- Tests are deterministic and fast enough for frequent execution.
+- Evidence is reproducible and actionable.
 
 ## Failure Handling
-- Stop when critical units lack deterministic tests for edge and failure paths.
-- Escalate when dependency isolation is impossible without design changes.
+- Stop when critical units lack edge/failure coverage.
+- Escalate when isolation requires architectural refactoring.
 
 ## Bundled Resources
-- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.

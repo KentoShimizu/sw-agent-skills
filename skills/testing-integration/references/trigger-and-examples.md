@@ -1,22 +1,22 @@
 # Testing Integration Trigger And Examples
 
 ## Positive Trigger Signals
-- User request implies integration boundary correctness.
-- User asks for merge/release confidence from executable evidence, not only narrative discussion.
-- User needs explicit test-level decision with traceable rationale.
+- Boundary behavior between modules/services is uncertain.
+- Timeout/retry/failure semantics across dependencies must be verified.
+- Adapter or infrastructure changes may break seams.
 
 ## Non-Matching Signals
-- ブラウザ導線のE2E検証をしたい（`testing-e2e` / `playwright` を使う）
-- 単体関数だけを高速検証したい（`testing-unit` を使う）
+- Full browser journey validation (`testing-e2e`/`playwright`).
+- Pure isolated unit logic checks (`testing-unit`).
 
 ## Example Requests That Should Trigger This Skill
-- `Repository層とDBの結合部を検証したい`
-- `service間API連携の失敗系を明示的にテストしたい`
-- `adapter差し替え時の境界契約を確認したい`
+- `Test repository and DB boundary behavior including failures.`
+- `Verify service timeout and retry handling across integration seams.`
+- `Validate adapter replacement with boundary tests.`
 
 ## Minimal Deliverable Example
-1. Decision question and constraints
-2. Alternatives considered with trade-offs
-3. Selected strategy and why
-4. Executed evidence (commands/artifacts)
-5. Residual risks and follow-up actions
+1. Boundary matrix and constraints
+2. Fixture alternatives and trade-offs
+3. Selected integration strategy
+4. Reproducible seam-level evidence
+5. Residual boundary risks and owners

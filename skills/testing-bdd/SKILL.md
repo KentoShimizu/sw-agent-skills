@@ -1,52 +1,49 @@
 ---
 name: testing-bdd
-description: "Behavior-driven scenario design for shared business language and executable acceptance evidence. Use when teams must align requirements as Given-When-Then scenarios before implementation sign-off or release; do not use for performance/load benchmarking or deployment policy design."
+description: "Behavior-driven scenario design for shared business language and executable acceptance evidence. Use when teams must align on Given-When-Then scenarios before implementation sign-off or release; do not use for performance benchmarking or deployment policy design."
 ---
 
-# Testing Bdd
+# Testing BDD
+
+## Overview
+Use this skill to encode requirement intent as executable behavior scenarios that product, QA, and engineering can all review.
 
 ## Trigger Boundary
-- Use when the core need is behavior scenarios in ubiquitous language.
+- Use when behavior semantics need alignment across stakeholders before or during implementation.
 - Typical requests:
-  - `仕様レビュー前にGiven-When-Thenを整理したい`
-  - `要件の解釈差分をテスト可能なシナリオに落としたい`
-  - `PO/QA/開発で同じ受け入れ条件を共有したい`
+  - `Turn ambiguous requirements into Given-When-Then scenarios.`
+  - `Align PO, QA, and engineering on acceptance behavior.`
+  - `Define executable acceptance evidence before release.`
 - Do not use when:
-  - 純粋な負荷試験設計のみをしたい（`performance-*` を使う）
-  - 本番監視やアラート運用の設計をしたい（`observability-*` を使う）
-
-## Goal
-Build sufficient, risk-aligned verification evidence to prevent regressions.
+  - The primary task is load/performance benchmark design (`performance-*`).
+  - The task is operational monitoring/alert policy (`observability-*`).
 
 ## Inputs
-- Change scope, risk profile, and release constraints
-- Domain evidence for behavior scenarios in ubiquitous language
-- Existing test assets, toolchain constraints, and known failure modes
+- Requirement candidates and acceptance concerns
+- Domain language and business rules
+- Existing test policy and release constraints
 
 ## Outputs
-- Given-When-Then scenario suite with requirement mapping
-- Decision record including alternatives and selected strategy
-- Verification checklist with measurable pass/fail criteria
+- Scenario suite in Given-When-Then format with requirement mapping
+- Decision record describing scenario strategy and assumptions
+- Verification checklist with pass/fail signals
 
 ## Workflow
-1. Clarify decision question, existing project testing policy, and non-negotiable constraints for behavior scenarios in ubiquitous language.
-2. Map risks to required test depth and execution tiers (fast gate vs full gate).
-3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
-4. Select one strategy and document why alternatives were not chosen.
-5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
-6. Execute verification and capture reproducible evidence using scenario execution evidence tied to acceptance decisions.
-7. Publish residual risks, follow-up actions, and owner accountability.
+1. Clarify behavior decisions and non-negotiable constraints.
+2. Model happy-path, alternate, and failure behavior in ubiquitous language.
+3. Compare scenario granularity options and choose one with rationale.
+4. Make scenarios executable and traceable to acceptance decisions.
+5. Publish residual risks and unresolved semantic disputes.
 
 ## Quality Gates
-- Trigger fit is explicit, and alternative testing levels were consciously considered.
-- Decision rationale is evidence-based, not preference-based.
-- Assumptions, unknowns, and confidence level are documented.
-- Evidence is reproducible with exact commands/artifacts.
-- Residual risks include owner, due date, and verification plan.
+- Scenarios are understandable by non-engineering stakeholders.
+- Acceptance semantics are explicit and testable.
+- Assumptions and confidence are documented.
+- Evidence is reproducible and linked to requirements.
 
 ## Failure Handling
-- Stop when critical business behavior cannot be expressed as executable scenarios.
-- Escalate when stakeholders disagree on scenario semantics and release criteria.
+- Stop when critical behavior cannot be expressed unambiguously.
+- Escalate when stakeholder interpretations remain incompatible.
 
 ## Bundled Resources
-- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.

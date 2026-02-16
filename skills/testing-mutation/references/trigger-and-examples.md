@@ -1,22 +1,22 @@
 # Testing Mutation Trigger And Examples
 
 ## Positive Trigger Signals
-- User request implies mutation score and weak assertion detection.
-- User asks for merge/release confidence from executable evidence, not only narrative discussion.
-- User needs explicit test-level decision with traceable rationale.
+- Existing tests pass but confidence is low.
+- Teams need objective evidence of assertion strength.
+- Critical modules require mutation-based robustness checks.
 
 ## Non-Matching Signals
-- まだ基礎テストがない段階で初回設計したい（先に `testing-unit`/`testing-integration`）
-- パフォーマンス限界を測りたい（`performance-*` を使う）
+- No baseline unit/integration tests yet.
+- Primary task is performance or capacity benchmarking.
 
 ## Example Requests That Should Trigger This Skill
-- `テストは通るが壊しても落ちない不安がある`
-- `生存mutantを起点にアサーション強化したい`
-- `重要モジュールのテスト有効性を定量評価したい`
+- `Identify weak tests that let mutants survive.`
+- `Use mutation results to harden assertions.`
+- `Measure test robustness for critical business logic.`
 
 ## Minimal Deliverable Example
-1. Decision question and constraints
-2. Alternatives considered with trade-offs
-3. Selected strategy and why
-4. Executed evidence (commands/artifacts)
-5. Residual risks and follow-up actions
+1. Mutation scope and constraints
+2. Score target alternatives and trade-offs
+3. Selected mutation strategy
+4. Survivor triage and rerun evidence
+5. Residual mutant risk and remediation owners

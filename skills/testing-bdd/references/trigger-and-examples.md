@@ -1,22 +1,22 @@
-# Testing Bdd Trigger And Examples
+# Testing BDD Trigger And Examples
 
 ## Positive Trigger Signals
-- User request implies behavior scenarios in ubiquitous language.
-- User asks for merge/release confidence from executable evidence, not only narrative discussion.
-- User needs explicit test-level decision with traceable rationale.
+- The task needs shared business-language scenarios.
+- Stakeholders need executable acceptance semantics before release.
+- Requirement interpretation gaps are causing delivery risk.
 
 ## Non-Matching Signals
-- 純粋な負荷試験設計のみをしたい（`performance-*` を使う）
-- 本番監視やアラート運用の設計をしたい（`observability-*` を使う）
+- Pure load/performance benchmark design (`performance-*`).
+- Monitoring and alert operation design (`observability-*`).
 
 ## Example Requests That Should Trigger This Skill
-- `仕様レビュー前にGiven-When-Thenを整理したい`
-- `要件の解釈差分をテスト可能なシナリオに落としたい`
-- `PO/QA/開発で同じ受け入れ条件を共有したい`
+- `Translate these requirements into Given-When-Then scenarios.`
+- `Align acceptance behavior across product, QA, and engineering.`
+- `Create executable behavior scenarios before sign-off.`
 
 ## Minimal Deliverable Example
-1. Decision question and constraints
-2. Alternatives considered with trade-offs
-3. Selected strategy and why
-4. Executed evidence (commands/artifacts)
+1. Scenario scope and constraints
+2. Scenario alternatives and trade-offs
+3. Selected scenario strategy with rationale
+4. Executable evidence and traceability
 5. Residual risks and follow-up actions

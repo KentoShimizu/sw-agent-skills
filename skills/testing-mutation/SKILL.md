@@ -1,52 +1,49 @@
 ---
 name: testing-mutation
-description: "Mutation-testing workflow for exposing weak assertions and missing behavioral checks. Use when existing tests pass but confidence is low and you need objective robustness signals; do not use for first-pass test creation before baseline tests exist."
+description: "Mutation-testing workflow for exposing weak assertions and missing behavioral checks. Use when tests pass but confidence is low and objective robustness evidence is needed; do not use before baseline tests exist."
 ---
 
 # Testing Mutation
 
-## Trigger Boundary
-- Use when the core need is mutation score and weak assertion detection.
-- Typical requests:
-  - `テストは通るが壊しても落ちない不安がある`
-  - `生存mutantを起点にアサーション強化したい`
-  - `重要モジュールのテスト有効性を定量評価したい`
-- Do not use when:
-  - まだ基礎テストがない段階で初回設計したい（先に `testing-unit`/`testing-integration`）
-  - パフォーマンス限界を測りたい（`performance-*` を使う）
+## Overview
+Use this skill to quantify test effectiveness and prioritize strengthening weak assertions.
 
-## Goal
-Build sufficient, risk-aligned verification evidence to prevent regressions.
+## Trigger Boundary
+- Use when pass-only test status is insufficient for confidence.
+- Typical requests:
+  - `Find weak tests that do not fail when behavior is changed.`
+  - `Use surviving mutants to guide assertion hardening.`
+  - `Quantify test robustness for critical modules.`
+- Do not use when:
+  - Baseline unit/integration coverage is missing.
+  - The primary goal is load or capacity benchmarking (`performance-*`).
 
 ## Inputs
-- Change scope, risk profile, and release constraints
-- Domain evidence for mutation score and weak assertion detection
-- Existing test assets, toolchain constraints, and known failure modes
+- Existing tests and module criticality
+- Mutation tooling constraints and runtime budget
+- Release risk tolerance
 
 ## Outputs
-- mutation report with surviving mutant triage
-- Decision record including alternatives and selected strategy
-- Verification checklist with measurable pass/fail criteria
+- Mutation report with surviving mutant triage
+- Decision record for target score and remediation strategy
+- Verification checklist for strengthened assertions
 
 ## Workflow
-1. Clarify decision question, existing project testing policy, and non-negotiable constraints for mutation score and weak assertion detection.
-2. Map risks to required test depth and execution tiers (fast gate vs full gate).
-3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
-4. Select one strategy and document why alternatives were not chosen.
-5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
-6. Execute verification and capture reproducible evidence using kill-rate evidence plus patch plan for surviving mutants.
-7. Publish residual risks, follow-up actions, and owner accountability.
+1. Select mutation scope by business risk and runtime budget.
+2. Define acceptable mutation score and exception policy.
+3. Run mutation analysis and triage surviving mutants.
+4. Strengthen tests or implementation assertions based on triage.
+5. Re-run and publish deltas, residual risk, and follow-up plan.
 
 ## Quality Gates
-- Trigger fit is explicit, and alternative testing levels were consciously considered.
-- Decision rationale is evidence-based, not preference-based.
-- Assumptions, unknowns, and confidence level are documented.
-- Evidence is reproducible with exact commands/artifacts.
-- Residual risks include owner, due date, and verification plan.
+- Surviving mutants are triaged with explicit rationale.
+- Critical-path mutants have remediation plan.
+- Runtime cost is balanced with risk coverage.
+- Evidence is reproducible and comparable over time.
 
 ## Failure Handling
-- Stop when surviving mutants in critical logic remain without remediation plan.
-- Escalate when mutation runtime cost blocks practical CI usage.
+- Stop when critical survivors remain without remediation owner.
+- Escalate when mutation runtime cost blocks practical adoption.
 
 ## Bundled Resources
-- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.

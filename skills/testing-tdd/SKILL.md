@@ -3,50 +3,47 @@ name: testing-tdd
 description: "Red-green-refactor workflow for test-first implementation feedback loops. Use when behavior and design must evolve safely through small increments backed by failing-then-passing tests; do not use for post-hoc test backfilling only."
 ---
 
-# Testing Tdd
+# Testing TDD
+
+## Overview
+Use this skill to drive implementation through fast red-green-refactor cycles with explicit design feedback.
 
 ## Trigger Boundary
-- Use when the core need is test-first red-green-refactor discipline.
+- Use when implementation should be guided by failing tests first.
 - Typical requests:
-  - `新機能をTDDで安全に進めたい`
-  - `設計を小さく検証しながら進めたい`
-  - `リファクタ時の回帰不安を最小化したい`
+  - `Develop a new feature with strict red-green-refactor discipline.`
+  - `Reduce refactor risk with micro-cycle verification.`
+  - `Use tests to shape API and domain design incrementally.`
 - Do not use when:
-  - 実装後にまとめてテスト追加するだけの作業
-  - 負荷試験や運用監視の設計
-
-## Goal
-Build sufficient, risk-aligned verification evidence to prevent regressions.
+  - Tests are added only after full implementation.
+  - The primary goal is performance/load experimentation.
 
 ## Inputs
-- Change scope, risk profile, and release constraints
-- Domain evidence for test-first red-green-refactor discipline
-- Existing test assets, toolchain constraints, and known failure modes
+- Target behavior and constraints
+- Existing test harness and coding standards
+- Cycle-time and commit-granularity expectations
 
 ## Outputs
-- commit-level red-green-refactor evidence
-- Decision record including alternatives and selected strategy
-- Verification checklist with measurable pass/fail criteria
+- Red-green-refactor evidence at incremental steps
+- Decision record for cycle design and test scope
+- Verification checklist for regression safety
 
 ## Workflow
-1. Clarify decision question, existing project testing policy, and non-negotiable constraints for test-first red-green-refactor discipline.
-2. Map risks to required test depth and execution tiers (fast gate vs full gate).
-3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
-4. Select one strategy and document why alternatives were not chosen.
-5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
-6. Execute verification and capture reproducible evidence using trace of failing test -> minimal fix -> refactor with green suite.
-7. Publish residual risks, follow-up actions, and owner accountability.
+1. Write a failing test for the smallest next behavior.
+2. Implement the minimal change to pass.
+3. Refactor while keeping tests green.
+4. Repeat in small increments with explicit intent.
+5. Publish residual risks and uncovered behaviors.
 
 ## Quality Gates
-- Trigger fit is explicit, and alternative testing levels were consciously considered.
-- Decision rationale is evidence-based, not preference-based.
-- Assumptions, unknowns, and confidence level are documented.
-- Evidence is reproducible with exact commands/artifacts.
-- Residual risks include owner, due date, and verification plan.
+- Every implementation step is preceded by a failing test.
+- Steps remain small enough for quick diagnosis and rollback.
+- Refactoring preserves behavior with green evidence.
+- Assumptions and unresolved risks are explicit.
 
 ## Failure Handling
-- Stop when implementation proceeds without preceding failing tests.
-- Escalate when cycle time is blocked by oversized steps or missing seams.
+- Stop when implementation proceeds without prior failing tests.
+- Escalate when cycle size becomes too large for reliable feedback.
 
 ## Bundled Resources
-- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.
