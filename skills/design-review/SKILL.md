@@ -13,10 +13,12 @@ description: "Structured design review workflow for validating UX quality, imple
 ## Goal
 Identify design risks early and provide concrete, reviewable fixes.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
-- Validate IDs, lifecycle states, and approval requirements against this contract.
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Design artifact and review scope
@@ -24,7 +26,7 @@ Identify design risks early and provide concrete, reviewable fixes.
 - Accessibility and localization constraints
 
 ## Outputs
-- `DREV-*` findings list with severity and owner
+- Findings list with project-defined IDs (example: `DREV-*` when no existing policy is available), severity, and owner
 - Approval decision with blockers and conditions
 - Follow-up action log with due dates
 
@@ -38,8 +40,12 @@ Identify design risks early and provide concrete, reviewable fixes.
 ## Quality Gates
 - Findings are evidence-based and reproducible.
 - Blockers are clearly separated from improvements.
-- Required approvers are assigned and traceable.
-- Contract validation passes for IDs and gates.
+- Project-required approvers are assigned and traceable.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Stop review when scope or artifact is ambiguous.

@@ -13,10 +13,12 @@ description: "Interaction design workflow for defining user flows, state transit
 ## Goal
 Define predictable and accessible interaction behavior across core flows.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
-- Assign flow IDs as `UX-FLW-*`.
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - User tasks and business-critical journeys
@@ -24,7 +26,7 @@ Define predictable and accessible interaction behavior across core flows.
 - Platform interaction constraints
 
 ## Outputs
-- Flow specifications with `UX-FLW-*` IDs
+- Flow specifications with project-defined IDs (example: `UX-FLW-*` when no existing policy is available)
 - State transition and feedback behavior map
 - Edge-case and failure-state definitions
 
@@ -40,6 +42,11 @@ Define predictable and accessible interaction behavior across core flows.
 - Failure states are defined and user-actionable.
 - Interaction behavior is consistent across similar patterns.
 - Accessibility gates pass for keyboard and focus behavior.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Stop when flow goals or state boundaries are ambiguous.

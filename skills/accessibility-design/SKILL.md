@@ -8,6 +8,12 @@ description: "Design accessibility requirements for product flows and components
 ## Overview
 Use this skill to define concrete accessibility behavior so implemented UI is usable by keyboard users, screen-reader users, and users with visual/cognitive constraints.
 
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
+
 ## Inputs To Gather
 - Critical user journeys and high-impact screens/components.
 - Current UX constraints and known accessibility defects.
@@ -35,6 +41,11 @@ Use this skill to define concrete accessibility behavior so implemented UI is us
 4. Define visual readability and feedback behavior for all states.
 5. Define assistive-technology behavior for dynamic updates and errors.
 6. Produce verification checklist and prioritized remediation plan.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Conditions
 - Stop when critical journeys are not covered by accessibility requirements.

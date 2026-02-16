@@ -13,10 +13,12 @@ description: "UX research synthesis workflow for translating qualitative and qua
 ## Goal
 Turn research evidence into high-confidence, actionable design direction.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
-- Track synthesis packages with project-defined IDs (for example `UX-RSR-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Research transcripts, notes, analytics, and observations
@@ -24,10 +26,10 @@ Turn research evidence into high-confidence, actionable design direction.
 - Segment definitions and sampling limitations
 
 ## Outputs
-- Synthesized findings package with project-defined ID (for example `UX-RSR-*`)
+- Synthesized findings package with project-defined ID (example: `UX-RSR-*` when no existing policy is available)
 - Prioritized design implications and risk notes
 - Confidence level and evidence traceability map
-- Privacy evidence package for research handling decisions
+- Privacy evidence package when personal data handling or policy requires it
 
 ## Workflow
 1. Normalize research inputs and remove duplicate signals.
@@ -40,10 +42,14 @@ Turn research evidence into high-confidence, actionable design direction.
 - Every implication links back to evidence.
 - Confidence level and sampling limits are explicit.
 - Contradictory signals are surfaced, not hidden.
-- Privacy Reviewer approval is always present.
-- Contract validation passes including privacy evidence requirements.
+- Policy-required approvers and privacy controls are explicitly recorded.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Stop when evidence traceability is missing.
-- Stop when Privacy Reviewer approval is missing.
+- Stop when policy-required approvers are missing.
 - Escalate when synthesis relies on non-representative samples.

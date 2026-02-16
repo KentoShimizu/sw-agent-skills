@@ -13,10 +13,12 @@ description: "Design system foundation workflow for defining reusable component 
 ## Goal
 Create a coherent and maintainable design system foundation.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
-- Track foundation elements with project-defined IDs (for example `DSN-SYS-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Existing UI inventory and inconsistency map
@@ -24,7 +26,7 @@ Create a coherent and maintainable design system foundation.
 - Engineering implementation constraints
 
 ## Outputs
-- Foundation map with project-defined IDs (for example `DSN-SYS-*`)
+- Foundation map with project-defined IDs (example: `DSN-SYS-*` when no existing policy is available)
 - Pattern ownership and lifecycle definitions
 - Component adoption roadmap
 
@@ -40,6 +42,11 @@ Create a coherent and maintainable design system foundation.
 - Ownership and lifecycle are explicit for each item.
 - Patterns are implementable without hidden dependencies.
 - Accessibility requirements are part of foundation definitions.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Stop when foundation boundaries overlap ambiguously.

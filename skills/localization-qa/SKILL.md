@@ -13,18 +13,20 @@ description: "Localization quality assurance workflow for validating language co
 ## Goal
 Ensure localized experiences are accurate, usable, and visually stable.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
-- Track localization QA artifacts with `DREV-*` IDs.
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Localized strings and glossary references
-- Target locales including `en-US`, `ja-JP`, and at least two EU locales
+- Target locales required by product scope or project policy
 - UI builds covering target locales
 
 ## Outputs
-- `DREV-*` locale-by-locale QA report
+- Locale-by-locale QA report with project-defined IDs (example: `LQA-*` when no existing policy is available)
 - Truncation, overflow, and semantic mismatch findings
 - Release recommendation with blocking issues
 
@@ -40,8 +42,12 @@ Ensure localized experiences are accurate, usable, and visually stable.
 - No blocking truncation or semantic errors remain.
 - Critical user flows pass in every required locale.
 - Defect ownership and retest status are explicit.
-- Contract validation passes for `DREV-*` artifact manifests.
-- When `checks.user_facing_change` is `true`, Privacy Reviewer approval and privacy evidence are present.
+- Policy-required approvers and privacy controls are explicitly recorded.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Stop release recommendation when required locale coverage is incomplete.

@@ -13,10 +13,13 @@ description: "Design principle definition workflow for establishing stable UX gu
 ## Goal
 Define clear principles that guide interaction, visual, and content decisions.
 
-## Shared Design Contract (Canonical)
-- Use `references/design-governance-contract.md` as the primary reference for recommended structure.
-- Validate principle IDs as project-defined ID (for example `DSN-PRN-*`) and keep append-only history.
-- Optional consistency check (only if your repository enforces manifest validation): `python3 scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
+- Use `references/design-governance-contract.md` only as an optional default policy when no existing project rules are available.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
+- Optional validator for governed mode only: `python3 scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Product strategy and user outcomes
@@ -24,7 +27,7 @@ Define clear principles that guide interaction, visual, and content decisions.
 - Accessibility and localization requirements
 
 ## Outputs
-- Principle catalog with project-defined IDs (for example `DSN-PRN-*`)
+- Principle catalog with project-defined IDs (example: `DSN-PRN-*` when no existing policy is available)
 - Principle rationale and anti-pattern examples
 - Review checklist aligned to principles
 
@@ -40,6 +43,11 @@ Define clear principles that guide interaction, visual, and content decisions.
 - Principle set has no unresolved contradiction.
 - Accessibility and localization constraints are represented.
 - Review checklist maps directly to principles.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Stop when principles are abstract slogans without test criteria.

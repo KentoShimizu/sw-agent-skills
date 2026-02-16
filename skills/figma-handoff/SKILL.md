@@ -13,10 +13,12 @@ description: "Design-to-engineering handoff workflow for packaging implementatio
 ## Goal
 Deliver unambiguous handoff artifacts that reduce implementation drift.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
-- Track handoff packages with project-defined IDs (for example `FIG-HND-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Finalized Figma frames, components, and variants
@@ -24,10 +26,10 @@ Deliver unambiguous handoff artifacts that reduce implementation drift.
 - Accessibility and localization constraints
 
 ## Outputs
-- project-defined ID (for example `FIG-HND-*`) handoff package
+- Handoff package with project-defined ID (example: `FIG-HND-*` when no existing policy is available)
 - Asset inventory and spec mapping
 - Acceptance checklist for engineering verification
-- Privacy evidence package for handoff artifacts
+- Privacy evidence package when policy requires it
 
 ## Workflow
 1. Confirm design artifacts are final and versioned.
@@ -40,10 +42,15 @@ Deliver unambiguous handoff artifacts that reduce implementation drift.
 - Handoff includes all required assets and spec references.
 - States and variants are fully documented.
 - Accessibility and localization checks are explicit.
-- Privacy Reviewer approval is always present.
+- Policy-required approvers and privacy controls are explicitly recorded.
 - Engineering owner confirms implementability.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Stop when source designs are not version-locked.
-- Stop when Privacy Reviewer approval is missing.
+- Stop when policy-required approvers are missing.
 - Escalate when critical specs or assets are missing.

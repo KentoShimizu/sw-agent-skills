@@ -13,10 +13,12 @@ description: End-user behavior research workflow for validating user needs and p
 ## Goal
 Produce evidence-backed user insights that improve requirement quality and priority.
 
-## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
-- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, evidence handling, privacy handling, and artifact lifecycle.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Research hypotheses and decision questions
@@ -24,22 +26,27 @@ Produce evidence-backed user insights that improve requirement quality and prior
 - Existing analytics and support signals
 
 ## Outputs
-- `UR-*` session records and synthesized insights
-- Evidence links (`EVD-*`) backing findings
+- Session records and synthesized insights with project-defined IDs (examples: `UR-*`, `EVD-*` when no existing policy is available)
+- Evidence links backing findings
 - Requirement implications and confidence levels
 
 ## Workflow
 1. Define decision-linked research questions and success criteria.
 2. Select method aligned to risk, timeline, and evidence gap.
 3. Recruit representative participants and document sampling risk.
-4. Capture structured observations and assign `UR-*` / `EVD-*` IDs.
-5. Synthesize insights and map implications to `REQ-*` candidates.
+4. Capture structured observations and assign project-defined IDs.
+5. Synthesize insights and map implications to project-defined requirement candidates (example: `REQ-*`).
 
 ## Quality Gates
 - Findings are traceable to auditable evidence IDs.
 - Sample limitations and confidence levels are explicit.
 - Sensitive data is protected in all shared artifacts.
 - Requirement implications are clearly linked and testable.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Reject conclusions from non-representative or underpowered samples.

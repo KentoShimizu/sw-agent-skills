@@ -1,6 +1,6 @@
 ---
 name: user-story-writing
-description: Implementation-slice authoring for prioritized requirements. Trigger when approved and prioritized `REQ-*` items must be decomposed into sprint-ready user stories with explicit user value, scope boundaries, and testability; do not use for requirement discovery.
+description: Implementation-slice authoring for prioritized requirements. Trigger when approved and prioritized requirement items (for example `REQ-*`) must be decomposed into sprint-ready user stories with explicit user value, scope boundaries, and testability; do not use for requirement discovery.
 ---
 
 # User Story Writing
@@ -13,25 +13,27 @@ description: Implementation-slice authoring for prioritized requirements. Trigge
 ## Goal
 Create sprint-ready stories with explicit user value and clear completion conditions.
 
-## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
-- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, evidence handling, privacy handling, and artifact lifecycle.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
-- Prioritized `REQ-*` backlog
-- Relevant `AC-*`, `NFR-*`, and dependency context
+- Prioritized requirement backlog (example IDs: `REQ-*` when no existing policy is available)
+- Relevant acceptance/non-functional/dependency context (examples: `AC-*`, `NFR-*`)
 - Team capacity and planning horizon
 
 ## Outputs
-- Story set linked to `REQ-*` IDs
+- Story set linked to project-defined requirement IDs
 - Story-level acceptance mapping and constraints
 - Blockers, assumptions, and dependency notes
 
 ## Workflow
 1. Derive small vertical slices from prioritized requirements.
 2. Write actor-need-value statement for each story.
-3. Link each story to one or more `REQ-*` and `AC-*` IDs.
+3. Link each story to one or more project-defined requirement and acceptance IDs.
 4. Add non-functional and compliance constraints explicitly.
 5. Split oversized stories until estimable in one cycle.
 
@@ -40,6 +42,11 @@ Create sprint-ready stories with explicit user value and clear completion condit
 - Story scope fits one delivery cycle.
 - Story completion criteria are testable.
 - Compliance-related stories are not optional when legally required.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Reject stories without requirement linkage.

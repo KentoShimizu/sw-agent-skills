@@ -13,10 +13,12 @@ description: "Visual design workflow for defining color, typography, spacing, an
 ## Goal
 Deliver coherent visual language that improves clarity and trust.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
-- Track visual specs with `VIS-SPEC-*` IDs.
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Project Rule Policy
+- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
+- If no existing rule is available, define a lightweight project default and mark it as provisional.
+- Treat example IDs in this skill as non-binding guidance.
+- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Brand direction and product context
@@ -24,7 +26,7 @@ Deliver coherent visual language that improves clarity and trust.
 - Accessibility contrast and readability constraints
 
 ## Outputs
-- Visual spec set with `VIS-SPEC-*` IDs
+- Visual spec set with project-defined IDs (example: `VIS-SPEC-*` when no existing policy is available)
 - Typography, color, spacing, and hierarchy rules
 - Component-level visual usage guidance
 
@@ -40,6 +42,11 @@ Deliver coherent visual language that improves clarity and trust.
 - Spec set is consistent and reusable.
 - Contrast and legibility pass required thresholds.
 - Visual decisions map to principle and token systems.
+
+## Engineering Judgment Application
+1. Generate at least two plausible options before recommending one.
+2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
+3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
 
 ## Failure Handling
 - Stop when visual rules rely on one-off overrides.
