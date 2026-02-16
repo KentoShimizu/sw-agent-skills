@@ -1,0 +1,59 @@
+{
+  "artifact_id": "API-CMP-20260215-001",
+  "state": "approved",
+  "approvers": [
+    "API Owner",
+    "Engineering Owner",
+    "Security Reviewer",
+    "Legal Reviewer"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "backward_compatibility_reviewed": true,
+    "transport_selection_documented": true,
+    "naming_convention_defined": true,
+    "authz_modeled": true,
+    "error_contract_defined": true,
+    "observability_fields_defined": true,
+    "runbook_updated": true,
+    "timeout_budget_defined": true,
+    "delivery_semantics_defined": true,
+    "backpressure_strategy_defined": false,
+    "connection_lifecycle_defined": false,
+    "consumer_idempotency_defined": false,
+    "no_fallback_logic": true,
+    "rate_limit_policy_defined": false,
+    "handles_sensitive_data": true,
+    "external_public_api": false,
+    "regulated_jurisdiction_impact": true
+  },
+  "decision_context": {
+    "api_audience": "both",
+    "interaction_mode": "sync",
+    "primary_transport": "rest",
+    "selection_rationale": "Compliance package covers both internal and external API surfaces that process sensitive operational data.",
+    "alternatives_considered": [
+      "graphql",
+      "grpc"
+    ],
+    "naming_convention_summary": "Sensitive-data fields and error codes follow namespace rules to support policy audits.",
+    "threshold_method_summary": "Compliance-related thresholds are derived from legal retention obligations and incident response objectives."
+  },
+  "threshold_policy": {
+    "latency_target_derivation": "Latency thresholds are set from service SLO and regulated user-impact windows.",
+    "availability_target_derivation": "Availability target aligns with contractual obligations and regulated downtime tolerances.",
+    "timeout_budget_derivation": "Timeout budgets account for audit logging and policy enforcement latency.",
+    "capacity_headroom_derivation": "Headroom is derived from compliance-reporting peaks and incident-driven reprocessing.",
+    "payload_limit_derivation": "Payload limits are derived from data-minimization policy and transfer control boundaries.",
+    "concurrency_limit_derivation": "Concurrency limits are set to protect policy-enforcement dependencies and audit stores.",
+    "retry_backoff_derivation": "Retry policy balances durability needs with legal constraints on duplicate side effects.",
+    "delivery_semantics_derivation": "Delivery semantics specify deterministic processing and auditable outcome recording."
+  },
+  "compliance_evidence": {
+    "lawful_basis_or_contract": "contractual necessity",
+    "data_categories": "user identifiers and order metadata",
+    "retention_policy": "90 days operational logs, then deletion",
+    "cross_border_transfer_control": "regional data routing and SCC controls",
+    "audit_log_location": "security-log-index/api-changes"
+  }
+}

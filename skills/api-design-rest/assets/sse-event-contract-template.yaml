@@ -1,0 +1,41 @@
+protocol: sse
+version: v1
+
+connection:
+  endpoint: https://api.example.com/events
+  auth:
+    method: bearer_token_or_signed_cookie
+  reconnect:
+    retry_hint_milliseconds: "<set>"
+    replay_window: "<set>"
+
+event_envelope:
+  required_fields:
+    - id
+    - event
+    - data
+  headers:
+    content_type: text/event-stream
+
+events:
+  - event: resource.updated
+    id_scope: resource_id
+    data_schema: "<reference>"
+  - event: system.notice
+    id_scope: global
+    data_schema: "<reference>"
+
+ordering_and_replay:
+  ordering_scope: "<global_or_partitioned>"
+  last_event_id_supported: "<true_or_false>"
+  replay_policy: "<set>"
+
+flow_control:
+  stream_rate_limit: "<set>"
+  client_disconnect_policy: "<set>"
+  server_backpressure_strategy: "<set>"
+
+error_contract:
+  http_status_mapping_defined: true
+  retryable_field_required: true
+  trace_id_required: true

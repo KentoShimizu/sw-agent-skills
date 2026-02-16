@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run architecture and design contract validators in one command."""
+"""Run contract validators in one command."""
 
 from __future__ import annotations
 
@@ -11,7 +11,9 @@ from pathlib import Path
 
 ARCH_VALIDATOR = Path("skills/architecture-principles/scripts/validate_architecture_contract.py")
 DESIGN_VALIDATOR = Path("skills/design-principles/scripts/validate_design_contract.py")
+API_VALIDATOR = Path("skills/api-design-rest/scripts/validate_api_contract.py")
 ARCH_SAMPLE_DIR = Path("skills/architecture-principles/references/samples")
+API_SAMPLE_DIR = Path("skills/api-design-rest/assets")
 
 
 @dataclass(frozen=True)
@@ -43,9 +45,20 @@ def parse_args() -> argparse.Namespace:
         help="Design manifest path. Repeatable.",
     )
     parser.add_argument(
+        "--api-manifest",
+        action="append",
+        default=[],
+        help="API manifest path. Repeatable.",
+    )
+    parser.add_argument(
         "--run-architecture-samples",
         action="store_true",
         help="Run architecture validator against reference sample manifests.",
+    )
+    parser.add_argument(
+        "--run-api-samples",
+        action="store_true",
+        help="Run API validator against reference sample manifests.",
     )
     return parser.parse_args()
 
@@ -59,14 +72,21 @@ def build_tasks(args: argparse.Namespace) -> list[ValidationTask]:
     for manifest in args.design_manifest:
         tasks.append(ValidationTask(validator=DESIGN_VALIDATOR, manifest=Path(manifest)))
 
+    for manifest in args.api_manifest:
+        tasks.append(ValidationTask(validator=API_VALIDATOR, manifest=Path(manifest)))
+
     if args.run_architecture_samples and ARCH_SAMPLE_DIR.exists():
         for sample in sorted(ARCH_SAMPLE_DIR.glob("*.json")):
             tasks.append(ValidationTask(validator=ARCH_VALIDATOR, manifest=sample))
 
+    if args.run_api_samples and API_SAMPLE_DIR.exists():
+        for sample in sorted(API_SAMPLE_DIR.glob("*.json")):
+            tasks.append(ValidationTask(validator=API_VALIDATOR, manifest=sample))
+
     if not tasks:
         raise SystemExit(
-            "no validation tasks provided; pass --architecture-manifest/--design-manifest "
-            "or use --run-architecture-samples"
+            "no validation tasks provided; pass --architecture-manifest/--design-manifest/--api-manifest "
+            "or use --run-architecture-samples/--run-api-samples"
         )
 
     return tasks

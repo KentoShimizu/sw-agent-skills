@@ -1,41 +1,60 @@
 ---
 name: api-design-graphql
-description: Specialized workflow for GraphQL schema boundaries, resolver behavior, and query safety. Use when defining external API contracts, compatibility rules, and request/response behavior; do not use for storage-internal schema design or CI/CD orchestration.
+description: GraphQL schema and resolver contract design for type boundaries, nullability, authz, and query-cost safety. Use when authoring or changing GraphQL SDL/resolvers; do not use for REST/OpenAPI endpoint design, API version lifecycle governance, or standalone error taxonomy design.
 ---
 
-# Api Design Graphql
+# API Design GraphQL
 
 ## Trigger Boundary
-- Use when service interface contracts or compatibility rules are being defined.
+- Use when GraphQL schema boundaries, resolver contracts, and query safety must be defined.
+- Do not use for REST-first endpoint design; use `api-design-rest`.
 - Do not use for storage internals; use `db-*`.
-- Do not use for CI release orchestration; use `ci-cd-pipeline-design`.
 
 ## Goal
-Deliver stable interfaces with predictable behavior and upgrade paths.
+Deliver GraphQL contracts that are safe to evolve and efficient at runtime.
+
+## Shared API Contract (Canonical)
+- Use `../api-design-rest/references/api-governance-contract.md` as the canonical contract.
+- Validate manifests with:
+  - `python3 ../api-design-rest/scripts/validate_api_contract.py --manifest <path/to/manifest.json>`
+- Use valid templates in `../api-design-rest/assets/`.
+- Use transport decision reference:
+  - `../api-design-rest/references/transport-selection-matrix.md`
+- Use threshold derivation reference:
+  - `../api-design-rest/references/threshold-derivation-framework.md`
+- Do not redefine API artifact ID formats, states, or approval gates.
+
+## Implementation Templates
+- GraphQL SDL template:
+  - `../api-design-rest/assets/graphql-schema-template.graphql`
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for GraphQL schema boundaries, resolver behavior, and query safety
-- Operational, compliance, and rollout constraints
+- Required queries/mutations and consumer usage patterns
+- Entity ownership and field-level authorization requirements
+- Performance budgets for depth, complexity, and resolver latency
 
 ## Outputs
-- GraphQL schema and resolver contract
-- Decision log for GraphQL schema boundaries, resolver behavior, and query safety
-- Verification checklist with measurable pass-fail criteria
+- Schema contract (types, inputs, mutations, deprecation tags)
+- Resolver behavior contract (authz, caching, batching, nullability semantics)
+- Query safety controls (complexity/depth limits and abuse controls)
 
 ## Workflow
-1. Clarify outcomes and hard constraints for GraphQL schema boundaries, resolver behavior, and query safety.
-2. Produce options and select an approach for GraphQL schema boundaries, resolver behavior, and query safety.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using schema validation and resolver performance checks.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define schema boundaries aligned with domain ownership, not backend table layout.
+2. Model inputs and payloads for forward-compatible evolution and explicit nullability.
+3. Set resolver authorization rules and avoid N+1 with batching strategy.
+4. Decide whether GraphQL is the primary transport or a gateway facade, and document alternatives.
+5. Define query complexity/depth limits and abuse safeguards for public access paths.
+6. Define error extension fields and trace correlation behavior.
+7. Derive threshold methods for query latency, complexity limits, and resolver concurrency.
+8. Validate compatibility, operational readiness, and canonical API contract compliance.
 
 ## Quality Gates
-- Scope and assumptions for GraphQL schema boundaries, resolver behavior, and query safety are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Schema evolution rules are explicit, including deprecations and migration notes.
+- Resolver behavior is deterministic, authorized, and free of unbounded fan-out paths.
+- Query safety limits are defined and enforced.
+- Observability and error semantics are consistent with API governance contract.
 
 ## Failure Handling
-- Stop when schema changes break client expectations or resolver safeguards.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when schema changes break existing client contracts without approved version plan.
+- Stop when resolver performance or query safety controls are undefined.
+- Escalate when required security/governance approvers are missing.

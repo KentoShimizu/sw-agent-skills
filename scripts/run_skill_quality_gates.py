@@ -11,10 +11,12 @@ from pathlib import Path
 
 ARCH_VALIDATOR = Path("skills/architecture-principles/scripts/validate_architecture_contract.py")
 DESIGN_VALIDATOR = Path("skills/design-principles/scripts/validate_design_contract.py")
+API_VALIDATOR = Path("skills/api-design-rest/scripts/validate_api_contract.py")
 GIT_VALIDATOR = Path("skills/git-branch-strategy/scripts/validate_git_contract.py")
 REQUIREMENTS_VALIDATOR = Path("skills/requirements-definition/scripts/validate_requirements_contract.py")
 
 ARCH_SAMPLE_DIR = Path("skills/architecture-principles/references/samples")
+API_SAMPLE_DIR = Path("skills/api-design-rest/assets")
 REQUIREMENTS_SAMPLE_DIR = Path("skills/requirements-definition/references/samples")
 
 TRIGGER_MATRIX_VALIDATOR = Path("scripts/validate_trigger_matrix_sync.py")
@@ -53,6 +55,12 @@ def parse_args() -> argparse.Namespace:
         help="Design manifest path. Repeatable.",
     )
     parser.add_argument(
+        "--api-manifest",
+        action="append",
+        default=[],
+        help="API manifest path. Repeatable.",
+    )
+    parser.add_argument(
         "--git-manifest",
         action="append",
         default=[],
@@ -68,6 +76,11 @@ def parse_args() -> argparse.Namespace:
         "--run-architecture-samples",
         action="store_true",
         help="Run architecture validator against reference sample manifests.",
+    )
+    parser.add_argument(
+        "--run-api-samples",
+        action="store_true",
+        help="Run API validator against reference sample manifests.",
     )
     parser.add_argument(
         "--run-requirements-samples",
@@ -169,6 +182,12 @@ def build_tasks(args: argparse.Namespace) -> list[ValidationTask]:
     )
     add_manifest_tasks(
         tasks,
+        validator=API_VALIDATOR,
+        manifests=args.api_manifest,
+        prefix="api_manifest",
+    )
+    add_manifest_tasks(
+        tasks,
         validator=GIT_VALIDATOR,
         manifests=args.git_manifest,
         prefix="git_manifest",
@@ -186,6 +205,13 @@ def build_tasks(args: argparse.Namespace) -> list[ValidationTask]:
         validator=ARCH_VALIDATOR,
         sample_dir=ARCH_SAMPLE_DIR,
         prefix="architecture_sample",
+    )
+    add_sample_tasks(
+        tasks,
+        enabled=args.run_api_samples,
+        validator=API_VALIDATOR,
+        sample_dir=API_SAMPLE_DIR,
+        prefix="api_sample",
     )
     add_sample_tasks(
         tasks,
