@@ -1,41 +1,51 @@
 ---
 name: technical-roadmapping
-description: Specialized workflow for sequencing of technical investments and dependency-aware milestones. Trigger when teams need a roadmap for technical initiatives with dependency ordering, milestone planning, and risk-aware sequencing across releases or quarters; do not use for low-level implementation design details.
+description: "Technical roadmap workflow for sequencing initiatives, dependencies, and risk-aware milestones. Use when teams must decide what technical work to do first across multiple increments; do not use for low-level code implementation details."
 ---
 
 # Technical Roadmapping
 
-## Trigger Boundary
-- Use when planning artifacts must convert uncertain inputs into executable milestones.
-- Do not use for incident response execution; use `runbook-authoring` or `incident-postmortem`.
-- Do not use for code-level quality review.
+## Overview
+Use this skill to produce realistic technical roadmaps that make sequencing, risk, and ownership explicit.
 
-## Goal
-Create realistic plans with explicit assumptions, risks, and sequencing.
+## Use This Skill When
+- Multiple initiatives compete for the same engineering capacity.
+- Dependency ordering and milestone timing determine delivery feasibility.
+- Teams need a defensible plan across quarters or release trains.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for sequencing of technical investments and dependency-aware milestones
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Milestone template:
+  - `assets/roadmap-milestone-template.md`
+- Dependency and risk register:
+  - `assets/dependency-risk-register-template.md`
 
-## Outputs
-- Technical roadmap with dependency map
-- Decision log for sequencing of technical investments and dependency-aware milestones
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Initiative goals, outcome metrics, and non-negotiable deadlines.
+- Dependency graph (technical, organizational, vendor, compliance).
+- Capacity assumptions, staffing constraints, and environment readiness.
+- Risk tolerance and escalation policy.
+
+## Deliverables
+- Sequenced roadmap with milestones, owners, and decision checkpoints.
+- Dependency map and critical-path analysis.
+- Risk register with mitigation actions and trigger-based contingency plans.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for sequencing of technical investments and dependency-aware milestones.
-2. Produce options and select an approach for sequencing of technical investments and dependency-aware milestones.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using milestone dependency and risk review.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define desired outcomes and constraints for each initiative.
+2. Map dependencies and identify the critical path.
+3. Evaluate at least two sequencing options with trade-offs (risk, value timing, coordination cost).
+4. Select a roadmap option and document rationale and rejected alternatives.
+5. Assign milestone entry/exit criteria and measurable progress signals.
+6. Add contingency actions for high-impact dependency or staffing failures.
+7. Publish roadmap with review cadence and explicit replan triggers.
 
-## Quality Gates
-- Scope and assumptions for sequencing of technical investments and dependency-aware milestones are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Sequence is justified by dependencies, not only stakeholder preference.
+- Milestones have objective entry/exit criteria.
+- Risks are tied to owners, deadlines, and mitigation plans.
+- The roadmap can be revised predictably when assumptions change.
 
-## Failure Handling
-- Stop when roadmap milestones ignore critical technical dependencies.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when critical dependencies are unknown or unowned.
+- Stop when milestones lack measurable completion criteria.
+- Escalate when required outcomes exceed feasible capacity under current constraints.

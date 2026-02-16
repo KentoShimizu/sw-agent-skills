@@ -1,46 +1,47 @@
 ---
 name: use-case-modeling
-description: Actor-flow modeling for behavior clarification of defined requirements. Trigger when approved requirements need explicit main, alternate, and exception interaction flows across actors/system boundaries to remove behavior ambiguity; do not use for backlog ranking or acceptance test authoring.
+description: "Use case modeling workflow for clarifying actor interactions, boundary behavior, and exception handling of approved requirements. Use when requirement behavior remains ambiguous and teams need explicit main/alternate/exception flows; do not use for backlog prioritization."
 ---
 
 # Use Case Modeling
 
-## Trigger Boundary
-- Use when actor interactions are unclear after requirements are defined.
-- Do not use for priority decisions; use `requirement-prioritization`.
-- Do not use for executable pass/fail checks; use `acceptance-criteria-design`.
+## Overview
+Use this skill to make behavior explicit across actors and system boundaries before coding.
 
-## Goal
-Reveal requirement gaps by modeling complete interaction flows.
+## Use This Skill When
+- Approved requirements still leave interaction behavior unclear.
+- Teams need aligned understanding of success, alternate, and failure flows.
+- Boundary responsibilities across systems or roles are disputed.
 
-## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
-- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- Use case specification template:
+  - `assets/use-case-template.md`
 
-## Inputs
-- Approved `REQ-*`
-- Actor roles, permissions, and boundary definitions
-- Business rules and integration constraints
+## Inputs To Gather
+- Approved requirement set and known constraints.
+- Actor definitions, permissions, and system boundaries.
+- Business rules, integration dependencies, and error-handling expectations.
 
-## Outputs
-- Use cases with preconditions and postconditions
-- Main, alternate, and exception flows
-- Gap list linked back to `REQ-*` IDs
+## Deliverables
+- Use case set with preconditions, triggers, outcomes, and postconditions.
+- Main, alternate, and exception flow definitions.
+- Requirement-gap list mapped to unresolved use-case steps.
 
 ## Workflow
-1. Define actors and goals with permission boundaries.
-2. Draft main success flow from trigger to completion.
-3. Add alternate flows for realistic path variation.
-4. Add exception flows for failure and recovery.
-5. Link discovered gaps to impacted `REQ-*` IDs.
+1. Identify actors and goals with clear boundary ownership.
+2. Define main success flow from trigger to postcondition.
+3. Add alternate flows for expected variation (authorization differences, optional paths, retries).
+4. Add exception flows for failure and recovery behavior.
+5. Validate data/state transitions and side effects at each step.
+6. Trace uncovered ambiguity back to requirement items for refinement.
 
-## Quality Gates
-- Critical actor goals are covered by at least one use case.
-- Alternate and exception paths are explicit.
-- Data handling constraints are visible in relevant flows.
-- Gaps are traceable and assigned owners.
+## Quality Standard
+- Every critical actor goal has an explicit end-to-end flow.
+- Exception behavior is concrete, not implied by generic error text.
+- Boundary handoffs specify who validates, who mutates, and who observes.
+- Gaps are actionable and linked to requirement refinement tasks.
 
-## Failure Handling
-- Rework model when system boundary is ambiguous.
-- Stop when policy constraints for exception handling are undefined.
+## Failure Conditions
+- Stop when system boundaries are not defined.
+- Stop when exception handling cannot be mapped to responsible components.
+- Escalate when unresolved use-case gaps block implementation planning.

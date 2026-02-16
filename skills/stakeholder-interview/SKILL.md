@@ -1,46 +1,49 @@
 ---
 name: stakeholder-interview
-description: Internal decision-maker interview workflow for constraints and policy capture. Trigger when requirement progress is blocked by missing decisions from business, engineering, legal, or operations stakeholders and structured interviews are needed to extract constraints; do not use for end-user behavior research.
+description: "Internal stakeholder interview workflow for capturing constraints, decision authority, and policy requirements. Use when delivery is blocked by unresolved business, engineering, legal, security, or operations decisions; do not use for end-user behavior research."
 ---
 
 # Stakeholder Interview
 
-## Trigger Boundary
-- Use when internal decision authority and policy constraints must be clarified.
-- Do not use for end-user needs validation; use `user-research`.
-- Do not use to finalize requirement baseline; hand off to `requirements-definition`.
+## Overview
+Use this skill to extract authoritative decisions from internal stakeholders and convert them into traceable engineering constraints.
 
-## Goal
-Capture authoritative internal decisions and constraints with auditable traceability.
+## Use This Skill When
+- Requirements or architecture choices are blocked by missing policy or ownership decisions.
+- Teams disagree about constraints and need documented decision authority.
+- Cross-functional alignment is required before implementation commitments.
 
-## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
-- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- Interview note template:
+  - `assets/stakeholder-interview-template.md`
+- Decision conflict log:
+  - `assets/decision-conflict-log-template.md`
 
-## Inputs
-- Stakeholder map with authority boundaries
-- Interview objectives and decision-focused questions
-- Existing requirement hypotheses
+## Inputs To Gather
+- Decision questions and why each question is blocking progress.
+- Stakeholder map with authority boundaries and fallback approvers.
+- Existing assumptions, unresolved conflicts, and time constraints.
 
-## Outputs
-- `INT-*` interview records with source and authority context
-- Confirmed constraints and explicit decision statements
-- Conflict list with owner and follow-up date
+## Deliverables
+- Interview records with source, date, authority level, and explicit decision statement.
+- Constraint catalog (policy, compliance, operational, budget, timeline).
+- Conflict log with owner, escalation route, and required resolution date.
 
 ## Workflow
-1. Prioritize interviews by risk and decision criticality.
-2. Run structured interviews with role-specific question sets.
-3. Record outcomes under `INT-*` IDs with authority tags.
-4. Classify statements as fact, policy, assumption, or preference.
-5. Send confirmation summary and resolve contradictions.
+1. Define interview goals as decision questions, not open brainstorming topics.
+2. Prioritize stakeholders by decision authority and delivery criticality.
+3. Conduct structured interviews and separate facts from preferences.
+4. Confirm decisions in writing with explicit scope and expiry assumptions.
+5. Record conflicts and escalate unresolved items with options and impacts.
+6. Publish an auditable summary that downstream requirement skills can consume.
 
-## Quality Gates
-- Each claim has source, authority level, and timestamp.
-- Contradictions are escalated with explicit options.
-- Personal data is masked in shared notes.
-- Follow-up actions have owner and due date.
+## Quality Standard
+- Every key claim has a named source and explicit authority level.
+- Ambiguous statements are converted into verifiable constraints.
+- Conflicts are visible with an assigned owner and deadline.
+- Outputs are specific enough to drive requirement and implementation decisions.
 
-## Failure Handling
-- Re-interview when authority is insufficient for decisions.
-- Stop synthesis when lawful basis for stored data is missing.
+## Failure Conditions
+- Stop when no stakeholder with decision authority is available.
+- Stop when interview outputs mix assumptions and approved policy.
+- Escalate when blocking conflicts remain unresolved past agreed deadlines.

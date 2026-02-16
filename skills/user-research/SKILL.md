@@ -1,53 +1,50 @@
 ---
 name: user-research
-description: End-user behavior research workflow for validating user needs and pain points. Trigger when product decisions need evidence from representative end users and assumptions must be validated through interviews, tests, or usage evidence; do not use for internal stakeholder policy or governance decisions.
+description: "End-user research workflow for validating behavior, needs, and pain points with representative evidence. Use when product decisions need direct user evidence through interviews, usability studies, or observed usage; do not use for internal stakeholder governance decisions."
 ---
 
 # User Research
 
-## Trigger Boundary
-- Use when user behavior evidence is required to validate product assumptions.
-- Do not use for internal policy constraints; use `stakeholder-interview`.
-- Do not use to finalize requirement wording; hand off to `requirements-definition`.
+## Overview
+Use this skill to gather credible evidence from representative users and reduce product decision risk.
 
-## Goal
-Produce evidence-backed user insights that improve requirement quality and priority.
+## Use This Skill When
+- Product assumptions require validation before high-cost implementation.
+- Teams need evidence for unmet needs, friction points, or mental-model mismatch.
+- Competing solution options need user-behavior evidence for prioritization.
 
-## Project Rule Policy
-- Follow existing repository or organization rules first for IDs, approvers, evidence handling, privacy handling, and artifact lifecycle.
-- If no existing rule is available, define a lightweight project default and mark it as provisional.
-- Treat example IDs in this skill as non-binding guidance.
-- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+## Templates And Assets
+- Research plan template:
+  - `assets/user-research-plan-template.md`
+- Research evidence log:
+  - `assets/user-research-evidence-log-template.md`
 
-## Inputs
-- Research hypotheses and decision questions
-- Target segments and recruitment criteria
-- Existing analytics and support signals
+## Inputs To Gather
+- Decision questions and hypotheses to test.
+- Target segments, inclusion/exclusion criteria, and sample constraints.
+- Existing analytics, support data, and prior research artifacts.
+- Privacy and consent requirements for research operations.
 
-## Outputs
-- Session records and synthesized insights with project-defined IDs (examples: `UR-*`, `EVD-*` when no existing policy is available)
-- Evidence links backing findings
-- Requirement implications and confidence levels
+## Deliverables
+- Research plan with method choice and participant strategy.
+- Evidence-backed findings with confidence and sampling limitations.
+- Decision implications and recommended next actions.
 
 ## Workflow
-1. Define decision-linked research questions and success criteria.
-2. Select method aligned to risk, timeline, and evidence gap.
-3. Recruit representative participants and document sampling risk.
-4. Capture structured observations and assign project-defined IDs.
-5. Synthesize insights and map implications to project-defined requirement candidates (example: `REQ-*`).
+1. Define decision-linked hypotheses and success/failure criteria.
+2. Choose method by evidence gap, timeline, and risk tolerance.
+3. Recruit representative participants and document sampling risks.
+4. Run sessions with consistent prompts and structured note capture.
+5. Distinguish observed behavior from interpretation.
+6. Synthesize findings, confidence, and implications for product decisions.
 
-6. Compare at least two feasible approaches and explain why one is preferred.
-7. Record key assumptions, unknowns, confidence, and rollback considerations.
+## Quality Standard
+- Findings are traceable to raw evidence.
+- Sampling limitations and confidence are explicit.
+- Sensitive information handling follows privacy requirements.
+- Outputs clearly state what should change and why.
 
-## Quality Gates
-- Findings are traceable to auditable evidence IDs.
-- Sample limitations and confidence levels are explicit.
-- Sensitive data is protected in all shared artifacts.
-- Requirement implications are clearly linked and testable.
-
-- Decision rationale and trade-offs are explicit.
-- Assumptions, unknowns, and confidence are explicitly documented.
-
-## Failure Handling
-- Reject conclusions from non-representative or underpowered samples.
-- Stop publication when consent, retention, or access controls are undefined.
+## Failure Conditions
+- Stop when participant sample is clearly non-representative for the decision.
+- Stop when consent or data-retention requirements are not met.
+- Escalate when findings are contradictory and decision cannot proceed safely.

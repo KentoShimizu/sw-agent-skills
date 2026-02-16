@@ -1,53 +1,48 @@
 ---
 name: visual-design
-description: "Visual design workflow for defining color, typography, spacing, and compositional language aligned with product and brand goals. Trigger when an experience needs concrete visual direction and teams must decide color/typography/layout language and brand expression before implementation; do not use for backend data-model or deployment pipeline decisions."
+description: "Visual design workflow for defining coherent color, typography, spacing, and composition systems. Use when teams need implementation-ready visual direction for product surfaces; do not use for backend architecture, data modeling, or deployment policy."
 ---
 
 # Visual Design
 
-## Trigger Boundary
-- Use when visual hierarchy, consistency, or brand alignment is unclear.
-- Do not use for interaction flow state logic; use `interaction-design`.
-- Do not use for accessibility audit execution only; use `accessibility-design`.
+## Overview
+Use this skill to create visual systems that are consistent, accessible, and implementation-ready.
 
-## Goal
-Deliver coherent visual language that improves clarity and trust.
+## Use This Skill When
+- Product surfaces need a coherent visual language or redesign.
+- Teams must align brand expression with usability and accessibility constraints.
+- Implementation teams need explicit visual rules rather than isolated mockups.
 
-## Project Rule Policy
-- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
-- If no existing rule is available, define a lightweight project default and mark it as provisional.
-- Treat example IDs in this skill as non-binding guidance.
-- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+## Templates And Assets
+- Visual spec template:
+  - `assets/visual-spec-template.md`
 
-## Inputs
-- Brand direction and product context
-- Existing UI artifacts and inconsistency reports
-- Accessibility contrast and readability constraints
+## Inputs To Gather
+- Brand and product positioning goals.
+- Existing UI inconsistencies and readability issues.
+- Accessibility requirements (contrast, legibility, scaling).
+- Platform constraints (web/mobile/native, theming model).
 
-## Outputs
-- Visual spec set with project-defined IDs (example: `VIS-SPEC-*` when no existing policy is available)
-- Typography, color, spacing, and hierarchy rules
-- Component-level visual usage guidance
+## Deliverables
+- Visual specification covering color roles, typography, spacing, and hierarchy.
+- Component-level visual usage guidelines and anti-pattern notes.
+- Accessibility validation notes for key visual decisions.
 
 ## Workflow
-1. Define visual hierarchy objectives by task criticality.
-2. Build typography and spacing scales.
-3. Define color role system and usage constraints.
-4. Apply rules to representative screens.
-5. Validate readability and contrast compliance.
+1. Define hierarchy goals by task criticality and information density.
+2. Build typography and spacing scales with explicit rationale.
+3. Define semantic color roles and permitted usage boundaries.
+4. Apply rules to representative screens and states.
+5. Validate readability/contrast and adjust conflicting decisions.
+6. Deliver implementation-ready specs and examples.
 
-6. Compare at least two feasible approaches and explain why one is preferred.
-7. Record key assumptions, unknowns, confidence, and rollback considerations.
+## Quality Standard
+- Visual system supports content hierarchy and task focus.
+- Rules are reusable across pages and components.
+- Accessibility checks are integrated into visual decisions.
+- Spec quality is high enough to reduce interpretation drift in implementation.
 
-## Quality Gates
-- Visual hierarchy supports task prioritization.
-- Spec set is consistent and reusable.
-- Contrast and legibility pass required thresholds.
-- Visual decisions map to principle and token systems.
-
-- Decision rationale and trade-offs are explicit.
-- Assumptions, unknowns, and confidence are explicitly documented.
-
-## Failure Handling
-- Stop when visual rules rely on one-off overrides.
-- Escalate when contrast or readability fails baseline gates.
+## Failure Conditions
+- Stop when specs rely on one-off exceptions as default behavior.
+- Stop when contrast or legibility fails baseline requirements.
+- Escalate when brand constraints conflict with accessibility requirements.

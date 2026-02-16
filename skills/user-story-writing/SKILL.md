@@ -1,53 +1,49 @@
 ---
 name: user-story-writing
-description: Implementation-slice authoring for prioritized requirements. Trigger when approved and prioritized requirement items (for example `REQ-*`) must be decomposed into sprint-ready user stories with explicit user value, scope boundaries, and testability; do not use for requirement discovery.
+description: "User story authoring workflow for turning prioritized requirements into implementable, testable delivery slices. Use when approved requirement work must be decomposed for sprint execution; do not use for initial requirement discovery or release-level prioritization."
 ---
 
 # User Story Writing
 
-## Trigger Boundary
-- Use when requirements are prioritized and delivery slicing is required.
-- Do not use to define canonical requirements; use `requirements-definition`.
-- Do not use to assign release ranking; use `requirement-prioritization`.
+## Overview
+Use this skill to convert prioritized requirements into stories that are small, value-oriented, and verifiable.
 
-## Goal
-Create sprint-ready stories with explicit user value and clear completion conditions.
+## Use This Skill When
+- Requirements are approved and ranked, but execution slices are not defined.
+- Teams need sprint-ready stories with explicit acceptance boundaries.
+- Scope must be split to reduce risk and improve delivery predictability.
 
-## Project Rule Policy
-- Follow existing repository or organization rules first for IDs, approvers, evidence handling, privacy handling, and artifact lifecycle.
-- If no existing rule is available, define a lightweight project default and mark it as provisional.
-- Treat example IDs in this skill as non-binding guidance.
-- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+## Templates And Assets
+- User story template:
+  - `assets/user-story-template.md`
+- Story slicing checklist:
+  - `assets/story-splitting-checklist.md`
 
-## Inputs
-- Prioritized requirement backlog (example IDs: `REQ-*` when no existing policy is available)
-- Relevant acceptance/non-functional/dependency context (examples: `AC-*`, `NFR-*`)
-- Team capacity and planning horizon
+## Inputs To Gather
+- Prioritized requirement items and acceptance context.
+- Technical dependencies, compliance constraints, and non-functional expectations.
+- Team delivery cadence and capacity boundaries.
 
-## Outputs
-- Story set linked to project-defined requirement IDs
-- Story-level acceptance mapping and constraints
-- Blockers, assumptions, and dependency notes
+## Deliverables
+- Story set with actor/need/value statements and scope boundaries.
+- Story-level acceptance mapping and explicit out-of-scope notes.
+- Dependency and assumption log for planning and risk tracking.
 
 ## Workflow
-1. Derive small vertical slices from prioritized requirements.
-2. Write actor-need-value statement for each story.
-3. Link each story to one or more project-defined requirement and acceptance IDs.
-4. Add non-functional and compliance constraints explicitly.
-5. Split oversized stories until estimable in one cycle.
+1. Select the next highest-priority requirement and identify user-visible value.
+2. Slice work vertically so each story produces testable user or operator value.
+3. Write story statements and add concrete acceptance evidence expectations.
+4. Mark non-functional, compliance, and operational constraints explicitly.
+5. Split oversized stories until each can finish in one planning cycle.
+6. Validate dependencies and sequencing assumptions with responsible owners.
 
-6. Compare at least two feasible approaches and explain why one is preferred.
-7. Record key assumptions, unknowns, confidence, and rollback considerations.
+## Quality Standard
+- Each story has clear value, scope boundary, and acceptance evidence.
+- Stories avoid hidden technical coupling that blocks independent completion.
+- Compliance or safety work is represented as first-class deliverables.
+- Assumptions and risks are visible before sprint commitment.
 
-## Quality Gates
-- Every story has clear value and linked requirement IDs.
-- Story scope fits one delivery cycle.
-- Story completion criteria are testable.
-- Compliance-related stories are not optional when legally required.
-
-- Decision rationale and trade-offs are explicit.
-- Assumptions, unknowns, and confidence are explicitly documented.
-
-## Failure Handling
-- Reject stories without requirement linkage.
-- Stop planning when critical dependencies are unresolved.
+## Failure Conditions
+- Stop when stories cannot be traced to approved requirements.
+- Stop when acceptance evidence is undefined or non-testable.
+- Escalate when critical dependencies make sprint sizing unreliable.
