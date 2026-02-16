@@ -13,6 +13,10 @@ Use this skill to build authorization systems that enforce least privilege acros
 - Resource-scoped access control must be consistent across services.
 - Privileged workflows require explicit separation-of-duty controls.
 
+## Templates And Assets
+- Authorization policy matrix:
+  - `assets/authorization-policy-matrix-template.md`
+
 ## Inputs To Gather
 - Actor categories, resources, and sensitive actions.
 - Data classification and tenant or domain boundaries.
@@ -26,7 +30,7 @@ Use this skill to build authorization systems that enforce least privilege acros
 - Verification plan for privilege escalation and cross-tenant isolation tests.
 
 ## Workflow
-1. Enumerate subject-action-resource tuples for critical operations.
+1. Enumerate subject-action-resource tuples and fill `assets/authorization-policy-matrix-template.md`.
 2. Select model based on change frequency, policy complexity, and auditability requirements.
 3. Define canonical policy evaluation order and conflict resolution rules.
 4. Ensure object-level authorization is checked server-side for every mutable/read-sensitive path.

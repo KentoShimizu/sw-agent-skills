@@ -13,6 +13,10 @@ Use this skill to make security risks explicit early, prioritize mitigations, an
 - Significant feature changes alter attacker opportunity or impact.
 - Security requirements need prioritization before implementation commitments.
 
+## Templates And Assets
+- Threat model template:
+  - `assets/threat-model-template.md`
+
 ## Inputs To Gather
 - System context, components, and data flow diagrams.
 - Asset classification and business impact.
@@ -25,7 +29,7 @@ Use this skill to make security risks explicit early, prioritize mitigations, an
 - Validation plan mapping top threats to test and monitoring evidence.
 
 ## Workflow
-1. Define model scope and highest-value assets.
+1. Define model scope and highest-value assets in `assets/threat-model-template.md`.
 2. Identify trust boundaries and all ingress/egress paths.
 3. Enumerate attacker goals and feasible attack paths for each boundary.
 4. Assess risk using impact and exploitability, then rank mitigation candidates.

@@ -13,6 +13,10 @@ Use this skill to design and review authentication flows that resist account tak
 - Session management (cookie/token TTL, refresh policy, revocation) needs to be defined.
 - Risk-based controls (MFA, step-up auth, suspicious login handling) are required.
 
+## Templates And Assets
+- Authentication assurance matrix:
+  - `assets/auth-assurance-matrix-template.md`
+
 ## Inputs To Gather
 - Identity sources and trust level requirements (internal users, external users, federated identities).
 - Threat assumptions (credential stuffing, phishing, token theft, session hijacking).
@@ -26,7 +30,7 @@ Use this skill to design and review authentication flows that resist account tak
 - Residual risk list with owners and verification checkpoints.
 
 ## Workflow
-1. Define assurance targets by action sensitivity (for example: view, edit, payout, admin action).
+1. Define assurance targets by action sensitivity using `assets/auth-assurance-matrix-template.md`.
 2. Select factor strategy (password, passkey, OTP, federated SSO) using attacker capability and usability constraints.
 3. Design session/token lifecycle with explicit expiry, refresh, revocation, and device binding rules.
 4. Add anti-automation and abuse controls for login and recovery endpoints.

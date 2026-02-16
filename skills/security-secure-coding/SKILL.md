@@ -13,6 +13,10 @@ Use this skill to prevent introducing exploitable code patterns and to enforce e
 - Sensitive data handling or trust-boundary crossing logic changes.
 - High-risk dependency or framework behavior needs secure usage decisions.
 
+## Templates And Assets
+- Secure coding review checklist:
+  - `assets/secure-coding-review-checklist.md`
+
 ## Inputs To Gather
 - Trust boundaries and untrusted input entry points.
 - Sensitive data flows and storage/transmission requirements.
@@ -27,12 +31,13 @@ Use this skill to prevent introducing exploitable code patterns and to enforce e
 
 ## Workflow
 1. Identify attack surfaces for the change (input parsing, file/network access, auth context, templating).
-2. Apply allowlist validation and context-appropriate encoding/sanitization at boundaries.
-3. Remove or harden dangerous patterns (shell concatenation, unsafe deserialization, path traversal gaps, SSRF primitives).
-4. Enforce explicit authorization checks in server-side handlers for sensitive operations.
-5. Protect secrets and PII in logs, errors, and telemetry outputs.
-6. Add or update negative tests for malicious payload classes.
-7. Verify dependencies and transitive packages for known critical vulnerabilities.
+2. Run checklist from `assets/secure-coding-review-checklist.md`.
+3. Apply allowlist validation and context-appropriate encoding/sanitization at boundaries.
+4. Remove or harden dangerous patterns (shell concatenation, unsafe deserialization, path traversal gaps, SSRF primitives).
+5. Enforce explicit authorization checks in server-side handlers for sensitive operations.
+6. Protect secrets and PII in logs, errors, and telemetry outputs.
+7. Add or update negative tests for malicious payload classes.
+8. Verify dependencies and transitive packages for known critical vulnerabilities.
 
 ## Quality Standard
 - Security-relevant assumptions are explicit in code and tests.

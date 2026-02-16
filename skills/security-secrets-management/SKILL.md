@@ -13,6 +13,10 @@ Use this skill to prevent secret exposure and ensure secrets remain manageable t
 - Secret storage and runtime distribution mechanisms are being designed.
 - Secret exposure response and revocation capability need verification.
 
+## Templates And Assets
+- Secrets inventory template:
+  - `assets/secrets-inventory-template.csv`
+
 ## Inputs To Gather
 - Secret inventory by owner, purpose, and environment.
 - Storage and access architecture (vault/KMS/secret manager, runtime injection path).
@@ -26,7 +30,7 @@ Use this skill to prevent secret exposure and ensure secrets remain manageable t
 - Detection and response playbook for secret leakage events.
 
 ## Workflow
-1. Build/refresh secret inventory with ownership and classification.
+1. Build/refresh secret inventory with `assets/secrets-inventory-template.csv`.
 2. Enforce non-hardcoded secret policy across source, CI, build artifacts, and logs.
 3. Choose distribution model (pull, sidecar, env injection, runtime fetch) based on blast radius and operability.
 4. Define rotation strategy by secret type, including coordinated client update order.
