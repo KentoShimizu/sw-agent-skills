@@ -1,41 +1,51 @@
 ---
 name: code-review-general
-description: Specialized workflow for correctness, maintainability, and change risk in code reviews. Trigger during review when a change needs structured findings on behavioral correctness, regression risk, and maintainability impact, from broad review requests to line-level implementation checks; do not use for domain-specific security-only or performance-only review tracks.
+description: "Run full-scope code review for correctness, maintainability, and regression risk when no single specialty dominates. Use for broad merge-readiness reviews with explicit findings and evidence; if security or performance risk is primary, prioritize `code-review-security` or `code-review-performance` first."
 ---
 
 # Code Review General
 
-## Trigger Boundary
-- Use when code changes need merge-readiness evaluation with explicit findings.
-- Do not use for architecture option selection; use `architecture-tradeoff-analysis`.
-- Do not use for writing implementation code directly; use relevant domain skills.
+## Overview
+Use this skill for structured merge-readiness review across correctness, readability, maintainability, and change risk.
 
-## Goal
-Find high-risk defects early and unblock high-confidence merges.
+## Inputs To Gather
+- Diff scope, affected modules, and runtime impact.
+- Change intent and acceptance criteria.
+- Related incidents/bugs and known fragile areas.
+- Existing test coverage and missing verification.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for correctness, maintainability, and change risk in code reviews
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Prioritized findings list (severity, rationale, evidence).
+- Open questions and risk assumptions.
+- Minimal change summary and test/verification gaps.
 
-## Outputs
-- Review findings log with severity and rationale
-- Decision log for correctness, maintainability, and change risk in code reviews
-- Verification checklist with measurable pass-fail criteria
+## Finding Format (Required)
+Use this structure for each finding:
+- `severity`: blocker/high/medium/low
+- `location`: file + line
+- `issue`: concrete defect/risk
+- `impact`: why this matters
+- `fix`: root-cause-oriented recommendation
+
+## Quick Review Heuristics
+- Correctness: state transitions, edge-case handling, error propagation.
+- Maintainability: naming clarity, duplication, boundary responsibility.
+- Safety: hidden fallbacks, implicit defaults, brittle conditionals.
+- Verification: missing tests for new branches/failure paths.
+
+## Quality Standard
+- Findings are evidence-based and tied to changed code.
+- Severity reflects user/business impact, not stylistic preference.
+- Recommendations address root causes, not cosmetic patches.
+- Residual risks and untested paths are explicitly called out.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for correctness, maintainability, and change risk in code reviews.
-2. Produce options and select an approach for correctness, maintainability, and change risk in code reviews.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using line-by-line evidence trace for each finding.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Build change context and identify high-risk areas.
+2. Review for correctness and behavioral regressions.
+3. Review maintainability and architectural fit.
+4. Assess verification sufficiency and operational risk.
+5. Publish findings first, then questions, then concise summary.
 
-## Quality Gates
-- Scope and assumptions for correctness, maintainability, and change risk in code reviews are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when critical correctness defects remain unresolved.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when critical correctness issues block safe merge.
+- Escalate when required context or evidence is unavailable for high-risk changes.

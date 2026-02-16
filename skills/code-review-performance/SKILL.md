@@ -1,41 +1,49 @@
 ---
 name: code-review-performance
-description: Specialized workflow for latency, throughput, and resource-efficiency risks in code changes. Trigger during review when a change may affect hot-path latency, throughput ceilings, or CPU/memory/I/O efficiency and needs explicit performance-risk findings before merge; do not use for broad non-performance review scopes.
+description: "Run performance-focused code review when changes may affect latency, throughput, or CPU/memory/I/O efficiency on critical paths. Use for merge decisions requiring explicit performance-risk findings; do not use for broad non-performance review scope."
 ---
 
 # Code Review Performance
 
-## Trigger Boundary
-- Use when code changes need merge-readiness evaluation with explicit findings.
-- Do not use for architecture option selection; use `architecture-tradeoff-analysis`.
-- Do not use for writing implementation code directly; use relevant domain skills.
+## Overview
+Use this skill to detect performance regressions before merge, especially on hot paths and high-traffic execution flows.
 
-## Goal
-Find high-risk defects early and unblock high-confidence merges.
+## Inputs To Gather
+- Hot-path endpoints/jobs and current performance budgets.
+- Workload assumptions (QPS, payload size, concurrency, data cardinality).
+- Existing benchmark/profiling evidence.
+- Resource constraints (CPU, memory, I/O, network).
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for latency, throughput, and resource-efficiency risks in code changes
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Performance findings prioritized by user impact.
+- Budget-fit judgment (within budget / at risk / out of budget).
+- Required follow-up checks (benchmark, profiling, load test).
 
-## Outputs
-- Performance review report with hotspot analysis
-- Decision log for latency, throughput, and resource-efficiency risks in code changes
-- Verification checklist with measurable pass-fail criteria
+## Finding Focus Areas
+- Algorithmic growth (`O(n^2)` regressions, repeated scans).
+- Allocation pressure and unnecessary object churn.
+- I/O amplification (N+1 calls, repeated DB/API access).
+- Contention/serialization bottlenecks under concurrency.
+- Cache invalidation or cache-bypass risks.
+
+## Quick Example
+- Change adds per-item DB call inside loop over 10k records.
+- Finding: high-severity throughput risk (N+1 query pattern).
+- Fix direction: batch query + in-memory map, verify via benchmark.
+
+## Quality Standard
+- Each finding ties to an explicit performance budget or hotspot.
+- Recommendations include measurement plan, not assumptions only.
+- Risk classification includes expected scale sensitivity.
+- Missing evidence (benchmark/profile) is flagged explicitly.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for latency, throughput, and resource-efficiency risks in code changes.
-2. Produce options and select an approach for latency, throughput, and resource-efficiency risks in code changes.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using complexity and benchmark evidence checks.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Identify changed hot paths and performance-sensitive flows.
+2. Analyze algorithmic and resource behavior from diff.
+3. Compare expected behavior with existing budgets.
+4. Require measurement where uncertainty is material.
+5. Publish findings with mitigation and verification steps.
 
-## Quality Gates
-- Scope and assumptions for latency, throughput, and resource-efficiency risks in code changes are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when performance regressions lack mitigation or verification.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when high-risk regressions have no mitigation/verification plan.
+- Escalate when performance impact cannot be bounded from available evidence.
