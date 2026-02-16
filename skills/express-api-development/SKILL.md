@@ -1,41 +1,53 @@
 ---
 name: express-api-development
-description: "Express API development workflow. Trigger when Express-specific API code (routing, middleware chain, validation, error handling, auth integration, request lifecycle behavior) must be implemented or revised with framework-level decisions in scope; do not use for repository-wide architecture governance or release management policy."
+description: "Express API development workflow for production-ready Node.js services. Use when Express-specific API code (routing, middleware chain, validation, error handling, auth integration, request lifecycle behavior) must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Express Api Development
 
-## Trigger Boundary
-- Use when building or modifying Express-based HTTP APIs.
-- Do not use for framework-agnostic API policy only; use `api-design-rest`.
-- Do not use for infrastructure deployment tasks.
+## Overview
+Use this skill to design and implement Express services with explicit middleware ordering, stable API errors, and operationally debuggable behavior.
 
-## Goal
-Build maintainable Express APIs with explicit middleware chain and reliable error semantics.
+## Shared References
+- Middleware ordering guidance:
+  - `references/express-middleware-ordering-guidance.md`
+- Error handling guidance:
+  - `references/express-error-handling-guidance.md`
 
-## Inputs
-- Endpoint requirements and validation rules
-- AuthN/AuthZ and rate-limit requirements
-- Logging and observability expectations
+## Templates And Assets
+- Route module starter:
+  - `assets/express-route-module-template.js`
+- Error catalog template:
+  - `assets/express-error-catalog-template.md`
+- Verification checklist:
+  - `assets/express-api-verification-checklist.md`
 
-## Outputs
-- Route and middleware composition plan
-- Request validation and error response strategy
-- Operational checklist for logging and health endpoints
+## Inputs To Gather
+- Endpoint requirements and validation rules.
+- AuthN/AuthZ and rate-limit requirements.
+- Logging and observability expectations.
+- Existing middleware stack and error contract conventions.
+
+## Deliverables
+- Route and middleware composition plan.
+- Validation and error response contract.
+- Security and observability integration plan.
+- Verification checklist with critical-path coverage.
 
 ## Workflow
 1. Define route modules by domain and resource responsibility.
-2. Add validation middleware before business logic handlers.
-3. Centralize error handling with consistent response shapes.
-4. Wire auth, rate limiting, and request correlation IDs.
-5. Validate critical paths with integration-level API tests.
+2. Apply middleware ordering from `references/express-middleware-ordering-guidance.md`.
+3. Implement route handlers using `assets/express-route-module-template.js`.
+4. Centralize and normalize error handling using `references/express-error-handling-guidance.md` and `assets/express-error-catalog-template.md`.
+5. Validate behavior with `assets/express-api-verification-checklist.md`.
 
-## Quality Gates
-- Middleware order is deterministic and documented.
-- Validation failures return clear client-actionable responses.
-- Error handling avoids unhandled promise or silent failures.
-- Logs and metrics are sufficient for incident triage.
+## Quality Standard
+- Middleware order is explicit, deterministic, and testable.
+- Validation failures are client-actionable and consistent.
+- Error responses use stable codes and correlation IDs.
+- Operational signals are sufficient for incident triage.
 
-## Failure Handling
-- Stop when middleware side effects are order-dependent and unclear.
-- Escalate when error contracts diverge across endpoints.
+## Failure Conditions
+- Stop when middleware side effects are order-dependent and undocumented.
+- Stop when endpoints bypass centralized error mapping.
+- Escalate when error contracts diverge across routes without policy approval.

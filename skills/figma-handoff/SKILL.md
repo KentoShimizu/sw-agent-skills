@@ -5,52 +5,47 @@ description: "Design-to-engineering handoff workflow for packaging implementatio
 
 # Figma Handoff
 
-## Trigger Boundary
-- Use when design outputs must be converted into engineering-ready handoff artifacts.
-- Do not use for defining new principles or token architecture; use `design-principles` or `design-tokens`.
-- Do not use for exploratory research synthesis; use `ux-research-synthesis`.
+## Overview
+Use this skill to produce implementation-ready handoff artifacts that reduce ambiguity between design and engineering.
 
-## Goal
-Deliver unambiguous handoff artifacts that reduce implementation drift.
+## Shared References
+- Handoff quality gates:
+  - `references/figma-handoff-quality-gates.md`
 
-## Project Rule Policy
-- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
-- If no existing rule is available, define a lightweight project default and mark it as provisional.
-- Treat example IDs in this skill as non-binding guidance.
-- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+## Templates And Assets
+- Handoff package template:
+  - `assets/figma-handoff-package-template.md`
+- Asset inventory template:
+  - `assets/figma-asset-inventory-template.csv`
+- Acceptance checklist:
+  - `assets/figma-acceptance-checklist-template.md`
 
-## Inputs
-- Finalized Figma frames, components, and variants
-- Token and interaction specifications
-- Accessibility and localization constraints
+## Inputs To Gather
+- Finalized Figma frames, components, and variants.
+- Token, interaction, and responsive behavior specs.
+- Accessibility and localization constraints.
+- Engineering constraints and implementation boundaries.
 
-## Outputs
-- Handoff package with project-defined ID (example: `FIG-HND-*` when no existing policy is available)
-- Asset inventory and spec mapping
-- Acceptance checklist for engineering verification
-- Privacy evidence package when policy requires it
+## Deliverables
+- Handoff package with scope, states, and implementation notes.
+- Asset inventory with source mapping and export spec.
+- Acceptance checklist for engineering sign-off.
+- Explicit open issues and follow-up owners.
 
 ## Workflow
-1. Confirm design artifacts are final and versioned.
-2. Export required assets with naming and usage rules.
-3. Map tokens, states, and interactions to implementation notes.
-4. Add accessibility and localization checkpoints.
-5. Publish handoff package with owner, review status, and privacy evidence.
+1. Lock design source versions and confirm in-scope artifacts.
+2. Build handoff package using `assets/figma-handoff-package-template.md`.
+3. Export and register assets in `assets/figma-asset-inventory-template.csv`.
+4. Add acceptance checks with `assets/figma-acceptance-checklist-template.md`.
+5. Validate readiness against `references/figma-handoff-quality-gates.md`.
 
-6. Compare at least two feasible approaches and explain why one is preferred.
-7. Record key assumptions, unknowns, confidence, and rollback considerations.
+## Quality Standard
+- Handoff scope is versioned, complete, and unambiguous.
+- States, variants, and interactions are implementation-ready.
+- Accessibility and localization constraints are explicit.
+- Engineering owner can implement without inferred design intent.
 
-## Quality Gates
-- Handoff includes all required assets and spec references.
-- States and variants are fully documented.
-- Accessibility and localization checks are explicit.
-- Policy-required approvers and privacy controls are explicitly recorded.
-- Engineering owner confirms implementability.
-
-- Decision rationale and trade-offs are explicit.
-- Assumptions, unknowns, and confidence are explicitly documented.
-
-## Failure Handling
+## Failure Conditions
 - Stop when source designs are not version-locked.
-- Stop when policy-required approvers are missing.
-- Escalate when critical specs or assets are missing.
+- Stop when required assets/spec details are missing.
+- Escalate when implementation constraints conflict with design assumptions.

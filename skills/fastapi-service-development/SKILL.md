@@ -1,41 +1,53 @@
 ---
 name: fastapi-service-development
-description: "FastAPI service development workflow. Trigger when FastAPI service behavior (path operations, dependency injection, request/response models, validation, async execution, OpenAPI exposure) must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
+description: "FastAPI service development workflow for production-grade Python APIs. Use when FastAPI service behavior (path operations, dependency injection, request/response models, validation, async execution, OpenAPI exposure) must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Fastapi Service Development
 
-## Trigger Boundary
-- Use when implementing or refactoring FastAPI applications.
-- Do not use for pure model training pipelines without HTTP interfaces.
-- Do not use for ORM tuning alone; use database-specific skills.
+## Overview
+Use this skill to build FastAPI services with explicit schema contracts, controlled dependency lifecycles, and predictable async runtime behavior.
 
-## Goal
-Deliver FastAPI services with explicit schema contracts, dependency boundaries, and predictable runtime behavior.
+## Shared References
+- Dependency lifecycle guidance:
+  - `references/fastapi-dependency-lifecycle-guidance.md`
+- Schema contract guidance:
+  - `references/fastapi-schema-contract-guidance.md`
 
-## Inputs
-- Endpoint definitions and request/response schema requirements
-- Dependency injection graph and external service dependencies
-- Authentication, validation, and observability requirements
+## Templates And Assets
+- Router implementation starter:
+  - `assets/fastapi-router-template.py`
+- Error response shape template:
+  - `assets/fastapi-error-model-template.json`
+- Service verification checklist:
+  - `assets/fastapi-service-checklist.md`
 
-## Outputs
-- Endpoint map with typed request/response models
-- Dependency and lifecycle management plan
-- Test and verification checklist for API behavior
+## Inputs To Gather
+- Endpoint definitions and request/response schema requirements.
+- Dependency injection graph and external service dependencies.
+- Authentication, validation, and observability requirements.
+- Async I/O boundaries and expected latency constraints.
+
+## Deliverables
+- Endpoint map with typed request/response models.
+- Dependency and lifecycle management plan.
+- Error contract and exception handling policy.
+- Verification checklist and test focus areas.
 
 ## Workflow
 1. Define Pydantic models and endpoint contracts first.
 2. Separate routers, service logic, and infrastructure adapters.
-3. Use dependency injection for shared resources and auth context.
-4. Implement exception handlers with consistent API error shapes.
-5. Validate docs generation and behavior with endpoint tests.
+3. Manage shared resources using `references/fastapi-dependency-lifecycle-guidance.md`.
+4. Implement exception mapping with `assets/fastapi-error-model-template.json`.
+5. Validate behavior and docs with `assets/fastapi-service-checklist.md`.
 
-## Quality Gates
-- All endpoints use explicit typed schemas.
-- Dependency lifecycle is deterministic and testable.
-- Error responses are consistent and documented.
-- OpenAPI docs reflect actual runtime behavior.
+## Quality Standard
+- All endpoints expose explicit typed schemas.
+- Dependency scope and teardown behavior are deterministic.
+- Error responses are stable and machine-parseable.
+- OpenAPI output reflects actual runtime behavior.
 
-## Failure Handling
+## Failure Conditions
 - Stop when schema contracts are ambiguous or loosely typed.
+- Stop when async request paths contain hidden blocking I/O.
 - Escalate when dependency lifecycle cannot be managed safely.
