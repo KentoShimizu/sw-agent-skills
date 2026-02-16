@@ -18,7 +18,6 @@ Create sprint-ready stories with explicit user value and clear completion condit
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Treat example IDs in this skill as non-binding guidance.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Prioritized requirement backlog (example IDs: `REQ-*` when no existing policy is available)
@@ -37,16 +36,17 @@ Create sprint-ready stories with explicit user value and clear completion condit
 4. Add non-functional and compliance constraints explicitly.
 5. Split oversized stories until estimable in one cycle.
 
+6. Compare at least two feasible approaches and explain why one is preferred.
+7. Record key assumptions, unknowns, confidence, and rollback considerations.
+
 ## Quality Gates
 - Every story has clear value and linked requirement IDs.
 - Story scope fits one delivery cycle.
 - Story completion criteria are testable.
 - Compliance-related stories are not optional when legally required.
 
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+- Decision rationale and trade-offs are explicit.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Failure Handling
 - Reject stories without requirement linkage.

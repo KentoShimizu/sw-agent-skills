@@ -18,7 +18,6 @@ Identify design risks early and provide concrete, reviewable fixes.
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Treat example IDs in this skill as non-binding guidance.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Design artifact and review scope
@@ -37,15 +36,16 @@ Identify design risks early and provide concrete, reviewable fixes.
 4. Record findings with severity, owner, and remediation path.
 5. Conclude approval or rejection with explicit rationale.
 
+6. Compare at least two feasible approaches and explain why one is preferred.
+7. Record key assumptions, unknowns, confidence, and rollback considerations.
+
 ## Quality Gates
 - Findings are evidence-based and reproducible.
 - Blockers are clearly separated from improvements.
 - Project-required approvers are assigned and traceable.
 
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+- Decision rationale and trade-offs are explicit.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Failure Handling
 - Stop review when scope or artifact is ambiguous.

@@ -18,7 +18,6 @@ Deliver unambiguous handoff artifacts that reduce implementation drift.
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Treat example IDs in this skill as non-binding guidance.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Finalized Figma frames, components, and variants
@@ -38,6 +37,9 @@ Deliver unambiguous handoff artifacts that reduce implementation drift.
 4. Add accessibility and localization checkpoints.
 5. Publish handoff package with owner, review status, and privacy evidence.
 
+6. Compare at least two feasible approaches and explain why one is preferred.
+7. Record key assumptions, unknowns, confidence, and rollback considerations.
+
 ## Quality Gates
 - Handoff includes all required assets and spec references.
 - States and variants are fully documented.
@@ -45,10 +47,8 @@ Deliver unambiguous handoff artifacts that reduce implementation drift.
 - Policy-required approvers and privacy controls are explicitly recorded.
 - Engineering owner confirms implementability.
 
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+- Decision rationale and trade-offs are explicit.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Failure Handling
 - Stop when source designs are not version-locked.

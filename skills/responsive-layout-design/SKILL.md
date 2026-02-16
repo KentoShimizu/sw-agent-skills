@@ -18,7 +18,6 @@ Ensure layouts remain usable, readable, and consistent across screen contexts.
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Treat example IDs in this skill as non-binding guidance.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Breakpoint requirements and device usage data
@@ -37,16 +36,17 @@ Ensure layouts remain usable, readable, and consistent across screen contexts.
 4. Define interaction affordance changes for touch and pointer contexts.
 5. Document regression checkpoints for critical screens.
 
+6. Compare at least two feasible approaches and explain why one is preferred.
+7. Record key assumptions, unknowns, confidence, and rollback considerations.
+
 ## Quality Gates
 - Core tasks remain usable at all supported breakpoints.
 - Overflow and truncation are controlled for long localized strings.
 - Interaction targets remain accessible on touch devices.
 - Responsive rules are traceable and non-conflicting.
 
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+- Decision rationale and trade-offs are explicit.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Failure Handling
 - Stop when breakpoints are chosen without user/device evidence.

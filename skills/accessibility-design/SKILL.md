@@ -12,7 +12,6 @@ Use this skill to define concrete accessibility behavior so implemented UI is us
 - Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs To Gather
 - Critical user journeys and high-impact screens/components.
@@ -33,6 +32,8 @@ Use this skill to define concrete accessibility behavior so implemented UI is us
 - Color contrast and non-color affordances are specified for critical interactions.
 - Screen-reader announcements and dynamic-content updates are specified where state changes occur.
 - Requirements are testable with manual and automated checks.
+- Decision rationale and trade-offs are explicit for critical accessibility decisions.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Workflow
 1. Identify critical journeys and accessibility-sensitive interactions.
@@ -41,11 +42,8 @@ Use this skill to define concrete accessibility behavior so implemented UI is us
 4. Define visual readability and feedback behavior for all states.
 5. Define assistive-technology behavior for dynamic updates and errors.
 6. Produce verification checklist and prioritized remediation plan.
-
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+7. Compare at least two feasible remediation approaches and explain why one is preferred.
+8. Record key assumptions, unknowns, confidence, and rollback/mitigation constraints.
 
 ## Failure Conditions
 - Stop when critical journeys are not covered by accessibility requirements.

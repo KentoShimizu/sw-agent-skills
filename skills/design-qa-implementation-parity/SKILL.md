@@ -18,7 +18,6 @@ Prevent design-to-implementation drift with objective parity evidence.
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Treat example IDs in this skill as non-binding guidance.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Approved design artifacts and version identifiers
@@ -37,6 +36,9 @@ Prevent design-to-implementation drift with objective parity evidence.
 4. Record mismatches with reproducible evidence.
 5. Publish parity decision and remediation backlog with contract validation evidence.
 
+6. Compare at least two feasible approaches and explain why one is preferred.
+7. Record key assumptions, unknowns, confidence, and rollback considerations.
+
 ## Quality Gates
 - Critical user flows have zero unresolved blocker mismatches.
 - State coverage includes loading, empty, error, and success states.
@@ -44,10 +46,8 @@ Prevent design-to-implementation drift with objective parity evidence.
 - Ownership is assigned for every mismatch.
 - Policy-required approvers and privacy controls are explicitly recorded.
 
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+- Decision rationale and trade-offs are explicit.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Failure Handling
 - Stop parity sign-off when source versions are not locked.

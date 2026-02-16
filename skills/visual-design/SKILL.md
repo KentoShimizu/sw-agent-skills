@@ -18,7 +18,6 @@ Deliver coherent visual language that improves clarity and trust.
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Treat example IDs in this skill as non-binding guidance.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Brand direction and product context
@@ -37,16 +36,17 @@ Deliver coherent visual language that improves clarity and trust.
 4. Apply rules to representative screens.
 5. Validate readability and contrast compliance.
 
+6. Compare at least two feasible approaches and explain why one is preferred.
+7. Record key assumptions, unknowns, confidence, and rollback considerations.
+
 ## Quality Gates
 - Visual hierarchy supports task prioritization.
 - Spec set is consistent and reusable.
 - Contrast and legibility pass required thresholds.
 - Visual decisions map to principle and token systems.
 
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+- Decision rationale and trade-offs are explicit.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Failure Handling
 - Stop when visual rules rely on one-off overrides.

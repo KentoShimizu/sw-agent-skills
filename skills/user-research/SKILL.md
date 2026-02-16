@@ -18,7 +18,6 @@ Produce evidence-backed user insights that improve requirement quality and prior
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Treat example IDs in this skill as non-binding guidance.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Research hypotheses and decision questions
@@ -37,16 +36,17 @@ Produce evidence-backed user insights that improve requirement quality and prior
 4. Capture structured observations and assign project-defined IDs.
 5. Synthesize insights and map implications to project-defined requirement candidates (example: `REQ-*`).
 
+6. Compare at least two feasible approaches and explain why one is preferred.
+7. Record key assumptions, unknowns, confidence, and rollback considerations.
+
 ## Quality Gates
 - Findings are traceable to auditable evidence IDs.
 - Sample limitations and confidence levels are explicit.
 - Sensitive data is protected in all shared artifacts.
 - Requirement implications are clearly linked and testable.
 
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+- Decision rationale and trade-offs are explicit.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Failure Handling
 - Reject conclusions from non-representative or underpowered samples.

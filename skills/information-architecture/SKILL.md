@@ -18,7 +18,6 @@ Create clear, scalable, and discoverable information structures.
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Treat example IDs in this skill as non-binding guidance.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Content inventory and navigation pain points
@@ -37,16 +36,17 @@ Create clear, scalable, and discoverable information structures.
 4. Validate labeling for clarity and localization fit.
 5. Test discoverability against key user tasks.
 
+6. Compare at least two feasible approaches and explain why one is preferred.
+7. Record key assumptions, unknowns, confidence, and rollback considerations.
+
 ## Quality Gates
 - Hierarchy depth and breadth remain navigable.
 - Labels are unambiguous across supported locales.
 - Critical tasks are reachable in predictable steps.
 - Structural decisions are traceable to user needs.
 
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+- Decision rationale and trade-offs are explicit.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Failure Handling
 - Stop when taxonomy terms conflict across core surfaces.

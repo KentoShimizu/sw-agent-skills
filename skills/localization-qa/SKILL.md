@@ -18,7 +18,6 @@ Ensure localized experiences are accurate, usable, and visually stable.
 - If no existing rule is available, define a lightweight project default and mark it as provisional.
 - Treat example IDs in this skill as non-binding guidance.
 - Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Use `references/engineering-judgment-defaults.md` for default decision scoring, risk gating, uncertainty handling, and output structure.
 
 ## Inputs
 - Localized strings and glossary references
@@ -37,6 +36,9 @@ Ensure localized experiences are accurate, usable, and visually stable.
 4. Validate date, time, number, and currency formatting.
 5. Publish defects by severity and locale impact with contract validation evidence.
 
+6. Compare at least two feasible approaches and explain why one is preferred.
+7. Record key assumptions, unknowns, confidence, and rollback considerations.
+
 ## Quality Gates
 - Required locales are fully tested.
 - No blocking truncation or semantic errors remain.
@@ -44,10 +46,8 @@ Ensure localized experiences are accurate, usable, and visually stable.
 - Defect ownership and retest status are explicit.
 - Policy-required approvers and privacy controls are explicitly recorded.
 
-## Engineering Judgment Application
-1. Generate at least two plausible options before recommending one.
-2. Evaluate options using project-defined criteria; if missing, use defaults in `references/engineering-judgment-defaults.md`.
-3. Record assumptions, unknowns, confidence, and key trade-offs in the final output.
+- Decision rationale and trade-offs are explicit.
+- Assumptions, unknowns, and confidence are explicitly documented.
 
 ## Failure Handling
 - Stop release recommendation when required locale coverage is incomplete.
