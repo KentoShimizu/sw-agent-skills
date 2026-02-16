@@ -1,53 +1,51 @@
 ---
 name: interaction-design
-description: "Interaction design workflow for defining user flows, state transitions, and feedback behaviors for key product tasks. Trigger when user journeys require explicit interaction rules (state changes, validation feedback, error recovery, empty/loading behavior) before UI implementation; do not use for backend data-model or deployment pipeline decisions."
+description: "Interaction design workflow for user flows, state transitions, and feedback behavior across key tasks. Use when user journeys require explicit interaction rules (state changes, validation feedback, error recovery, empty/loading behavior) before UI implementation; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Interaction Design
 
-## Trigger Boundary
-- Use when user flow behavior, transitions, or state logic is unclear.
-- Do not use for high-level navigation hierarchy; use `information-architecture`.
-- Do not use for aesthetic styling decisions only; use `visual-design`.
+## Overview
+Use this skill to define clear, accessible interaction behavior for primary and edge-case user journeys.
 
-## Goal
-Define predictable and accessible interaction behavior across core flows.
+## Shared References
+- Interaction feedback principles:
+  - `references/interaction-feedback-principles.md`
 
-## Project Rule Policy
-- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
-- If no existing rule is available, define a lightweight project default and mark it as provisional.
-- Treat example IDs in this skill as non-binding guidance.
-- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+## Templates And Assets
+- Flow spec template:
+  - `assets/flow-spec-template.md`
+- State transition template:
+  - `assets/state-transition-template.csv`
+- Edge-case checklist:
+  - `assets/interaction-edge-case-checklist.md`
 
-## Inputs
-- User tasks and business-critical journeys
-- Existing flow issues and support signals
-- Platform interaction constraints
+## Inputs To Gather
+- User tasks and business-critical journeys.
+- Existing flow issues and support signals.
+- Platform interaction constraints.
+- Error/retry expectations and accessibility constraints.
 
-## Outputs
-- Flow specifications with project-defined IDs (example: `UX-FLW-*` when no existing policy is available)
-- State transition and feedback behavior map
-- Edge-case and failure-state definitions
+## Deliverables
+- Flow specifications with start/end/alternate/failure paths.
+- State transition and feedback behavior map.
+- Explicit edge-case behavior definitions.
+- Accessibility-ready interaction checkpoints.
 
 ## Workflow
-1. Define start/end conditions for each key flow.
-2. Map primary, alternative, and failure paths.
-3. Specify state transitions and user feedback timing.
-4. Add explicit empty, loading, and error states.
-5. Validate keyboard and assistive-technology operability.
+1. Define flow boundaries in `assets/flow-spec-template.md`.
+2. Map state transitions in `assets/state-transition-template.csv`.
+3. Apply feedback principles from `references/interaction-feedback-principles.md`.
+4. Cover failure and edge behavior via `assets/interaction-edge-case-checklist.md`.
+5. Validate consistency and accessibility across similar patterns.
 
-6. Compare at least two feasible approaches and explain why one is preferred.
-7. Record key assumptions, unknowns, confidence, and rollback considerations.
+## Quality Standard
+- Critical flows have explicit state and transition models.
+- Failure states are actionable and recovery paths are clear.
+- Interaction behavior is consistent for similar intents.
+- Keyboard/focus behavior supports accessibility requirements.
 
-## Quality Gates
-- Critical flows have explicit state models.
-- Failure states are defined and user-actionable.
-- Interaction behavior is consistent across similar patterns.
-- Accessibility gates pass for keyboard and focus behavior.
-
-- Decision rationale and trade-offs are explicit.
-- Assumptions, unknowns, and confidence are explicitly documented.
-
-## Failure Handling
+## Failure Conditions
 - Stop when flow goals or state boundaries are ambiguous.
-- Escalate when critical error states are undefined.
+- Stop when edge-case behavior is undefined for critical tasks.
+- Escalate when interaction rules conflict with accessibility requirements.

@@ -1,0 +1,4 @@
+flow_id,state,event,next_state,user_feedback,guard_condition
+UX-FLW-001,idle,submit,loading,show inline loading,form_valid=true
+UX-FLW-001,loading,success,success,show success confirmation,api_ok=true
+UX-FLW-001,loading,error,error,show actionable error with retry,api_ok=false
