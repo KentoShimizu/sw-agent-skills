@@ -1,52 +1,56 @@
 ---
 name: jest-testing-workflow
-description: "Jest verification workflow for JavaScript/TypeScript codebases. Use when JS/TS changes need executable Jest evidence (unit/integration behavior, mocks, async/timer control, regression checks) before merge; do not use for browser-level E2E or language-agnostic policy design."
+description: "Jest verification workflow for JavaScript/TypeScript codebases with deterministic tests, explicit mock boundaries, and actionable CI evidence. Use when JS/TS changes need executable Jest evidence before merge; do not use for browser-level E2E or language-agnostic policy design."
 ---
 
 # Jest Testing Workflow
 
-## Trigger Boundary
-- Use when the core need is Jest-based verification in JS/TS.
-- Typical requests:
-  - `Jestでモック境界を見直してテストを安定化したい`
-  - `fake timers を使う async テストのフレークを潰したい`
-  - `CI向けJest実行プロファイルを整理したい`
-- Do not use when:
-  - 実ブラウザの導線検証（`playwright`）
-  - Pythonテスト設計（`pytest-workflow`）
+## Overview
+Use this skill to design and run Jest suites that are stable, meaningful, and decision-ready for merge gates.
 
-## Goal
-Deliver maintainable Jest suites with deterministic behavior and actionable failures.
+## Shared References
+- Trigger examples and expected deliverables:
+  - `references/trigger-and-examples.md`
+- Mock boundary decision rules:
+  - `references/mock-boundary-decision-rules.md`
+- Determinism rules:
+  - `references/jest-determinism-rules.md`
 
-## Inputs
-- Change scope and affected JS/TS modules
-- Runtime assumptions (node/jsdom) and mocking boundaries
-- CI constraints for runtime and coverage gates
+## Templates And Assets
+- Test plan template:
+  - `assets/jest-test-plan-template.md`
+- Command profile template:
+  - `assets/jest-command-profile-template.md`
+- Flake triage checklist:
+  - `assets/jest-flake-triage-checklist.md`
 
-## Outputs
-- Jest test plan with mock/timer/env strategy
-- Assertion plan for happy/edge/failure paths
-- Command set for local-fast and CI-full runs
+## Inputs To Gather
+- Change scope and affected JS/TS modules.
+- Runtime assumptions (`node`/`jsdom`) and mock boundaries.
+- CI constraints for runtime and coverage gates.
+- Known flaky areas (async timers, shared state, external dependencies).
+
+## Deliverables
+- Jest test strategy with mock/timer/environment policy.
+- Assertion matrix for happy, edge, and failure paths.
+- Local-fast and CI-full command profiles.
+- Residual flakiness risk log with owner and next action.
 
 ## Workflow
-1. Clarify decision question, existing project testing policy, and non-negotiable constraints for Jest-based verification in JS/TS.
-2. Map risks to required test depth and execution tiers (fast gate vs full gate).
-3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
-4. Select one strategy and document why alternatives were not chosen.
-5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
-6. Execute verification and capture reproducible evidence using reproducible jest command set with deterministic outcomes.
-7. Publish residual risks, follow-up actions, and owner accountability.
+1. Clarify decision question and mandatory quality constraints.
+2. Draft strategy using `assets/jest-test-plan-template.md`.
+3. Decide mock boundaries with `references/mock-boundary-decision-rules.md`.
+4. Define execution profiles in `assets/jest-command-profile-template.md`.
+5. Stabilize async/timer behavior with `references/jest-determinism-rules.md`.
+6. Run checks and close with `assets/jest-flake-triage-checklist.md`.
 
-## Quality Gates
-- Trigger fit is explicit, and alternative testing levels were consciously considered.
-- Decision rationale is evidence-based, not preference-based.
-- Assumptions, unknowns, and confidence level are documented.
-- Evidence is reproducible with exact commands/artifacts.
-- Residual risks include owner, due date, and verification plan.
+## Quality Standard
+- Trigger fit and test depth are explicit.
+- Mock strategy preserves behavior confidence for critical paths.
+- Async/timer behavior is deterministic in local and CI runs.
+- Evidence is reproducible with exact commands and artifacts.
 
-## Failure Handling
+## Failure Conditions
 - Stop when mock strategy hides behavior that must be integration-visible.
-- Escalate when async/timer flakiness persists after deterministic controls.
-
-## Bundled Resources
-- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.
+- Stop when command profile is not reproducible across local/CI.
+- Escalate when flakiness persists after deterministic controls.
