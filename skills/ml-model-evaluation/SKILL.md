@@ -1,41 +1,45 @@
 ---
 name: ml-model-evaluation
-description: Specialized workflow for evaluation metrics, threshold selection, and failure segmentation. Trigger when model readiness decisions require explicit evaluation design (metrics, thresholds, slices, error analysis) and objective accept/reject criteria; do not use for generic API-layer or infrastructure-only changes.
+description: "ML model evaluation workflow for metric design, threshold setting, and failure segmentation. Use when model readiness decisions require explicit accept/reject criteria and segment-level evidence; do not use for generic API-layer or infrastructure-only changes."
 ---
 
 # Ml Model Evaluation
 
-## Trigger Boundary
-- Use when ML data, model, training, evaluation, or serving choices are being made.
-- Do not use for generic API lifecycle governance; use `api-*`.
-- Do not use for non-ML database administration concerns.
+## Overview
+Use this skill to evaluate models with decision-grade evidence across aggregate and high-risk segments.
 
-## Goal
-Produce reliable ML lifecycle decisions from data to production monitoring.
+## Shared References
+- Threshold and segmentation rules:
+  - `references/threshold-and-segmentation-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for evaluation metrics, threshold selection, and failure segmentation
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Evaluation report template:
+  - `assets/evaluation-report-template.md`
 
-## Outputs
-- Model evaluation report with acceptance thresholds
-- Decision log for evaluation metrics, threshold selection, and failure segmentation
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Dataset splits and baseline/candidate definitions.
+- Business cost trade-offs for false positives/negatives.
+- Segment definitions for fairness/risk-critical cohorts.
+- Acceptance thresholds and calibration requirements.
+
+## Deliverables
+- Evaluation report with thresholds and decision.
+- Segment-level failure analysis.
+- Acceptance/rejection rationale and follow-ups.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for evaluation metrics, threshold selection, and failure segmentation.
-2. Produce options and select an approach for evaluation metrics, threshold selection, and failure segmentation.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using slice-based metric review and calibration checks.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Build evaluation report in `assets/evaluation-report-template.md`.
+2. Apply threshold/segment policy via `references/threshold-and-segmentation-rules.md`.
+3. Validate calibration and error concentration risks.
+4. Compare baseline vs candidate under same conditions.
+5. Publish release recommendation and unresolved risks.
 
-## Quality Gates
-- Scope and assumptions for evaluation metrics, threshold selection, and failure segmentation are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Thresholds are tied to business risk trade-offs.
+- Critical segments are explicitly evaluated.
+- Decision rationale is traceable to evidence.
 
-## Failure Handling
-- Stop when evaluation ignores critical segments or risk-sensitive errors.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when evaluation omits high-risk segments.
+- Stop when acceptance thresholds are undefined.
+- Escalate when model risk is unacceptable for rollout.

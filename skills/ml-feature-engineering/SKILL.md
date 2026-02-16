@@ -1,41 +1,45 @@
 ---
 name: ml-feature-engineering
-description: Specialized workflow for feature generation, feature store consistency, and online-offline parity. Trigger when model performance depends on feature design and teams need explicit feature definitions, transformation logic, and offline/online parity controls; do not use for generic API-layer or infrastructure-only changes.
+description: "ML feature engineering workflow for feature definition, lineage, and online-offline parity. Use when model performance depends on explicit feature design and parity controls; do not use for generic API-layer or infrastructure-only changes."
 ---
 
 # Ml Feature Engineering
 
-## Trigger Boundary
-- Use when ML data, model, training, evaluation, or serving choices are being made.
-- Do not use for generic API lifecycle governance; use `api-*`.
-- Do not use for non-ML database administration concerns.
+## Overview
+Use this skill to design features that are useful, explainable, and consistent across training and serving.
 
-## Goal
-Produce reliable ML lifecycle decisions from data to production monitoring.
+## Shared References
+- Online/offline parity rules:
+  - `references/online-offline-parity-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for feature generation, feature store consistency, and online-offline parity
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Feature specification template:
+  - `assets/feature-spec-template.csv`
 
-## Outputs
-- Feature specification catalog with lineage
-- Decision log for feature generation, feature store consistency, and online-offline parity
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Candidate feature hypotheses and business rationale.
+- Data sources and freshness constraints.
+- Serving path capabilities and latency budget.
+- Leakage/fairness/compliance constraints.
+
+## Deliverables
+- Feature catalog with lineage and ownership.
+- Parity validation plan for train vs serve paths.
+- Feature risk and maintenance notes.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for feature generation, feature store consistency, and online-offline parity.
-2. Produce options and select an approach for feature generation, feature store consistency, and online-offline parity.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using feature drift and leakage checks across training and serving.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define feature specs in `assets/feature-spec-template.csv`.
+2. Validate parity assumptions with `references/online-offline-parity-rules.md`.
+3. Prioritize features by incremental value vs complexity.
+4. Verify leakage and freshness assumptions.
+5. Publish feature rollout and deprecation plan.
 
-## Quality Gates
-- Scope and assumptions for feature generation, feature store consistency, and online-offline parity are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Feature definitions are versioned and reproducible.
+- Online/offline behavior is consistent for decision-critical features.
+- Feature ownership and monitoring are explicit.
 
-## Failure Handling
-- Stop when feature definitions are inconsistent between training and serving.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when feature logic diverges between training and serving.
+- Stop when feature value cannot justify operational complexity.
+- Escalate when parity gaps remain unresolved.

@@ -1,0 +1,3 @@
+model,accuracy_metric,latency_ms,cost_per_request,robustness_score,operability_score,decision
+model_a,,,,,,
+model_b,,,,,,

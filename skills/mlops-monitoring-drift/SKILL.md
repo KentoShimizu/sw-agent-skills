@@ -1,41 +1,45 @@
 ---
 name: mlops-monitoring-drift
-description: Specialized workflow for data drift, concept drift, and model quality degradation detection. Trigger when production ML systems need drift/quality monitoring design with actionable detection thresholds, diagnostics, and retraining escalation rules; do not use for model-architecture research decisions.
+description: "MLOps drift monitoring workflow for detecting data drift, concept drift, and quality degradation with actionable response rules. Use when production ML systems need drift detection thresholds and escalation ownership; do not use for model-architecture research decisions."
 ---
 
 # Mlops Monitoring Drift
 
-## Trigger Boundary
-- Use when ML data, model, training, evaluation, or serving choices are being made.
-- Do not use for generic API lifecycle governance; use `api-*`.
-- Do not use for non-ML database administration concerns.
+## Overview
+Use this skill to detect meaningful model degradation early and trigger appropriate remediation actions.
 
-## Goal
-Produce reliable ML lifecycle decisions from data to production monitoring.
+## Shared References
+- Drift alerting and escalation rules:
+  - `references/drift-alerting-escalation-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for data drift, concept drift, and model quality degradation detection
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Drift monitoring policy template:
+  - `assets/drift-monitoring-policy-template.md`
 
-## Outputs
-- Drift monitoring policy with alert thresholds
-- Decision log for data drift, concept drift, and model quality degradation detection
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Drift signals and quality metrics to monitor.
+- Alert thresholds and acceptable noise level.
+- Escalation owners and response SLA.
+- Retraining and rollback policies.
+
+## Deliverables
+- Drift monitoring policy and thresholds.
+- Alert routing and severity model.
+- Response playbook for drift events.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for data drift, concept drift, and model quality degradation detection.
-2. Produce options and select an approach for data drift, concept drift, and model quality degradation detection.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using historical replay and alert precision checks.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define monitoring policy in `assets/drift-monitoring-policy-template.md`.
+2. Validate threshold actionability via `references/drift-alerting-escalation-rules.md`.
+3. Test alert behavior with historical replay or backtests.
+4. Assign response ownership and SLA per severity.
+5. Publish retraining/mitigation decision criteria.
 
-## Quality Gates
-- Scope and assumptions for data drift, concept drift, and model quality degradation detection are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Alerts are actionable, not noise-heavy.
+- Severity levels map to clear response ownership.
+- Retraining triggers are explicit and auditable.
 
-## Failure Handling
-- Stop when drift detection lacks actionable thresholds or ownership.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when drift thresholds are not operationally actionable.
+- Stop when alerts have no clear owner.
+- Escalate when degradation risk remains unmanaged.
