@@ -25,10 +25,10 @@ Use this skill to design pytest suites that are fast enough for daily feedback a
   - `assets/pytest-command-profile-template.md`
 
 ## Inputs To Gather
-- Change scope and risk profile.
-- Fixture graph and dependency constraints.
-- Marker strategy and CI runtime limits.
-- Known flakiness hotspots.
+- Python modules and behaviors at risk.
+- Fixture graph, dependency seams, and isolation constraints.
+- Marker strategy and CI runtime/cost limits.
+- Known flaky paths (async timing, shared state, environment coupling).
 
 ## Deliverables
 - Pytest test strategy and case matrix.

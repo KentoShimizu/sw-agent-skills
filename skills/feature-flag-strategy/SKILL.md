@@ -23,10 +23,10 @@ Use this skill to manage feature flags as controlled release instruments, not pe
   - `assets/flag-retirement-checklist.md`
 
 ## Inputs To Gather
-- Change scope and risk profile.
-- Targeting options and blast-radius constraints.
+- Rollout objective, user segments, and release risk tolerance.
+- Blast-radius constraints and required kill-switch latency.
 - Operational/compliance constraints and on-call readiness.
-- Flag platform capabilities and telemetry coverage.
+- Flag platform capabilities, dependency behavior, and telemetry coverage.
 
 ## Deliverables
 - Flag definition with owner, type, kill-switch, and expiry.

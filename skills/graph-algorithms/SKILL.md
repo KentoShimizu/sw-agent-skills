@@ -1,41 +1,56 @@
 ---
 name: graph-algorithms
-description: Specialized workflow for graph modeling and traversal/path algorithm selection. Trigger when entities and relationships form graph-like problems (pathfinding, reachability, dependency ordering, connectivity, flow) and algorithm choice drives correctness or performance; do not use for persistence schema design or deployment topology choices.
+description: "Graph algorithm workflow for modeling entities/relations and selecting traversal, path, ordering, or flow strategies. Use when correctness or performance depends on graph representation and algorithm choice; do not use for schema-only modeling or deployment topology planning."
 ---
 
 # Graph Algorithms
 
-## Trigger Boundary
-- Use when algorithmic correctness or complexity drives implementation risk.
-- Do not use for persistence-schema decisions; use `db-*`.
-- Do not use for runtime deployment topology; use `deployment-*` or `kubernetes-*`.
+## Overview
+Use this skill to choose and validate graph approaches that are correct for the domain and efficient for expected scale.
 
-## Goal
-Deliver correct and efficient computational designs with clear tradeoffs.
+## Use This Skill When
+- The problem involves reachability, shortest paths, dependencies, connectivity, matching, or flow.
+- Algorithm choice materially affects correctness guarantees or runtime cost.
+- Teams need explicit trade-off rationale between multiple graph approaches.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for graph modeling and traversal/path algorithm selection
-- Operational, compliance, and rollout constraints
+## Shared References
+- Algorithm selection rules:
+  - `references/graph-algorithm-selection-rules.md`
 
-## Outputs
-- Graph algorithm choice rationale
-- Decision log for graph modeling and traversal/path algorithm selection
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Problem framing template:
+  - `assets/graph-problem-framing-template.md`
+- Algorithm comparison template:
+  - `assets/graph-algorithm-comparison-template.md`
+
+## Inputs To Gather
+- Entity/relationship model and graph directionality assumptions.
+- Constraints (weighted/unweighted, cyclic/acyclic, static/dynamic updates).
+- Scale expectations (nodes, edges, update/query ratio, latency budget).
+- Correctness requirements and acceptable approximation/error policy.
+
+## Deliverables
+- Graph representation choice with invariants and assumptions.
+- Candidate algorithm comparison with complexity and fit rationale.
+- Validation plan for correctness, complexity, and edge-case handling.
+- Residual risk list for scaling or approximation trade-offs.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for graph modeling and traversal/path algorithm selection.
-2. Produce options and select an approach for graph modeling and traversal/path algorithm selection.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using graph property tests and path correctness validation.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Frame the problem using `assets/graph-problem-framing-template.md`.
+2. Determine representation (adjacency list/matrix/edge list) based on scale and operations.
+3. Compare candidate algorithms using `assets/graph-algorithm-comparison-template.md`.
+4. Select an approach using `references/graph-algorithm-selection-rules.md`.
+5. Validate with correctness tests (cycles, disconnected components, degenerate cases).
+6. Measure complexity behavior under representative and worst-case workloads.
+7. Publish decision rationale, constraints, and follow-up optimization actions.
 
-## Quality Gates
-- Scope and assumptions for graph modeling and traversal/path algorithm selection are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Representation and algorithm assumptions are explicit and testable.
+- Complexity claims are tied to real workload characteristics.
+- Edge and failure cases are validated, not inferred.
+- Trade-offs between accuracy, latency, and memory are documented.
 
-## Failure Handling
-- Stop when graph representation or algorithm choice mismatches problem constraints.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when representation assumptions conflict with domain behavior.
+- Stop when chosen algorithm fails required correctness guarantees.
+- Escalate when performance requirements cannot be met with current constraints.
