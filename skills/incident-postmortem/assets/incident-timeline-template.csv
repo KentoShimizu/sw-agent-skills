@@ -1,0 +1,2 @@
+timestamp_utc,event,owner,signal,evidence_link
+2026-01-01T00:00:00Z,alert_fired,oncall,error-rate-spike,link

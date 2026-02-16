@@ -1,41 +1,51 @@
 ---
 name: infrastructure-as-code
-description: Specialized workflow for declarative infrastructure change management and drift prevention. Trigger when infrastructure changes must be represented declaratively with reviewable plans, module boundaries, state safety, and drift controls before apply; do not use for API contract design or requirement prioritization.
+description: "Declarative infrastructure change workflow for plan-reviewed operations, state safety, and drift prevention. Use when infrastructure changes must be represented declaratively with reviewable plans and controlled apply; do not use for API contract design or requirement prioritization."
 ---
 
 # Infrastructure As Code
 
-## Trigger Boundary
-- Use when runtime packaging, orchestration, or infrastructure controls must be defined.
-- Do not use for product requirement decomposition; use `requirements-*` or `user-story-writing`.
-- Do not use for post-incident review output; use `incident-postmortem`.
+## Overview
+Use this skill to manage infrastructure changes as reviewable, reproducible code with explicit state and drift controls.
 
-## Goal
-Establish reproducible, secure, and operable runtime platforms.
+## Shared References
+- State safety rules:
+  - `references/iac-state-safety-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for declarative infrastructure change management and drift prevention
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- IaC change plan template:
+  - `assets/iac-change-plan-template.md`
+- IaC review checklist:
+  - `assets/iac-review-checklist.md`
+- Drift response runbook:
+  - `assets/drift-response-runbook-template.md`
 
-## Outputs
-- Infrastructure plan and apply policy
-- Decision log for declarative infrastructure change management and drift prevention
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Target environment, module scope, and change intent.
+- State mutation risk and blast radius expectations.
+- Security/compliance constraints.
+- Drift detection and response capabilities.
+
+## Deliverables
+- IaC change plan with risk and rollback notes.
+- Reviewed plan/apply decision record.
+- Drift response process with ownership.
+- Verification evidence after apply.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for declarative infrastructure change management and drift prevention.
-2. Produce options and select an approach for declarative infrastructure change management and drift prevention.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using plan review and drift-detection outputs.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Capture scope and risk in `assets/iac-change-plan-template.md`.
+2. Evaluate state safety with `references/iac-state-safety-rules.md`.
+3. Review plan and apply readiness via `assets/iac-review-checklist.md`.
+4. Execute controlled apply and validate expected state.
+5. Define drift response using `assets/drift-response-runbook-template.md`.
 
-## Quality Gates
-- Scope and assumptions for declarative infrastructure change management and drift prevention are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Infrastructure changes are fully reviewable before apply.
+- State risks and rollback feasibility are explicit.
+- Drift detection and remediation ownership are defined.
+- Declarative source remains the single source of truth.
 
-## Failure Handling
-- Stop when infrastructure changes cannot be reviewed or reproduced declaratively.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when changes cannot be reviewed declaratively before apply.
+- Stop when state risk is unknown or rollback is unplanned.
+- Escalate when drift risk exceeds operational policy thresholds.
