@@ -1,52 +1,45 @@
 ---
 name: design-review
-description: "Structured design review workflow for validating UX quality, implementation readiness, and governance compliance before delivery. Trigger when a design artifact needs formal review for usability, accessibility, consistency, and implementation readiness before handoff or approval; do not use for backend data-model or deployment pipeline decisions."
+description: "Run structured design reviews that produce actionable findings and clear approval decisions. Use when a design artifact needs formal review for usability, accessibility, consistency, and implementation readiness before handoff or approval; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Review
 
-## Trigger Boundary
-- Use when a design artifact is ready for formal review before implementation or release.
-- Do not use for creating principles from scratch; use `design-principles`.
-- Do not use for designing accessibility remediation plans; use `accessibility-design`.
+## Overview
+Use this skill to convert subjective design feedback into prioritized, evidence-based decisions that unblock implementation.
 
-## Goal
-Identify design risks early and provide concrete, reviewable fixes.
+## Inputs To Gather
+- Review target (screens, flows, interaction states) and intended users.
+- Acceptance criteria and non-negotiable constraints.
+- Accessibility and localization expectations for in-scope surfaces.
+- Delivery timeline and risk tolerance for unresolved issues.
 
-## Project Rule Policy
-- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
-- If no existing rule is available, define a lightweight project default and mark it as provisional.
-- Treat example IDs in this skill as non-binding guidance.
-- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+## Deliverables
+- Findings list with severity, user impact, engineering impact, and owner.
+- Explicit approval decision: approved, conditional approval, or rejected.
+- Remediation plan with due dates and verification method.
+- Residual risk statement for any deferred non-blocker issues.
 
-## Inputs
-- Design artifact and review scope
-- Relevant flow IDs and spec IDs
-- Accessibility and localization constraints
+## Quick Example
+- Blocker: keyboard focus order breaks checkout completion.
+- Major: ambiguous copy causes wrong destructive action selection.
+- Minor: visual rhythm inconsistency without measurable task impact.
+- Decision: reject due to blocker; re-review only affected flow after fix.
 
-## Outputs
-- Findings list with project-defined IDs (example: `DREV-*` when no existing policy is available), severity, and owner
-- Approval decision with blockers and conditions
-- Follow-up action log with due dates
+## Quality Standard
+- Findings are reproducible and linked to concrete evidence.
+- Severity reflects impact, not reviewer preference.
+- Blockers are separated from improvements and tracked independently.
+- Approval decision is auditable and tied to explicit criteria.
 
 ## Workflow
-1. Confirm review scope and acceptance criteria.
-2. Check usability, consistency, and implementation feasibility.
-3. Verify accessibility gate status using existing results under project-defined IDs (for example `A11Y-CHK-*`).
-4. Record findings with severity, owner, and remediation path.
-5. Conclude approval or rejection with explicit rationale.
+1. Confirm review scope, criteria, and decision authority.
+2. Evaluate critical user journeys before secondary surfaces.
+3. Log findings with impact, severity, and remediation guidance.
+4. Resolve or defer issues using explicit risk acceptance rules.
+5. Publish final decision and follow-up actions.
 
-6. Compare at least two feasible approaches and explain why one is preferred.
-7. Record key assumptions, unknowns, confidence, and rollback considerations.
-
-## Quality Gates
-- Findings are evidence-based and reproducible.
-- Blockers are clearly separated from improvements.
-- Project-required approvers are assigned and traceable.
-
-- Decision rationale and trade-offs are explicit.
-- Assumptions, unknowns, and confidence are explicitly documented.
-
-## Failure Handling
-- Stop review when scope or artifact is ambiguous.
-- Stop release recommendation when blocker findings remain unresolved.
+## Failure Conditions
+- Stop when review scope or acceptance criteria are ambiguous.
+- Stop when critical flows cannot be validated end-to-end.
+- Escalate when blocker findings remain open near implementation handoff.

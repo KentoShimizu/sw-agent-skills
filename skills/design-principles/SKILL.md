@@ -1,54 +1,45 @@
 ---
 name: design-principles
-description: "Design principle definition workflow for establishing stable UX guardrails before visual or component-level work. Trigger when product or UX direction is ambiguous and teams need explicit design principles and decision guardrails before detailed screens or components are produced; do not use for backend data-model or deployment pipeline decisions."
+description: "Define and align product design principles that teams can apply consistently across UX decisions. Use when product or UX direction is ambiguous and teams need explicit decision guardrails before detailed screens or components are produced; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Principles
 
-## Trigger Boundary
-- Use when team-level design principles are missing or inconsistent.
-- Do not use for component inventory design; use `design-system-foundations`.
-- Do not use for visual polish-only tasks; use `visual-design`.
+## Overview
+Use this skill to produce principle-level guardrails that reduce design churn and conflicting decisions across teams.
 
-## Goal
-Define clear principles that guide interaction, visual, and content decisions.
+## Inputs To Gather
+- Product outcomes, user success criteria, and business constraints.
+- Recurring design conflicts and inconsistency examples.
+- Accessibility, localization, privacy, and brand constraints.
+- Existing governance rules or review process already used in the project.
 
-## Project Rule Policy
-- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
-- Use `references/design-governance-contract.md` only as an optional default policy when no existing project rules are available.
-- Treat example IDs in this skill as non-binding guidance.
-- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
-- Optional validator for governed mode only: `python3 scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Deliverables
+- Principle set written as actionable decision rules.
+- Principle rationale with explicit trade-offs and anti-patterns.
+- Practical review checklist mapped one-to-one to each principle.
+- Ownership and update cadence for principle maintenance.
 
-## Inputs
-- Product strategy and user outcomes
-- Existing design inconsistencies and pain points
-- Accessibility and localization requirements
+## Quick Example
+- Principle: "Optimize for task completion over visual novelty."
+- Applies to: interaction density, information hierarchy, and default states.
+- Anti-pattern: decorative elements that hide primary actions.
+- Review check: critical action is visible without hover or tooltip dependency.
 
-## Outputs
-- Principle catalog with project-defined IDs (example: `DSN-PRN-*` when no existing policy is available)
-- Principle rationale and anti-pattern examples
-- Review checklist aligned to principles
+## Quality Standard
+- Each principle is testable in design review, not just aspirational wording.
+- Principles do not conflict with each other or with required constraints.
+- Trade-offs are explicit so teams can resolve edge cases consistently.
+- Checklist items are concrete enough for independent reviewers to agree.
 
 ## Workflow
-1. Convert user and business outcomes into principle candidates.
-2. Define principles as actionable and testable statements.
-3. Attach anti-pattern examples for each principle.
-4. Validate principles against accessibility and localization gates.
-5. Publish principle set with ownership and revision policy.
+1. Identify repeated decision conflicts from current product/design work.
+2. Draft candidate principles tied to outcomes and user risk.
+3. Add anti-patterns and boundary conditions for each principle.
+4. Validate against accessibility/localization/privacy constraints.
+5. Publish approved principles with ownership and revision policy.
 
-6. Compare at least two feasible approaches and explain why one is preferred.
-7. Record key assumptions, unknowns, confidence, and rollback considerations.
-
-## Quality Gates
-- Each principle is specific and reviewable.
-- Principle set has no unresolved contradiction.
-- Accessibility and localization constraints are represented.
-- Review checklist maps directly to principles.
-
-- Decision rationale and trade-offs are explicit.
-- Assumptions, unknowns, and confidence are explicitly documented.
-
-## Failure Handling
-- Stop when principles are abstract slogans without test criteria.
-- Escalate when principles conflict with mandatory compliance constraints.
+## Failure Conditions
+- Stop when principles are abstract slogans without observable checks.
+- Stop when principles directly conflict with mandatory compliance requirements.
+- Escalate when ownership is unclear and no team can enforce the principles.

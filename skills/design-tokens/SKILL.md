@@ -1,53 +1,45 @@
 ---
 name: design-tokens
-description: "Design token architecture workflow for defining semantic, scalable, and implementation-ready token systems. Trigger when multiple screens or products need consistent color/type/spacing/motion decisions and token definitions must be established before component implementation; do not use for backend data-model or deployment pipeline decisions."
+description: "Design token architecture workflow for semantic, scalable, implementation-ready token systems. Use when multiple screens or products need consistent color/type/spacing/motion decisions and token definitions before component implementation; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Tokens
 
-## Trigger Boundary
-- Use when visual values are hardcoded or inconsistent across UI surfaces.
-- Do not use for component behavior design; use `interaction-design`.
-- Do not use for final handoff packaging; use `figma-handoff`.
+## Overview
+Use this skill to replace hardcoded visual values with a governed token model that scales across teams and platforms.
 
-## Goal
-Define a token system that is semantic, versionable, and implementation-safe.
+## Inputs To Gather
+- Brand rules and product-level visual requirements.
+- Current hardcoded values and style drift hotspots.
+- Platform targets, theming needs, and implementation constraints.
+- Accessibility requirements and localization-sensitive typography rules.
 
-## Project Rule Policy
-- Follow existing repository or organization rules first for IDs, approvers, quality gates, locale scope, and privacy handling.
-- If no existing rule is available, define a lightweight project default and mark it as provisional.
-- Treat example IDs in this skill as non-binding guidance.
-- Skip manifest validation for documentation-only deliverables unless the project explicitly requests governed validation.
+## Deliverables
+- Token taxonomy and naming conventions (core, semantic, component-level).
+- Token mapping plan from raw values to semantic tokens.
+- Versioning/deprecation policy with migration guidance.
+- Adoption checklist for design and engineering teams.
 
-## Inputs
-- Brand and product visual requirements
-- Existing style values and debt map
-- Platform constraints and theming requirements
+## Quick Example
+- Core token: `color.blue.600`.
+- Semantic token: `color.action.primary.default`.
+- Component token: `button.primary.background.default`.
+- Rule: components consume semantic/component tokens only, never raw core values directly.
 
-## Outputs
-- Token taxonomy and naming rules
-- Token set with project-defined IDs (example: `DSN-TOK-*` when no existing policy is available)
-- Token governance and migration guidance
+## Quality Standard
+- Naming reflects intent, not specific component or hex value.
+- Token layering prevents direct coupling between components and raw primitives.
+- Accessibility-critical token sets pass contrast and state visibility requirements.
+- Token changes include migration impact and rollout sequence.
 
 ## Workflow
-1. Define semantic token categories and scopes.
-2. Map raw values into semantic tokens.
-3. Define alias and component token layering.
-4. Establish versioning and deprecation rules.
-5. Validate token coverage against key components.
+1. Define token layers and scope boundaries.
+2. Map existing raw values to semantic tokens.
+3. Add component-level aliases only where needed for stability.
+4. Establish version/deprecation workflow and ownership.
+5. Validate token coverage against critical UI surfaces.
 
-6. Compare at least two feasible approaches and explain why one is preferred.
-7. Record key assumptions, unknowns, confidence, and rollback considerations.
-
-## Quality Gates
-- Token names are semantic and stable.
-- Token hierarchy prevents duplication and drift.
-- Accessibility-critical values meet contrast requirements.
-- Token changes include migration impact notes.
-
-- Decision rationale and trade-offs are explicit.
-- Assumptions, unknowns, and confidence are explicitly documented.
-
-## Failure Handling
-- Stop when token model depends on one-off component exceptions.
-- Escalate when token changes break critical accessibility guarantees.
+## Failure Conditions
+- Stop when token design allows uncontrolled one-off exceptions.
+- Stop when naming ties tokens to unstable implementation details.
+- Escalate when token changes break accessibility without mitigation.
