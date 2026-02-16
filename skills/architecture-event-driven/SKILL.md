@@ -1,62 +1,40 @@
 ---
 name: architecture-event-driven
-description: "Event-driven architecture design for asynchronous workflows, decoupled integration, and scalable domain event propagation. Trigger when async flow design needs explicit guarantees for delivery, ordering, retries, and consumer isolation before implementation; do not use for single-module implementation refactors without architecture impact."
+description: "Design event-driven architecture with explicit delivery, ordering, schema evolution, and failure-handling guarantees. Use when asynchronous workflows are core and correctness depends on messaging semantics."
 ---
 
 # Architecture Event Driven
 
-## Trigger Boundary
-- Use when asynchronous integration and loose coupling are required.
-- Do not use for request-response dominant topology design; use `architecture-microservices` or `architecture-monolith`.
-- Do not use to document final decision history; use `architecture-decision-records`.
+## Overview
+Use this skill to design reliable asynchronous systems where events are first-class contracts. The output must be implementable and operable under failure.
 
-## Goal
-Define event model, schema governance, and runtime guarantees for asynchronous systems.
+## Inputs To Gather
+- Event candidates and domain ownership.
+- Throughput, latency, and ordering requirements.
+- Consistency and compensation expectations.
+- Recovery/compliance constraints.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Do not define local ID formats or alternate state machines.
+## Deliverables
+- Event catalog with schema and owner.
+- Delivery semantics and ordering policy.
+- Retry, DLQ, replay, and idempotency strategy.
+- Schema evolution and compatibility policy.
 
-## Project-Specific Decision Calibration (Mandatory)
-- Use `skills/architecture-principles/references/project-calibration-framework.md` to derive decision criteria from project evidence.
-- Derive no-go conditions from current requirements, existing implementation constraints, and user/stakeholder direction collected in this task.
-- Do not hardcode universal no-go rules; represent them as falsifiable, project-scoped checks with evidence links.
-- Define threshold types before values (for example latency budget, consistency tolerance, recovery objective, ownership capacity, and cost volatility).
-- For each threshold, document rationale, measurement method, observation window, and re-decision trigger.
-- If evidence is incomplete, record explicit assumptions and decision confidence.
-
-## Compliance & Governance Baseline (US, Japan, EU)
-- Classify event payload sensitivity and minimize personal data fields.
-- Enforce retention and replay policy under jurisdictional constraints.
-- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for governance review.
-
-## Inputs
-- Domain events and producer/consumer candidates
-- Latency and durability requirements
-- Ordering, duplication, and consistency constraints
-
-## Outputs
-- Event catalog with schema ownership and versioning rules
-- Delivery semantics and retry/dead-letter policy
-- Consistency and compensating-action strategy
+## Quality Standard
+- Event ownership and lifecycle are explicit.
+- Delivery semantics are chosen intentionally per flow.
+- Idempotency and dedupe strategy are testable.
+- Retry and DLQ handling include operational ownership.
+- Compatibility policy supports safe producer/consumer evolution.
 
 ## Workflow
-1. Identify domain events and bounded payload contracts.
-2. Define event schema lifecycle and compatibility policy.
-3. Specify delivery guarantees and idempotency requirements.
-4. Design dead-letter handling and replay procedures.
-5. Record eventual consistency behavior and compensations.
+1. Identify events and ownership boundaries.
+2. Define schema contracts and evolution policy.
+3. Define delivery, ordering, and idempotency guarantees.
+4. Define retry, DLQ, and replay operations.
+5. Validate consistency gaps and compensation design.
 
-## Quality Gates
-- Every event has owner, schema, and versioning policy.
-- Consumers can handle duplicates and out-of-order messages.
-- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
-- Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
-- Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
-
-## Failure Handling
-- Stop when event ownership or schema governance is undefined.
-- Stop when canonical contract validation fails.
-- Stop when no-go checks or threshold values are copied from generic defaults without project evidence.
-- Escalate when consistency gaps cannot be compensated safely.
+## Failure Conditions
+- Stop when event ownership is undefined.
+- Stop when consistency expectations are implicit.
+- Escalate when compensation cannot bound business risk.

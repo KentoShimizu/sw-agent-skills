@@ -1,69 +1,43 @@
 ---
 name: architecture-principles
-description: "Architecture principle and guardrail definition before selecting concrete topology. Trigger when teams have competing architecture proposals and need explicit decision principles, constraints, and review guardrails before choosing any concrete pattern; do not use to choose one implementation pattern without principle alignment."
+description: "Define architecture principles and review guardrails before choosing monolith, microservices, serverless, or event-driven options. Use when teams need explicit decision criteria; do not use to record final decisions."
 ---
 
 # Architecture Principles
 
-## Trigger Boundary
-- Use when architecture drivers are known but principles and guardrails are undefined.
-- Do not use to choose between concrete architecture options; use `architecture-tradeoff-analysis`.
-- Do not use to document finalized decisions; use `architecture-decision-records`.
+## Overview
+Use this skill to produce principle-level guardrails that help agents and humans make consistent architecture decisions. The output must be concrete enough to guide design reviews and implementation planning.
 
-## Goal
-Define stable architecture principles that guide consistent decisions across teams.
+## Inputs To Gather
+- Business outcomes and failure impact.
+- Quality priorities (latency, reliability, security, consistency, cost, delivery speed).
+- Hard constraints (regulatory, legal, platform, security).
+- Team ownership model and operational maturity.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- When project-specific governance rules are not defined, apply the canonical contract as the default operating method.
-- Optional consistency check (only if your repository enforces manifest validation): `python3 skills/architecture-principles/scripts/validate_architecture_contract.py --manifest <path/to/manifest.json>`.
-- Block host-specific path leakage with `python3 scripts/validate_no_absolute_paths.py`.
-- Start from valid samples when drafting manifests:
-  - `skills/architecture-principles/assets/arc-prn-manifest.valid.json`
-  - `skills/architecture-principles/assets/arc-cmp-manifest.valid.json`
-- Use the field-level guidance reference:
-  - `skills/architecture-principles/references/manifest-field-guide.md`
-- Do not define local ID formats or alternate state machines.
+## Deliverables
+- Principle catalog with rationale.
+- Review guardrail checklist.
+- Tradeoff policy for conflicting principles.
+- Re-decision triggers when assumptions change.
 
-## Project-Specific Decision Calibration (Mandatory)
-- Use `skills/architecture-principles/references/project-calibration-framework.md` to derive decision criteria from project evidence.
-- Derive no-go conditions from current requirements, existing implementation constraints, and user/stakeholder direction collected in this task.
-- Do not hardcode universal no-go rules; represent them as falsifiable, project-scoped checks with evidence links.
-- Define threshold types before values (for example latency budget, consistency tolerance, recovery objective, ownership capacity, and cost volatility).
-- For each threshold, document rationale, measurement method, observation window, and re-decision trigger.
-- If evidence is incomplete, record explicit assumptions and decision confidence.
-
-## Compliance & Governance Baseline (US, Japan, EU)
-- Encode privacy, security, residency, and transfer constraints as explicit principles.
-- Treat legal obligations as hard architecture constraints.
-- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for review.
-
-## Inputs
-- Business goals and quality attribute priorities
-- Regulatory and security constraints
-- Team topology and operational constraints
-
-## Outputs
-- Principle catalog with rationale and anti-patterns
-- Guardrail checklist for design reviews
-- Open principle conflicts and decision owners
+## Quality Standard
+- Each principle states:
+  - Why it exists.
+  - What decision it constrains.
+  - How to verify pass/fail in review.
+  - Who approves exceptions.
+- Hard constraints are separated from optimization preferences.
+- Tradeoffs are explicit: what is intentionally worse and why.
+- Re-decision triggers are observable and testable.
 
 ## Workflow
-1. Translate business goals into measurable architecture drivers.
-2. Draft principles with rationale, tradeoffs, and scope.
-3. Define anti-pattern examples for each principle.
-4. Convert principles into reviewable guardrail checks and project-scoped no-go/threshold criteria.
-5. Resolve conflicts and assign owners for future revisions.
+1. Convert business goals into ranked architecture drivers.
+2. Draft principles that constrain real decisions, not slogans.
+3. Add measurable review checks and exception handling.
+4. Resolve conflicts between principles with explicit priority rules.
+5. Publish the principle set and review cadence.
 
-## Quality Gates
-- Every principle is testable in architecture review.
-- Principle set contains no unresolved contradictions.
-- project-defined compliance evidence package ID (for example `ARC-CMP-*`) exists and is complete.
-- Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
-- Required approvers are assigned according to the contract.
-
-## Failure Handling
-- Stop when principles are vague or not reviewable.
-- Stop when canonical contract validation fails.
-- Stop when no-go checks or threshold values are copied from generic defaults without project evidence.
-- Escalate when mandatory legal constraints conflict with product goals.
+## Failure Conditions
+- Stop when priorities are contradictory or missing.
+- Stop when principles cannot be evaluated objectively.
+- Escalate when legal or security constraints conflict with product goals.

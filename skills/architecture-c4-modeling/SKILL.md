@@ -1,62 +1,39 @@
 ---
 name: architecture-c4-modeling
-description: "C4 architecture modeling workflow for producing context, container, and component views that communicate system structure consistently. Trigger when teams need explicit boundary and dependency views to align architecture decisions before implementation, review, or handoff; do not use for single-module implementation refactors without architecture impact."
+description: "Create C4 context, container, and component views that clarify boundaries, dependencies, and responsibilities. Use when architecture alignment needs clear structural communication; do not use as a final decision record."
 ---
 
 # Architecture C4 Modeling
 
-## Trigger Boundary
-- Use when architecture communication artifacts are missing or outdated.
-- Do not use to decide architecture options; use `architecture-tradeoff-analysis`.
-- Do not use as decision history storage; use `architecture-decision-records`.
+## Overview
+Use this skill to produce C4 diagrams that reduce ambiguity and improve architecture communication. The output should support decision-making, implementation planning, and review.
 
-## Goal
-Produce accurate and traceable C4 views that align stakeholders on architecture.
+## Inputs To Gather
+- System landscape and external dependencies.
+- Runtime/deployment boundaries.
+- Trust boundaries and sensitive data flows.
+- Existing ADRs and known risks.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Do not define local ID formats or alternate state machines.
+## Deliverables
+- Context diagram.
+- Container diagram.
+- Component diagrams only where complexity justifies them.
+- Assumptions, omissions, and trace links to risks/ADRs.
 
-## Project-Specific Decision Calibration (Mandatory)
-- Use `skills/architecture-principles/references/project-calibration-framework.md` to derive decision criteria from project evidence.
-- Derive no-go conditions from current requirements, existing implementation constraints, and user/stakeholder direction collected in this task.
-- Do not hardcode universal no-go rules; represent them as falsifiable, project-scoped checks with evidence links.
-- Define threshold types before values (for example latency budget, consistency tolerance, recovery objective, ownership capacity, and cost volatility).
-- For each threshold, document rationale, measurement method, observation window, and re-decision trigger.
-- If evidence is incomplete, record explicit assumptions and decision confidence.
-
-## Compliance & Governance Baseline (US, Japan, EU)
-- Mark sensitive data flows and regulated boundaries in relevant diagrams.
-- Avoid exposing credentials or internal secrets in architecture artifacts.
-- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for governance review.
-
-## Inputs
-- Current architecture and dependency information
-- Target audience and required abstraction level
-- Related ADRs and risks
-
-## Outputs
-- Updated C4 context, container, and component views
-- Relationship legend and assumptions list
-- Traceability links to ADRs and key risks
+## Quality Standard
+- Each diagram answers a concrete audience question.
+- Cross-level consistency is maintained (names, boundaries, relationships).
+- Trust boundaries and critical data paths are explicit.
+- Scope is controlled: only useful detail, no diagram noise.
 
 ## Workflow
-1. Build context view with external actors and systems.
-2. Build container view with runtime responsibilities.
-3. Build component view for high-complexity containers.
-4. Link diagrams to ADR and risk identifiers.
-5. Validate naming and relationship consistency.
+1. Define target audience and questions each diagram must answer.
+2. Draft context view with external actors/systems and trust boundaries.
+3. Draft container view with runtime responsibilities and key interactions.
+4. Add component views only for complex containers.
+5. Validate consistency and annotate assumptions.
 
-## Quality Gates
-- Diagram scope matches intended audience.
-- Names and relationships are consistent across views.
-- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
-- Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
-- Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
-
-## Failure Handling
-- Stop when source architecture information is stale or conflicting.
-- Stop when canonical contract validation fails.
-- Stop when no-go checks or threshold values are copied from generic defaults without project evidence.
-- Escalate when critical boundaries cannot be represented clearly.
+## Failure Conditions
+- Stop when source inventory is stale or contradictory.
+- Stop when diagram scope is unclear.
+- Escalate when critical boundaries cannot be represented unambiguously.

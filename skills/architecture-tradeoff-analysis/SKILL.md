@@ -1,64 +1,41 @@
 ---
 name: architecture-tradeoff-analysis
-description: "Structured architecture option evaluation with explicit criteria, weighting, and sensitivity checks. Trigger when multiple architecture options are still viable and the decision needs transparent scoring, risk weighting, and sensitivity analysis for stakeholder sign-off; do not use after the architecture direction is already fixed."
+description: "Compare viable architecture options using explicit criteria, evidence, and risk weighting. Use when multiple options are still on the table and a transparent decision is required; do not use after direction is fixed."
 ---
 
 # Architecture Tradeoff Analysis
 
-## Trigger Boundary
-- Use when multiple architecture options exist and a defensible choice is required.
-- Do not use to document final decision history; use `architecture-decision-records`.
-- Do not use to produce communication diagrams only; use `architecture-c4-modeling`.
+## Overview
+Use this skill to produce a defensible architecture decision from competing options. The result should make decision logic auditable and reusable for future re-evaluation.
 
-## Goal
-Select architecture options through transparent, evidence-based evaluation.
+## Inputs To Gather
+- Decision question and deadline.
+- Option set at the same abstraction level.
+- Hard constraints that cannot be violated.
+- Quality targets and operational constraints.
+- Known uncertainties and assumptions.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Do not define local ID formats or alternate state machines.
+## Deliverables
+- Option scorecard (criteria, weights, evidence, assumptions).
+- Sensitivity analysis for uncertain assumptions.
+- Recommendation with residual risk and owner.
+- Re-decision triggers.
 
-## Project-Specific Decision Calibration (Mandatory)
-- Use `skills/architecture-principles/references/project-calibration-framework.md` to derive decision criteria from project evidence.
-- Derive no-go conditions from current requirements, existing implementation constraints, and user/stakeholder direction collected in this task.
-- Do not hardcode universal no-go rules; represent them as falsifiable, project-scoped checks with evidence links.
-- Define threshold types before values (for example latency budget, consistency tolerance, recovery objective, ownership capacity, and cost volatility).
-- For each threshold, document rationale, measurement method, observation window, and re-decision trigger.
-- If evidence is incomplete, record explicit assumptions and decision confidence.
-
-## Compliance & Governance Baseline (US, Japan, EU)
-- Include legal and privacy constraints as hard gates, not soft preferences.
-- Reject options that require non-compliant data handling assumptions.
-- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for governance review.
-
-## Inputs
-- Decision question and candidate options
-- Architecture drivers and quality attributes
-- Constraints, risks, and cost assumptions
-
-## Outputs
-- Option scorecard with criteria and weights
-- Sensitivity analysis on uncertain assumptions
-- Recommended option with explicit risks and re-decision trigger
-- Brownfield only: rollback strategy with trigger condition and runbook link
+## Quality Standard
+- Constraint filtering happens before scoring.
+- Scoring criteria are defined before evaluating options.
+- Every score links to evidence.
+- Sensitivity analysis is present for high-uncertainty inputs.
+- The recommendation includes operational consequences and reversibility.
 
 ## Workflow
-1. Define decision scope and non-negotiable constraints.
-2. Enumerate at least two viable architecture options.
-3. Score options against weighted criteria.
-4. Perform sensitivity checks on uncertain inputs.
-5. For greenfield, define failure exposure criteria and re-decision trigger.
-6. For brownfield, add rollback trigger and runbook reference.
+1. Freeze scope, options, and non-negotiable constraints.
+2. Define criteria and weights from quality priorities.
+3. Score each option with explicit evidence and assumptions.
+4. Run sensitivity checks and identify fragile outcomes.
+5. Recommend one option and document residual risk.
 
-## Quality Gates
-- Criteria and weights are defined before scoring.
-- Options are comparable at equal abstraction level.
-- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
-- Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
-- Greenfield output does not contain fallback or rollback architecture paths.
-
-## Failure Handling
-- Stop when decision criteria are missing or unstable.
-- Stop when canonical contract validation fails.
-- Stop when no-go checks or threshold values are copied from generic defaults without project evidence.
-- Escalate when top options are statistically indistinguishable under sensitivity checks.
+## Failure Conditions
+- Stop when criteria or weights are unstable.
+- Stop when options are not comparable.
+- Escalate when top options remain tied after sensitivity analysis.

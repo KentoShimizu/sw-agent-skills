@@ -1,62 +1,40 @@
 ---
 name: architecture-decision-records
-description: "Architecture Decision Record authoring and lifecycle governance for significant technical decisions. Trigger when a high-impact technical decision needs traceable rationale, option comparison, and lifecycle state management for future audit and re-decision; do not use for single-module implementation refactors without architecture impact."
+description: "Capture high-impact architecture decisions as ADRs with rationale, alternatives, consequences, and lifecycle status. Use when a decision changes risk, cost, ownership, or reliability posture."
 ---
 
 # Architecture Decision Records
 
-## Trigger Boundary
-- Use when a significant architecture decision must be recorded or revised.
-- Do not use to evaluate alternatives from scratch; use `architecture-tradeoff-analysis` first.
-- Do not use to model runtime structure visually; use `architecture-c4-modeling`.
+## Overview
+Use this skill to produce ADRs that make architecture decisions traceable and maintainable over time. ADRs are decision artifacts, not brainstorming notes.
 
-## Goal
-Maintain auditable and current decision history for architecture evolution.
+## Inputs To Gather
+- Decision statement and scope.
+- Options considered and supporting evidence.
+- Constraints, risks, approvals.
+- Related incidents, diagrams, and requirements.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Do not define local ID formats or alternate state machines.
+## Deliverables
+- ADR document with lifecycle status.
+- Explicit rationale for accepted and rejected options.
+- Consequences and follow-up actions.
+- Links to superseded or related ADRs.
 
-## Project-Specific Decision Calibration (Mandatory)
-- Use `skills/architecture-principles/references/project-calibration-framework.md` to derive decision criteria from project evidence.
-- Derive no-go conditions from current requirements, existing implementation constraints, and user/stakeholder direction collected in this task.
-- Do not hardcode universal no-go rules; represent them as falsifiable, project-scoped checks with evidence links.
-- Define threshold types before values (for example latency budget, consistency tolerance, recovery objective, ownership capacity, and cost volatility).
-- For each threshold, document rationale, measurement method, observation window, and re-decision trigger.
-- If evidence is incomplete, record explicit assumptions and decision confidence.
-
-## Compliance & Governance Baseline (US, Japan, EU)
-- Capture compliance and privacy rationale in each relevant ADR.
-- Preserve change history and approval traceability for audits.
-- Prepare or reference a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for each high-impact decision.
-
-## Inputs
-- Decision statement and context
-- Evaluated options and tradeoff evidence
-- Risks, constraints, and stakeholder approvals
-
-## Outputs
-- ADR documents with status lifecycle
-- Supersession links between related ADRs
-- Decision consequences and follow-up actions
+## Quality Standard
+- Context, decision, alternatives, consequences, and status are complete.
+- Rationale is evidence-based, not preference-based.
+- Operational impact and ownership are explicit.
+- Re-decision triggers are defined.
+- Supersession chain remains navigable.
 
 ## Workflow
-1. Create ADR with context, decision, options, and consequences.
-2. Reference related drivers, risks, diagrams, and evidence package IDs.
-3. Set status: proposed, accepted, rejected, or superseded.
-4. Record approvers and decision date.
-5. Update or supersede ADR when assumptions change.
+1. Capture context, constraints, and decision scope.
+2. Summarize alternatives with tradeoff evidence.
+3. Record decision and concrete consequences.
+4. Set status, owner, and approvals.
+5. Link follow-ups and future re-decision triggers.
 
-## Quality Gates
-- Every major decision has an ADR identifier.
-- ADR rationale includes rejected options.
-- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
-- Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
-- High-impact decisions have required approver matrix.
-
-## Failure Handling
-- Stop when decision rationale lacks option evidence.
-- Stop when canonical contract validation fails.
-- Stop when no-go checks or threshold values are copied from generic defaults without project evidence.
-- Escalate when high-impact ADRs lack explicit approval ownership.
+## Failure Conditions
+- Stop when rationale lacks evidence.
+- Stop when status or ownership is missing.
+- Escalate when high-impact decisions bypass ADR capture.
