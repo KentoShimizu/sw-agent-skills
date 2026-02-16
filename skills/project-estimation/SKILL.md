@@ -1,41 +1,47 @@
 ---
 name: project-estimation
-description: Specialized workflow for work breakdown accuracy and uncertainty-aware effort estimation. Trigger when initiatives need planning-grade estimates with dependency-aware breakdown, uncertainty ranges, and scenario assumptions for sequencing decisions; do not use for low-level implementation design details.
+description: "Project estimation workflow for dependency-aware breakdowns and uncertainty-calibrated effort ranges. Use when initiatives need planning-grade estimates with explicit assumptions and confidence ranges; do not use for low-level implementation design details."
 ---
 
 # Project Estimation
 
-## Trigger Boundary
-- Use when planning artifacts must convert uncertain inputs into executable milestones.
-- Do not use for incident response execution; use `runbook-authoring` or `incident-postmortem`.
-- Do not use for code-level quality review.
+## Overview
+Use this skill to create realistic estimates that expose uncertainty and sequencing risk instead of false precision.
 
-## Goal
-Create realistic plans with explicit assumptions, risks, and sequencing.
+## Shared References
+- Estimation calibration rules:
+  - `references/estimation-calibration-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for work breakdown accuracy and uncertainty-aware effort estimation
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Estimation breakdown template:
+  - `assets/estimation-breakdown-template.csv`
+- Uncertainty register template:
+  - `assets/uncertainty-register-template.md`
 
-## Outputs
-- Estimation sheet with confidence ranges
-- Decision log for work breakdown accuracy and uncertainty-aware effort estimation
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Scope definition and dependency graph.
+- Team capacity and delivery constraints.
+- Historical delivery data for calibration.
+- Risk factors and assumption volatility.
+
+## Deliverables
+- Work breakdown with range estimates.
+- Uncertainty/risk register with owners.
+- Sequencing recommendation and confidence level.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for work breakdown accuracy and uncertainty-aware effort estimation.
-2. Produce options and select an approach for work breakdown accuracy and uncertainty-aware effort estimation.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using historical calibration against delivered scope.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Create breakdown in `assets/estimation-breakdown-template.csv`.
+2. Calibrate ranges with `references/estimation-calibration-rules.md`.
+3. Track assumptions and risks in `assets/uncertainty-register-template.md`.
+4. Review dependencies and critical path sensitivity.
+5. Publish estimate with confidence and update policy.
 
-## Quality Gates
-- Scope and assumptions for work breakdown accuracy and uncertainty-aware effort estimation are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Estimates include explicit uncertainty ranges.
+- Dependencies and assumptions are visible and owned.
+- Calibration uses historical evidence when available.
 
-## Failure Handling
-- Stop when estimates do not expose assumptions or uncertainty bounds.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when estimates hide assumptions or uncertainty.
+- Stop when dependencies are ignored in schedule confidence.
+- Escalate when estimation risk blocks planning decisions.
