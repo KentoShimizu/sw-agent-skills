@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import importlib.util
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -68,12 +69,102 @@ class ResolveStyleGuidesRoutingTest(unittest.TestCase):
                 ["src/app.ts", "web/app.js", "package.json"],
                 ["javascript-style-guide", "typescript-style-guide"],
             ),
+            (
+                "powershell_script_triggers_powershell_style_guide",
+                ["scripts/deploy.ps1"],
+                ["powershell-style-guide"],
+            ),
+            (
+                "ambiguous_sh_extension_triggers_bash_and_sh",
+                ["scripts/deploy.sh"],
+                ["bash-style-guide", "sh-style-guide"],
+            ),
+            (
+                "zsh_extension_triggers_zsh_style_guide",
+                ["scripts/deploy.zsh"],
+                ["zsh-style-guide"],
+            ),
         ]
 
         for case_name, changed_paths, expected in cases:
             with self.subTest(case_name=case_name):
                 actual = resolve_skills(changed_paths)
                 self.assertEqual(expected, actual)
+
+    def test_ci_workflow_shell_hints_trigger_shell_specific_skills(self) -> None:
+        resolve_skills = load_resolver()
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            workflow_dir = Path(temp_dir) / ".github" / "workflows"
+            workflow_dir.mkdir(parents=True, exist_ok=True)
+
+            bash_workflow = workflow_dir / "bash-ci.yml"
+            bash_workflow.write_text(
+                "jobs:\n"
+                "  test:\n"
+                "    runs-on: ubuntu-latest\n"
+                "    steps:\n"
+                "      - run: echo hello\n"
+                "        shell: bash\n",
+                encoding="utf-8",
+            )
+
+            powershell_workflow = workflow_dir / "pwsh-ci.yml"
+            powershell_workflow.write_text(
+                "jobs:\n"
+                "  test:\n"
+                "    runs-on: windows-latest\n"
+                "    steps:\n"
+                "      - run: Write-Host 'hello'\n"
+                "        shell: pwsh\n",
+                encoding="utf-8",
+            )
+
+            sh_workflow = workflow_dir / "sh-ci.yml"
+            sh_workflow.write_text(
+                "jobs:\n"
+                "  test:\n"
+                "    runs-on: ubuntu-latest\n"
+                "    steps:\n"
+                "      - run: echo hello\n"
+                "        shell: sh\n",
+                encoding="utf-8",
+            )
+
+            zsh_workflow = workflow_dir / "zsh-ci.yml"
+            zsh_workflow.write_text(
+                "jobs:\n"
+                "  test:\n"
+                "    runs-on: ubuntu-latest\n"
+                "    steps:\n"
+                "      - run: print hello\n"
+                "        shell: zsh\n",
+                encoding="utf-8",
+            )
+
+            actual = resolve_skills(
+                [str(bash_workflow), str(powershell_workflow), str(sh_workflow), str(zsh_workflow)]
+            )
+            self.assertEqual(
+                ["bash-style-guide", "powershell-style-guide", "sh-style-guide", "zsh-style-guide"],
+                actual,
+            )
+
+    def test_extensionless_shebang_detection_for_shell_scripts(self) -> None:
+        resolve_skills = load_resolver()
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            script_dir = Path(temp_dir) / "scripts"
+            script_dir.mkdir(parents=True, exist_ok=True)
+
+            sh_script = script_dir / "deploy-sh"
+            sh_script.write_text("#!/bin/sh\necho hello\n", encoding="utf-8")
+
+            zsh_script = script_dir / "deploy-zsh"
+            zsh_script.write_text("#!/usr/bin/env zsh\nprint hello\n", encoding="utf-8")
+
+            actual = resolve_skills([str(sh_script), str(zsh_script)])
+            self.assertEqual(["sh-style-guide", "zsh-style-guide"], actual)
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path, PurePosixPath
 
 BASH = "bash-style-guide"
@@ -12,15 +13,20 @@ CSHARP = "csharp-style-guide"
 GO = "go-style-guide"
 JAVA = "java-style-guide"
 JAVASCRIPT = "javascript-style-guide"
+POWERSHELL = "powershell-style-guide"
 PYTHON = "python-style-guide"
 RUST = "rust-style-guide"
+SH = "sh-style-guide"
 SQL = "sql-style-guide"
 TERRAFORM = "terraform-style-guide"
 TYPESCRIPT = "typescript-style-guide"
+ZSH = "zsh-style-guide"
 
 JAVASCRIPT_EXTENSIONS = {".js", ".jsx", ".mjs", ".cjs"}
 TYPESCRIPT_EXTENSIONS = {".ts", ".tsx", ".d.ts"}
 CSHARP_EXTENSIONS = {".cs", ".csproj", ".sln", ".props", ".targets", ".razor"}
+POWERSHELL_EXTENSIONS = {".ps1", ".psm1", ".psd1"}
+ZSH_FILENAMES = {".zshrc", ".zprofile", ".zshenv", ".zlogin", ".zlogout"}
 
 SHARED_JS_TS_CONFIG_BASENAMES = {
     "package.json",
@@ -108,7 +114,7 @@ def looks_like_shared_js_ts_config(path: PurePosixPath) -> bool:
     return any(name == prefix or name.startswith(f"{prefix}.") for prefix in SHARED_JS_TS_RC_PREFIXES)
 
 
-def has_bash_shebang(path: PurePosixPath) -> bool:
+def has_shebang(path: PurePosixPath, prefixes: tuple[str, ...]) -> bool:
     file_path = Path(path)
     if not file_path.exists() or not file_path.is_file():
         return False
@@ -118,7 +124,54 @@ def has_bash_shebang(path: PurePosixPath) -> bool:
     except (UnicodeDecodeError, IndexError):
         return False
 
-    return first_line.startswith("#!/usr/bin/env bash") or first_line.startswith("#!/bin/bash")
+    return any(first_line.startswith(prefix) for prefix in prefixes)
+
+
+def has_bash_shebang(path: PurePosixPath) -> bool:
+    return has_shebang(path, ("#!/usr/bin/env bash", "#!/bin/bash"))
+
+
+def has_sh_shebang(path: PurePosixPath) -> bool:
+    return has_shebang(path, ("#!/usr/bin/env sh", "#!/bin/sh"))
+
+
+def has_zsh_shebang(path: PurePosixPath) -> bool:
+    return has_shebang(path, ("#!/usr/bin/env zsh", "#!/bin/zsh"))
+
+
+def is_ci_workflow_file(path: PurePosixPath) -> bool:
+    if path.suffix.lower() not in {".yml", ".yaml"}:
+        return False
+
+    parts = [part.lower() for part in path.parts]
+    return ".github" in parts and "workflows" in parts
+
+
+def workflow_shell_hints(path: PurePosixPath) -> set[str]:
+    hints: set[str] = set()
+    file_path = Path(path)
+
+    if not is_ci_workflow_file(path) or not file_path.exists() or not file_path.is_file():
+        return hints
+
+    try:
+        text = file_path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        return hints
+
+    if re.search(r"(?im)^\s*shell\s*:\s*(?:bash|/bin/bash)(?:\s+\{0\})?\s*$", text):
+        hints.add(BASH)
+
+    if re.search(r"(?im)^\s*shell\s*:\s*(?:sh|/bin/sh)(?:\s+\{0\})?\s*$", text):
+        hints.add(SH)
+
+    if re.search(r"(?im)^\s*shell\s*:\s*(?:zsh|/bin/zsh)(?:\s+\{0\})?\s*$", text):
+        hints.add(ZSH)
+
+    if re.search(r"(?im)^\s*shell\s*:\s*(?:pwsh|powershell)(?:\s+\{0\})?\s*$", text):
+        hints.add(POWERSHELL)
+
+    return hints
 
 
 def resolve_skills(changed_paths: list[str]) -> list[str]:
@@ -135,9 +188,35 @@ def resolve_skills(changed_paths: list[str]) -> list[str]:
         name = path.name
         name_lower = name.lower()
         shared_config = looks_like_shared_js_ts_config(path)
+        workflow_hints = workflow_shell_hints(path)
 
-        if suffix == ".sh" or has_bash_shebang(path):
-            resolved.add(BASH)
+        if workflow_hints:
+            resolved.update(workflow_hints)
+
+        bash_shebang = has_bash_shebang(path)
+        sh_shebang = has_sh_shebang(path)
+        zsh_shebang = has_zsh_shebang(path)
+
+        if suffix == ".sh":
+            if bash_shebang:
+                resolved.add(BASH)
+            elif sh_shebang:
+                resolved.add(SH)
+            else:
+                # `.sh` without explicit shebang is ambiguous; run both shell style guides.
+                resolved.add(BASH)
+                resolved.add(SH)
+        else:
+            if bash_shebang:
+                resolved.add(BASH)
+            if sh_shebang:
+                resolved.add(SH)
+
+        if suffix == ".zsh" or name_lower in ZSH_FILENAMES or zsh_shebang:
+            resolved.add(ZSH)
+
+        if suffix in POWERSHELL_EXTENSIONS:
+            resolved.add(POWERSHELL)
 
         if suffix in CSHARP_EXTENSIONS or name_lower in CSHARP_EXTENSIONS:
             resolved.add(CSHARP)
