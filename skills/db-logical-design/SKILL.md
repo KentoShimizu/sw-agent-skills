@@ -1,6 +1,6 @@
 ---
 name: db-logical-design
-description: Specialized workflow for table structure, keys, constraints, and relational consistency. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for table structure, keys, constraints, and relational consistency. Trigger when entities and relationships must be translated into relational tables with enforceable keys, constraints, and integrity rules before migration or implementation; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Logical Design

@@ -1,6 +1,6 @@
 ---
 name: pytest-workflow
-description: "Pytest test design workflow. Use when test or evidence artifacts are the primary output for verification; do not use for product requirement prioritization or architecture topology selection."
+description: "Pytest test design workflow. Trigger when Python code changes require executable verification via pytest (unit/integration behavior, fixtures, parametrization, regression evidence) before merge; do not use for product requirement prioritization or architecture topology selection."
 ---
 
 # Pytest Workflow

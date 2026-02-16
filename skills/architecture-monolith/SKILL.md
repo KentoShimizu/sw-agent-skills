@@ -1,6 +1,6 @@
 ---
 name: architecture-monolith
-description: "Modular monolith architecture design for systems that prioritize transactional consistency, simple operations, and fast team iteration in a single deployable unit. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Modular monolith architecture design for systems that prioritize transactional consistency, operational simplicity, and fast team iteration in a single deployable unit. Trigger when architecture direction is undecided and teams must decide whether domain boundaries, dependency rules, and scaling constraints can be handled safely inside one deployable; do not use for single-module implementation refactors without architecture impact."
 ---
 
 # Architecture Monolith

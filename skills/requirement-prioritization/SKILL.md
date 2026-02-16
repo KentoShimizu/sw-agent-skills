@@ -1,6 +1,6 @@
 ---
 name: requirement-prioritization
-description: Release planning ranker for already-defined requirements. Use only when `REQ-*` items are finalized and Codex must produce a dependency-aware priority order and release cut line; do not use for requirement discovery.
+description: Release planning ranker for already-defined requirements. Trigger when finalized `REQ-*` items need dependency-aware ordering and release cut-line decisions under value, risk, and capacity constraints; do not use for requirement discovery.
 ---
 
 # Requirement Prioritization

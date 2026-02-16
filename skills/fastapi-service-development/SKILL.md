@@ -1,6 +1,6 @@
 ---
 name: fastapi-service-development
-description: "FastAPI service development workflow. Use when framework-specific application structure and runtime behavior must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
+description: "FastAPI service development workflow. Trigger when FastAPI service behavior (path operations, dependency injection, request/response models, validation, async execution, OpenAPI exposure) must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Fastapi Service Development

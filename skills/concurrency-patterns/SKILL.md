@@ -1,6 +1,6 @@
 ---
 name: concurrency-patterns
-description: Specialized workflow for shared-state safety, coordination primitives, and contention control. Use when implementation risk depends on algorithm correctness, complexity, or state-coordination tradeoffs; do not use for persistence schema design or deployment topology choices.
+description: Specialized workflow for shared-state safety, coordination primitives, and contention control. Trigger when code introduces parallel execution, shared mutable state, or async coordination and needs explicit safety/liveness decisions (race prevention, deadlock avoidance, and contention control); do not use for persistence schema design or deployment topology choices.
 ---
 
 # Concurrency Patterns

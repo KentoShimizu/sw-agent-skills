@@ -1,6 +1,6 @@
 ---
 name: kubernetes-security
-description: Specialized workflow for cluster hardening, workload isolation, and policy enforcement. Use when container, orchestration, or infrastructure runtime configuration is central; do not use for API contract design or requirement prioritization.
+description: Specialized workflow for cluster hardening, workload isolation, and policy enforcement. Trigger when Kubernetes workloads or clusters need explicit security controls (RBAC, network policy, pod security, secret handling, admission policy) before production exposure; do not use for API contract design or requirement prioritization.
 ---
 
 # Kubernetes Security

@@ -1,6 +1,6 @@
 ---
 name: security-authentication
-description: Specialized workflow for identity verification flows and credential assurance controls. Use when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
+description: Specialized workflow for identity verification flows and credential assurance controls. Trigger when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
 ---
 
 # Security Authentication

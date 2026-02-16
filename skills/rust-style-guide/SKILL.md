@@ -1,6 +1,6 @@
 ---
 name: rust-style-guide
-description: "Style, review, and refactoring standards for Rust codebases. Use when editing or reviewing `.rs`, `Cargo.toml`, or `Cargo.lock`, or Rust crates/binaries built with Cargo. Do not use for C/C++ toolchain conventions, shell-only changes, or non-Rust runtime style concerns unless Rust artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
+description: "Style, review, and refactoring standards for Rust codebases. Trigger when `.rs`, `Cargo.toml`, or `Cargo.lock` files are created, changed, or reviewed and Rust-specific quality rules (ownership/borrowing clarity, error handling, trait/API design, crate boundaries) must be enforced. Do not use for C/C++ toolchain conventions, shell-only changes, or non-Rust runtime style concerns unless Rust artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
 ---
 
 # Rust Style Guide

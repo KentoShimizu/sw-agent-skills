@@ -1,6 +1,6 @@
 ---
 name: javascript-style-guide
-description: "Style, review, and refactoring standards for JavaScript codebases. Use when editing or reviewing `.js`, `.jsx`, `.mjs`, or `.cjs` source files and JavaScript-only runtime/tooling code not included in TypeScript compilation. Do not use for `.ts`, `.tsx`, `.d.ts`, or `tsconfig*.json`-owned code. For shared JS/TS configuration files (for example `package.json`, shared lint/test config), run together with `typescript-style-guide` when both JS and TS artifacts change in the same pull request."
+description: "Style, review, and refactoring standards for JavaScript codebases. Trigger when `.js`, `.jsx`, `.mjs`, or `.cjs` source/runtime tooling files are created, changed, or reviewed and JS-specific quality rules (module boundaries, async/error handling, readability, runtime safety) must be enforced. Do not use for `.ts`, `.tsx`, `.d.ts`, or `tsconfig*.json`-owned code. For shared JS/TS configuration files (for example `package.json`, shared lint/test config), run together with `typescript-style-guide` when both JS and TS artifacts change in the same pull request."
 ---
 
 # Javascript Style Guide

@@ -1,6 +1,6 @@
 ---
 name: db-replication-sharding
-description: Specialized workflow for replication topology, shard strategy, and consistency trade-offs. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for replication topology, shard strategy, and consistency trade-offs. Trigger when availability, scale, or regional requirements require selecting replication/sharding topology with explicit consistency, failover, and rebalancing tradeoffs; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Replication Sharding

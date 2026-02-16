@@ -1,6 +1,6 @@
 ---
 name: schema-evolution-governance
-description: "Data schema evolution governance workflow for safe forward migration, compatibility control, and rollback readiness in operated systems. Use when coordinating cross-service schema compatibility and migration safety over time; do not use for isolated query micro-optimizations without schema lifecycle impact."
+description: "Data schema evolution governance workflow for safe forward migration, compatibility control, and rollback readiness in operated systems. Trigger when shared schemas used by multiple services/consumers are changing and compatibility policy, migration sequencing, and fallback strategy must be governed end-to-end; do not use for isolated query micro-optimizations without schema lifecycle impact."
 ---
 
 # Schema Evolution Governance

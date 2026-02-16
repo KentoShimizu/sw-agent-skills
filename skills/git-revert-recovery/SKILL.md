@@ -1,6 +1,6 @@
 ---
 name: git-revert-recovery
-description: "Specialized workflow for recovering safely from problematic merges or commits using explicit revert strategy. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for recovering safely from problematic merges or commits using explicit revert strategy. Trigger when a bad commit or merge has landed and rollback intent, blast radius, and follow-up recovery steps must be defined explicitly; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Revert Recovery

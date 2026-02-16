@@ -1,6 +1,6 @@
 ---
 name: architecture-event-driven
-description: "Event-driven architecture design for asynchronous workflows, decoupled integration, and scalable domain event propagation. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Event-driven architecture design for asynchronous workflows, decoupled integration, and scalable domain event propagation. Trigger when async flow design needs explicit guarantees for delivery, ordering, retries, and consumer isolation before implementation; do not use for single-module implementation refactors without architecture impact."
 ---
 
 # Architecture Event Driven

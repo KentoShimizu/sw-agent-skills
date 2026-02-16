@@ -1,6 +1,6 @@
 ---
 name: privacy-by-design
-description: "Privacy-by-design workflow for embedding data minimization, lawful basis, and user-rights readiness into feature and UX design decisions. Use when privacy controls must be embedded in product and UX decisions before implementation; do not use for narrow infrastructure tuning that does not affect personal-data handling."
+description: "Privacy-by-design workflow for embedding data minimization, lawful basis, and user-rights readiness into feature and UX design decisions. Trigger when a feature touches personal data and privacy controls (collection scope, legal basis, retention, user rights, consent/notice) must be defined before implementation; do not use for narrow infrastructure tuning that does not affect personal-data handling."
 ---
 
 # Privacy By Design

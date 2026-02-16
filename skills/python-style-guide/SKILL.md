@@ -1,6 +1,6 @@
 ---
 name: python-style-guide
-description: "Style, review, and refactoring standards for Python codebases. Use when editing or reviewing `.py` files, Python runtime/packaging configuration (`pyproject.toml`, `requirements*.txt`, `uv.lock`), or Python application/test code executed by Python runtimes. Do not use for notebook-only data analysis conventions, shell scripting style, or non-Python language style concerns unless Python artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
+description: "Style, review, and refactoring standards for Python codebases. Trigger when `.py`, `pyproject.toml`, `requirements*.txt`, or `uv.lock` files are created, changed, or reviewed and Python-specific quality rules (typing discipline, error handling, module boundaries, readability) must be enforced. Do not use for notebook-only data analysis conventions, shell scripting style, or non-Python language style concerns unless Python artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
 ---
 
 # Python Style Guide

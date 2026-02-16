@@ -1,6 +1,6 @@
 ---
 name: bash-style-guide
-description: "Style, review, and refactoring standards for Bash shell scripting. Use when editing or reviewing Bash artifacts such as `.sh` files, files with a Bash shebang (`#!/usr/bin/env bash` or `#!/bin/bash`), or CI script blocks explicitly executed by Bash. Do not use for generic POSIX `sh`, PowerShell, or language-specific application style rules. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
+description: "Style, review, and refactoring standards for Bash shell scripting. Trigger when `.sh` files, scripts with `#!/usr/bin/env bash` or `#!/bin/bash`, or Bash-executed CI blocks are created, modified, or reviewed and shell-specific quality controls (quoting safety, error handling, portability, readability) must be enforced. Do not use for generic POSIX `sh`, PowerShell, or language-specific application style rules. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
 ---
 
 # Bash Style Guide

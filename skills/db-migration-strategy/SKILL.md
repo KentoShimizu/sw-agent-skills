@@ -1,6 +1,6 @@
 ---
 name: db-migration-strategy
-description: Specialized workflow for schema migration sequencing, rollout safety, and rollback viability. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for schema migration sequencing, rollout safety, and rollback viability. Trigger when schema changes require online migration planning, compatibility windows, and explicit rollback or forward-only decisions across environments; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Migration Strategy

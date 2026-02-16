@@ -1,6 +1,6 @@
 ---
 name: git-merge-conflict-resolution
-description: "Specialized workflow for resolving Git merge conflicts with explicit intent tracking and verification. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for resolving Git merge conflicts with explicit intent tracking and verification. Trigger when merge or rebase conflicts occur and teams need intent-preserving conflict resolution with post-merge verification before integration; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Merge Conflict Resolution

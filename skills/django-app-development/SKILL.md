@@ -1,6 +1,6 @@
 ---
 name: django-app-development
-description: "Django application development workflow. Use when framework-specific application structure and runtime behavior must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
+description: "Django application development workflow. Trigger when Django-specific application code (models, views, serializers/forms, routing, settings, middleware, auth flow) must be implemented or changed with framework conventions and runtime behavior in scope; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Django App Development

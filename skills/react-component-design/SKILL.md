@@ -1,6 +1,6 @@
 ---
 name: react-component-design
-description: "React component design workflow. Use when framework-specific application structure and runtime behavior must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
+description: "React component design workflow. Trigger when React component behavior (props/state/effects, composition, rendering performance, accessibility behavior) must be implemented or revised with framework-level decisions in scope; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # React Component Design

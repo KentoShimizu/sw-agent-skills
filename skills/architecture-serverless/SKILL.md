@@ -1,6 +1,6 @@
 ---
 name: architecture-serverless
-description: "Serverless architecture design for event-driven and bursty workloads using managed services and function execution. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Serverless architecture design for event-driven and bursty workloads using managed services and function execution. Trigger when architecture decisions must weigh serverless fit (event model, latency/cold-start tolerance, operational ownership, and cost variability) before implementation; do not use for single-module implementation refactors without architecture impact."
 ---
 
 # Architecture Serverless

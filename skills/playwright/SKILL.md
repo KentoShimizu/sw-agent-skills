@@ -1,6 +1,6 @@
 ---
 name: playwright
-description: "Browser flow verification workflow using Playwright CLI. Use when test or evidence artifacts are the primary output for verification; do not use for product requirement prioritization or architecture topology selection."
+description: "Browser flow verification workflow using Playwright CLI. Trigger when web user journeys need executable browser-level verification evidence (pass/fail results, traces, screenshots) before merge or release; do not use for product requirement prioritization or architecture topology selection."
 ---
 
 # Playwright

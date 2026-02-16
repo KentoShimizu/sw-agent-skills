@@ -1,6 +1,6 @@
 ---
 name: graph-algorithms
-description: Specialized workflow for graph modeling and traversal/path algorithm selection. Use when implementation risk depends on algorithm correctness, complexity, or state-coordination tradeoffs; do not use for persistence schema design or deployment topology choices.
+description: Specialized workflow for graph modeling and traversal/path algorithm selection. Trigger when entities and relationships form graph-like problems (pathfinding, reachability, dependency ordering, connectivity, flow) and algorithm choice drives correctness or performance; do not use for persistence schema design or deployment topology choices.
 ---
 
 # Graph Algorithms

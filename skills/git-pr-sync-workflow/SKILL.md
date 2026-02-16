@@ -1,6 +1,6 @@
 ---
 name: git-pr-sync-workflow
-description: "Specialized workflow for keeping pull request branches synchronized with target branch changes and review expectations. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for keeping pull request branches synchronized with target branch changes and review expectations. Trigger when a PR branch diverges from the base branch and synchronization strategy (merge vs rebase, conflict handling, review continuity) must be chosen safely; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Pr Sync Workflow

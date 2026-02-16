@@ -1,6 +1,6 @@
 ---
 name: documentation-architecture
-description: Specialized workflow for architecture documentation clarity for boundaries and dependencies. Use when documentation artifacts are the primary deliverable; do not use for writing production feature logic unless documenting already-approved outcomes.
+description: Specialized workflow for architecture documentation clarity for boundaries and dependencies. Trigger when architecture context, component boundaries, dependency direction, and operational constraints must be documented for alignment, onboarding, or review readiness; do not use for writing production feature logic unless documenting already-approved outcomes.
 ---
 
 # Documentation Architecture

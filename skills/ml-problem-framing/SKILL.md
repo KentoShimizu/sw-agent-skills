@@ -1,6 +1,6 @@
 ---
 name: ml-problem-framing
-description: Specialized workflow for objective definition, target variable design, and success metrics. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: Specialized workflow for objective definition, target variable design, and success metrics. Trigger when a business problem is being translated into an ML task and objective/label/metric definitions are still ambiguous or contested; do not use for generic API-layer or infrastructure-only changes.
 ---
 
 # Ml Problem Framing

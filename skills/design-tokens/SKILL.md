@@ -1,6 +1,6 @@
 ---
 name: design-tokens
-description: "Design token architecture workflow for defining semantic, scalable, and implementation-ready token systems. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Design token architecture workflow for defining semantic, scalable, and implementation-ready token systems. Trigger when multiple screens or products need consistent color/type/spacing/motion decisions and token definitions must be established before component implementation; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Tokens

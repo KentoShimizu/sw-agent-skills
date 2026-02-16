@@ -1,6 +1,6 @@
 ---
 name: design-review
-description: "Structured design review workflow for validating UX quality, implementation readiness, and governance compliance before delivery. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Structured design review workflow for validating UX quality, implementation readiness, and governance compliance before delivery. Trigger when a design artifact needs formal review for usability, accessibility, consistency, and implementation readiness before handoff or approval; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Review

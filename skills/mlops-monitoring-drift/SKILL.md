@@ -1,6 +1,6 @@
 ---
 name: mlops-monitoring-drift
-description: Specialized workflow for data drift, concept drift, and model quality degradation detection. Use when ML deployment, monitoring, and pipeline operations are in scope; do not use for model-architecture research decisions.
+description: Specialized workflow for data drift, concept drift, and model quality degradation detection. Trigger when production ML systems need drift/quality monitoring design with actionable detection thresholds, diagnostics, and retraining escalation rules; do not use for model-architecture research decisions.
 ---
 
 # Mlops Monitoring Drift

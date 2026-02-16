@@ -1,6 +1,6 @@
 ---
 name: docker-basics
-description: Specialized workflow for container runtime fundamentals and reproducible local execution. Use when container, orchestration, or infrastructure runtime configuration is central; do not use for API contract design or requirement prioritization.
+description: Specialized workflow for container runtime fundamentals and reproducible local execution. Trigger when a service must be containerized or run reproducibly across developer/CI environments and base-image, runtime, and execution assumptions need to be made explicit; do not use for API contract design or requirement prioritization.
 ---
 
 # Docker Basics

@@ -1,6 +1,6 @@
 ---
 name: testing-bdd
-description: Specialized workflow for behavior-driven scenarios and ubiquitous language alignment. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: Specialized workflow for behavior-driven scenarios and ubiquitous language alignment. Trigger when requirements must be expressed as executable behavior scenarios in shared business language across product, engineering, and QA before implementation or release decisions; do not use for observability ownership or release scheduling policy.
 ---
 
 # Testing Bdd

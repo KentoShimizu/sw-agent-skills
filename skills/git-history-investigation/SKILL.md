@@ -1,6 +1,6 @@
 ---
 name: git-history-investigation
-description: "Specialized workflow for reconstructing change history using log, show, diff, and blame evidence. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for reconstructing change history using log, show, diff, and blame evidence. Trigger when teams need evidence-based answers about when/why behavior changed, who changed it, and what commit sequence caused the current state; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git History Investigation

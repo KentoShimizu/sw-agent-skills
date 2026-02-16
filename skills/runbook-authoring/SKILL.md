@@ -1,6 +1,6 @@
 ---
 name: runbook-authoring
-description: Specialized workflow for operational procedure clarity for on-call responders. Use when documentation artifacts are the primary deliverable; do not use for writing production feature logic unless documenting already-approved outcomes.
+description: Specialized workflow for operational procedure clarity for on-call responders. Trigger when operational procedures (incident response, rollback, failover, maintenance) must be documented as executable runbooks for responders before production use; do not use for writing production feature logic unless documenting already-approved outcomes.
 ---
 
 # Runbook Authoring

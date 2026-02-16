@@ -1,6 +1,6 @@
 ---
 name: sqlalchemy-orm-patterns
-description: "SQLAlchemy ORM design workflow. Use when framework-specific application structure and runtime behavior must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
+description: "SQLAlchemy ORM design workflow. Trigger when SQLAlchemy model mappings, relationship loading strategy, query composition, or session/transaction behavior must be implemented or revised with ORM-specific decisions in scope; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Sqlalchemy Orm Patterns

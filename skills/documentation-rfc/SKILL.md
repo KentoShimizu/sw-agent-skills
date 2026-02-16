@@ -1,6 +1,6 @@
 ---
 name: documentation-rfc
-description: Specialized workflow for decision proposal structure, trade-off clarity, and approval traceability. Use when documentation artifacts are the primary deliverable; do not use for writing production feature logic unless documenting already-approved outcomes.
+description: Specialized workflow for decision proposal structure, trade-off clarity, and approval traceability. Trigger when a technical direction is not yet approved and stakeholders need an RFC that compares options, risks, and adoption plan with explicit decision records; do not use for writing production feature logic unless documenting already-approved outcomes.
 ---
 
 # Documentation Rfc

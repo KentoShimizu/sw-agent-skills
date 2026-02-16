@@ -1,6 +1,6 @@
 ---
 name: data-structures
-description: Specialized workflow for data structure selection by access pattern and mutation profile. Use when implementation risk depends on algorithm correctness, complexity, or state-coordination tradeoffs; do not use for persistence schema design or deployment topology choices.
+description: Specialized workflow for data structure selection by access pattern and mutation profile. Trigger when correctness or performance depends on choosing the right in-memory structure for lookup, update, ordering, or traversal workloads and constraints are not yet explicit; do not use for persistence schema design or deployment topology choices.
 ---
 
 # Data Structures

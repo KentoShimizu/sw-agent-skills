@@ -1,6 +1,6 @@
 ---
 name: dynamic-programming
-description: Specialized workflow for state definition, transition design, and memoization strategy. Use when implementation risk depends on algorithm correctness, complexity, or state-coordination tradeoffs; do not use for persistence schema design or deployment topology choices.
+description: Specialized workflow for state definition, transition design, and memoization strategy. Trigger when a problem has overlapping subproblems and optimal-substructure characteristics and needs dynamic-programming modeling to hit correctness and performance targets; do not use for persistence schema design or deployment topology choices.
 ---
 
 # Dynamic Programming

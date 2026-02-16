@@ -1,6 +1,6 @@
 ---
 name: ci-cd-pipeline-design
-description: Specialized workflow for pipeline stage design, gate sequencing, and build reproducibility. Use when build, test, release, and rollout gates must be designed or changed; do not use for application-domain algorithm or schema decisions.
+description: Specialized workflow for pipeline stage design, gate sequencing, and build reproducibility. Trigger when build/test/release/rollout flow is new or changing and teams need explicit gate criteria, stage order, artifact traceability, and rollback safety before adoption; do not use for application-domain algorithm or schema decisions.
 ---
 
 # Ci Cd Pipeline Design

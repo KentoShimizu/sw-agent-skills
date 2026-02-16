@@ -1,6 +1,6 @@
 ---
 name: db-transaction-design
-description: Specialized workflow for transaction boundaries, isolation levels, and contention control. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for transaction boundaries, isolation levels, and contention control. Trigger when multi-step write operations need explicit transaction semantics (boundary, isolation, retry/idempotency, lock contention behavior) to guarantee correctness under concurrency; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Transaction Design

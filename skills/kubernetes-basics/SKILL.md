@@ -1,6 +1,6 @@
 ---
 name: kubernetes-basics
-description: Specialized workflow for workload deployment, service discovery, and cluster resource basics. Use when container, orchestration, or infrastructure runtime configuration is central; do not use for API contract design or requirement prioritization.
+description: Specialized workflow for workload deployment, service discovery, and cluster resource basics. Trigger when applications must run on Kubernetes and teams need concrete decisions on workload manifests, service exposure, namespace/resource setup, and cluster primitives before deployment; do not use for API contract design or requirement prioritization.
 ---
 
 # Kubernetes Basics

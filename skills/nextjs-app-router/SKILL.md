@@ -1,6 +1,6 @@
 ---
 name: nextjs-app-router
-description: "Next.js App Router implementation workflow. Use when framework-specific application structure and runtime behavior must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
+description: "Next.js App Router implementation workflow. Trigger when Next.js App Router behavior (route structure, server/client components, data fetching, rendering/caching strategy, navigation state) must be implemented or changed; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Nextjs App Router

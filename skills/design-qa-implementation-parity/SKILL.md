@@ -1,6 +1,6 @@
 ---
 name: design-qa-implementation-parity
-description: "UI parity verification workflow between design specs and implemented interfaces. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "UI parity verification workflow between design specs and implemented interfaces. Trigger when implemented UI must be compared against approved design specs and mismatches need structured severity judgment plus fix guidance before release or sign-off; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Qa Implementation Parity

@@ -1,6 +1,6 @@
 ---
 name: git-commit-hygiene
-description: "Specialized workflow for enforcing atomic commits, clear commit messages, and auditable change intent. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for enforcing atomic commits, clear commit messages, and auditable change intent. Trigger when changes are being prepared for commit and commit granularity, message clarity, and traceability must be enforced before push or review; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Commit Hygiene

@@ -1,6 +1,6 @@
 ---
 name: db-backup-recovery
-description: Specialized workflow for backup retention, restore reliability, and recovery time objectives. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for backup retention, restore reliability, and recovery time objectives. Trigger when data protection policy, RPO/RTO targets, or restore runbooks must be designed, changed, or validated before release or operational sign-off; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Backup Recovery

@@ -1,6 +1,6 @@
 ---
 name: ml-model-evaluation
-description: Specialized workflow for evaluation metrics, threshold selection, and failure segmentation. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: Specialized workflow for evaluation metrics, threshold selection, and failure segmentation. Trigger when model readiness decisions require explicit evaluation design (metrics, thresholds, slices, error analysis) and objective accept/reject criteria; do not use for generic API-layer or infrastructure-only changes.
 ---
 
 # Ml Model Evaluation

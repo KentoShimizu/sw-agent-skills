@@ -1,6 +1,6 @@
 ---
 name: db-normalization
-description: Specialized workflow for normal form decisions and update anomaly prevention. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for normal form decisions and update anomaly prevention. Trigger when table design must balance normalization, denormalization, and write/read costs with explicit anomaly and consistency implications before schema freeze; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Normalization

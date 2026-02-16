@@ -1,6 +1,6 @@
 ---
 name: redis-caching-patterns
-description: "Redis caching workflow for application performance. Use when framework-specific application structure and runtime behavior must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
+description: "Redis caching workflow for application performance. Trigger when application latency/throughput targets require caching decisions (cache-aside/write-through strategy, key schema, TTL, invalidation, consistency tradeoffs) using Redis; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Redis Caching Patterns

@@ -1,6 +1,6 @@
 ---
 name: testing-contract
-description: Specialized workflow for provider-consumer contract compatibility across service boundaries. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: Specialized workflow for provider-consumer contract compatibility across service boundaries. Trigger when service interfaces evolve and compatibility between providers and consumers must be validated by executable contract checks before release; do not use for observability ownership or release scheduling policy.
 ---
 
 # Testing Contract

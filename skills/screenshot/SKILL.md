@@ -1,6 +1,6 @@
 ---
 name: screenshot
-description: "Visual evidence capture workflow for software development. Use when test or evidence artifacts are the primary output for verification; do not use for product requirement prioritization or architecture topology selection."
+description: "Visual evidence capture workflow for software development. Trigger when test or evidence artifacts are the primary output for verification; do not use for product requirement prioritization or architecture topology selection."
 ---
 
 # Screenshot

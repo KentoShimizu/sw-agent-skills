@@ -1,6 +1,6 @@
 ---
 name: architecture-microservices
-description: "Microservices architecture design for independent deployability, team autonomy, and domain-level scaling. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Microservices architecture design for independent deployability, team autonomy, and domain-level scaling. Trigger when service boundaries, ownership, and inter-service integration risks must be resolved to decide whether a microservices direction is viable; do not use for single-module implementation refactors without architecture impact."
 ---
 
 # Architecture Microservices

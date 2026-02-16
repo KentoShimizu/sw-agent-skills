@@ -1,6 +1,6 @@
 ---
 name: git-bisect-debugging
-description: "Specialized workflow for locating regression-introducing commits with git bisect and deterministic checks. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for locating regression-introducing commits with git bisect and deterministic checks. Trigger when a reproducible regression exists but the introducing commit is unknown and history-driven isolation is needed before fixing; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Bisect Debugging

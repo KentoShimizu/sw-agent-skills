@@ -1,6 +1,6 @@
 ---
 name: github-fix-ci
-description: "GitHub Actions failure response workflow using GitHub CLI. Use when GitHub-native workflows, review routing, checks, or releases are the primary scope; do not use for non-GitHub runtime architecture or data-layer design."
+description: "GitHub Actions failure response workflow using GitHub CLI. Trigger when GitHub-hosted CI checks fail and teams need failure triage, log-based root-cause isolation, and a repair plan tied to specific failed jobs; do not use for non-GitHub runtime architecture or data-layer design."
 ---
 
 # Github Fix Ci

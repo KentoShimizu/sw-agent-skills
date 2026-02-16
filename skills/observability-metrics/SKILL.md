@@ -1,6 +1,6 @@
 ---
 name: observability-metrics
-description: Specialized workflow for metric model design aligned to service health and business impact. Use when telemetry signal design, alertability, and operational detection policy are in scope; do not use for business-feature implementation logic.
+description: Specialized workflow for metric model design aligned to service health and business impact. Trigger when teams must define or revise service metrics/SLIs so health, capacity, and user impact can be measured reliably for decisions and alerting; do not use for business-feature implementation logic.
 ---
 
 # Observability Metrics

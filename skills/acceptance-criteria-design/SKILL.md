@@ -1,6 +1,6 @@
 ---
 name: acceptance-criteria-design
-description: Pass/fail criteria authoring for approved requirements. Use only when `REQ-*` items are stable and Codex must define executable acceptance conditions; do not use for requirement discovery or prioritization.
+description: Pass/fail criteria authoring for approved requirements. Trigger when approved `REQ-*` items need executable acceptance checks for implementation handoff, QA validation, or release sign-off, whether the request starts as a high-level goal or a detailed spec; do not use for requirement discovery or prioritization.
 ---
 
 # Acceptance Criteria Design

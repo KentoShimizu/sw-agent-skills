@@ -1,6 +1,6 @@
 ---
 name: github-release-management
-description: "GitHub release packaging process. Use when GitHub-native workflows, review routing, checks, or releases are the primary scope; do not use for non-GitHub runtime architecture or data-layer design."
+description: "GitHub release packaging process. Trigger when a release must be prepared on GitHub with version/tag alignment, release-note quality, artifact linkage, and publication controls before announcement; do not use for non-GitHub runtime architecture or data-layer design."
 ---
 
 # Github Release Management

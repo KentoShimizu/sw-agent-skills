@@ -1,6 +1,6 @@
 ---
 name: architecture-c4-modeling
-description: "C4 architecture modeling workflow for producing context, container, and component views that communicate system structure consistently. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "C4 architecture modeling workflow for producing context, container, and component views that communicate system structure consistently. Trigger when teams need explicit boundary and dependency views to align architecture decisions before implementation, review, or handoff; do not use for single-module implementation refactors without architecture impact."
 ---
 
 # Architecture C4 Modeling

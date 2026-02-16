@@ -1,6 +1,6 @@
 ---
 name: infrastructure-as-code
-description: Specialized workflow for declarative infrastructure change management and drift prevention. Use when container, orchestration, or infrastructure runtime configuration is central; do not use for API contract design or requirement prioritization.
+description: Specialized workflow for declarative infrastructure change management and drift prevention. Trigger when infrastructure changes must be represented declaratively with reviewable plans, module boundaries, state safety, and drift controls before apply; do not use for API contract design or requirement prioritization.
 ---
 
 # Infrastructure As Code

@@ -1,6 +1,6 @@
 ---
 name: information-architecture
-description: "Information architecture workflow for structuring navigation, content hierarchy, and labeling across product surfaces. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Information architecture workflow for structuring navigation, content hierarchy, and labeling across product surfaces. Trigger when product content/navigation structure is unclear and teams need explicit hierarchy, taxonomy, and labeling decisions before screen-level design; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Information Architecture

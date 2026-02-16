@@ -1,6 +1,6 @@
 ---
 name: localization-qa
-description: "Localization quality assurance workflow for validating language correctness, layout resilience, and locale-specific UX behavior. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Localization quality assurance workflow for validating language correctness, layout resilience, and locale-specific UX behavior. Trigger when localized UI/content must be verified across target locales for translation quality, truncation/layout issues, formatting rules, and locale behavior before release; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Localization Qa

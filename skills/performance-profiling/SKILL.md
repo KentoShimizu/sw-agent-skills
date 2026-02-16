@@ -1,6 +1,6 @@
 ---
 name: performance-profiling
-description: Specialized workflow for CPU, memory, and I/O hotspot identification and optimization guidance. Use when throughput, latency, or resource-efficiency bottlenecks must be measured and mitigated; do not use for non-performance functional acceptance decisions.
+description: Specialized workflow for CPU, memory, and I/O hotspot identification and optimization guidance. Trigger when runtime performance regressions or inefficiencies require profiler evidence to localize hotspots and prioritize optimization work; do not use for non-performance functional acceptance decisions.
 ---
 
 # Performance Profiling

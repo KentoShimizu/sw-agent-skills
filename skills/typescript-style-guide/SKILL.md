@@ -1,6 +1,6 @@
 ---
 name: typescript-style-guide
-description: "Style, review, and refactoring standards for TypeScript codebases. Use when editing or reviewing `.ts`, `.tsx`, `.d.ts`, `tsconfig*.json`, or TypeScript tooling/config files compiled or type-checked by `tsc`. Do not use for JavaScript-only modules that are outside TypeScript type-check scope. In mixed JS/TS repositories, this skill owns `tsconfig`-scoped modules. For shared JS/TS configuration files (for example `package.json`, shared lint/test config), run together with `javascript-style-guide` when both JS and TS artifacts change in the same pull request."
+description: "Style, review, and refactoring standards for TypeScript codebases. Trigger when `.ts`, `.tsx`, `.d.ts`, or `tsconfig*.json` files are created, changed, or reviewed and TS-specific quality rules (type safety, narrowing, async/error handling, module boundaries) must be enforced. Do not use for JavaScript-only modules that are outside TypeScript type-check scope. In mixed JS/TS repositories, this skill owns `tsconfig`-scoped modules. For shared JS/TS configuration files (for example `package.json`, shared lint/test config), run together with `javascript-style-guide` when both JS and TS artifacts change in the same pull request."
 ---
 
 # Typescript Style Guide

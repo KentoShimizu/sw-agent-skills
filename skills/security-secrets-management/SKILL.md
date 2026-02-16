@@ -1,6 +1,6 @@
 ---
 name: security-secrets-management
-description: Specialized workflow for secret lifecycle controls for storage, rotation, and access auditing. Use when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
+description: Specialized workflow for secret lifecycle controls for storage, rotation, and access auditing. Trigger when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
 ---
 
 # Security Secrets Management

@@ -1,6 +1,6 @@
 ---
 name: non-functional-requirements
-description: "Quality attribute specification after functional requirements are defined. Use when requirement-level quality attributes or risks must be formalized against existing requirement baselines; do not use for initial requirement elicitation or sprint task breakdown."
+description: "Quality attribute specification after functional requirements are defined. Trigger when approved functional requirements need measurable quality targets (performance, reliability, security, operability, compliance) and explicit risk constraints before implementation planning; do not use for initial requirement elicitation or sprint task breakdown."
 ---
 
 # Non Functional Requirements

@@ -1,6 +1,6 @@
 ---
 name: design-principles
-description: "Design principle definition workflow for establishing stable UX guardrails before visual or component-level work. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Design principle definition workflow for establishing stable UX guardrails before visual or component-level work. Trigger when product or UX direction is ambiguous and teams need explicit design principles and decision guardrails before detailed screens or components are produced; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Principles

@@ -1,6 +1,6 @@
 ---
 name: cost-optimization-cloud
-description: "Cloud cost optimization workflow balancing spend, performance, and reliability. Use when cloud spend reduction must be balanced against reliability and performance constraints; do not use for purely functional product behavior design."
+description: "Cloud cost optimization workflow balancing spend, performance, and reliability. Trigger when cloud spend or forecast exceeds budget targets and teams must choose concrete cost controls (rightsizing, scaling policy, storage tiering, request-path optimization) without violating SLOs; do not use for purely functional product behavior design."
 ---
 
 # Cost Optimization Cloud

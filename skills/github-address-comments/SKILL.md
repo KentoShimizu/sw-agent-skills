@@ -1,6 +1,6 @@
 ---
 name: github-address-comments
-description: "Pull request comment resolution workflow with GitHub CLI. Use when GitHub-native workflows, review routing, checks, or releases are the primary scope; do not use for non-GitHub runtime architecture or data-layer design."
+description: "Pull request comment resolution workflow with GitHub CLI. Trigger when review comments on GitHub PRs/issues need structured triage, code updates, and traceable resolution responses; do not use for non-GitHub runtime architecture or data-layer design."
 ---
 
 # Github Address Comments

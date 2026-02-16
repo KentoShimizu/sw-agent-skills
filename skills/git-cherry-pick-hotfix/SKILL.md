@@ -1,6 +1,6 @@
 ---
 name: git-cherry-pick-hotfix
-description: "Specialized workflow for selecting and applying minimal hotfix commits across branches via cherry-pick. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for selecting and applying minimal hotfix commits across branches via cherry-pick. Trigger when urgent fixes must be propagated to other maintained branches without pulling unrelated changes and commit selection risk must be controlled; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Cherry Pick Hotfix

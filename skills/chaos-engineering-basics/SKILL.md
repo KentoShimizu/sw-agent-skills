@@ -1,6 +1,6 @@
 ---
 name: chaos-engineering-basics
-description: "Foundational chaos engineering workflow for validating resilience assumptions through controlled fault injection in non-production and guarded production contexts. Use when designing controlled resilience experiments with explicit blast-radius controls; do not use for active incident command or postmortem document authoring."
+description: "Foundational chaos engineering workflow for validating resilience assumptions through controlled fault injection in non-production and guarded production contexts. Trigger when reliability assumptions must be proven with planned fault experiments, explicit blast-radius limits, and rollback/abort criteria before broader rollout; do not use for active incident command or postmortem document authoring."
 ---
 
 # Chaos Engineering Basics

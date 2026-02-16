@@ -1,6 +1,6 @@
 ---
 name: mlops-pipeline-design
-description: Specialized workflow for orchestration of training, validation, packaging, and promotion stages. Use when ML deployment, monitoring, and pipeline operations are in scope; do not use for model-architecture research decisions.
+description: Specialized workflow for orchestration of training, validation, packaging, and promotion stages. Trigger when ML lifecycle stages must be automated end-to-end and teams need explicit pipeline gates, artifact lineage, and promotion criteria; do not use for model-architecture research decisions.
 ---
 
 # Mlops Pipeline Design

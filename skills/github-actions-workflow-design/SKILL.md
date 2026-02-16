@@ -1,6 +1,6 @@
 ---
 name: github-actions-workflow-design
-description: "GitHub Actions workflow design and maintenance process. Use when GitHub-native workflows, review routing, checks, or releases are the primary scope; do not use for non-GitHub runtime architecture or data-layer design."
+description: "GitHub Actions workflow design and maintenance process. Trigger when repository automation on GitHub (build/test/release jobs, trigger rules, permissions, caching, concurrency, environments) must be created or revised; do not use for non-GitHub runtime architecture or data-layer design."
 ---
 
 # Github Actions Workflow Design

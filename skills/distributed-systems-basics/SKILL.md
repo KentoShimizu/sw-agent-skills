@@ -1,6 +1,6 @@
 ---
 name: distributed-systems-basics
-description: Specialized workflow for distributed failure modes, consistency models, and reliability primitives. Use when multi-node consistency, partition tolerance, and fault-handling semantics are central; do not use for single-process application implementation details.
+description: Specialized workflow for distributed failure modes, consistency models, and reliability primitives. Trigger when a system spans multiple nodes/services and needs explicit failure assumptions, consistency expectations, and retry/timeout/idempotency behavior before implementation; do not use for single-process application implementation details.
 ---
 
 # Distributed Systems Basics

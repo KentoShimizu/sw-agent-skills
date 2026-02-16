@@ -1,6 +1,6 @@
 ---
 name: algorithm-design
-description: Specialized workflow for problem decomposition and algorithmic strategy selection. Use when implementation risk depends on algorithm correctness, complexity, or state-coordination tradeoffs; do not use for persistence schema design or deployment topology choices.
+description: Specialized workflow for problem decomposition and algorithmic strategy selection. Trigger when a task needs algorithm choice or decomposition and correctness/complexity tradeoffs are still unclear, whether the input is a vague outcome request or a concrete implementation directive; do not use for persistence schema design or deployment topology choices.
 ---
 
 # Algorithm Design

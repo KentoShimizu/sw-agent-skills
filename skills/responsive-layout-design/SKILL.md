@@ -1,6 +1,6 @@
 ---
 name: responsive-layout-design
-description: "Responsive layout design workflow for defining adaptive structure and component behavior across screen sizes and device contexts. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Responsive layout design workflow for defining adaptive structure and component behavior across screen sizes and device contexts. Trigger when UI layouts must adapt across breakpoints/devices and teams need explicit responsive behavior rules before implementation; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Responsive Layout Design

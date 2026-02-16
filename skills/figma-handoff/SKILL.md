@@ -1,6 +1,6 @@
 ---
 name: figma-handoff
-description: "Design-to-engineering handoff workflow for packaging implementation-ready Figma specifications, assets, and acceptance criteria. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Design-to-engineering handoff workflow for packaging implementation-ready Figma specifications, assets, and acceptance criteria. Trigger when approved Figma designs must be translated into engineering-ready handoff materials (specs, assets, states, acceptance criteria) before implementation starts; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Figma Handoff

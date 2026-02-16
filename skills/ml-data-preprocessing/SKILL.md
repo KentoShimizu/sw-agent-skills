@@ -1,6 +1,6 @@
 ---
 name: ml-data-preprocessing
-description: Specialized workflow for data cleaning, normalization, and leakage prevention rules. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: Specialized workflow for data cleaning, normalization, and leakage prevention rules. Trigger when ML training/inference data pipelines require explicit preprocessing decisions (cleaning, normalization, missing/outlier handling, split hygiene) to ensure valid model learning; do not use for generic API-layer or infrastructure-only changes.
 ---
 
 # Ml Data Preprocessing

@@ -1,6 +1,6 @@
 ---
 name: feature-flag-strategy
-description: Specialized workflow for flag lifecycle governance and blast-radius control. Use when runtime flag lifecycle, rollout safety, and kill-switch governance are in scope; do not use for statistical experiment design and analysis.
+description: Specialized workflow for flag lifecycle governance and blast-radius control. Trigger when feature rollout needs runtime controls (targeting, staged exposure, kill-switch policy, ownership, and cleanup lifecycle) and those rules are not yet explicit; do not use for statistical experiment design and analysis.
 ---
 
 # Feature Flag Strategy

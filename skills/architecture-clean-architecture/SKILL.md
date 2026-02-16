@@ -1,6 +1,6 @@
 ---
 name: architecture-clean-architecture
-description: "Clean Architecture implementation design for enforcing dependency inversion and stable domain-centric layering. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Clean Architecture implementation design for enforcing dependency inversion and stable domain-centric layering. Trigger when dependency direction, layer responsibilities, or boundary rules are unclear and must be codified before implementation or review; do not use for single-module implementation refactors without architecture impact."
 ---
 
 # Architecture Clean Architecture

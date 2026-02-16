@@ -1,6 +1,6 @@
 ---
 name: db-index-strategy
-description: Specialized workflow for index selection for critical read and write access paths. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for index selection for critical read and write access paths. Trigger when query latency, scan cost, or write amplification risks are driven by access-path design and index choices must be justified from real workload patterns; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Index Strategy

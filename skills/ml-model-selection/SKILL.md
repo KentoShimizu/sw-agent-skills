@@ -1,6 +1,6 @@
 ---
 name: ml-model-selection
-description: Specialized workflow for candidate model trade-offs across accuracy, latency, and cost. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: Specialized workflow for candidate model trade-offs across accuracy, latency, and cost. Trigger when selecting among multiple model candidates requires transparent tradeoff decisions against product KPIs and operational constraints; do not use for generic API-layer or infrastructure-only changes.
 ---
 
 # Ml Model Selection

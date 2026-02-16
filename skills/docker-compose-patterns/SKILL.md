@@ -1,6 +1,6 @@
 ---
 name: docker-compose-patterns
-description: Specialized workflow for multi-service local orchestration and dependency wiring. Use when container, orchestration, or infrastructure runtime configuration is central; do not use for API contract design or requirement prioritization.
+description: Specialized workflow for multi-service local orchestration and dependency wiring. Trigger when local integration requires coordinating multiple services (startup order, health dependencies, shared networks/volumes, environment wiring) via Docker Compose; do not use for API contract design or requirement prioritization.
 ---
 
 # Docker Compose Patterns

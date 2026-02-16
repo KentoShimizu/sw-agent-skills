@@ -1,6 +1,6 @@
 ---
 name: dockerfile-best-practices
-description: Specialized workflow for image build efficiency, security posture, and deterministic builds. Use when container, orchestration, or infrastructure runtime configuration is central; do not use for API contract design or requirement prioritization.
+description: Specialized workflow for image build efficiency, security posture, and deterministic builds. Trigger when Dockerfiles are created or modified and image size, build speed, supply-chain security, and reproducibility need deliberate optimization decisions; do not use for API contract design or requirement prioritization.
 ---
 
 # Dockerfile Best Practices

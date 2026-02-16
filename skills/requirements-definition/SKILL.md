@@ -1,6 +1,6 @@
 ---
 name: requirements-definition
-description: Canonical requirement baseline design after evidence collection is complete. Use only when elicitation artifacts already exist and Codex must synthesize them into a traceable requirement specification; do not use for prioritization or implementation slicing.
+description: Canonical requirement baseline design after evidence collection is complete. Trigger when elicitation evidence is ready and must be synthesized into a traceable, testable requirement baseline with clear scope, constraints, and acceptance boundaries; do not use for prioritization or implementation slicing.
 ---
 
 # Requirements Definition

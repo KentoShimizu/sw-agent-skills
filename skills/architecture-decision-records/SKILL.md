@@ -1,6 +1,6 @@
 ---
 name: architecture-decision-records
-description: "Architecture Decision Record authoring and lifecycle governance for significant technical decisions. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Architecture Decision Record authoring and lifecycle governance for significant technical decisions. Trigger when a high-impact technical decision needs traceable rationale, option comparison, and lifecycle state management for future audit and re-decision; do not use for single-module implementation refactors without architecture impact."
 ---
 
 # Architecture Decision Records

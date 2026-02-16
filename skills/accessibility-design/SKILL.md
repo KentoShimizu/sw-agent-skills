@@ -1,6 +1,6 @@
 ---
 name: accessibility-design
-description: "Accessibility-first design workflow for ensuring inclusive interaction, semantics, and visual clarity across product experiences. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Accessibility-first design workflow for ensuring inclusive interaction, semantics, and visual clarity across product experiences. Trigger when screens, flows, or components need accessibility decisions (semantics, keyboard behavior, contrast, assistive-tech behavior) before implementation or design sign-off; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Accessibility Design

@@ -1,6 +1,6 @@
 ---
 name: use-case-modeling
-description: Actor-flow modeling for behavior clarification of defined requirements. Use only when Codex must model main, alternate, and exception flows across boundaries; do not use for backlog ranking or acceptance test authoring.
+description: Actor-flow modeling for behavior clarification of defined requirements. Trigger when approved requirements need explicit main, alternate, and exception interaction flows across actors/system boundaries to remove behavior ambiguity; do not use for backlog ranking or acceptance test authoring.
 ---
 
 # Use Case Modeling

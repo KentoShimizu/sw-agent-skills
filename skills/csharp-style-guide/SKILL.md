@@ -1,6 +1,6 @@
 ---
 name: csharp-style-guide
-description: "Style, review, and refactoring standards for C#/.NET codebases. Use when editing or reviewing `.cs`, `.csproj`, `.sln`, `.props`, `.targets`, or `.razor` files, or `dotnet`-compiled application/test code. Do not use for Java/Kotlin or JavaScript/TypeScript style concerns unless C# artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
+description: "Style, review, and refactoring standards for C#/.NET codebases. Trigger when `.cs`, `.csproj`, `.sln`, `.props`, `.targets`, or `.razor` artifacts are created, modified, or reviewed and C#-specific quality rules (naming, nullability, async patterns, API design consistency) must be enforced. Do not use for Java/Kotlin or JavaScript/TypeScript style concerns unless C# artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
 ---
 
 # Csharp Style Guide

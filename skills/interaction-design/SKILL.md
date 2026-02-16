@@ -1,6 +1,6 @@
 ---
 name: interaction-design
-description: "Interaction design workflow for defining user flows, state transitions, and feedback behaviors for key product tasks. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Interaction design workflow for defining user flows, state transitions, and feedback behaviors for key product tasks. Trigger when user journeys require explicit interaction rules (state changes, validation feedback, error recovery, empty/loading behavior) before UI implementation; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Interaction Design

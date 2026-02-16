@@ -1,6 +1,6 @@
 ---
 name: deployment-strategy-canary
-description: Specialized workflow for canary rollout guardrails and progressive risk containment. Use when build, test, release, and rollout gates must be designed or changed; do not use for application-domain algorithm or schema decisions.
+description: Specialized workflow for canary rollout guardrails and progressive risk containment. Trigger when rollout risk must be controlled through staged exposure, metric-based promotion gates, and abort criteria before full traffic rollout; do not use for application-domain algorithm or schema decisions.
 ---
 
 # Deployment Strategy Canary

@@ -1,6 +1,6 @@
 ---
 name: performance-capacity-planning
-description: Specialized workflow for resource forecasting, headroom policy, and growth scenario readiness. Use when throughput, latency, or resource-efficiency bottlenecks must be measured and mitigated; do not use for non-performance functional acceptance decisions.
+description: Specialized workflow for resource forecasting, headroom policy, and growth scenario readiness. Trigger when traffic growth or workload forecasts require explicit capacity plans, scaling thresholds, and headroom policy to prevent saturation and SLO breaches; do not use for non-performance functional acceptance decisions.
 ---
 
 # Performance Capacity Planning

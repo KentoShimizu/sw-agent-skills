@@ -1,6 +1,6 @@
 ---
 name: deployment-strategy-blue-green
-description: Specialized workflow for blue-green cutover safety and fast rollback readiness. Use when build, test, release, and rollout gates must be designed or changed; do not use for application-domain algorithm or schema decisions.
+description: Specialized workflow for blue-green cutover safety and fast rollback readiness. Trigger when releases require near-zero-downtime environment switching with explicit cutover checks, rollback criteria, and traffic flip procedures; do not use for application-domain algorithm or schema decisions.
 ---
 
 # Deployment Strategy Blue Green

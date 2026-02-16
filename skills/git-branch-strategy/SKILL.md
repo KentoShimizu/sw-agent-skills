@@ -1,6 +1,6 @@
 ---
 name: git-branch-strategy
-description: "Specialized workflow for defining branch topology, lifecycle rules, and merge policy in Git repositories. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for defining branch topology, lifecycle rules, and merge policy in Git repositories. Trigger when a repository needs explicit branch protection, release branching, merge discipline, and ownership rules to prevent unsafe history changes; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Branch Strategy

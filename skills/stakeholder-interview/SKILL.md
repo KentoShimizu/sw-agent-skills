@@ -1,6 +1,6 @@
 ---
 name: stakeholder-interview
-description: Internal decision-maker interview workflow for constraints and policy capture. Use only when Codex must collect requirement inputs from business, engineering, legal, or operations stakeholders; do not use for end-user behavior research.
+description: Internal decision-maker interview workflow for constraints and policy capture. Trigger when requirement progress is blocked by missing decisions from business, engineering, legal, or operations stakeholders and structured interviews are needed to extract constraints; do not use for end-user behavior research.
 ---
 
 # Stakeholder Interview

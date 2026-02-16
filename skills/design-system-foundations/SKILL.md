@@ -1,6 +1,6 @@
 ---
 name: design-system-foundations
-description: "Design system foundation workflow for defining reusable component foundations, patterns, and ownership boundaries. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Design system foundation workflow for defining reusable component foundations, patterns, and ownership boundaries. Trigger when multiple teams need shared component standards, token foundations, and ownership rules to scale consistent UI delivery across products; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design System Foundations

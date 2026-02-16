@@ -1,6 +1,6 @@
 ---
 name: visual-design
-description: "Visual design workflow for defining color, typography, spacing, and compositional language aligned with product and brand goals. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Visual design workflow for defining color, typography, spacing, and compositional language aligned with product and brand goals. Trigger when an experience needs concrete visual direction and teams must decide color/typography/layout language and brand expression before implementation; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Visual Design

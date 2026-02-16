@@ -1,6 +1,6 @@
 ---
 name: architecture-principles
-description: "Architecture principle and guardrail definition before selecting concrete topology. Use when setting cross-team architecture guardrails before concrete design selection; do not use to choose one implementation pattern without principle alignment."
+description: "Architecture principle and guardrail definition before selecting concrete topology. Trigger when teams have competing architecture proposals and need explicit decision principles, constraints, and review guardrails before choosing any concrete pattern; do not use to choose one implementation pattern without principle alignment."
 ---
 
 # Architecture Principles

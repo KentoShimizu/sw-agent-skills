@@ -1,6 +1,6 @@
 ---
 name: sre-sli-slo
-description: Specialized workflow for SLI definition, SLO target setting, and error budget policy. Use when telemetry signal design, alertability, and operational detection policy are in scope; do not use for business-feature implementation logic.
+description: Specialized workflow for SLI definition, SLO target setting, and error budget policy. Trigger when service reliability objectives must be formalized into measurable SLIs/SLOs with error-budget policy and escalation actions for operational decision-making; do not use for business-feature implementation logic.
 ---
 
 # Sre Sli Slo

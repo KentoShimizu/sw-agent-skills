@@ -1,6 +1,6 @@
 ---
 name: java-style-guide
-description: "Style, review, and refactoring standards for Java codebases. Use when editing or reviewing `.java` files or Java source-set build configuration (`pom.xml`, `build.gradle`, `build.gradle.kts`) tied to Java modules. Do not use for Kotlin-only, Android-Gradle-only, or non-JVM language style concerns unless Java artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
+description: "Style, review, and refactoring standards for Java codebases. Trigger when `.java`, `pom.xml`, `build.gradle`, or `build.gradle.kts` files are created, changed, or reviewed and Java-specific quality rules (API design, null-safety discipline, exception handling, package structure) must be enforced. Do not use for Kotlin-only, Android-Gradle-only, or non-JVM language style concerns unless Java artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
 ---
 
 # Java Style Guide

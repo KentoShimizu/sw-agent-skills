@@ -1,6 +1,6 @@
 ---
 name: ml-feature-engineering
-description: Specialized workflow for feature generation, feature store consistency, and online-offline parity. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: Specialized workflow for feature generation, feature store consistency, and online-offline parity. Trigger when model performance depends on feature design and teams need explicit feature definitions, transformation logic, and offline/online parity controls; do not use for generic API-layer or infrastructure-only changes.
 ---
 
 # Ml Feature Engineering

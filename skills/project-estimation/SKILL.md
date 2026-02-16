@@ -1,6 +1,6 @@
 ---
 name: project-estimation
-description: Specialized workflow for work breakdown accuracy and uncertainty-aware effort estimation. Use when estimating work or sequencing technical initiatives; do not use for low-level implementation design details.
+description: Specialized workflow for work breakdown accuracy and uncertainty-aware effort estimation. Trigger when initiatives need planning-grade estimates with dependency-aware breakdown, uncertainty ranges, and scenario assumptions for sequencing decisions; do not use for low-level implementation design details.
 ---
 
 # Project Estimation

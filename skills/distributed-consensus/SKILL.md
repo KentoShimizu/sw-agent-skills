@@ -1,6 +1,6 @@
 ---
 name: distributed-consensus
-description: Specialized workflow for consensus protocol guarantees, quorum rules, and failure handling. Use when multi-node consistency, partition tolerance, and fault-handling semantics are central; do not use for single-process application implementation details.
+description: Specialized workflow for consensus protocol guarantees, quorum rules, and failure handling. Trigger when correctness depends on multi-node agreement under failures or partitions (leader election, quorum writes, commit guarantees) and consensus properties must be explicit; do not use for single-process application implementation details.
 ---
 
 # Distributed Consensus

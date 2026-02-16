@@ -1,6 +1,6 @@
 ---
 name: kubernetes-workload-design
-description: Specialized workflow for resource sizing, rollout behavior, and workload resilience design. Use when container, orchestration, or infrastructure runtime configuration is central; do not use for API contract design or requirement prioritization.
+description: Specialized workflow for resource sizing, rollout behavior, and workload resilience design. Trigger when Kubernetes workload specs need concrete sizing, autoscaling, availability, and rollout strategy decisions to meet reliability and performance targets; do not use for API contract design or requirement prioritization.
 ---
 
 # Kubernetes Workload Design

@@ -1,6 +1,6 @@
 ---
 name: code-review-general
-description: Specialized workflow for correctness, maintainability, and change risk in code reviews. Use during code review when correctness, maintainability, and change risk must be assessed; do not use for domain-specific security-only or performance-only review tracks.
+description: Specialized workflow for correctness, maintainability, and change risk in code reviews. Trigger during review when a change needs structured findings on behavioral correctness, regression risk, and maintainability impact, from broad review requests to line-level implementation checks; do not use for domain-specific security-only or performance-only review tracks.
 ---
 
 # Code Review General

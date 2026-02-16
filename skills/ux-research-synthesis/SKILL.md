@@ -1,6 +1,6 @@
 ---
 name: ux-research-synthesis
-description: "UX research synthesis workflow for translating qualitative and quantitative findings into prioritized design actions. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "UX research synthesis workflow for translating qualitative and quantitative findings into prioritized design actions. Trigger when UX research data from multiple sources must be synthesized into prioritized insights, patterns, and action plans for product/design decisions; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # UX Research Synthesis

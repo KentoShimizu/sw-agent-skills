@@ -1,6 +1,6 @@
 ---
 name: documentation-api-reference
-description: Specialized workflow for API reference completeness, accuracy, and client usability. Use when documentation artifacts are the primary deliverable; do not use for writing production feature logic unless documenting already-approved outcomes.
+description: Specialized workflow for API reference completeness, accuracy, and client usability. Trigger when API contracts already exist and client-facing reference docs must be authored or updated with precise endpoints/schemas/errors/examples before release or external consumption; do not use for writing production feature logic unless documenting already-approved outcomes.
 ---
 
 # Documentation Api Reference

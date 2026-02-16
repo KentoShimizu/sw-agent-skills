@@ -1,6 +1,6 @@
 ---
 name: architecture-ddd
-description: "Domain-driven design workflow for modeling bounded contexts, aggregates, and context maps in complex domains. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Domain-driven design workflow for modeling bounded contexts, aggregates, and context maps in complex domains. Trigger when complex domain behavior requires explicit context boundaries and model ownership to avoid cross-team leakage and integration ambiguity; do not use for single-module implementation refactors without architecture impact."
 ---
 
 # Architecture Ddd

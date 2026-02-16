@@ -1,6 +1,6 @@
 ---
 name: ml-experiment-tracking
-description: Specialized workflow for experiment metadata integrity, reproducibility, and comparison traceability. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: Specialized workflow for experiment metadata integrity, reproducibility, and comparison traceability. Trigger when multiple ML runs must be compared or reproduced and experiment metadata (config, data version, code version, metrics) needs disciplined tracking; do not use for generic API-layer or infrastructure-only changes.
 ---
 
 # Ml Experiment Tracking

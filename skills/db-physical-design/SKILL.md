@@ -1,6 +1,6 @@
 ---
 name: db-physical-design
-description: Specialized workflow for storage layout, partitioning, and engine-specific performance controls. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for storage layout, partitioning, and engine-specific performance controls. Trigger when data growth and workload patterns require explicit physical design decisions (partitioning, clustering, storage/index layout) to meet latency, throughput, and maintenance targets; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Physical Design

@@ -1,6 +1,6 @@
 ---
 name: code-review-performance
-description: Specialized workflow for latency, throughput, and resource-efficiency risks in code changes. Use during code review when latency, throughput, or resource-efficiency risks must be assessed; do not use for broad non-performance review scopes.
+description: Specialized workflow for latency, throughput, and resource-efficiency risks in code changes. Trigger during review when a change may affect hot-path latency, throughput ceilings, or CPU/memory/I/O efficiency and needs explicit performance-risk findings before merge; do not use for broad non-performance review scopes.
 ---
 
 # Code Review Performance

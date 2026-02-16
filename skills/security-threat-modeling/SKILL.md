@@ -1,6 +1,6 @@
 ---
 name: security-threat-modeling
-description: Specialized workflow for asset, boundary, and abuse-path modeling for system threats. Use when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
+description: Specialized workflow for asset, boundary, and abuse-path modeling for system threats. Trigger when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
 ---
 
 # Security Threat Modeling

@@ -1,6 +1,6 @@
 ---
 name: security-authorization
-description: Specialized workflow for access decision modeling and least-privilege enforcement. Use when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
+description: Specialized workflow for access decision modeling and least-privilege enforcement. Trigger when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
 ---
 
 # Security Authorization

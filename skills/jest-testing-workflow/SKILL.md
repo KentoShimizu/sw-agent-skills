@@ -1,6 +1,6 @@
 ---
 name: jest-testing-workflow
-description: "Jest testing workflow for JavaScript/TypeScript projects. Use when test or evidence artifacts are the primary output for verification; do not use for product requirement prioritization or architecture topology selection."
+description: "Jest testing workflow for JavaScript/TypeScript projects. Trigger when implementation changes need executable verification via Jest (unit/integration behavior, mocks, coverage evidence, regression checks) before merge; do not use for product requirement prioritization or architecture topology selection."
 ---
 
 # Jest Testing Workflow

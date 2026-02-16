@@ -1,6 +1,6 @@
 ---
 name: db-query-optimization
-description: Specialized workflow for query rewrite, plan stability, and latency reduction on hot paths. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for query rewrite, plan stability, and latency reduction on hot paths. Trigger when critical queries miss SLOs, execution plans are unstable, or resource usage is excessive and query-level remediation must be chosen before release; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Query Optimization

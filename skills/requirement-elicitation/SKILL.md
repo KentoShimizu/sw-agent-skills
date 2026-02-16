@@ -1,6 +1,6 @@
 ---
 name: requirement-elicitation
-description: Evidence gathering workflow before requirement writing. Use only when Codex must collect and structure requirement inputs from artifacts and conversations; do not use for formal baseline synthesis, which belongs to requirements-definition.
+description: Evidence gathering workflow before requirement writing. Trigger when requirement inputs are incomplete and teams must collect, reconcile, and structure evidence from stakeholders, artifacts, and constraints before drafting formal requirements; do not use for formal baseline synthesis, which belongs to requirements-definition.
 ---
 
 # Requirement Elicitation

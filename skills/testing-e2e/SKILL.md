@@ -1,6 +1,6 @@
 ---
 name: testing-e2e
-description: Specialized workflow for full-stack user journey integrity across integrated systems. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: Specialized workflow for full-stack user journey integrity across integrated systems. Trigger when critical end-user flows must be validated across UI, APIs, and dependencies as integrated journeys before release; do not use for observability ownership or release scheduling policy.
 ---
 
 # Testing E2e

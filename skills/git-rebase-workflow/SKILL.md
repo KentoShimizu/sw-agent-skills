@@ -1,6 +1,6 @@
 ---
 name: git-rebase-workflow
-description: "Specialized workflow for linearizing local branch history with safe rebase practices before integration. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for linearizing local branch history with safe rebase practices before integration. Trigger when branch history needs cleanup or linearization prior to merge and rebase risk (conflicts, dropped commits, rewritten history impact) must be controlled; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Rebase Workflow

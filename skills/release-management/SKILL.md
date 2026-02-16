@@ -1,6 +1,6 @@
 ---
 name: release-management
-description: Specialized workflow for release readiness coordination and risk sign-off governance. Use when build, test, release, and rollout gates must be designed or changed; do not use for application-domain algorithm or schema decisions.
+description: Specialized workflow for release readiness coordination and risk sign-off governance. Trigger when a release decision needs explicit go/no-go criteria, cross-team readiness checks, rollback preparedness, and formal risk sign-off; do not use for application-domain algorithm or schema decisions.
 ---
 
 # Release Management

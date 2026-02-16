@@ -1,6 +1,6 @@
 ---
 name: code-review-security
-description: Specialized workflow for vulnerability exposure, data protection, and abuse-path risks. Use during code review when vulnerability exposure, trust boundaries, and data protection risks must be assessed; do not use for non-security quality concerns.
+description: Specialized workflow for vulnerability exposure, data protection, and abuse-path risks. Trigger during review when a change crosses trust boundaries or may impact authn/authz, secrets handling, input validation, or sensitive-data exposure and needs security-first findings; do not use for non-security quality concerns.
 ---
 
 # Code Review Security

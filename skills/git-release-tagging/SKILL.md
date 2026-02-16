@@ -1,6 +1,6 @@
 ---
 name: git-release-tagging
-description: "Specialized workflow for creating immutable release tags and traceable release notes from Git history. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Specialized workflow for creating immutable release tags and traceable release notes from Git history. Trigger when a release cut requires consistent tag naming, immutability guarantees, and changelog traceability from commit history; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Release Tagging

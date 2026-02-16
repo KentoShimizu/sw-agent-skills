@@ -1,6 +1,6 @@
 ---
 name: github-codeowners-management
-description: "CODEOWNERS governance process. Use when GitHub-native workflows, review routing, checks, or releases are the primary scope; do not use for non-GitHub runtime architecture or data-layer design."
+description: "CODEOWNERS governance process. Trigger when repository ownership and review-routing rules must be defined or updated to ensure mandatory reviewers and clear responsibility boundaries on GitHub; do not use for non-GitHub runtime architecture or data-layer design."
 ---
 
 # Github Codeowners Management

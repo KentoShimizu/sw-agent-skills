@@ -1,6 +1,6 @@
 ---
 name: security-incident-response
-description: Specialized workflow for detection-to-containment response workflow and evidence handling. Use when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
+description: Specialized workflow for detection-to-containment response workflow and evidence handling. Trigger when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
 ---
 
 # Security Incident Response

@@ -1,6 +1,6 @@
 ---
 name: observability-alerting
-description: Specialized workflow for alert signal quality, routing policy, and actionable thresholds. Use when telemetry signal design, alertability, and operational detection policy are in scope; do not use for business-feature implementation logic.
+description: Specialized workflow for alert signal quality, routing policy, and actionable thresholds. Trigger when alerting rules need design or tuning so incidents are detected with actionable thresholds, ownership routing, and noise-control policies; do not use for business-feature implementation logic.
 ---
 
 # Observability Alerting

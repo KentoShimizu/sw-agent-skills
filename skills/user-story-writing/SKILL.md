@@ -1,6 +1,6 @@
 ---
 name: user-story-writing
-description: Implementation-slice authoring for prioritized requirements. Use only when `REQ-*` priorities are approved and Codex must convert them into sprint-ready stories with explicit value and testability; do not use for requirement discovery.
+description: Implementation-slice authoring for prioritized requirements. Trigger when approved and prioritized `REQ-*` items must be decomposed into sprint-ready user stories with explicit user value, scope boundaries, and testability; do not use for requirement discovery.
 ---
 
 # User Story Writing

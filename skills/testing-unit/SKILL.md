@@ -1,6 +1,6 @@
 ---
 name: testing-unit
-description: Specialized workflow for small-scope deterministic unit behavior validation. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: Specialized workflow for small-scope deterministic unit behavior validation. Trigger when logic units need isolated, deterministic verification with fast feedback and controlled dependencies before broader integration testing; do not use for observability ownership or release scheduling policy.
 ---
 
 # Testing Unit

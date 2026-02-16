@@ -1,6 +1,6 @@
 ---
 name: jupyter-notebook
-description: "Notebook delivery workflow for software teams. Use when test or evidence artifacts are the primary output for verification; do not use for product requirement prioritization or architecture topology selection."
+description: "Notebook delivery workflow for software teams. Trigger when analysis, experiment, or verification results must be delivered as reproducible notebook artifacts with clear narrative, executable cells, and shareable outputs; do not use for product requirement prioritization or architecture topology selection."
 ---
 
 # Jupyter Notebook

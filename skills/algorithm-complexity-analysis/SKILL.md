@@ -1,6 +1,6 @@
 ---
 name: algorithm-complexity-analysis
-description: Specialized workflow for time and space complexity analysis for candidate approaches. Use when implementation risk depends on algorithm correctness, complexity, or state-coordination tradeoffs; do not use for persistence schema design or deployment topology choices.
+description: Specialized workflow for time and space complexity analysis for candidate approaches. Trigger when feasibility depends on algorithmic complexity tradeoffs (input scale, latency budget, memory budget, or concurrency contention), including cases where requirements are high-level and constraints must be derived; do not use for persistence schema design or deployment topology choices.
 ---
 
 # Algorithm Complexity Analysis

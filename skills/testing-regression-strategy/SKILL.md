@@ -1,6 +1,6 @@
 ---
 name: testing-regression-strategy
-description: Specialized workflow for regression suite curation and risk-based test selection. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: Specialized workflow for regression suite curation and risk-based test selection. Trigger when release cadence or test budget requires selecting and maintaining regression coverage using change impact and risk prioritization; do not use for observability ownership or release scheduling policy.
 ---
 
 # Testing Regression Strategy

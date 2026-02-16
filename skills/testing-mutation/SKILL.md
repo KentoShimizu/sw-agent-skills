@@ -1,6 +1,6 @@
 ---
 name: testing-mutation
-description: Specialized workflow for mutation score improvement and weak assertion detection. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: Specialized workflow for mutation score improvement and weak assertion detection. Trigger when test robustness needs objective strengthening and mutation analysis is required to expose weak or missing assertions; do not use for observability ownership or release scheduling policy.
 ---
 
 # Testing Mutation

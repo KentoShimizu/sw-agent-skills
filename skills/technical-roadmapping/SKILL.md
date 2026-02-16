@@ -1,6 +1,6 @@
 ---
 name: technical-roadmapping
-description: Specialized workflow for sequencing of technical investments and dependency-aware milestones. Use when estimating work or sequencing technical initiatives; do not use for low-level implementation design details.
+description: Specialized workflow for sequencing of technical investments and dependency-aware milestones. Trigger when teams need a roadmap for technical initiatives with dependency ordering, milestone planning, and risk-aware sequencing across releases or quarters; do not use for low-level implementation design details.
 ---
 
 # Technical Roadmapping

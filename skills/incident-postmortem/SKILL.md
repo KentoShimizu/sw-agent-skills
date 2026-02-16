@@ -1,6 +1,6 @@
 ---
 name: incident-postmortem
-description: Specialized workflow for incident root cause analysis and systemic prevention actions. Use after incidents to capture root cause, impact, and prevention actions; do not use for active incident command and real-time mitigation.
+description: Specialized workflow for incident root cause analysis and systemic prevention actions. Trigger after incident stabilization when teams need a rigorous timeline, root-cause chain, contributing factors, and prevention actions with clear ownership; do not use for active incident command and real-time mitigation.
 ---
 
 # Incident Postmortem

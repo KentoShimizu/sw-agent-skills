@@ -1,6 +1,6 @@
 ---
 name: db-conceptual-modeling
-description: Specialized workflow for domain entities, relationships, and bounded context boundaries. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: Specialized workflow for domain entities, relationships, and bounded context boundaries. Trigger when domain concepts, ownership boundaries, and relationship semantics must be clarified before logical schema or integration contracts are finalized; do not use for API boundary design or infrastructure provisioning.
 ---
 
 # Db Conceptual Modeling

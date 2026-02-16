@@ -1,6 +1,6 @@
 ---
 name: testing-property-based
-description: Specialized workflow for invariant validation using randomized and generative inputs. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: Specialized workflow for invariant validation using randomized and generative inputs. Trigger when correctness depends on invariants across broad input spaces and generated/randomized tests are needed beyond finite example-based cases; do not use for observability ownership or release scheduling policy.
 ---
 
 # Testing Property Based

@@ -1,6 +1,6 @@
 ---
 name: mlops-model-serving
-description: Specialized workflow for serving architecture, latency SLOs, and rollout safety. Use when ML deployment, monitoring, and pipeline operations are in scope; do not use for model-architecture research decisions.
+description: Specialized workflow for serving architecture, latency SLOs, and rollout safety. Trigger when ML models must be deployed to production serving paths and teams need explicit decisions on serving topology, latency/error budgets, and safe rollout controls; do not use for model-architecture research decisions.
 ---
 
 # Mlops Model Serving

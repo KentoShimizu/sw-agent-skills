@@ -1,6 +1,6 @@
 ---
 name: user-research
-description: End-user behavior research workflow for validating user needs and pain points. Use only when Codex must gather evidence from representative users; do not use for internal stakeholder policy or governance decisions.
+description: End-user behavior research workflow for validating user needs and pain points. Trigger when product decisions need evidence from representative end users and assumptions must be validated through interviews, tests, or usage evidence; do not use for internal stakeholder policy or governance decisions.
 ---
 
 # User Research

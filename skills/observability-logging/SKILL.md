@@ -1,6 +1,6 @@
 ---
 name: observability-logging
-description: Specialized workflow for structured logging schema and incident triage utility. Use when telemetry signal design, alertability, and operational detection policy are in scope; do not use for business-feature implementation logic.
+description: Specialized workflow for structured logging schema and incident triage utility. Trigger when services need logging standards or revisions so incidents can be diagnosed from consistent fields, severity policy, and correlation identifiers; do not use for business-feature implementation logic.
 ---
 
 # Observability Logging

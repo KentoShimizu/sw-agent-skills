@@ -1,6 +1,6 @@
 ---
 name: performance-load-testing
-description: Specialized workflow for load profile realism, bottleneck detection, and saturation behavior. Use when throughput, latency, or resource-efficiency bottlenecks must be measured and mitigated; do not use for non-performance functional acceptance decisions.
+description: Specialized workflow for load profile realism, bottleneck detection, and saturation behavior. Trigger when systems need realistic load/stress validation against throughput and latency targets and teams must identify saturation points before rollout; do not use for non-performance functional acceptance decisions.
 ---
 
 # Performance Load Testing

@@ -1,6 +1,6 @@
 ---
 name: architecture-tradeoff-analysis
-description: "Structured architecture option evaluation with explicit criteria, weighting, and sensitivity checks. Use when evaluating competing architecture options with explicit criteria and risk weighting; do not use after the architecture direction is already fixed."
+description: "Structured architecture option evaluation with explicit criteria, weighting, and sensitivity checks. Trigger when multiple architecture options are still viable and the decision needs transparent scoring, risk weighting, and sensitivity analysis for stakeholder sign-off; do not use after the architecture direction is already fixed."
 ---
 
 # Architecture Tradeoff Analysis

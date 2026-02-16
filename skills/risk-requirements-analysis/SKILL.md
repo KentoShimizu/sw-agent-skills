@@ -1,6 +1,6 @@
 ---
 name: risk-requirements-analysis
-description: "Requirement-level risk analysis before implementation commitment. Use when requirement-level quality attributes or risks must be formalized against existing requirement baselines; do not use for initial requirement elicitation or sprint task breakdown."
+description: "Requirement-level risk analysis before implementation commitment. Trigger when approved requirements need explicit risk assessment (failure modes, impact/probability, mitigation and contingency) before delivery commitment; do not use for initial requirement elicitation or sprint task breakdown."
 ---
 
 # Risk Requirements Analysis

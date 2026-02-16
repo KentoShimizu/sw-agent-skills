@@ -1,6 +1,6 @@
 ---
 name: testing-tdd
-description: Specialized workflow for red-green-refactor discipline and test-first design feedback. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: Specialized workflow for red-green-refactor discipline and test-first design feedback. Trigger when implementation approach requires test-first iteration to shape design, lock behavior, and reduce regression risk from the first code change; do not use for observability ownership or release scheduling policy.
 ---
 
 # Testing Tdd

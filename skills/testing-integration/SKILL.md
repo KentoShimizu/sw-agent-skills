@@ -1,6 +1,6 @@
 ---
 name: testing-integration
-description: Specialized workflow for component and service interaction correctness at integration boundaries. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: Specialized workflow for component and service interaction correctness at integration boundaries. Trigger when module/service boundaries need verification for protocol compatibility, data mapping, and failure handling across integrated components; do not use for observability ownership or release scheduling policy.
 ---
 
 # Testing Integration

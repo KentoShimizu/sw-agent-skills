@@ -1,6 +1,6 @@
 ---
 name: observability-tracing
-description: Specialized workflow for distributed trace coverage and critical path latency diagnosis. Use when telemetry signal design, alertability, and operational detection policy are in scope; do not use for business-feature implementation logic.
+description: Specialized workflow for distributed trace coverage and critical path latency diagnosis. Trigger when cross-service request paths need trace instrumentation or analysis to localize latency/error bottlenecks and dependency failure propagation; do not use for business-feature implementation logic.
 ---
 
 # Observability Tracing

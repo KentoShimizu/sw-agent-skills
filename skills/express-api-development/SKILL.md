@@ -1,6 +1,6 @@
 ---
 name: express-api-development
-description: "Express API development workflow. Use when framework-specific application structure and runtime behavior must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
+description: "Express API development workflow. Trigger when Express-specific API code (routing, middleware chain, validation, error handling, auth integration, request lifecycle behavior) must be implemented or revised with framework-level decisions in scope; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Express Api Development

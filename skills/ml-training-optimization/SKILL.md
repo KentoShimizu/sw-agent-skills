@@ -1,6 +1,6 @@
 ---
 name: ml-training-optimization
-description: Specialized workflow for training efficiency, convergence stability, and resource utilization. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: Specialized workflow for training efficiency, convergence stability, and resource utilization. Trigger when training runs are too slow, unstable, or costly and optimization decisions (batching, scheduling, precision, checkpointing, hyperparameter strategy) are required; do not use for generic API-layer or infrastructure-only changes.
 ---
 
 # Ml Training Optimization
