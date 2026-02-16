@@ -1,41 +1,46 @@
 ---
 name: security-secure-coding
-description: Specialized workflow for secure-by-default coding patterns and vulnerability prevention. Trigger when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
+description: "Security workflow for secure-by-default coding decisions and vulnerability prevention in implementation changes. Use when application code paths process untrusted input, sensitive data, or privileged operations; do not use for policy-only governance without code impact."
 ---
 
 # Security Secure Coding
 
-## Trigger Boundary
-- Use when security controls, abuse paths, or compliance obligations must be defined.
-- Do not use for non-security product prioritization; use requirement or roadmap skills.
-- Do not use for purely aesthetic UI decisions.
+## Overview
+Use this skill to prevent introducing exploitable code patterns and to enforce explicit security invariants during implementation.
 
-## Goal
-Reduce exploitable risk with verifiable security controls.
+## Use This Skill When
+- New endpoints, parsers, deserializers, or command execution paths are added.
+- Sensitive data handling or trust-boundary crossing logic changes.
+- High-risk dependency or framework behavior needs secure usage decisions.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for secure-by-default coding patterns and vulnerability prevention
-- Operational, compliance, and rollout constraints
+## Inputs To Gather
+- Trust boundaries and untrusted input entry points.
+- Sensitive data flows and storage/transmission requirements.
+- Language/framework-specific risk patterns.
+- Existing test coverage and security tooling signals.
 
-## Outputs
-- Secure coding checklist mapped to threat classes
-- Decision log for secure-by-default coding patterns and vulnerability prevention
-- Verification checklist with measurable pass-fail criteria
+## Deliverables
+- Security invariants for the changed code path.
+- Mitigation mapping for relevant threat classes.
+- Targeted secure coding checks and tests.
+- Residual risk notes for deferred hardening work.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for secure-by-default coding patterns and vulnerability prevention.
-2. Produce options and select an approach for secure-by-default coding patterns and vulnerability prevention.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using code-path review against known vulnerability patterns.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Identify attack surfaces for the change (input parsing, file/network access, auth context, templating).
+2. Apply allowlist validation and context-appropriate encoding/sanitization at boundaries.
+3. Remove or harden dangerous patterns (shell concatenation, unsafe deserialization, path traversal gaps, SSRF primitives).
+4. Enforce explicit authorization checks in server-side handlers for sensitive operations.
+5. Protect secrets and PII in logs, errors, and telemetry outputs.
+6. Add or update negative tests for malicious payload classes.
+7. Verify dependencies and transitive packages for known critical vulnerabilities.
 
-## Quality Gates
-- Scope and assumptions for secure-by-default coding patterns and vulnerability prevention are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Security-relevant assumptions are explicit in code and tests.
+- Error paths fail closed for sensitive operations.
+- No sensitive data leaks through logs or debug output.
+- High-risk operations are wrapped with deliberate validation and policy checks.
 
-## Failure Handling
-- Stop when high-risk insecure patterns remain in critical paths.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when trust-boundary validation is missing or implicit.
+- Stop when privileged operations execute without explicit authorization checks.
+- Escalate when unresolved critical vulnerabilities remain in production-bound paths.

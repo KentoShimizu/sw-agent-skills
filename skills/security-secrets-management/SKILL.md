@@ -1,41 +1,46 @@
 ---
 name: security-secrets-management
-description: Specialized workflow for secret lifecycle controls for storage, rotation, and access auditing. Trigger when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
+description: "Security workflow for secret inventory, storage, distribution, rotation, and auditability controls. Use when API keys, credentials, certificates, or signing secrets lifecycle decisions are required; do not use for generic config management that excludes sensitive material."
 ---
 
 # Security Secrets Management
 
-## Trigger Boundary
-- Use when security controls, abuse paths, or compliance obligations must be defined.
-- Do not use for non-security product prioritization; use requirement or roadmap skills.
-- Do not use for purely aesthetic UI decisions.
+## Overview
+Use this skill to prevent secret exposure and ensure secrets remain manageable throughout their lifecycle.
 
-## Goal
-Reduce exploitable risk with verifiable security controls.
+## Use This Skill When
+- New secrets are introduced or existing secrets are rotated/migrated.
+- Secret storage and runtime distribution mechanisms are being designed.
+- Secret exposure response and revocation capability need verification.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for secret lifecycle controls for storage, rotation, and access auditing
-- Operational, compliance, and rollout constraints
+## Inputs To Gather
+- Secret inventory by owner, purpose, and environment.
+- Storage and access architecture (vault/KMS/secret manager, runtime injection path).
+- Rotation cadence, revocation requirements, and dependency constraints.
+- Audit and compliance obligations for access and change tracking.
 
-## Outputs
-- Secrets inventory with rotation schedule
-- Decision log for secret lifecycle controls for storage, rotation, and access auditing
-- Verification checklist with measurable pass-fail criteria
+## Deliverables
+- Secret lifecycle policy covering creation, storage, usage, rotation, and retirement.
+- Access control model with least-privilege and break-glass constraints.
+- Rotation runbook with rehearsal and rollback guidance.
+- Detection and response playbook for secret leakage events.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for secret lifecycle controls for storage, rotation, and access auditing.
-2. Produce options and select an approach for secret lifecycle controls for storage, rotation, and access auditing.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using rotation rehearsal and access log review.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Build/refresh secret inventory with ownership and classification.
+2. Enforce non-hardcoded secret policy across source, CI, build artifacts, and logs.
+3. Choose distribution model (pull, sidecar, env injection, runtime fetch) based on blast radius and operability.
+4. Define rotation strategy by secret type, including coordinated client update order.
+5. Implement auditing for secret reads, writes, and policy changes.
+6. Rehearse emergency rotation and revoke compromised credentials end-to-end.
+7. Verify decommissioned secrets cannot still authenticate.
 
-## Quality Gates
-- Scope and assumptions for secret lifecycle controls for storage, rotation, and access auditing are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Every secret has a clear owner and rotation/revocation process.
+- Runtime access is identity-bound and minimally scoped.
+- Secret exposure can be detected and remediated quickly.
+- Audit trails support incident and compliance investigations.
 
-## Failure Handling
-- Stop when secrets are unmanaged, hardcoded, or unrotated.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when any production secret is stored in plaintext repositories.
+- Stop when rotation cannot be executed without prolonged outage.
+- Escalate when secret access is unaudited or broadly shared.

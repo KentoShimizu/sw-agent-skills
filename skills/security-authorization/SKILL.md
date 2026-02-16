@@ -1,41 +1,46 @@
 ---
 name: security-authorization
-description: Specialized workflow for access decision modeling and least-privilege enforcement. Trigger when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
+description: "Security workflow for authorization boundaries, least-privilege policy, and enforcement design. Use when permission models, access decisions, or privileged action controls are required; do not use for authentication factor selection or non-security quality tuning."
 ---
 
 # Security Authorization
 
-## Trigger Boundary
-- Use when security controls, abuse paths, or compliance obligations must be defined.
-- Do not use for non-security product prioritization; use requirement or roadmap skills.
-- Do not use for purely aesthetic UI decisions.
+## Overview
+Use this skill to build authorization systems that enforce least privilege across APIs, UI actions, and background jobs.
 
-## Goal
-Reduce exploitable risk with verifiable security controls.
+## Use This Skill When
+- Role/permission models are being introduced or revised.
+- Resource-scoped access control must be consistent across services.
+- Privileged workflows require explicit separation-of-duty controls.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for access decision modeling and least-privilege enforcement
-- Operational, compliance, and rollout constraints
+## Inputs To Gather
+- Actor categories, resources, and sensitive actions.
+- Data classification and tenant or domain boundaries.
+- Existing policy model and enforcement points (API gateway, service layer, DB layer).
+- Abuse scenarios (horizontal/vertical privilege escalation, confused deputy, missing object-level checks).
 
-## Outputs
-- Authorization policy matrix
-- Decision log for access decision modeling and least-privilege enforcement
-- Verification checklist with measurable pass-fail criteria
+## Deliverables
+- Authorization model (RBAC, ABAC, ReBAC, or hybrid) with policy decision rules.
+- Enforcement map (where decisions are made and where they are enforced).
+- Default-deny and exception policy with break-glass controls.
+- Verification plan for privilege escalation and cross-tenant isolation tests.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for access decision modeling and least-privilege enforcement.
-2. Produce options and select an approach for access decision modeling and least-privilege enforcement.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using privilege boundary and escalation-path verification.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Enumerate subject-action-resource tuples for critical operations.
+2. Select model based on change frequency, policy complexity, and auditability requirements.
+3. Define canonical policy evaluation order and conflict resolution rules.
+4. Ensure object-level authorization is checked server-side for every mutable/read-sensitive path.
+5. Specify admin and break-glass flows with time limits, approval, and audit logging.
+6. Validate policy propagation consistency across UI hints and backend enforcement.
+7. Run abuse-case tests for IDOR, privilege creep, and stale privilege revocation.
 
-## Quality Gates
-- Scope and assumptions for access decision modeling and least-privilege enforcement are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Authorization decisions are default-deny and centrally explainable.
+- Every privileged operation has a single source of policy truth.
+- Policy updates are auditable and revocation latency is acceptable.
+- Cross-tenant and cross-domain boundaries are explicitly tested.
 
-## Failure Handling
-- Stop when authorization rules allow privilege escalation or over-broad access.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when enforcement relies on client-side checks.
+- Stop when policy conflicts are unresolved or implicit.
+- Escalate when least-privilege requirements cannot be implemented without structural change.
