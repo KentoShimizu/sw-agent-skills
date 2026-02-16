@@ -1,41 +1,40 @@
 ---
 name: algorithm-complexity-analysis
-description: Specialized workflow for time and space complexity analysis for candidate approaches. Trigger when feasibility depends on algorithmic complexity tradeoffs (input scale, latency budget, memory budget, or concurrency contention), including cases where requirements are high-level and constraints must be derived; do not use for persistence schema design or deployment topology choices.
+description: "Analyze candidate algorithms for time/space complexity, scalability limits, and resource-budget fit (CPU, memory, I/O, concurrency). Use when feasibility depends on input growth or latency/memory constraints and quantitative bounds are required before implementation; do not use for persistence schema or deployment topology decisions."
 ---
 
 # Algorithm Complexity Analysis
 
-## Trigger Boundary
-- Use when algorithmic correctness or complexity drives implementation risk.
-- Do not use for persistence-schema decisions; use `db-*`.
-- Do not use for runtime deployment topology; use `deployment-*` or `kubernetes-*`.
+## Overview
+Use this skill to quantify whether candidate approaches can meet performance and resource constraints at expected scale.
 
-## Goal
-Deliver correct and efficient computational designs with clear tradeoffs.
+## Inputs To Gather
+- Candidate algorithms and dominant operations.
+- Input-scale assumptions (current, expected, and stress ranges).
+- Resource budgets (latency targets, throughput targets, memory limits).
+- Runtime context (I/O patterns, cache behavior, concurrency contention).
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for time and space complexity analysis for candidate approaches
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Complexity report with worst-case, average-case, and amortized bounds (as applicable).
+- Memory and auxiliary-space analysis, including peak usage assumptions.
+- Budget-fit assessment and scalability breakpoints.
+- Recommendation with residual risk and monitoring triggers.
 
-## Outputs
-- Complexity analysis report with worst-case bounds
-- Decision log for time and space complexity analysis for candidate approaches
-- Verification checklist with measurable pass-fail criteria
+## Quality Standard
+- Complexity claims are tied to explicit assumptions and units.
+- Dominant operations and constants relevant at target scale are identified.
+- CPU, memory, I/O, and contention effects are addressed where applicable.
+- Analysis states confidence level and uncertainty sources.
+- Decision includes conditions that would invalidate the current choice.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for time and space complexity analysis for candidate approaches.
-2. Produce options and select an approach for time and space complexity analysis for candidate approaches.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using input-growth simulation against complexity assumptions.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define workload model, scale assumptions, and performance budgets.
+2. Derive formal bounds for each candidate's critical operations.
+3. Evaluate real-world cost drivers (constants, I/O, cache, contention).
+4. Compare candidates against budgets and identify breakpoints.
+5. Publish recommendation, residual risks, and re-evaluation triggers.
 
-## Quality Gates
-- Scope and assumptions for time and space complexity analysis for candidate approaches are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when selected approach cannot meet complexity constraints.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when workload/scale assumptions are missing.
+- Stop when dominant cost drivers are unmodeled.
+- Escalate when no candidate can satisfy mandatory budgets.

@@ -1,46 +1,40 @@
 ---
 name: acceptance-criteria-design
-description: Pass/fail criteria authoring for approved requirements. Trigger when approved `REQ-*` items need executable acceptance checks for implementation handoff, QA validation, or release sign-off, whether the request starts as a high-level goal or a detailed spec; do not use for requirement discovery or prioritization.
+description: "Design executable acceptance criteria for approved requirements by converting goals/specs into binary pass/fail checks with observable outcomes. Use when implementation handoff, QA validation, or release decisions need testable criteria for stable `REQ-*`/`NFR-*` baselines; do not use for requirement discovery, prioritization, or sprint slicing."
 ---
 
 # Acceptance Criteria Design
 
-## Trigger Boundary
-- Use when requirement wording is approved and implementation readiness is needed.
-- Do not use to define requirement intent; use `requirements-definition`.
-- Do not use to split sprint work; use `user-story-writing`.
+## Overview
+Use this skill to translate approved requirements into acceptance criteria that engineering and QA can execute without interpretation drift.
 
-## Goal
-Translate stable requirements into binary, testable acceptance conditions.
+## Inputs To Gather
+- Approved requirements (`REQ-*`) and relevant non-functional requirements (`NFR-*`).
+- Business intent, out-of-scope boundaries, and policy constraints.
+- User-visible behaviors, system side effects, and error paths.
+- Test environment capabilities and observability limits.
 
-## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
-- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+## Deliverables
+- Acceptance criteria set with binary pass/fail expectations.
+- Scenario matrix covering happy path, boundary, negative, and failure cases.
+- Traceability map: requirement -> criterion -> verification method.
+- Open ambiguity list that blocks objective verification.
 
-## Inputs
-- Approved `REQ-*` and relevant `NFR-*`
-- Boundary conditions and known failure paths
-- Test environment capabilities
-
-## Outputs
-- `AC-*` conditions mapped to `REQ-*`
-- Positive, negative, and boundary test scenarios
-- Traceability table from requirement to verification method
+## Quality Standard
+- Each criterion is independently testable and yields one clear result.
+- Each criterion states preconditions, action, expected observable outcome, and evidence source.
+- Boundary values, invalid inputs, authorization errors, and integration failure behavior are covered when applicable.
+- Criteria describe required behavior, not implementation detail.
+- Overlap and contradiction across criteria are removed.
 
 ## Workflow
-1. Write behavior-focused pass/fail statements per requirement.
-2. Assign `AC-*` IDs and map each to one `REQ-*` ID.
-3. Include normal flow, edge conditions, and failure outcomes.
-4. Specify setup, inputs, and expected observable results.
-5. Review for ambiguity, overlap, and missing failure coverage.
+1. Normalize requirement intent and explicit assumptions.
+2. Split requirements into observable behavior units.
+3. Draft pass/fail criteria for normal, boundary, negative, and failure scenarios.
+4. Define evidence sources (API response, UI state, logs, metrics, events) for each criterion.
+5. Run ambiguity and overlap review; publish unresolved blockers.
 
-## Quality Gates
-- Every `AC-*` is independently verifiable.
-- Coverage includes negative and boundary paths.
-- Criteria map to requirement and NFR obligations.
-- Compliance conditions are testable and explicit.
-
-## Failure Handling
-- Reject criteria that cannot be executed in available environments.
-- Stop when requirement ambiguity prevents binary criteria.
+## Failure Conditions
+- Stop when requirement intent is unstable or contradictory.
+- Stop when a criterion cannot be verified with available test/observability capabilities.
+- Escalate when missing instrumentation prevents objective pass/fail judgment.
