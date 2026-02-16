@@ -1,41 +1,52 @@
 ---
 name: testing-bdd
-description: Specialized workflow for behavior-driven scenarios and ubiquitous language alignment. Trigger when requirements must be expressed as executable behavior scenarios in shared business language across product, engineering, and QA before implementation or release decisions; do not use for observability ownership or release scheduling policy.
+description: "Behavior-driven scenario design for shared business language and executable acceptance evidence. Use when teams must align requirements as Given-When-Then scenarios before implementation sign-off or release; do not use for performance/load benchmarking or deployment policy design."
 ---
 
 # Testing Bdd
 
 ## Trigger Boundary
-- Use when verification strategy or release confidence evidence must be designed.
-- Do not use for production observability ownership; use `observability-*`.
-- Do not use for architecture topology selection.
+- Use when the core need is behavior scenarios in ubiquitous language.
+- Typical requests:
+  - `仕様レビュー前にGiven-When-Thenを整理したい`
+  - `要件の解釈差分をテスト可能なシナリオに落としたい`
+  - `PO/QA/開発で同じ受け入れ条件を共有したい`
+- Do not use when:
+  - 純粋な負荷試験設計のみをしたい（`performance-*` を使う）
+  - 本番監視やアラート運用の設計をしたい（`observability-*` を使う）
 
 ## Goal
-Build sufficient verification evidence to prevent regressions.
+Build sufficient, risk-aligned verification evidence to prevent regressions.
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for behavior-driven scenarios and ubiquitous language alignment
-- Operational, compliance, and rollout constraints
+- Change scope, risk profile, and release constraints
+- Domain evidence for behavior scenarios in ubiquitous language
+- Existing test assets, toolchain constraints, and known failure modes
 
 ## Outputs
-- Given-When-Then scenario suite
-- Decision log for behavior-driven scenarios and ubiquitous language alignment
-- Verification checklist with measurable pass-fail criteria
+- Given-When-Then scenario suite with requirement mapping
+- Decision record including alternatives and selected strategy
+- Verification checklist with measurable pass/fail criteria
 
 ## Workflow
-1. Clarify outcomes and hard constraints for behavior-driven scenarios and ubiquitous language alignment.
-2. Produce options and select an approach for behavior-driven scenarios and ubiquitous language alignment.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using stakeholder-readable scenario execution evidence.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Clarify decision question, existing project testing policy, and non-negotiable constraints for behavior scenarios in ubiquitous language.
+2. Map risks to required test depth and execution tiers (fast gate vs full gate).
+3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
+4. Select one strategy and document why alternatives were not chosen.
+5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
+6. Execute verification and capture reproducible evidence using scenario execution evidence tied to acceptance decisions.
+7. Publish residual risks, follow-up actions, and owner accountability.
 
 ## Quality Gates
-- Scope and assumptions for behavior-driven scenarios and ubiquitous language alignment are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Trigger fit is explicit, and alternative testing levels were consciously considered.
+- Decision rationale is evidence-based, not preference-based.
+- Assumptions, unknowns, and confidence level are documented.
+- Evidence is reproducible with exact commands/artifacts.
+- Residual risks include owner, due date, and verification plan.
 
 ## Failure Handling
-- Stop when critical business behaviors are not captured as executable scenarios.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when critical business behavior cannot be expressed as executable scenarios.
+- Escalate when stakeholders disagree on scenario semantics and release criteria.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.

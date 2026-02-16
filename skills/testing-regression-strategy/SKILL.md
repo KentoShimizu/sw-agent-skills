@@ -1,41 +1,53 @@
 ---
 name: testing-regression-strategy
-description: Specialized workflow for regression suite curation and risk-based test selection. Trigger when release cadence or test budget requires selecting and maintaining regression coverage using change impact and risk prioritization; do not use for observability ownership or release scheduling policy.
+description: "Risk-based regression suite curation for release gating under limited time and budget. Use when you must decide which tests run always/conditionally based on impact and risk; do not use for writing a single test type in isolation."
 ---
 
 # Testing Regression Strategy
 
 ## Trigger Boundary
-- Use when verification strategy or release confidence evidence must be designed.
-- Do not use for production observability ownership; use `observability-*`.
-- Do not use for architecture topology selection.
+- Use when the core need is regression suite selection by risk and impact.
+- Typical requests:
+  - `CI時間制約の中で回帰セットを最適化したい`
+  - `毎回全部回せないので高リスク優先で選びたい`
+  - `変更影響とテスト優先度を紐付けたい`
+- Do not use when:
+  - 単一テストケース実装のみ（`testing-unit` など個別skillを使う）
+  - 監視設計そのもの（`observability-*` を使う）
 
 ## Goal
-Build sufficient verification evidence to prevent regressions.
+Build sufficient, risk-aligned verification evidence to prevent regressions.
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for regression suite curation and risk-based test selection
-- Operational, compliance, and rollout constraints
+- Change scope, risk profile, and release constraints
+- Domain evidence for regression suite selection by risk and impact
+- Existing test assets, toolchain constraints, and known failure modes
 
 ## Outputs
-- Regression selection policy with impact mapping
-- Decision log for regression suite curation and risk-based test selection
-- Verification checklist with measurable pass-fail criteria
+- regression policy with tiered test selection rules
+- Decision record including alternatives and selected strategy
+- Verification checklist with measurable pass/fail criteria
 
 ## Workflow
-1. Clarify outcomes and hard constraints for regression suite curation and risk-based test selection.
-2. Produce options and select an approach for regression suite curation and risk-based test selection.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using change-impact to regression coverage traceability.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Clarify decision question, existing project testing policy, and non-negotiable constraints for regression suite selection by risk and impact.
+2. Map risks to required test depth and execution tiers (fast gate vs full gate).
+3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
+4. Select one strategy and document why alternatives were not chosen.
+5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
+6. Execute verification and capture reproducible evidence using change-impact traceability between risks and selected suites.
+7. Publish residual risks, follow-up actions, and owner accountability.
 
 ## Quality Gates
-- Scope and assumptions for regression suite curation and risk-based test selection are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Trigger fit is explicit, and alternative testing levels were consciously considered.
+- Decision rationale is evidence-based, not preference-based.
+- Assumptions, unknowns, and confidence level are documented.
+- Evidence is reproducible with exact commands/artifacts.
+- Residual risks include owner, due date, and verification plan.
+- Release gating criteria and rollback signals are explicit for production-impacting changes.
 
 ## Failure Handling
-- Stop when high-risk change areas are absent from regression gates.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when high-risk areas are missing from mandatory regression gates.
+- Escalate when suite budget and required risk coverage are irreconcilable.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.

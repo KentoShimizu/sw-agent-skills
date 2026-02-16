@@ -1,44 +1,53 @@
 ---
 name: playwright
-description: "Browser flow verification workflow using Playwright CLI. Trigger when web user journeys need executable browser-level verification evidence (pass/fail results, traces, screenshots) before merge or release; do not use for product requirement prioritization or architecture topology selection."
+description: "Playwright CLI workflow for browser-level user-journey verification. Use when web flows require executable browser evidence (traces, screenshots, reproducible command logs) before merge or release; do not use for pure unit/API-only checks."
 ---
 
 # Playwright
 
 ## Trigger Boundary
-- Use when real browser interaction is required to validate behavior.
-- Do not use for unit or API-only verification scopes.
-- Do not use for desktop app capture where no browser is involved.
+- Use when the core need is browser-level flow verification with artifacts.
+- Typical requests:
+  - `主要ユーザーフローをブラウザ実行で再現証跡付きで確認したい`
+  - `DOM更新後の要素参照ミスを防いでE2Eを安定させたい`
+  - `失敗時にtrace/screenshot付きで報告したい`
+- Do not use when:
+  - API契約のみの検証（`testing-contract`）
+  - 関数単位のロジック検証（`testing-unit`）
 
 ## Goal
-Produce deterministic browser-run evidence for functional and UI flow validation.
+Produce deterministic browser evidence for functional and UX flow validation.
 
 ## Inputs
-- Target URLs and critical user journey definition
-- Test credentials or fixtures (provided via environment variables or secret store)
-- Required artifacts (`snapshot`, `screenshot`, `trace`)
+- Target URLs and critical flow definition
+- Credentials/fixtures from environment variables or secret store
+- Artifact requirements (`trace`, `screenshot`, `video` if needed)
 
 ## Outputs
-- Reproducible command sequence for target flow
-- Artifact bundle for key checkpoints and failures
-- Findings list with exact reproduction references
+- Reproducible Playwright command sequence
+- playwright execution package with artifacts and replay steps
+- Findings list with exact replay references
 
 ## Workflow
-1. Confirm Playwright CLI runtime availability and browser readiness.
-2. Prepare test credentials from environment variables; avoid inline plaintext secrets.
-3. Open target page and snapshot before interacting.
-4. Execute flow step-by-step; refresh references after DOM-changing actions.
-5. Capture artifacts at decision points and failure boundaries.
-6. Report observed behavior with command-level traceability.
+1. Clarify decision question, existing project testing policy, and non-negotiable constraints for browser-level flow verification with artifacts.
+2. Map risks to required test depth and execution tiers (fast gate vs full gate).
+3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
+4. Select one strategy and document why alternatives were not chosen.
+5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
+6. Execute verification and capture reproducible evidence using step-by-step browser run evidence with deterministic replay.
+7. Publish residual risks, follow-up actions, and owner accountability.
 
 ## Quality Gates
-- Every action maps to a fresh, valid UI reference.
-- Flow can be replayed from the documented command sequence.
-- Artifacts cover both success path and failing branch when present.
-- Conclusions are based on observed runs, not inferred behavior.
-- Credentials are never hardcoded in commands, scripts, logs, or screenshots.
+- Trigger fit is explicit, and alternative testing levels were consciously considered.
+- Decision rationale is evidence-based, not preference-based.
+- Assumptions, unknowns, and confidence level are documented.
+- Evidence is reproducible with exact commands/artifacts.
+- Residual risks include owner, due date, and verification plan.
+- Release gating criteria and rollback signals are explicit for production-impacting changes.
 
 ## Failure Handling
-- Stop when automation prerequisites (runtime, auth, env) are unmet.
-- Escalate when deterministic replay is impossible due to external instability.
-- Stop when only plaintext credentials are available and secure injection is not possible.
+- Stop when automation prerequisites are missing or secure credential injection is unavailable.
+- Escalate when external instability prevents deterministic replay despite retries.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.

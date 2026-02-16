@@ -1,41 +1,52 @@
 ---
 name: testing-mutation
-description: Specialized workflow for mutation score improvement and weak assertion detection. Trigger when test robustness needs objective strengthening and mutation analysis is required to expose weak or missing assertions; do not use for observability ownership or release scheduling policy.
+description: "Mutation-testing workflow for exposing weak assertions and missing behavioral checks. Use when existing tests pass but confidence is low and you need objective robustness signals; do not use for first-pass test creation before baseline tests exist."
 ---
 
 # Testing Mutation
 
 ## Trigger Boundary
-- Use when verification strategy or release confidence evidence must be designed.
-- Do not use for production observability ownership; use `observability-*`.
-- Do not use for architecture topology selection.
+- Use when the core need is mutation score and weak assertion detection.
+- Typical requests:
+  - `テストは通るが壊しても落ちない不安がある`
+  - `生存mutantを起点にアサーション強化したい`
+  - `重要モジュールのテスト有効性を定量評価したい`
+- Do not use when:
+  - まだ基礎テストがない段階で初回設計したい（先に `testing-unit`/`testing-integration`）
+  - パフォーマンス限界を測りたい（`performance-*` を使う）
 
 ## Goal
-Build sufficient verification evidence to prevent regressions.
+Build sufficient, risk-aligned verification evidence to prevent regressions.
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for mutation score improvement and weak assertion detection
-- Operational, compliance, and rollout constraints
+- Change scope, risk profile, and release constraints
+- Domain evidence for mutation score and weak assertion detection
+- Existing test assets, toolchain constraints, and known failure modes
 
 ## Outputs
-- Mutation analysis report with surviving mutants
-- Decision log for mutation score improvement and weak assertion detection
-- Verification checklist with measurable pass-fail criteria
+- mutation report with surviving mutant triage
+- Decision record including alternatives and selected strategy
+- Verification checklist with measurable pass/fail criteria
 
 ## Workflow
-1. Clarify outcomes and hard constraints for mutation score improvement and weak assertion detection.
-2. Produce options and select an approach for mutation score improvement and weak assertion detection.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using mutation testing execution with kill-rate targets.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Clarify decision question, existing project testing policy, and non-negotiable constraints for mutation score and weak assertion detection.
+2. Map risks to required test depth and execution tiers (fast gate vs full gate).
+3. Design at least two viable strategies and compare feedback latency, maintenance cost, and flakiness risk.
+4. Select one strategy and document why alternatives were not chosen.
+5. Design happy-path, edge-path, and failure-path checks with explicit expected outcomes.
+6. Execute verification and capture reproducible evidence using kill-rate evidence plus patch plan for surviving mutants.
+7. Publish residual risks, follow-up actions, and owner accountability.
 
 ## Quality Gates
-- Scope and assumptions for mutation score improvement and weak assertion detection are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Trigger fit is explicit, and alternative testing levels were consciously considered.
+- Decision rationale is evidence-based, not preference-based.
+- Assumptions, unknowns, and confidence level are documented.
+- Evidence is reproducible with exact commands/artifacts.
+- Residual risks include owner, due date, and verification plan.
 
 ## Failure Handling
-- Stop when surviving mutants expose untested behavior.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when surviving mutants in critical logic remain without remediation plan.
+- Escalate when mutation runtime cost blocks practical CI usage.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: concrete trigger phrases, non-matching requests, and expected deliverable shape.
