@@ -1,0 +1,10 @@
+<type>(<scope>): <summary>
+
+Why:
+- <business or technical reason>
+
+What:
+- <key changes>
+
+Risk:
+- <known risks and mitigations>

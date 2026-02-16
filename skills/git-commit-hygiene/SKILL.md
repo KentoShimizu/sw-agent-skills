@@ -1,47 +1,49 @@
 ---
 name: git-commit-hygiene
-description: "Specialized workflow for enforcing atomic commits, clear commit messages, and auditable change intent. Trigger when changes are being prepared for commit and commit granularity, message clarity, and traceability must be enforced before push or review; do not use for CI workflow design or application behavior implementation."
+description: "Enforce atomic commits, clear commit messages, and auditable change intent before push or review. Use when commit granularity, message clarity, and traceability must be improved; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Commit Hygiene
 
-## Trigger Boundary
-- Use when commit quality, traceability, or reviewability must be improved.
-- Do not use for architecture decision records; use `architecture-decision-records`.
-- Do not use for source code style conventions; use language `*-style-guide` skills.
+## Overview
+Use this skill to create commit history that reviewers can reason about and operators can bisect safely.
 
-## Goal
-Produce commit history that is easy to review, bisect, and audit.
+## Shared References
+- Commit message quality rules:
+  - `references/commit-message-quality-rules.md`
 
-## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
-- Track commit hygiene artifacts with project-defined IDs (for example `GIT-CMT-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- Commit slicing checklist:
+  - `assets/commit-slicing-checklist.md`
+- Commit message template:
+  - `assets/commit-message-template.txt`
 
-## Inputs
-- Changed files and logical change boundaries
-- Team commit message conventions
-- Compliance and traceability requirements
+## Inputs To Gather
+- Changed files and logical change boundaries.
+- Team commit message conventions and compliance constraints.
+- Risk profile of the change set (critical path vs local refactor).
+- Required verification scope before push.
 
-## Outputs
-- project-defined ID (for example `GIT-CMT-*`) commit slicing and hygiene report
-- Commit message standard and examples
-- Pre-push and CI checklist for history quality
+## Deliverables
+- Logical commit slicing plan.
+- Commit messages with explicit intent/rationale.
+- Verification notes per commit (tests/checks run).
+- Traceability-ready history for review and rollback.
 
 ## Workflow
-1. Separate unrelated changes into distinct logical commits.
-2. Write intent-first commit messages with scope and rationale.
-3. Verify each commit builds and passes relevant tests.
-4. Run secret scanning on staged history in pre-push and CI.
-5. Publish commit checklist and contract validation evidence.
+1. Separate unrelated changes using `assets/commit-slicing-checklist.md`.
+2. Write commit messages from `assets/commit-message-template.txt` and `references/commit-message-quality-rules.md`.
+3. Ensure each commit is independently reviewable and reversible.
+4. Run required tests/checks before push.
+5. Re-check history for mixed intent, hidden generated noise, and sensitive content.
 
-## Quality Gates
-- Each commit has one primary intent and reversible scope.
-- Commit messages explain why, not only what changed.
-- Commits are testable and bisect-friendly.
-- Secret scan passes before push (`checks.secret_scan_passed=true`).
+## Quality Standard
+- Each commit has one primary behavioral intent.
+- Messages explain why and risk, not only file changes.
+- Commit sequence is bisect-friendly for regression analysis.
+- Sensitive data never appears in staged history.
 
-## Failure Handling
-- Stop when a commit mixes unrelated behavioral changes.
-- Stop when secret scan detects credentials or personal data leakage.
-- Escalate when traceability requirements are unmet by current history.
+## Failure Conditions
+- Stop when a commit mixes unrelated behavior changes.
+- Stop when a commit cannot be validated independently.
+- Escalate when traceability/compliance requirements cannot be met with current history.
