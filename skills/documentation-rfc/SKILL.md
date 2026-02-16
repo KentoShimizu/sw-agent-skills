@@ -8,6 +8,16 @@ description: "Author RFC documents for proposed technical changes with clear pro
 ## Overview
 Use this skill to produce decision-ready RFCs that let stakeholders review options with clear tradeoffs and risks.
 
+## Shared References
+- Decision quality checks:
+  - `references/rfc-decision-quality-checks.md`
+
+## Templates And Assets
+- RFC template:
+  - `assets/rfc-template.md`
+- Tradeoff matrix template:
+  - `assets/rfc-tradeoff-matrix-template.csv`
+
 ## Inputs To Gather
 - Problem statement and business/technical motivation.
 - Constraints and non-goals.
@@ -37,8 +47,8 @@ Use this skill to produce decision-ready RFCs that let stakeholders review optio
 ## Workflow
 1. Define problem scope and success criteria.
 2. Collect options and evaluation evidence.
-3. Compare options with explicit tradeoff criteria.
-4. Draft recommendation and risk treatment plan.
+3. Compare options with explicit tradeoff criteria in `assets/rfc-tradeoff-matrix-template.csv`.
+4. Draft recommendation and risk treatment plan using `assets/rfc-template.md`.
 5. Publish for review with clear decision deadlines.
 
 ## Failure Conditions

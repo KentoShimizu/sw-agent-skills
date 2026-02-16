@@ -8,6 +8,16 @@ description: "Design and review container runtime basics for reproducible local/
 ## Overview
 Use this skill to ensure containerized workloads are reproducible, debuggable, and operationally safe.
 
+## Shared References
+- Runtime risk catalog:
+  - `references/docker-runtime-risk-catalog.md`
+
+## Templates And Assets
+- Runtime contract template:
+  - `assets/container-runtime-contract-template.md`
+- Runtime checklist:
+  - `assets/docker-runtime-checklist.md`
+
 ## Inputs To Gather
 - Application runtime requirements and dependencies.
 - Local/dev/prod run differences.
@@ -33,10 +43,10 @@ Use this skill to ensure containerized workloads are reproducible, debuggable, a
 - Health and failure signals are observable.
 
 ## Workflow
-1. Define container runtime contract.
+1. Define container runtime contract using `assets/container-runtime-contract-template.md`.
 2. Configure networking, storage, and environment boundaries.
 3. Validate startup/health behavior.
-4. Verify security constraints and secret handling.
+4. Verify security constraints and secret handling using `assets/docker-runtime-checklist.md`.
 5. Document reproducible run commands.
 
 ## Failure Conditions

@@ -1,0 +1,2 @@
+risk_id,description,impact,likelihood,mitigation,owner,status
+ARC-RISK-001,dependency outage can cascade across services,high,medium,circuit breaker and fallback owner assignment,platform-team,open

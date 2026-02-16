@@ -8,6 +8,18 @@ description: "Define and align product design principles that teams can apply co
 ## Overview
 Use this skill to produce principle-level guardrails that reduce design churn and conflicting decisions across teams.
 
+## Shared References
+- Baseline governance contract:
+  - `references/design-governance-contract.md`
+- Principle quality heuristics:
+  - `references/principle-quality-heuristics.md`
+
+## Templates And Assets
+- Principle set template:
+  - `assets/design-principles-template.md`
+- Review checklist:
+  - `assets/design-principle-review-checklist.md`
+
 ## Inputs To Gather
 - Product outcomes, user success criteria, and business constraints.
 - Recurring design conflicts and inconsistency examples.
@@ -34,9 +46,9 @@ Use this skill to produce principle-level guardrails that reduce design churn an
 
 ## Workflow
 1. Identify repeated decision conflicts from current product/design work.
-2. Draft candidate principles tied to outcomes and user risk.
+2. Draft candidate principles in `assets/design-principles-template.md`.
 3. Add anti-patterns and boundary conditions for each principle.
-4. Validate against accessibility/localization/privacy constraints.
+4. Validate against accessibility/localization/privacy constraints and run `assets/design-principle-review-checklist.md`.
 5. Publish approved principles with ownership and revision policy.
 
 ## Failure Conditions

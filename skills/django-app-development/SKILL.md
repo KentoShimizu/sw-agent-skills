@@ -8,6 +8,16 @@ description: "Django application development workflow for production-grade app c
 ## Overview
 Use this skill to implement Django changes with explicit domain boundaries, safe migrations, and operationally predictable behavior.
 
+## Shared References
+- Layering and boundary guidance:
+  - `references/django-layering-guidelines.md`
+
+## Templates And Assets
+- Change planning template:
+  - `assets/django-change-plan-template.md`
+- Migration safety checklist:
+  - `assets/django-migration-safety-checklist.md`
+
 ## Inputs To Gather
 - Feature requirements and affected domain boundaries.
 - Existing app/module structure and cross-app dependencies.
@@ -33,10 +43,10 @@ Use this skill to implement Django changes with explicit domain boundaries, safe
 - Error handling and logging expose failures without silent fallback behavior.
 
 ## Workflow
-1. Scope impacted apps and define boundary-safe change plan.
+1. Scope impacted apps and define boundary-safe change plan in `assets/django-change-plan-template.md`.
 2. Implement model and domain logic with explicit constraints.
 3. Update views/forms/serializers while keeping transport and domain concerns separated.
-4. Create and review migrations with operational safety checks.
+4. Create and review migrations with operational safety checks from `assets/django-migration-safety-checklist.md`.
 5. Validate with tests and critical-flow verification before release.
 
 ## Failure Conditions

@@ -8,6 +8,16 @@ description: "Design Dockerfiles for secure, deterministic, and efficient image 
 ## Overview
 Use this skill to create images that build reliably, run securely, and minimize size/startup overhead.
 
+## Shared References
+- Layer and cache strategy guidance:
+  - `references/dockerfile-layer-cache-guidance.md`
+
+## Templates And Assets
+- Dockerfile baseline:
+  - `assets/Dockerfile.template`
+- Image hardening checklist:
+  - `assets/image-hardening-checklist.md`
+
 ## Inputs To Gather
 - Runtime requirements and base image constraints.
 - Dependency installation and caching strategy.
@@ -35,7 +45,7 @@ Use this skill to create images that build reliably, run securely, and minimize 
 ## Workflow
 1. Select base image aligned to runtime and policy.
 2. Design multi-stage build and layer ordering for cache efficiency.
-3. Apply runtime hardening in final stage.
+3. Apply runtime hardening in final stage using `assets/image-hardening-checklist.md`.
 4. Validate build reproducibility and image behavior.
 5. Verify security and size/performance constraints.
 

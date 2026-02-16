@@ -8,6 +8,16 @@ description: "Run structured design reviews that produce actionable findings and
 ## Overview
 Use this skill to convert subjective design feedback into prioritized, evidence-based decisions that unblock implementation.
 
+## Shared References
+- Severity calibration guidance:
+  - `references/design-review-severity-guidance.md`
+
+## Templates And Assets
+- Findings template:
+  - `assets/design-review-findings-template.md`
+- Approval decision log:
+  - `assets/design-review-decision-log-template.md`
+
 ## Inputs To Gather
 - Review target (screens, flows, interaction states) and intended users.
 - Acceptance criteria and non-negotiable constraints.
@@ -35,9 +45,9 @@ Use this skill to convert subjective design feedback into prioritized, evidence-
 ## Workflow
 1. Confirm review scope, criteria, and decision authority.
 2. Evaluate critical user journeys before secondary surfaces.
-3. Log findings with impact, severity, and remediation guidance.
-4. Resolve or defer issues using explicit risk acceptance rules.
-5. Publish final decision and follow-up actions.
+3. Log findings with impact, severity, and remediation guidance in `assets/design-review-findings-template.md`.
+4. Resolve or defer issues using explicit risk acceptance rules and `references/design-review-severity-guidance.md`.
+5. Publish final decision and follow-up actions in `assets/design-review-decision-log-template.md`.
 
 ## Failure Conditions
 - Stop when review scope or acceptance criteria are ambiguous.

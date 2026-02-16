@@ -8,6 +8,16 @@ description: "Design blue-green deployment strategy with explicit cutover checks
 ## Overview
 Use this skill to design low-risk cutovers between two production environments with clear rollback paths.
 
+## Shared References
+- Data/schema compatibility guidance:
+  - `references/blue-green-data-compatibility.md`
+
+## Templates And Assets
+- Cutover runbook template:
+  - `assets/blue-green-cutover-runbook-template.md`
+- Readiness checklist:
+  - `assets/blue-green-readiness-checklist.md`
+
 ## Inputs To Gather
 - Service criticality and acceptable deployment interruption.
 - Data/schema compatibility constraints between old/new versions.
@@ -34,8 +44,8 @@ Use this skill to design low-risk cutovers between two production environments w
 
 ## Workflow
 1. Define cutover/rollback criteria and owners.
-2. Validate environment parity and dependencies.
-3. Execute pre-cutover verification in green.
+2. Validate environment parity and dependencies using `assets/blue-green-readiness-checklist.md`.
+3. Execute pre-cutover verification in green and capture steps in `assets/blue-green-cutover-runbook-template.md`.
 4. Perform controlled traffic switch.
 5. Monitor guardrails and either stabilize or rollback.
 6. Decommission blue only after stabilization window.

@@ -8,6 +8,16 @@ description: "Define scalable design-system foundations with clear ownership and
 ## Overview
 Use this skill to establish stable UI foundations that multiple teams can adopt without diverging conventions.
 
+## Shared References
+- Lifecycle governance guidance:
+  - `references/foundation-lifecycle-guidance.md`
+
+## Templates And Assets
+- Foundation inventory:
+  - `assets/foundation-inventory-template.csv`
+- Ownership and lifecycle model:
+  - `assets/foundation-ownership-model-template.md`
+
 ## Inputs To Gather
 - Current component inventory, duplication hotspots, and drift patterns.
 - Product surface priorities and expected growth areas.
@@ -33,11 +43,11 @@ Use this skill to establish stable UI foundations that multiple teams can adopt 
 - Accessibility and localization constraints are baked into foundation definitions.
 
 ## Workflow
-1. Audit existing UI patterns and identify high-cost inconsistency clusters.
+1. Audit existing UI patterns and capture inventory in `assets/foundation-inventory-template.csv`.
 2. Define foundational primitives and composition boundaries.
-3. Assign ownership and lifecycle governance per foundation area.
+3. Assign ownership and lifecycle governance per foundation area using `assets/foundation-ownership-model-template.md`.
 4. Validate technical feasibility with implementation teams.
-5. Publish adoption plan with phased migration guidance.
+5. Publish adoption plan with phased migration guidance and lifecycle policy from `references/foundation-lifecycle-guidance.md`.
 
 ## Failure Conditions
 - Stop when foundation scope is too broad to govern consistently.

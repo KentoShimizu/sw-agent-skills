@@ -8,6 +8,26 @@ description: "Design token architecture workflow for semantic, scalable, impleme
 ## Overview
 Use this skill to replace hardcoded visual values with a governed token model that scales across teams and platforms.
 
+## Shared References
+- Naming rules and anti-patterns:
+  - `references/token-naming-rules.md`
+- Versioning and deprecation decision rules:
+  - `references/token-versioning-policy.md`
+- Accessibility and localization checks:
+  - `references/token-accessibility-and-localization-checks.md`
+
+## Templates And Assets
+- Token taxonomy starter:
+  - `assets/token-taxonomy-template.json`
+- Legacy-to-token mapping sheet:
+  - `assets/token-mapping-template.csv`
+- Component token example set:
+  - `assets/component-token-example.json`
+- Deprecation decision record:
+  - `assets/token-deprecation-plan-template.md`
+- Rollout execution checklist:
+  - `assets/token-rollout-checklist.md`
+
 ## Inputs To Gather
 - Brand rules and product-level visual requirements.
 - Current hardcoded values and style drift hotspots.
@@ -33,11 +53,11 @@ Use this skill to replace hardcoded visual values with a governed token model th
 - Token changes include migration impact and rollout sequence.
 
 ## Workflow
-1. Define token layers and scope boundaries.
-2. Map existing raw values to semantic tokens.
-3. Add component-level aliases only where needed for stability.
-4. Establish version/deprecation workflow and ownership.
-5. Validate token coverage against critical UI surfaces.
+1. Define token layers and scope boundaries using `assets/token-taxonomy-template.json`.
+2. Map existing raw values to semantic tokens with `assets/token-mapping-template.csv`.
+3. Add component-level aliases only where needed for stability, referencing `assets/component-token-example.json`.
+4. Establish version/deprecation workflow using `references/token-versioning-policy.md` and `assets/token-deprecation-plan-template.md`.
+5. Validate coverage with `references/token-accessibility-and-localization-checks.md` and complete `assets/token-rollout-checklist.md`.
 
 ## Failure Conditions
 - Stop when token design allows uncontrolled one-off exceptions.

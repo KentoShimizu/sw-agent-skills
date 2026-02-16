@@ -8,6 +8,16 @@ description: "Design multi-service local orchestration with Docker Compose, incl
 ## Overview
 Use this skill to define reliable multi-service local stacks for development, debugging, and integration testing.
 
+## Shared References
+- Dependency and startup patterns:
+  - `references/compose-dependency-guidance.md`
+
+## Templates And Assets
+- Compose stack baseline:
+  - `assets/compose-stack-template.yaml`
+- Operations runbook:
+  - `assets/compose-operations-runbook-template.md`
+
 ## Inputs To Gather
 - Services and dependencies required for target workflows.
 - Required startup order and readiness conditions.
@@ -33,10 +43,10 @@ Use this skill to define reliable multi-service local stacks for development, de
 
 ## Workflow
 1. Map required services and dependency graph.
-2. Define compose services, networks, volumes, and env boundaries.
+2. Define compose services, networks, volumes, and env boundaries using `assets/compose-stack-template.yaml`.
 3. Add health checks and readiness-aware dependency rules.
 4. Validate full stack startup and critical workflows.
-5. Document operational commands and troubleshooting notes.
+5. Document operational commands and troubleshooting notes in `assets/compose-operations-runbook-template.md`.
 
 ## Failure Conditions
 - Stop when service dependencies are implicit or race-prone.

@@ -1,0 +1,26 @@
+services:
+  api:
+    image: your-api-image:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: local
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: change-me
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  default:
+    name: app-local

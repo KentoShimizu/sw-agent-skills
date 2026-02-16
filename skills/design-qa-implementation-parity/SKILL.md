@@ -8,6 +8,16 @@ description: "Verify implementation parity against approved design specs with se
 ## Overview
 Use this skill to detect and triage design-to-implementation drift with evidence that engineers and designers can both act on.
 
+## Shared References
+- Severity classification model:
+  - `references/parity-severity-model.md`
+
+## Templates And Assets
+- Findings log:
+  - `assets/parity-findings-template.csv`
+- Sign-off decision document:
+  - `assets/parity-signoff-template.md`
+
 ## Inputs To Gather
 - Approved design source and exact version/snapshot.
 - Target implementation build, environment, and feature flags.
@@ -35,9 +45,9 @@ Use this skill to detect and triage design-to-implementation drift with evidence
 ## Workflow
 1. Freeze source design and implementation versions for the review window.
 2. Compare critical flows first, then secondary and edge states.
-3. Classify mismatches by severity and release impact.
-4. Assign owners and define remediation order.
-5. Publish sign-off outcome with unresolved risk explicitly documented.
+3. Classify mismatches by severity and release impact using `references/parity-severity-model.md`.
+4. Record findings in `assets/parity-findings-template.csv`, assign owners, and define remediation order.
+5. Publish sign-off outcome in `assets/parity-signoff-template.md` with unresolved risk explicitly documented.
 
 ## Failure Conditions
 - Stop sign-off when source versions are not locked.

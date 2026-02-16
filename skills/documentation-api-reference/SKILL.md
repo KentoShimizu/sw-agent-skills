@@ -8,6 +8,16 @@ description: "Author API reference documentation that is accurate, complete, and
 ## Overview
 Use this skill to produce API references that enable clients to integrate correctly without reverse engineering source code.
 
+## Shared References
+- Quality gates:
+  - `references/api-doc-quality-gates.md`
+
+## Templates And Assets
+- API reference template:
+  - `assets/api-reference-template.md`
+- Error catalog template:
+  - `assets/api-error-catalog-template.md`
+
 ## Inputs To Gather
 - Current API contracts/specs and change diff.
 - Authentication/authorization requirements.
@@ -35,9 +45,9 @@ Use this skill to produce API references that enable clients to integrate correc
 
 ## Workflow
 1. Diff contract changes and identify impacted sections.
-2. Update operation docs with schema and behavior details.
-3. Add/refresh example requests and responses.
-4. Validate consistency against source/spec.
+2. Update operation docs with schema and behavior details using `assets/api-reference-template.md`.
+3. Add/refresh example requests and responses, including error mapping in `assets/api-error-catalog-template.md`.
+4. Validate consistency against source/spec with `references/api-doc-quality-gates.md`.
 5. Publish with migration notes where applicable.
 
 ## Failure Conditions

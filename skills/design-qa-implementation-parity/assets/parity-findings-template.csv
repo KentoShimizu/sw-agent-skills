@@ -1,0 +1,3 @@
+finding_id,screen_or_flow,state_or_breakpoint,severity,description,reproduction_steps,owner,status,due_date
+DPAR-001,checkout summary,mobile-sm,blocker,primary CTA is not visible,open checkout and scroll summary,frontend-team,open,YYYY-MM-DD
+DPAR-002,profile edit,loading,major,text style mismatch causes truncation,open profile in slow network,design-systems,open,YYYY-MM-DD

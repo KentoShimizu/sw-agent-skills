@@ -8,6 +8,16 @@ description: "Design canary rollout strategy with progressive traffic steps, gua
 ## Overview
 Use this skill to release changes gradually while measuring real-user impact before broad rollout.
 
+## Shared References
+- Promotion and stop decision rules:
+  - `references/canary-promotion-rules.md`
+
+## Templates And Assets
+- Rollout plan template:
+  - `assets/canary-rollout-plan-template.md`
+- Guardrail matrix template:
+  - `assets/canary-guardrail-matrix-template.csv`
+
 ## Inputs To Gather
 - Critical SLOs and business guardrail metrics.
 - Traffic segmentation options (region, tenant, cohort).
@@ -32,10 +42,10 @@ Use this skill to release changes gradually while measuring real-user impact bef
 - Segment choice avoids exposing highest-risk cohorts first.
 
 ## Workflow
-1. Define canary audience and progression steps.
-2. Set promotion and rollback criteria for each step.
+1. Define canary audience and progression steps in `assets/canary-rollout-plan-template.md`.
+2. Set promotion and rollback criteria for each step using `assets/canary-guardrail-matrix-template.csv`.
 3. Deploy canary and monitor guardrails in real time.
-4. Promote only when criteria pass; otherwise stop/rollback.
+4. Promote only when criteria pass under `references/canary-promotion-rules.md`; otherwise stop/rollback.
 5. Complete rollout and run post-release verification.
 
 ## Failure Conditions
