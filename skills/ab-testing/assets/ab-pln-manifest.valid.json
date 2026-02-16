@@ -1,0 +1,50 @@
+{
+  "artifact_id": "AB-PLN-20260216-001",
+  "state": "approved",
+  "approvers": [
+    "Experiment Owner",
+    "Data Science Reviewer",
+    "Privacy Reviewer"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "pre_registration_complete": true,
+    "randomization_plan_defined": true,
+    "assignment_unit_defined": true,
+    "instrumentation_validated": true,
+    "srm_monitor_defined": true,
+    "guardrail_policy_defined": true,
+    "one_primary_metric_defined": true,
+    "no_posthoc_decision_rule_changes": true,
+    "external_user_impact": true
+  },
+  "decision_context": {
+    "decision_question": "Should the new recommendation ranker replace the baseline ranker?",
+    "primary_decision_metric": "weekly_retained_users",
+    "false_positive_cost": "high",
+    "false_negative_cost": "medium",
+    "allowed_actions": [
+      "ship",
+      "iterate",
+      "rollback",
+      "hold"
+    ],
+    "assignment_unit": "user",
+    "randomization_method": "hash(user_id) modulo 100",
+    "contamination_risk_mitigation": "Treatment assignment is shared across app and web to avoid cross-surface spillover."
+  },
+  "evidence_plan": {
+    "min_detectable_effect_pct": 1.5,
+    "confidence_level": 0.95,
+    "power_target": 0.8,
+    "minimum_runtime_days": 14,
+    "baseline_window_days": 28,
+    "analysis_method": "fixed_horizon",
+    "multiplicity_control": "Holm-Bonferroni across two secondary metrics."
+  },
+  "guardrails": [
+    "checkout_error_rate <= +0.20% absolute",
+    "p95_latency <= +30ms",
+    "support_contact_rate <= +0.10% absolute"
+  ]
+}

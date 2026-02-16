@@ -12,8 +12,10 @@ from pathlib import Path
 ARCH_VALIDATOR = Path("skills/architecture-principles/scripts/validate_architecture_contract.py")
 DESIGN_VALIDATOR = Path("skills/design-principles/scripts/validate_design_contract.py")
 API_VALIDATOR = Path("skills/api-design-rest/scripts/validate_api_contract.py")
+AB_VALIDATOR = Path("skills/ab-testing/scripts/validate_ab_testing_contract.py")
 ARCH_SAMPLE_DIR = Path("skills/architecture-principles/references/samples")
 API_SAMPLE_DIR = Path("skills/api-design-rest/assets")
+AB_SAMPLE_DIR = Path("skills/ab-testing/assets")
 
 
 @dataclass(frozen=True)
@@ -51,6 +53,12 @@ def parse_args() -> argparse.Namespace:
         help="API manifest path. Repeatable.",
     )
     parser.add_argument(
+        "--ab-manifest",
+        action="append",
+        default=[],
+        help="AB testing manifest path. Repeatable.",
+    )
+    parser.add_argument(
         "--run-architecture-samples",
         action="store_true",
         help="Run architecture validator against reference sample manifests.",
@@ -59,6 +67,11 @@ def parse_args() -> argparse.Namespace:
         "--run-api-samples",
         action="store_true",
         help="Run API validator against reference sample manifests.",
+    )
+    parser.add_argument(
+        "--run-ab-samples",
+        action="store_true",
+        help="Run AB testing validator against reference sample manifests.",
     )
     return parser.parse_args()
 
@@ -75,6 +88,9 @@ def build_tasks(args: argparse.Namespace) -> list[ValidationTask]:
     for manifest in args.api_manifest:
         tasks.append(ValidationTask(validator=API_VALIDATOR, manifest=Path(manifest)))
 
+    for manifest in args.ab_manifest:
+        tasks.append(ValidationTask(validator=AB_VALIDATOR, manifest=Path(manifest)))
+
     if args.run_architecture_samples and ARCH_SAMPLE_DIR.exists():
         for sample in sorted(ARCH_SAMPLE_DIR.glob("*.json")):
             tasks.append(ValidationTask(validator=ARCH_VALIDATOR, manifest=sample))
@@ -83,10 +99,14 @@ def build_tasks(args: argparse.Namespace) -> list[ValidationTask]:
         for sample in sorted(API_SAMPLE_DIR.glob("*.json")):
             tasks.append(ValidationTask(validator=API_VALIDATOR, manifest=sample))
 
+    if args.run_ab_samples and AB_SAMPLE_DIR.exists():
+        for sample in sorted(AB_SAMPLE_DIR.glob("*.json")):
+            tasks.append(ValidationTask(validator=AB_VALIDATOR, manifest=sample))
+
     if not tasks:
         raise SystemExit(
-            "no validation tasks provided; pass --architecture-manifest/--design-manifest/--api-manifest "
-            "or use --run-architecture-samples/--run-api-samples"
+            "no validation tasks provided; pass --architecture-manifest/--design-manifest/--api-manifest/"
+            "--ab-manifest or use --run-architecture-samples/--run-api-samples/--run-ab-samples"
         )
 
     return tasks
