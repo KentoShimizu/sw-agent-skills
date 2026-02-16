@@ -12,14 +12,13 @@
 
 - 再利用可能な skills の標準ディレクトリ構成
 - Codex、Claude Code、OpenCode 向けインストールスクリプト
-- リンクやパス整合性を確認する検証スクリプト
 
 ## リポジトリ構成
 
 - `skills/<skill-name>/SKILL.md`: 必須のスキル定義
 - `skills/<skill-name>/scripts/`: 任意の補助スクリプト
 - `skills/<skill-name>/references/`: 任意の参考資料
-- `scripts/`: インストーラーとバリデーター
+- `scripts/`: インストーラー
 - `docs/`: 多言語 README
 
 ## クイックセットアップ
@@ -70,13 +69,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | `-DryRun` | いいえ | ファイル変更せず実行内容のみ表示。 | 無効 |
 | `-VerboseList` | いいえ | 詳細な処理ログを表示。 | 無効 |
 | `-Force` | いいえ | 既存の配置先スキルディレクトリを置換。 | 無効 |
-
-## 検証
-
-```bash
-python3 scripts/validate_skill_links.py
-python3 scripts/validate_no_absolute_paths.py
-```
 
 ## 参考資料
 

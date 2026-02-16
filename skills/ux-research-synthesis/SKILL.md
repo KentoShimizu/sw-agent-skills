@@ -14,9 +14,9 @@ description: "UX research synthesis workflow for translating qualitative and qua
 Turn research evidence into high-confidence, actionable design direction.
 
 ## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track synthesis packages with `UX-RSR-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
+- Track synthesis packages with project-defined IDs (for example `UX-RSR-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Research transcripts, notes, analytics, and observations
@@ -24,7 +24,7 @@ Turn research evidence into high-confidence, actionable design direction.
 - Segment definitions and sampling limitations
 
 ## Outputs
-- Synthesized findings package with `UX-RSR-*` ID
+- Synthesized findings package with project-defined ID (for example `UX-RSR-*`)
 - Prioritized design implications and risk notes
 - Confidence level and evidence traceability map
 - Privacy evidence package for research handling decisions

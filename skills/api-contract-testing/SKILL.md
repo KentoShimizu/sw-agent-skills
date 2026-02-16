@@ -17,7 +17,7 @@ Catch contract drift before deployment impacts consumers.
 
 ## Shared API Contract (Canonical)
 - Use `../api-design-rest/references/api-governance-contract.md` as the canonical contract.
-- Validate manifests with:
+- Optional consistency checks (only if your repository enforces manifest validation):
   - `python3 ../api-design-rest/scripts/validate_api_contract.py --manifest <path/to/manifest.json>`
 - Use API contract-testing templates in `../api-design-rest/assets/`.
 - Use transport decision reference:

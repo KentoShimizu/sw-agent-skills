@@ -14,9 +14,9 @@ description: "Specialized workflow for creating immutable release tags and trace
 Produce auditable, immutable release markers with clear change traceability.
 
 ## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track release tagging artifacts with `GIT-REL-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track release tagging artifacts with project-defined IDs (for example `GIT-REL-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Release branch or commit SHA to tag
@@ -24,7 +24,7 @@ Produce auditable, immutable release markers with clear change traceability.
 - Release notes source and approval requirements
 
 ## Outputs
-- `GIT-REL-*` signed annotated release tag record
+- project-defined ID (for example `GIT-REL-*`) signed annotated release tag record
 - Release notes linked to commit range
 - Verification checklist for tagged artifact
 
@@ -39,7 +39,7 @@ Produce auditable, immutable release markers with clear change traceability.
 - Tag naming follows repository versioning policy.
 - Tag is signed, signature verification passes, and protected tag policy is enforced.
 - Release notes map clearly to included changes.
-- Security Reviewer approval is present for `GIT-REL-*` artifacts.
+- Security Reviewer approval is present for project-defined ID (for example `GIT-REL-*`) artifacts.
 
 ## Failure Handling
 - Stop when release commit is not fully validated.

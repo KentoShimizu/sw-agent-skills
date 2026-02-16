@@ -14,9 +14,9 @@ description: "Requirement-level risk analysis before implementation commitment. 
 Quantify requirement risk and define controls before release commitments.
 
 ## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the single schema and gate source.
-- Track requirements workflow artifacts with `RQM-*` IDs.
-- Run machine validation: `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
+- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Approved `REQ-*` and `NFR-*`

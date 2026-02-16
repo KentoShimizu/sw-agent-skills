@@ -14,9 +14,9 @@ description: "Design token architecture workflow for defining semantic, scalable
 Define a token system that is semantic, versionable, and implementation-safe.
 
 ## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Assign token IDs as `DSN-TOK-<CATEGORY>-*`.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
+- Assign token IDs as project-defined ID (for example `DSN-TOK-<CATEGORY>-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Brand and product visual requirements
@@ -25,7 +25,7 @@ Define a token system that is semantic, versionable, and implementation-safe.
 
 ## Outputs
 - Token taxonomy and naming rules
-- Token set with `DSN-TOK-*` IDs
+- Token set with project-defined IDs (for example `DSN-TOK-*`)
 - Token governance and migration guidance
 
 ## Workflow

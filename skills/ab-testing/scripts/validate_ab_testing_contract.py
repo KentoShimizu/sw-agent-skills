@@ -5,18 +5,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 
-ID_PATTERNS: dict[str, re.Pattern[str]] = {
-    "AB-PLN": re.compile(r"^AB-PLN-[0-9]{8}-[0-9]{3,}$"),
-    "AB-DEC": re.compile(r"^AB-DEC-[0-9]{8}-[0-9]{3,}$"),
-}
-
-VALID_STATES: dict[str, set[str]] = {
-    "AB-PLN": {"draft", "reviewed", "approved", "active", "stopped", "completed"},
-    "AB-DEC": {"draft", "reviewed", "finalized"},
+VALID_STATES_BY_PROFILE: dict[str, set[str]] = {
+    "experiment_plan": {"draft", "reviewed", "approved", "active", "stopped", "completed"},
+    "decision_record": {"draft", "reviewed", "finalized"},
 }
 
 RISK_LEVELS = {"low", "medium", "high", "critical"}
@@ -60,10 +54,22 @@ def load_manifest(path: Path) -> dict[str, object]:
     return data
 
 
-def artifact_prefix(artifact_id: str) -> str | None:
-    for prefix, pattern in ID_PATTERNS.items():
-        if pattern.match(artifact_id):
-            return prefix
+def infer_profile(manifest: dict[str, object], errors: list[str]) -> str | None:
+    has_result = "result" in manifest
+    has_plan_fields = "evidence_plan" in manifest or "guardrails" in manifest
+
+    if has_result and has_plan_fields:
+        errors.append("manifest mixes decision_record and experiment_plan fields")
+        return None
+    if has_result:
+        return "decision_record"
+    if has_plan_fields:
+        return "experiment_plan"
+
+    errors.append(
+        "unable to infer manifest profile; include result (decision_record) or "
+        "evidence_plan/guardrails (experiment_plan)"
+    )
     return None
 
 
@@ -191,7 +197,7 @@ def validate_decision_context(decision_context: object, errors: list[str]) -> No
 
 def validate_evidence_plan(evidence_plan: object, errors: list[str]) -> None:
     if not isinstance(evidence_plan, dict):
-        errors.append("evidence_plan must be an object for AB-PLN artifacts")
+        errors.append("evidence_plan must be an object for experiment_plan manifests")
         return
 
     evidence_map = evidence_plan
@@ -239,7 +245,7 @@ def validate_plan_fields(manifest: dict[str, object], errors: list[str]) -> None
     validate_evidence_plan(manifest.get("evidence_plan"), errors)
     guardrails = manifest.get("guardrails")
     if not isinstance(guardrails, list) or not all(isinstance(item, str) for item in guardrails):
-        errors.append("guardrails must be an array of strings for AB-PLN artifacts")
+        errors.append("guardrails must be an array of strings for experiment_plan manifests")
         return
     if not guardrails:
         errors.append("guardrails must include at least one metric")
@@ -250,7 +256,7 @@ def validate_plan_fields(manifest: dict[str, object], errors: list[str]) -> None
 
 def validate_result(result: object, errors: list[str]) -> None:
     if not isinstance(result, dict):
-        errors.append("result must be an object for AB-DEC artifacts")
+        errors.append("result must be an object for decision_record manifests")
         return
 
     result_map = result
@@ -285,19 +291,16 @@ def validate_manifest(manifest: dict[str, object]) -> list[str]:
     errors: list[str] = []
 
     artifact_id = manifest.get("artifact_id")
-    if not isinstance(artifact_id, str):
-        errors.append("artifact_id must be a string")
-        return errors
+    if artifact_id is not None and (not isinstance(artifact_id, str) or not artifact_id.strip()):
+        errors.append("artifact_id must be a non-empty string when present")
 
-    prefix = artifact_prefix(artifact_id)
-    if prefix is None:
-        errors.append("artifact_id does not match any allowed ID schema")
+    profile = infer_profile(manifest, errors)
+    if profile is None:
         return errors
 
     state = manifest.get("state")
-    allowed_states = VALID_STATES[prefix]
-    if not isinstance(state, str) or state not in allowed_states:
-        errors.append(f"state must be one of {sorted(allowed_states)}")
+    if not isinstance(state, str) or state not in VALID_STATES_BY_PROFILE[profile]:
+        errors.append(f"state must be one of {sorted(VALID_STATES_BY_PROFILE[profile])}")
 
     approvers = manifest.get("approvers")
     if not isinstance(approvers, list) or not all(isinstance(role, str) for role in approvers):
@@ -312,16 +315,16 @@ def validate_manifest(manifest: dict[str, object]) -> list[str]:
     validate_checks(manifest.get("checks"), approver_set, errors)
     validate_decision_context(manifest.get("decision_context"), errors)
 
-    if prefix == "AB-PLN":
+    if profile == "experiment_plan":
         validate_plan_fields(manifest, errors)
-    elif prefix == "AB-DEC":
+    else:
         validate_result(manifest.get("result"), errors)
 
     return errors
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate AB testing manifest")
+    parser = argparse.ArgumentParser(description="Validate AB testing governance manifest")
     parser.add_argument("--manifest", required=True, help="Path to manifest JSON")
     args = parser.parse_args()
 
@@ -330,8 +333,8 @@ def main() -> int:
 
     if errors:
         print("validation=failed")
-        for error in errors:
-            print(f"- {error}")
+        for err in errors:
+            print(f"- {err}")
         return 1
 
     print("validation=ok")

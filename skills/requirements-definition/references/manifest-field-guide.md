@@ -1,58 +1,65 @@
 # Requirements Manifest Field Guide
 
-This guide defines the manifest shape validated by:
+This guide provides a recommended manifest shape.
+Optional check command:
 `python3 skills/requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`
 
 ## Root Fields
-- `artifact_id` (string, required): `RQM-*` artifact ID.
-- `state` (string, required): lifecycle state from the governance contract.
-- `approvers` (array[string], required): approval roles.
-- `checks` (object, required): machine-check booleans.
-- `linked_ids` (object, required): traced work item IDs.
-- `privacy_evidence` (object, conditional): required when `checks.handles_personal_data=true`.
-- `compliance_evidence` (object, conditional): required for `RQM-CMP-*`.
+- `artifact_id` (string, optional): project-defined artifact ID.
+- `state` (string, recommended): lifecycle state from the governance contract.
+- `approvers` (array[string], recommended): approval roles.
+- `checks` (object, recommended): machine-check booleans.
+- `linked_ids` (object, recommended): traced work item IDs.
+- `privacy_evidence` (object, conditional): recommended when `checks.handles_personal_data=true`.
+- `compliance_evidence` (object, conditional): recommended for compliance evidence manifests.
+
+Profile routing does not use `artifact_kind`. The validator infers profile from `checks`, `linked_ids`, and optional `compliance_evidence`.
 
 ## `checks` Object
-Common required keys (boolean, must be `true`):
+Common keys (recommended as `true`):
 - `id_format_validated`
 - `traceability_verified`
 - `decision_owner_assigned`
 - `unresolved_conflicts_absent`
 - `compliance_constraints_captured`
 
-Common required keys (boolean, policy toggles):
+Common policy toggles:
 - `handles_personal_data`
 - `regulated_jurisdiction_impact`
 
-Prefix-specific required keys:
-- `RQM-ELC-*`, `RQM-INT-*`, `RQM-URS-*`: `source_authority_recorded`
-- `RQM-PRI-*`: `prioritization_rule_frozen`
-- `RQM-NFR-*`: `metric_threshold_defined`
-- `RQM-ACD-*`: `acceptance_mapping_complete`
-- `RQM-RSK-*`: `mitigation_owner_assigned`
-- `RQM-UCM-*`: `exception_flows_documented`
-- `RQM-STY-*`: `story_size_validated`
+Profile-specific keys (recommended):
+- Evidence-driven profile: `source_authority_recorded`
+- Prioritization profile: `prioritization_rule_frozen`
+- NFR profile: `metric_threshold_defined`
+- Acceptance criteria profile: `acceptance_mapping_complete`
+- Risk analysis profile: `mitigation_owner_assigned`
+- Use-case profile: `exception_flows_documented`
+- User story profile: `story_size_validated`
 
 ## `linked_ids` Object
-All keys are optional arrays, but IDs must match schema when present:
-- `requirements`: `REQ-*`
-- `nfr`: `NFR-*`
-- `acceptance_criteria`: `AC-*`
-- `risks`: `RSK-*`
-- `interviews`: `INT-*`
-- `user_research`: `UR-*`
-- `evidence`: `EVD-*`
+Allowed keys are optional arrays of non-empty strings:
+- `requirements`
+- `nfr`
+- `acceptance_criteria`
+- `risks`
+- `interviews`
+- `user_research`
+- `evidence`
 
-Minimum presence by artifact type:
-- Evidence-driven artifacts (`RQM-ELC-*`, `RQM-INT-*`, `RQM-URS-*`): at least one of interviews/user_research/evidence.
-- Requirement-bound artifacts (`RQM-DEF-*`, `RQM-PRI-*`, `RQM-NFR-*`, `RQM-ACD-*`, `RQM-RSK-*`, `RQM-UCM-*`, `RQM-STY-*`): `requirements` must be non-empty.
+ID naming inside `linked_ids` is project-defined and validated outside this contract.
+
+Minimum presence by profile (recommended):
+- Evidence-driven profile:
+  at least one of interviews/user_research/evidence.
+- Requirement-bound profiles (baseline, prioritization, nfr, acceptance criteria, risk analysis, use case, user story):
+  `requirements` must be non-empty.
 - Additional required sets:
-  - `RQM-NFR-*`: `nfr`
-  - `RQM-ACD-*`: `acceptance_criteria`
-  - `RQM-RSK-*`: `risks`
+  - NFR profile: `nfr`
+  - Acceptance criteria profile: `acceptance_criteria`
+  - Risk analysis profile: `risks`
 
 ## Privacy and Compliance Evidence
-### `privacy_evidence` (required when personal data is handled)
+### `privacy_evidence` (recommended when personal data is handled)
 - `lawful_basis_or_consent`
 - `pii_data_inventory`
 - `data_minimization_decision`
@@ -61,7 +68,7 @@ Minimum presence by artifact type:
 - `data_subject_rights_process`
 - `redaction_and_access_control`
 
-### `compliance_evidence` (required for `RQM-CMP-*`)
+### `compliance_evidence` (recommended for compliance evidence manifests)
 - `jurisdiction_scope`
 - `lawful_basis_summary`
 - `retention_policy_reference`

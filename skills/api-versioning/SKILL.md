@@ -17,7 +17,7 @@ Deliver explicit compatibility governance so consumers can migrate without surpr
 
 ## Shared API Contract (Canonical)
 - Use `../api-design-rest/references/api-governance-contract.md` as the canonical contract.
-- Validate manifests with:
+- Optional consistency checks (only if your repository enforces manifest validation):
   - `python3 ../api-design-rest/scripts/validate_api_contract.py --manifest <path/to/manifest.json>`
 - Use API versioning templates in `../api-design-rest/assets/` as baseline.
 - Use transport decision reference:

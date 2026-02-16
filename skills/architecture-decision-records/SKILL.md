@@ -29,7 +29,7 @@ Maintain auditable and current decision history for architecture evolution.
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Capture compliance and privacy rationale in each relevant ADR.
 - Preserve change history and approval traceability for audits.
-- Prepare or reference an `ARC-CMP-*` evidence package for each high-impact decision.
+- Prepare or reference a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for each high-impact decision.
 
 ## Inputs
 - Decision statement and context
@@ -51,7 +51,7 @@ Maintain auditable and current decision history for architecture evolution.
 ## Quality Gates
 - Every major decision has an ADR identifier.
 - ADR rationale includes rejected options.
-- `ARC-CMP-*` evidence package is complete and approved.
+- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
 - Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - High-impact decisions have required approver matrix.
 

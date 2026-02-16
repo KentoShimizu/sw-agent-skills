@@ -29,7 +29,7 @@ Produce accurate and traceable C4 views that align stakeholders on architecture.
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Mark sensitive data flows and regulated boundaries in relevant diagrams.
 - Avoid exposing credentials or internal secrets in architecture artifacts.
-- Prepare an `ARC-CMP-*` evidence package for governance review.
+- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for governance review.
 
 ## Inputs
 - Current architecture and dependency information
@@ -51,7 +51,7 @@ Produce accurate and traceable C4 views that align stakeholders on architecture.
 ## Quality Gates
 - Diagram scope matches intended audience.
 - Names and relationships are consistent across views.
-- `ARC-CMP-*` evidence package is complete and approved.
+- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
 - Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
 

@@ -29,7 +29,7 @@ Design a production-safe serverless architecture with clear boundaries and const
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Enforce least privilege IAM for function and managed-service access.
 - Define residency, encryption, and cross-border transfer constraints.
-- Prepare an `ARC-CMP-*` evidence package for compliance sign-off.
+- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for compliance sign-off.
 
 ## Inputs
 - Workload profile and traffic variability
@@ -51,7 +51,7 @@ Design a production-safe serverless architecture with clear boundaries and const
 ## Quality Gates
 - Function boundaries align with domain use cases.
 - Timeouts and retries are explicit and workload-appropriate.
-- `ARC-CMP-*` evidence package is complete and approved.
+- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
 - Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
 

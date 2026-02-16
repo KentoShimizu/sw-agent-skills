@@ -14,9 +14,9 @@ description: "Specialized workflow for selecting and applying minimal hotfix com
 Backport urgent fixes safely with minimal unrelated change propagation.
 
 ## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track hotfix backports with `GIT-CHP-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track hotfix backports with project-defined IDs (for example `GIT-CHP-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Source fix commit hashes and dependency notes
@@ -24,7 +24,7 @@ Backport urgent fixes safely with minimal unrelated change propagation.
 - Verification scope for target environment
 
 ## Outputs
-- `GIT-CHP-*` cherry-pick execution record
+- project-defined ID (for example `GIT-CHP-*`) cherry-pick execution record
 - Dependency and risk annotation per picked commit
 - Target-branch verification checklist and result
 
@@ -39,7 +39,7 @@ Backport urgent fixes safely with minimal unrelated change propagation.
 - Picked commits exclude unrelated feature changes.
 - Dependency assumptions are explicitly validated.
 - Target branch tests pass for impacted flows.
-- Security Reviewer approval is present for `GIT-CHP-*` artifacts.
+- Security Reviewer approval is present for project-defined ID (for example `GIT-CHP-*`) artifacts.
 
 ## Failure Handling
 - Stop when hotfix requires broad dependency migration.

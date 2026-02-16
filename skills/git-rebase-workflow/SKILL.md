@@ -14,9 +14,9 @@ description: "Specialized workflow for linearizing local branch history with saf
 Keep local branch history coherent and review-ready without losing change intent.
 
 ## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track rebase artifacts with `GIT-RBS-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track rebase artifacts with project-defined IDs (for example `GIT-RBS-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Current branch divergence from target base branch
@@ -24,7 +24,7 @@ Keep local branch history coherent and review-ready without losing change intent
 - PR status and branch sharing status
 
 ## Outputs
-- `GIT-RBS-*` rebased branch execution record
+- project-defined ID (for example `GIT-RBS-*`) rebased branch execution record
 - Conflict resolution notes for rewritten commits
 - Push plan aligned with rewrite policy
 

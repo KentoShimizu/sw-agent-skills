@@ -14,9 +14,9 @@ description: "Specialized workflow for recovering safely from problematic merges
 Restore stable behavior quickly without destructive history rewriting.
 
 ## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track revert artifacts with `GIT-RVT-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track revert artifacts with project-defined IDs (for example `GIT-RVT-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Problematic commit or merge identifiers
@@ -24,7 +24,7 @@ Restore stable behavior quickly without destructive history rewriting.
 - Verification and communication requirements
 
 ## Outputs
-- `GIT-RVT-*` revert execution record
+- project-defined ID (for example `GIT-RVT-*`) revert execution record
 - Validation results for recovered branch state
 - Follow-up action list for permanent fix
 
@@ -39,7 +39,7 @@ Restore stable behavior quickly without destructive history rewriting.
 - Revert target is explicitly identified and justified.
 - Recovery validation passes for critical user paths.
 - Rollback communication includes impact and ownership.
-- Security Reviewer approval is present for `GIT-RVT-*` artifacts.
+- Security Reviewer approval is present for project-defined ID (for example `GIT-RVT-*`) artifacts.
 
 ## Failure Handling
 - Stop when revert scope is ambiguous or unverified.

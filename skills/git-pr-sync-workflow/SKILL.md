@@ -14,9 +14,9 @@ description: "Specialized workflow for keeping pull request branches synchronize
 Keep open PR branches merge-ready with minimal integration surprises.
 
 ## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track PR sync artifacts with `GIT-PRS-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track PR sync artifacts with project-defined IDs (for example `GIT-PRS-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Current PR branch divergence and target branch status
@@ -24,7 +24,7 @@ Keep open PR branches merge-ready with minimal integration surprises.
 - Repository synchronization policy for open PRs
 
 ## Outputs
-- `GIT-PRS-*` synchronized PR branch record
+- project-defined ID (for example `GIT-PRS-*`) synchronized PR branch record
 - Conflict and resolution notes for reviewers
 - Updated validation evidence after synchronization
 

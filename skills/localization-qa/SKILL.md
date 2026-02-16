@@ -14,9 +14,9 @@ description: "Localization quality assurance workflow for validating language co
 Ensure localized experiences are accurate, usable, and visually stable.
 
 ## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
+- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
 - Track localization QA artifacts with `DREV-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Localized strings and glossary references

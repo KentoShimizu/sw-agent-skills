@@ -14,9 +14,9 @@ description: "Specialized workflow for enforcing atomic commits, clear commit me
 Produce commit history that is easy to review, bisect, and audit.
 
 ## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track commit hygiene artifacts with `GIT-CMT-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track commit hygiene artifacts with project-defined IDs (for example `GIT-CMT-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Changed files and logical change boundaries
@@ -24,7 +24,7 @@ Produce commit history that is easy to review, bisect, and audit.
 - Compliance and traceability requirements
 
 ## Outputs
-- `GIT-CMT-*` commit slicing and hygiene report
+- project-defined ID (for example `GIT-CMT-*`) commit slicing and hygiene report
 - Commit message standard and examples
 - Pre-push and CI checklist for history quality
 

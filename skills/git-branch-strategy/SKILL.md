@@ -14,9 +14,9 @@ description: "Specialized workflow for defining branch topology, lifecycle rules
 Establish a predictable branch model that reduces merge risk and review friction.
 
 ## Shared Git Contract (Canonical)
-- Use `references/git-governance-contract.md` as the single schema and gate source.
-- Track branch strategy artifacts with `GIT-BRN-*` IDs.
-- Run machine validation: `python3 scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track branch strategy artifacts with project-defined IDs (for example `GIT-BRN-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Team size and repository collaboration model
@@ -24,7 +24,7 @@ Establish a predictable branch model that reduces merge risk and review friction
 - Existing branch protection and CI constraints
 
 ## Outputs
-- `GIT-BRN-*` branch topology policy (`main`, release, hotfix, feature)
+- project-defined ID (for example `GIT-BRN-*`) branch topology policy (`main`, release, hotfix, feature)
 - Naming and retention rules for branches
 - Merge policy and protection gate checklist
 

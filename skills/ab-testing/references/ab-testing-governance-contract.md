@@ -2,21 +2,27 @@
 
 ## Scope
 Apply this contract to all artifacts produced by `ab-testing`.
-Do not redefine ID formats, lifecycle states, or gate rules in local notes.
+Project teams must define and operate a repository-specific ID policy.
+Treat this document as operational guidance, not a mandatory schema.
+When repository-specific rules exist, follow those first; otherwise use this as a default operating method.
 
-## ID Schema (Single Source of Truth)
-- `AB-PLN-<YYYYMMDD>-<NNN>`: `^AB-PLN-[0-9]{8}-[0-9]{3,}$`
-  - Meaning: experiment plan and pre-registered analysis design
-  - Issuer: experiment owner
-  - Uniqueness: repository-wide
-- `AB-DEC-<YYYYMMDD>-<NNN>`: `^AB-DEC-[0-9]{8}-[0-9]{3,}$`
-  - Meaning: post-run decision record and rollout action
-  - Issuer: experiment owner
-  - Uniqueness: repository-wide
+## Manifest Profile Model (Canonical)
+Validation profiles are inferred from manifest structure, not from a fixed ID format.
+
+Profiles:
+- `experiment_plan`
+  - Identified when `evidence_plan` or `guardrails` is present.
+- `decision_record`
+  - Identified when `result` is present.
+
+## ID Format Policy (Project-Defined)
+- `artifact_id` is optional and project-defined.
+- If present, it must be non-empty and should follow your repository's ID policy.
+- `checks.id_format_validated=true` means the manifest was validated against that project policy.
 
 ## Lifecycle Rules
-- `AB-PLN-*`: `draft`, `reviewed`, `approved`, `active`, `stopped`, `completed`
-- `AB-DEC-*`: `draft`, `reviewed`, `finalized`
+- `experiment_plan`: `draft`, `reviewed`, `approved`, `active`, `stopped`, `completed`
+- `decision_record`: `draft`, `reviewed`, `finalized`
 
 ## Approval Matrix
 - Required for all experiment artifacts:
@@ -28,7 +34,7 @@ Do not redefine ID formats, lifecycle states, or gate rules in local notes.
 ## Required Check Flags
 Manifest field: `checks`
 
-- Must be `true`:
+- Recommended `true` flags:
   - `id_format_validated`
   - `pre_registration_complete`
   - `randomization_plan_defined`
@@ -38,71 +44,69 @@ Manifest field: `checks`
   - `guardrail_policy_defined`
   - `one_primary_metric_defined`
   - `no_posthoc_decision_rule_changes`
-- Must be boolean:
+- Recommended boolean flag:
   - `external_user_impact`
 
-## Decision Context Requirements
+## Decision Context Guidance
 Manifest field: `decision_context`
 
-- Required non-empty strings:
+- Recommended non-empty strings:
   - `decision_question`
   - `primary_decision_metric`
   - `randomization_method`
   - `contamination_risk_mitigation`
-- Required risk levels:
+- Recommended risk levels:
   - `false_positive_cost` in `low | medium | high | critical`
   - `false_negative_cost` in `low | medium | high | critical`
-- Required assignment unit:
+- Recommended assignment unit:
   - `assignment_unit` in `user | session | org | device`
-- Required decision action list:
-  - `allowed_actions` must be non-empty
-  - Every action must be one of `ship | iterate | rollback | hold`
+- Recommended decision action list:
+  - `allowed_actions` should be non-empty
+  - Prefer one of `ship | iterate | rollback | hold`
 
-## Evidence Plan Requirements (`AB-PLN-*`)
+## Evidence Plan Guidance (`experiment_plan` profile)
 Manifest field: `evidence_plan`
 
-- Required numeric bounds:
+- Recommended numeric bounds:
   - `min_detectable_effect_pct` > 0
   - `confidence_level` in (0, 1)
   - `power_target` in (0, 1)
-- Required runtime windows:
+- Recommended runtime windows:
   - `minimum_runtime_days` >= 7
   - `baseline_window_days` >= 7
-- Required analysis method:
+- Recommended analysis method:
   - `analysis_method` in `fixed_horizon | sequential`
   - `multiplicity_control` must be non-empty
-- Required guardrails:
-  - `guardrails` must be a non-empty array of non-empty strings
+- Recommended guardrails:
+  - `guardrails` should be a non-empty array of non-empty strings
 
-## Decision Result Requirements (`AB-DEC-*`)
+## Decision Result Guidance (`decision_record` profile)
 Manifest field: `result`
 
-- Required outcome:
+- Recommended outcome:
   - `decision_outcome` in `ship | iterate | rollback | hold`
-- Required quantitative summary:
-  - `primary_metric_effect_pct` must be numeric
-  - `uncertainty_interval` must be non-empty
-- Required guardrail interpretation:
+- Recommended quantitative summary:
+  - `primary_metric_effect_pct` should be numeric
+  - `uncertainty_interval` should be non-empty
+- Recommended guardrail interpretation:
   - `guardrail_status` in `pass | mixed | fail`
-- Required execution integrity:
-  - `complies_with_pre_registered_rules` must be `true`
-- Required documentation:
-  - `interpretation` must be non-empty
-  - `follow_up_actions` must be a non-empty array of non-empty strings
+- Recommended execution integrity:
+  - `complies_with_pre_registered_rules` should be `true`
+- Recommended documentation:
+  - `interpretation` should be non-empty
+  - `follow_up_actions` should be a non-empty array of non-empty strings
 
-## Gate Policy
-- Block when required approvers are missing.
-- Block when ID format or lifecycle state is invalid.
-- Block when checks are missing or set to false.
-- Block when evidence plan is insufficient for decision-quality inference.
-- Block when decision outcomes contradict guardrail status (`ship` with `fail` guardrails).
+## Operational Handling (Recommended)
+- Escalate when approvers are missing.
+- Escalate when inferred profile and lifecycle state do not match.
+- Escalate when critical checks are missing or false.
+- Escalate when evidence plan is insufficient for decision-quality inference.
+- Escalate when decision outcomes contradict guardrail status (`ship` with `fail` guardrails).
 
-## Machine Validation
-- Run:
+## Optional Consistency Check
+- Optional:
   - `python3 skills/ab-testing/scripts/validate_ab_testing_contract.py --manifest <path/to/manifest.json>`
-- For batch validation:
-  - `python3 scripts/run_contract_validators.py --ab-manifest <path/to/manifest.json>`
 
-## Valid Manifest Samples
+## Valid Manifest Samples (Example IDs)
 - `skills/ab-testing/assets/ab-pln-manifest.valid.json`
 - `skills/ab-testing/assets/ab-dec-manifest.valid.json`

@@ -14,9 +14,9 @@ description: Evidence gathering workflow before requirement writing. Trigger whe
 Collect high-confidence requirement inputs with provenance and conflict visibility.
 
 ## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the single schema and gate source.
-- Track requirements workflow artifacts with `RQM-*` IDs.
-- Run machine validation: `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
+- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Stakeholder list and decision map

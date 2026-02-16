@@ -14,9 +14,9 @@ description: "Specialized workflow for reconstructing change history using log, 
 Find the commit-level root cause and decision context behind observed behavior.
 
 ## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track investigation artifacts with `GIT-HIS-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track investigation artifacts with project-defined IDs (for example `GIT-HIS-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Reproducible symptom or unexpected behavior
@@ -24,7 +24,7 @@ Find the commit-level root cause and decision context behind observed behavior.
 - Available issue, PR, or review metadata
 
 ## Outputs
-- `GIT-HIS-*` chronological evidence trail
+- project-defined ID (for example `GIT-HIS-*`) chronological evidence trail
 - Root-cause candidate commit set with rationale
 - Follow-up remediation recommendation
 

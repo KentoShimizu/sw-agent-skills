@@ -29,7 +29,7 @@ Define robust service boundaries, contracts, and operational controls for micros
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Define data ownership and residency per service boundary.
 - Enforce service-to-service authentication, authorization, and audit trails.
-- Prepare an `ARC-CMP-*` evidence package for compliance sign-off.
+- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for compliance sign-off.
 
 ## Inputs
 - Domain decomposition and team ownership model
@@ -51,7 +51,7 @@ Define robust service boundaries, contracts, and operational controls for micros
 ## Quality Gates
 - No ambiguous ownership between services.
 - Inter-service contracts are versioned and reviewable.
-- `ARC-CMP-*` evidence package is complete and approved.
+- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
 - Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
 

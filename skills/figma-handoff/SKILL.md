@@ -14,9 +14,9 @@ description: "Design-to-engineering handoff workflow for packaging implementatio
 Deliver unambiguous handoff artifacts that reduce implementation drift.
 
 ## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track handoff packages with `FIG-HND-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
+- Track handoff packages with project-defined IDs (for example `FIG-HND-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Finalized Figma frames, components, and variants
@@ -24,7 +24,7 @@ Deliver unambiguous handoff artifacts that reduce implementation drift.
 - Accessibility and localization constraints
 
 ## Outputs
-- `FIG-HND-*` handoff package
+- project-defined ID (for example `FIG-HND-*`) handoff package
 - Asset inventory and spec mapping
 - Acceptance checklist for engineering verification
 - Privacy evidence package for handoff artifacts

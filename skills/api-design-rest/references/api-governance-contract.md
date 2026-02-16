@@ -8,32 +8,36 @@ Apply this contract to all API skills:
 - `api-versioning`
 - `api-contract-testing`
 
-Do not redefine ID formats, lifecycle states, compatibility rules, or approval gates in individual skill files.
+Do not hardcode one repository's ID naming rules into this contract.
+Treat this document as operational guidance, not a mandatory schema.
+When repository-specific rules exist, follow those first; otherwise use this as a default operating method.
 
-## ID Schema (Single Source of Truth)
-- `API-RES-<YYYYMMDD>-<NNN>`: `^API-RES-[0-9]{8}-[0-9]{3,}$`
-  - REST design artifact
-- `API-GQL-<YYYYMMDD>-<NNN>`: `^API-GQL-[0-9]{8}-[0-9]{3,}$`
-  - GraphQL design artifact
-- `API-ERR-<YYYYMMDD>-<NNN>`: `^API-ERR-[0-9]{8}-[0-9]{3,}$`
-  - API error-handling artifact
-- `API-VER-<YYYYMMDD>-<NNN>`: `^API-VER-[0-9]{8}-[0-9]{3,}$`
-  - API versioning artifact
-- `API-CDC-<YYYYMMDD>-<NNN>`: `^API-CDC-[0-9]{8}-[0-9]{3,}$`
-  - Consumer-driven contract testing artifact
-- `API-CMP-<YYYYMMDD>-<NNN>`: `^API-CMP-[0-9]{8}-[0-9]{3,}$`
-  - Compliance evidence package for API changes
+## Manifest Profile Model (Canonical)
+Validation profiles are inferred from manifest fields and checks.
 
-## Issuance Rules
-- Allocate IDs sequentially per prefix.
-- Keep ID history append-only.
-- Never reuse retired IDs.
-- On collision, issue a new ID and mark the previous ID as invalid with reason.
+Profiles:
+- `rest_api_design`
+- `graphql_api_design`
+- `error_handling_design`
+- `versioning_strategy`
+- `contract_testing_evidence`
+- `compliance_evidence_package`
+
+Inference policy:
+- `compliance_evidence` present -> `compliance_evidence_package`
+- Profile-specific check keys -> corresponding profile
+- If no profile-specific check keys, `decision_context.primary_transport` may infer REST vs GraphQL
+- Ambiguous combinations are blocked
+
+## ID Format Policy (Project-Defined)
+- `artifact_id` is optional and project-defined.
+- If present, it must be non-empty and should follow your repository ID policy.
+- `checks.id_format_validated=true` must represent validation against that policy.
 
 ## Lifecycle States
-- `API-RES-*`, `API-GQL-*`, `API-ERR-*`, `API-VER-*`: `draft`, `reviewed`, `approved`, `deprecated`
-- `API-CDC-*`: `draft`, `active`, `blocked`, `deprecated`
-- `API-CMP-*`: `draft`, `reviewed`, `approved`, `expired`
+- `rest_api_design`, `graphql_api_design`, `error_handling_design`, `versioning_strategy`: `draft`, `reviewed`, `approved`, `deprecated`
+- `contract_testing_evidence`: `draft`, `active`, `blocked`, `deprecated`
+- `compliance_evidence_package`: `draft`, `reviewed`, `approved`, `expired`
 
 ## Compatibility Policy
 - Treat additive schema changes as the default path.
@@ -115,17 +119,17 @@ Each API artifact must document:
 - Required when `checks.regulated_jurisdiction_impact` is `true`:
   - `Legal Reviewer`
 
-## Machine Validation
-- Run: `python3 skills/api-design-rest/scripts/validate_api_contract.py --manifest <path/to/manifest.json>`
-- For batch validation, run: `python3 scripts/run_contract_validators.py --api-manifest <path/to/manifest.json>`
+## Optional Consistency Check
+- Optional: `python3 skills/api-design-rest/scripts/validate_api_contract.py --manifest <path/to/manifest.json>`
 
-Manifest requirements:
-- Required root fields:
-  - `artifact_id`
+Recommended structured manifest fields:
+- Recommended root fields:
   - `state`
   - `approvers`
   - `checks`
-- `checks` must include booleans:
+- Optional root field:
+  - `artifact_id`
+- Recommended `checks` booleans:
   - `id_format_validated`
   - `backward_compatibility_reviewed`
   - `transport_selection_documented`
@@ -144,7 +148,7 @@ Manifest requirements:
   - `handles_sensitive_data`
   - `external_public_api`
   - `regulated_jurisdiction_impact`
-- Required object `decision_context`:
+- Recommended object `decision_context`:
   - `api_audience` (`internal` | `external` | `both`)
   - `interaction_mode` (`sync` | `async` | `streaming` | `bidirectional_realtime`)
   - `primary_transport` (`rest` | `graphql` | `grpc` | `websocket` | `sse` | `queue`)
@@ -152,7 +156,7 @@ Manifest requirements:
   - `alternatives_considered` (non-empty array of strings)
   - `naming_convention_summary` (non-empty string)
   - `threshold_method_summary` (non-empty string)
-- Required object `threshold_policy`:
+- Recommended object `threshold_policy`:
   - `latency_target_derivation`
   - `availability_target_derivation`
   - `timeout_budget_derivation`
@@ -161,27 +165,27 @@ Manifest requirements:
   - `concurrency_limit_derivation`
   - `retry_backoff_derivation`
   - `delivery_semantics_derivation`
-- Prefix-specific `checks`:
-  - `API-RES-*`: `http_semantics_validated`, `idempotency_strategy_defined`
-  - `API-GQL-*`: `query_cost_limits_defined`, `n_plus_one_guard_defined`
-  - `API-ERR-*`: `status_mapping_complete`, `error_code_registry_updated`
-  - `API-VER-*`: `compatibility_matrix_updated`, `deprecation_policy_defined`, `has_breaking_change`
-  - `API-CDC-*`: `consumer_matrix_current`, `ci_blocking_enabled`
-- `API-VER-*` and `API-CDC-*` require `compatibility_matrix` with:
+- Profile-specific `checks` (recommended when applicable):
+  - REST: `http_semantics_validated`, `idempotency_strategy_defined`
+  - GraphQL: `query_cost_limits_defined`, `n_plus_one_guard_defined`
+  - Error handling: `status_mapping_complete`, `error_code_registry_updated`
+  - Versioning: `compatibility_matrix_updated`, `deprecation_policy_defined`, `has_breaking_change`
+  - Contract testing: `consumer_matrix_current`, `ci_blocking_enabled`
+- Versioning and contract testing should include `compatibility_matrix` with:
   - `supported_producer_versions`
   - `tested_consumers`
-- `API-VER-*` with `checks.has_breaking_change = true` requires `deprecation_plan` with:
+- Versioning with `checks.has_breaking_change = true` should include `deprecation_plan` with:
   - `target_version`
   - `deprecation_window_days`
   - `migration_guide_link`
-- `API-CMP-*` requires `compliance_evidence` with:
+- Compliance evidence should include `compliance_evidence` with:
   - `lawful_basis_or_contract`
   - `data_categories`
   - `retention_policy`
   - `cross_border_transfer_control`
   - `audit_log_location`
 
-## Valid Manifest Templates
+## Valid Manifest Templates (Example IDs)
 - `skills/api-design-rest/assets/api-res-manifest.valid.json`
 - `skills/api-design-rest/assets/api-gql-manifest.valid.json`
 - `skills/api-design-rest/assets/api-err-manifest.valid.json`
@@ -199,9 +203,9 @@ Manifest requirements:
 - `skills/api-design-rest/assets/api-versioning-policy-template.md`
 - `skills/api-design-rest/assets/api-contract-test-matrix-template.yaml`
 
-## Gate Policy
-- Block release when ID schema, state, or approver requirements fail.
-- Block release when decision context omits transport rationale or threshold derivation methods.
-- Block release when required compatibility evidence is missing.
-- Block release when breaking changes have no deprecation plan.
-- Block release when API-CMP evidence is incomplete.
+## Operational Handling (Recommended)
+- Escalate when inferred profile, state, or approver expectations do not match the artifact intent.
+- Escalate when decision context omits transport rationale or threshold derivation methods.
+- Escalate when compatibility evidence is missing.
+- Escalate when breaking changes have no deprecation plan.
+- Escalate when compliance evidence is incomplete.

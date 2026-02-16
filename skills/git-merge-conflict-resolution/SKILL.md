@@ -14,9 +14,9 @@ description: "Specialized workflow for resolving Git merge conflicts with explic
 Resolve conflicts deterministically while preserving both correctness and intent.
 
 ## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track conflict resolution artifacts with `GIT-MRG-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track conflict resolution artifacts with project-defined IDs (for example `GIT-MRG-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Conflicted files and conflict markers
@@ -24,7 +24,7 @@ Resolve conflicts deterministically while preserving both correctness and intent
 - Required tests and verification scope
 
 ## Outputs
-- `GIT-MRG-*` conflict resolution record
+- project-defined ID (for example `GIT-MRG-*`) conflict resolution record
 - File-level intent mapping for resolved hunks
 - Verification evidence for resolved behavior
 

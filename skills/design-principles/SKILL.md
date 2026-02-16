@@ -14,9 +14,9 @@ description: "Design principle definition workflow for establishing stable UX gu
 Define clear principles that guide interaction, visual, and content decisions.
 
 ## Shared Design Contract (Canonical)
-- Use `references/design-governance-contract.md` as the single schema and gate source.
-- Validate principle IDs as `DSN-PRN-*` and keep append-only history.
-- Run machine validation: `python3 scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Use `references/design-governance-contract.md` as the primary reference for recommended structure.
+- Validate principle IDs as project-defined ID (for example `DSN-PRN-*`) and keep append-only history.
+- Optional consistency check (only if your repository enforces manifest validation): `python3 scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Product strategy and user outcomes
@@ -24,7 +24,7 @@ Define clear principles that guide interaction, visual, and content decisions.
 - Accessibility and localization requirements
 
 ## Outputs
-- Principle catalog with `DSN-PRN-*` IDs
+- Principle catalog with project-defined IDs (for example `DSN-PRN-*`)
 - Principle rationale and anti-pattern examples
 - Review checklist aligned to principles
 

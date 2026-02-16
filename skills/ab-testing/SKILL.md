@@ -16,11 +16,9 @@ description: "Controlled online experiment workflow for product changes with cau
 Produce causally valid, operationally safe, and decision-ready experiment outcomes.
 
 ## Shared Experiment Contract (Canonical)
-- Use `references/ab-testing-governance-contract.md` as the only schema and gate source.
-- Validate manifests with:
+- Use `references/ab-testing-governance-contract.md` as the primary reference for recommended structure.
+- Optional consistency checks (only if your repository enforces manifest validation):
   - `python3 scripts/validate_ab_testing_contract.py --manifest <path/to/manifest.json>`
-- For batch validation, run:
-  - `python3 scripts/run_contract_validators.py --ab-manifest <path/to/manifest.json>`
 - Start from valid templates in `assets/`:
   - `assets/ab-pln-manifest.valid.json`
   - `assets/ab-dec-manifest.valid.json`

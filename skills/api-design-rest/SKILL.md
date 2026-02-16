@@ -16,11 +16,9 @@ description: Resource-oriented REST/OpenAPI contract design for URI/method seman
 Deliver REST contracts that are stable, predictable, and operationally safe.
 
 ## Shared API Contract (Canonical)
-- Use `references/api-governance-contract.md` as the only schema and gate source.
-- Validate manifests with:
+- Use `references/api-governance-contract.md` as the primary reference for recommended structure.
+- Optional consistency checks (only if your repository enforces manifest validation):
   - `python3 scripts/validate_api_contract.py --manifest <path/to/manifest.json>`
-- For batch validation, run:
-  - `python3 scripts/run_contract_validators.py --api-manifest <path/to/manifest.json>`
 - Start from valid templates in `assets/`.
 - Use transport decision reference:
   - `references/transport-selection-matrix.md`

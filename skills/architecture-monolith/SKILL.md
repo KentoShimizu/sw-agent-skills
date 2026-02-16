@@ -29,7 +29,7 @@ Design a modular monolith with clear internal boundaries and low coupling.
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Isolate sensitive data handling modules and enforce least privilege.
 - Centralize audit logging and retention controls for regulated data.
-- Prepare an `ARC-CMP-*` evidence package for governance review.
+- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for governance review.
 
 ## Inputs
 - Domain boundaries and transactional requirements
@@ -51,7 +51,7 @@ Design a modular monolith with clear internal boundaries and low coupling.
 ## Quality Gates
 - Module boundaries align with domain responsibilities.
 - Cross-module dependencies follow explicit rules.
-- `ARC-CMP-*` evidence package is complete and approved.
+- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
 - Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
 

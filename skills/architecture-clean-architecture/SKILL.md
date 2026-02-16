@@ -29,7 +29,7 @@ Define enforceable layer boundaries and dependency rules around core domain logi
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Keep policy and compliance logic in domain/use-case layers, not frameworks.
 - Ensure sensitive data access crosses explicit adapter boundaries.
-- Prepare an `ARC-CMP-*` evidence package for governance review.
+- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for governance review.
 
 ## Inputs
 - Domain rules and application use cases
@@ -51,7 +51,7 @@ Define enforceable layer boundaries and dependency rules around core domain logi
 ## Quality Gates
 - Inner layers have no dependency on outer frameworks.
 - Use cases orchestrate behavior without infrastructure leakage.
-- `ARC-CMP-*` evidence package is complete and approved.
+- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
 - Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
 

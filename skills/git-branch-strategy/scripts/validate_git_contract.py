@@ -5,49 +5,29 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 from typing import Any
 
-ID_PATTERNS: dict[str, re.Pattern[str]] = {
-    "GIT-BRN": re.compile(r"^GIT-BRN-[0-9]{3,}$"),
-    "GIT-CMT": re.compile(r"^GIT-CMT-[0-9]{8}-[0-9]{3,}$"),
-    "GIT-RBS": re.compile(r"^GIT-RBS-[0-9]{8}-[0-9]{3,}$"),
-    "GIT-MRG": re.compile(r"^GIT-MRG-[0-9]{8}-[0-9]{3,}$"),
-    "GIT-CHP": re.compile(r"^GIT-CHP-[0-9]{8}-[0-9]{3,}$"),
-    "GIT-HIS": re.compile(r"^GIT-HIS-[0-9]{8}-[0-9]{3,}$"),
-    "GIT-BIS": re.compile(r"^GIT-BIS-[0-9]{8}-[0-9]{3,}$"),
-    "GIT-RVT": re.compile(r"^GIT-RVT-[0-9]{8}-[0-9]{3,}$"),
-    "GIT-REL": re.compile(r"^GIT-REL-[0-9]{8}-[0-9]{3,}$"),
-    "GIT-PRS": re.compile(r"^GIT-PRS-[0-9]{8}-[0-9]{3,}$"),
-    "GIT-CMP": re.compile(r"^GIT-CMP-[0-9]{8}-[0-9]{3,}$"),
-}
-
 INVALID_STATE = "invalid"
 
-BASE_VALID_STATES: dict[str, set[str]] = {
-    "GIT-BRN": {"draft", "reviewed", "approved", "deprecated"},
-    "GIT-REL": {"prepared", "reviewed", "released", "superseded"},
-    "GIT-CMP": {"draft", "reviewed", "approved", "expired"},
-    "GIT-CMT": {"draft", "reviewed", "executed", "rejected"},
-    "GIT-RBS": {"draft", "reviewed", "executed", "rejected"},
-    "GIT-MRG": {"draft", "reviewed", "executed", "rejected"},
-    "GIT-CHP": {"draft", "reviewed", "executed", "rejected"},
-    "GIT-HIS": {"draft", "reviewed", "executed", "rejected"},
-    "GIT-BIS": {"draft", "reviewed", "executed", "rejected"},
-    "GIT-RVT": {"draft", "reviewed", "executed", "rejected"},
-    "GIT-PRS": {"draft", "reviewed", "executed", "rejected"},
-}
-
-VALID_STATES: dict[str, set[str]] = {
-    prefix: states | {INVALID_STATE} for prefix, states in BASE_VALID_STATES.items()
+VALID_STATES = {
+    "draft",
+    "reviewed",
+    "approved",
+    "deprecated",
+    "prepared",
+    "released",
+    "superseded",
+    "expired",
+    "executed",
+    "rejected",
+    INVALID_STATE,
 }
 
 ALWAYS_REQUIRED_APPROVERS = {"Repository Owner", "Engineering Owner"}
 SECURITY_REVIEWER = "Security Reviewer"
 PRIVACY_REVIEWER = "Privacy Reviewer"
-SECURITY_REQUIRED_PREFIXES = {"GIT-REL", "GIT-RVT", "GIT-CHP"}
 
 REQUIRED_CHECK_KEYS = {
     "id_format_validated",
@@ -56,12 +36,6 @@ REQUIRED_CHECK_KEYS = {
     "secret_scan_passed",
     "history_rewrite_policy_compliant",
     "handles_personal_data",
-}
-
-PREFIX_REQUIRED_CHECK_KEYS: dict[str, set[str]] = {
-    "GIT-PRS": {"pr_opened", "merge_sync_used", "rebase_used", "repository_merge_only_policy"},
-    "GIT-RBS": {"pr_opened", "rebase_used"},
-    "GIT-REL": {"signed_tag_verified"},
 }
 
 OPTIONAL_TYPED_CHECK_KEYS = {
@@ -97,13 +71,6 @@ def load_manifest(path: Path) -> dict[str, Any]:
     return data
 
 
-def artifact_prefix(artifact_id: str) -> str | None:
-    for prefix, pattern in ID_PATTERNS.items():
-        if pattern.match(artifact_id):
-            return prefix
-    return None
-
-
 def require_bool(checks: dict[str, Any], key: str, errors: list[str]) -> None:
     value = checks.get(key)
     if not isinstance(value, bool):
@@ -130,17 +97,11 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     checks = manifest.get("checks")
     privacy_evidence = manifest.get("privacy_evidence")
 
-    if not isinstance(artifact_id, str):
-        errors.append("artifact_id must be a string")
-        return errors
+    if artifact_id is not None and (not isinstance(artifact_id, str) or not artifact_id.strip()):
+        errors.append("artifact_id must be a non-empty string when present")
 
-    prefix = artifact_prefix(artifact_id)
-    if prefix is None:
-        errors.append("artifact_id does not match any allowed ID schema")
-        return errors
-
-    if not isinstance(state, str) or state not in VALID_STATES[prefix]:
-        errors.append(f"state must be one of {sorted(VALID_STATES[prefix])}")
+    if not isinstance(state, str) or state not in VALID_STATES:
+        errors.append(f"state must be one of {sorted(VALID_STATES)}")
     is_invalid_state = state == INVALID_STATE
 
     if not isinstance(approvers, list) or not all(isinstance(x, str) for x in approvers):
@@ -152,27 +113,16 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         for role in sorted(missing_base):
             errors.append(f"missing required approver: {role}")
 
-    if prefix in SECURITY_REQUIRED_PREFIXES and SECURITY_REVIEWER not in approver_set:
-        errors.append("missing required approver: Security Reviewer")
-
     if not isinstance(checks, dict):
         errors.append("checks must be an object")
         return errors
 
-    required_prefix_check_keys = set()
-    if not is_invalid_state:
-        required_prefix_check_keys = PREFIX_REQUIRED_CHECK_KEYS.get(prefix, set())
-
-    required_check_keys = REQUIRED_CHECK_KEYS | required_prefix_check_keys
     for key in sorted(REQUIRED_CHECK_KEYS):
         value = checks.get(key)
         if not isinstance(value, bool):
             errors.append(f"checks.{key} must be a boolean")
-    for key in sorted(required_prefix_check_keys):
-        value = checks.get(key)
-        if not isinstance(value, bool):
-            errors.append(f"checks.{key} must be a boolean")
-    for key in sorted(OPTIONAL_TYPED_CHECK_KEYS - required_check_keys):
+
+    for key in sorted(OPTIONAL_TYPED_CHECK_KEYS):
         if key in checks and not isinstance(checks.get(key), bool):
             errors.append(f"checks.{key} must be a boolean when present")
 
@@ -194,42 +144,46 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
                 privacy_evidence, PRIVACY_EVIDENCE_KEYS, errors, "privacy_evidence"
             )
 
-    # Prefix-specific policy checks.
+    # Optional context-specific policy checks.
     pr_opened = checks.get("pr_opened")
     merge_sync_used = checks.get("merge_sync_used")
     rebase_used = checks.get("rebase_used")
     repository_merge_only_policy = checks.get("repository_merge_only_policy")
     signed_tag_verified = checks.get("signed_tag_verified")
 
-    if not is_invalid_state and prefix == "GIT-PRS":
+    if not is_invalid_state and (
+        pr_opened is True
+        or merge_sync_used is not None
+        or repository_merge_only_policy is not None
+    ):
         if pr_opened is not True:
-            errors.append("checks.pr_opened must be true for GIT-PRS artifacts")
+            errors.append("checks.pr_opened must be true for PR-sync style manifests")
         used_merge_sync = merge_sync_used is True
         used_rebase_sync = rebase_used is True
         if used_merge_sync and used_rebase_sync:
             errors.append(
                 "checks.merge_sync_used and checks.rebase_used must not both be true for "
-                "GIT-PRS artifacts"
+                "PR-sync style manifests"
             )
         if not used_merge_sync and not used_rebase_sync:
             errors.append(
                 "one of checks.merge_sync_used or checks.rebase_used must be true for "
-                "GIT-PRS artifacts"
+                "PR-sync style manifests"
             )
         if repository_merge_only_policy is True and used_rebase_sync:
             errors.append(
-                "checks.rebase_used must be false when "
-                "checks.repository_merge_only_policy is true for GIT-PRS artifacts"
+                "checks.rebase_used must be false when checks.repository_merge_only_policy is true"
             )
 
-    if not is_invalid_state and prefix == "GIT-RBS":
-        if pr_opened is not False:
-            errors.append("checks.pr_opened must be false for GIT-RBS artifacts")
+    if not is_invalid_state and pr_opened is False and rebase_used is not None:
         if rebase_used is not True:
-            errors.append("checks.rebase_used must be true for GIT-RBS artifacts")
+            errors.append("checks.rebase_used must be true for rebase execution manifests")
 
-    if not is_invalid_state and prefix == "GIT-REL" and signed_tag_verified is not True:
-        errors.append("checks.signed_tag_verified must be true for GIT-REL artifacts")
+    if signed_tag_verified is not None:
+        if signed_tag_verified is not True:
+            errors.append("checks.signed_tag_verified must be true when present")
+        if SECURITY_REVIEWER not in approver_set:
+            errors.append("missing required approver: Security Reviewer")
 
     return errors
 

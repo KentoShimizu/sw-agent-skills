@@ -14,9 +14,9 @@ description: "UI parity verification workflow between design specs and implement
 Prevent design-to-implementation drift with objective parity evidence.
 
 ## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
+- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
 - Track parity review artifacts with `DREV-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Approved design artifacts and version identifiers

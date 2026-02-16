@@ -15,8 +15,8 @@ Define stable architecture principles that guide consistent decisions across tea
 
 ## Shared Architecture Contract (Canonical)
 - Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Run machine validation: `python3 skills/architecture-principles/scripts/validate_architecture_contract.py --manifest <path/to/manifest.json>`.
+- When project-specific governance rules are not defined, apply the canonical contract as the default operating method.
+- Optional consistency check (only if your repository enforces manifest validation): `python3 skills/architecture-principles/scripts/validate_architecture_contract.py --manifest <path/to/manifest.json>`.
 - Block host-specific path leakage with `python3 scripts/validate_no_absolute_paths.py`.
 - Start from valid samples when drafting manifests:
   - `skills/architecture-principles/assets/arc-prn-manifest.valid.json`
@@ -36,7 +36,7 @@ Define stable architecture principles that guide consistent decisions across tea
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Encode privacy, security, residency, and transfer constraints as explicit principles.
 - Treat legal obligations as hard architecture constraints.
-- Prepare an `ARC-CMP-*` evidence package for review.
+- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for review.
 
 ## Inputs
 - Business goals and quality attribute priorities
@@ -58,7 +58,7 @@ Define stable architecture principles that guide consistent decisions across tea
 ## Quality Gates
 - Every principle is testable in architecture review.
 - Principle set contains no unresolved contradictions.
-- `ARC-CMP-*` evidence package exists and is complete.
+- project-defined compliance evidence package ID (for example `ARC-CMP-*`) exists and is complete.
 - Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Required approvers are assigned according to the contract.
 

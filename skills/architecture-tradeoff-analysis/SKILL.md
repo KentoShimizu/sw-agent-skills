@@ -29,7 +29,7 @@ Select architecture options through transparent, evidence-based evaluation.
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Include legal and privacy constraints as hard gates, not soft preferences.
 - Reject options that require non-compliant data handling assumptions.
-- Prepare an `ARC-CMP-*` evidence package for governance review.
+- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for governance review.
 
 ## Inputs
 - Decision question and candidate options
@@ -53,7 +53,7 @@ Select architecture options through transparent, evidence-based evaluation.
 ## Quality Gates
 - Criteria and weights are defined before scoring.
 - Options are comparable at equal abstraction level.
-- `ARC-CMP-*` evidence package is complete and approved.
+- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
 - Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Greenfield output does not contain fallback or rollback architecture paths.
 

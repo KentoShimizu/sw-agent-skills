@@ -14,9 +14,9 @@ description: "Structured design review workflow for validating UX quality, imple
 Identify design risks early and provide concrete, reviewable fixes.
 
 ## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
+- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
 - Validate IDs, lifecycle states, and approval requirements against this contract.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Design artifact and review scope
@@ -31,7 +31,7 @@ Identify design risks early and provide concrete, reviewable fixes.
 ## Workflow
 1. Confirm review scope and acceptance criteria.
 2. Check usability, consistency, and implementation feasibility.
-3. Verify accessibility gate status using existing `A11Y-CHK-*` results.
+3. Verify accessibility gate status using existing results under project-defined IDs (for example `A11Y-CHK-*`).
 4. Record findings with severity, owner, and remediation path.
 5. Conclude approval or rejection with explicit rationale.
 

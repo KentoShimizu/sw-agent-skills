@@ -14,9 +14,9 @@ description: "Design system foundation workflow for defining reusable component 
 Create a coherent and maintainable design system foundation.
 
 ## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track foundation elements with `DSN-SYS-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
+- Track foundation elements with project-defined IDs (for example `DSN-SYS-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Existing UI inventory and inconsistency map
@@ -24,7 +24,7 @@ Create a coherent and maintainable design system foundation.
 - Engineering implementation constraints
 
 ## Outputs
-- Foundation map with `DSN-SYS-*` IDs
+- Foundation map with project-defined IDs (for example `DSN-SYS-*`)
 - Pattern ownership and lifecycle definitions
 - Component adoption roadmap
 

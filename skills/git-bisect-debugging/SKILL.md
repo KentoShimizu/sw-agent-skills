@@ -14,9 +14,9 @@ description: "Specialized workflow for locating regression-introducing commits w
 Isolate the first bad commit with objective pass-fail evidence.
 
 ## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track bisect artifacts with `GIT-BIS-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+- Use `../git-branch-strategy/references/git-governance-contract.md` as the primary reference for recommended structure.
+- Track bisect artifacts with project-defined IDs (for example `GIT-BIS-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - Known good commit and known bad commit
@@ -24,7 +24,7 @@ Isolate the first bad commit with objective pass-fail evidence.
 - Environment requirements for reproducible execution
 
 ## Outputs
-- `GIT-BIS-*` culprit commit evidence
+- project-defined ID (for example `GIT-BIS-*`) culprit commit evidence
 - Bisect log with classified steps
 - Next-step fix or revert recommendation
 

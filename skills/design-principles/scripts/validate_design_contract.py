@@ -5,37 +5,21 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 from typing import Any
 
-ID_PATTERNS: dict[str, re.Pattern[str]] = {
-    "DSN-PRN": re.compile(r"^DSN-PRN-[0-9]{3,}$"),
-    "DSN-SYS": re.compile(r"^DSN-SYS-[0-9]{3,}$"),
-    "DSN-TOK": re.compile(r"^DSN-TOK-[A-Z0-9_]+-[0-9]{3,}$"),
-    "UX-FLW": re.compile(r"^UX-FLW-[0-9]{3,}$"),
-    "IA-NAV": re.compile(r"^IA-NAV-[0-9]{3,}$"),
-    "VIS-SPEC": re.compile(r"^VIS-SPEC-[0-9]{3,}$"),
-    "A11Y-CHK": re.compile(r"^A11Y-CHK-[0-9]{3,}$"),
-    "RESP-RUL": re.compile(r"^RESP-RUL-[0-9]{3,}$"),
-    "UX-RSR": re.compile(r"^UX-RSR-[0-9]{8}-[0-9]{3,}$"),
-    "FIG-HND": re.compile(r"^FIG-HND-[0-9]{8}-[0-9]{3,}$"),
-    "DREV": re.compile(r"^DREV-[0-9]{8}-[0-9]{3,}$"),
-}
-
-VALID_STATES: dict[str, set[str]] = {
-    "DSN-PRN": {"proposed", "accepted", "deprecated"},
-    "DSN-SYS": {"proposed", "accepted", "deprecated"},
-    "DSN-TOK": {"proposed", "accepted", "deprecated"},
-    "UX-FLW": {"draft", "reviewed", "approved", "deprecated"},
-    "IA-NAV": {"draft", "reviewed", "approved", "deprecated"},
-    "VIS-SPEC": {"draft", "reviewed", "approved", "deprecated"},
-    "A11Y-CHK": {"draft", "reviewed", "approved", "rejected"},
-    "RESP-RUL": {"draft", "reviewed", "approved", "deprecated"},
-    "UX-RSR": {"draft", "reviewed", "approved", "rejected"},
-    "FIG-HND": {"prepared", "reviewed", "released", "superseded"},
-    "DREV": {"draft", "reviewed", "approved", "rejected"},
+VALID_STATES = {
+    "proposed",
+    "accepted",
+    "deprecated",
+    "draft",
+    "reviewed",
+    "approved",
+    "rejected",
+    "prepared",
+    "released",
+    "superseded",
 }
 
 EU_LOCALES = {
@@ -79,13 +63,6 @@ def load_manifest(path: Path) -> dict[str, Any]:
     return data
 
 
-def artifact_prefix(artifact_id: str) -> str | None:
-    for prefix, pattern in ID_PATTERNS.items():
-        if pattern.match(artifact_id):
-            return prefix
-    return None
-
-
 def require_bool(checks: dict[str, Any], key: str, errors: list[str]) -> None:
     if checks.get(key) is not True:
         errors.append(f"checks.{key} must be true")
@@ -107,17 +84,11 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     checks = manifest.get("checks")
     privacy_evidence = manifest.get("privacy_evidence")
 
-    if not isinstance(artifact_id, str):
-        errors.append("artifact_id must be a string")
-        return errors
+    if artifact_id is not None and (not isinstance(artifact_id, str) or not artifact_id.strip()):
+        errors.append("artifact_id must be a non-empty string when present")
 
-    prefix = artifact_prefix(artifact_id)
-    if prefix is None:
-        errors.append("artifact_id does not match any allowed ID schema")
-        return errors
-
-    if not isinstance(state, str) or state not in VALID_STATES[prefix]:
-        errors.append(f"state must be one of {sorted(VALID_STATES[prefix])}")
+    if not isinstance(state, str) or state not in VALID_STATES:
+        errors.append(f"state must be one of {sorted(VALID_STATES)}")
 
     if not isinstance(approvers, list) or not all(isinstance(x, str) for x in approvers):
         errors.append("approvers must be an array of strings")
@@ -161,10 +132,10 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         if eu_count < 2:
             errors.append("at least two EU locales are required in checks.locales")
 
-    privacy_required = prefix in {"UX-RSR", "FIG-HND"} or user_facing_change is True
+    privacy_required = user_facing_change is True or privacy_evidence is not None
 
-    if prefix in {"UX-RSR", "FIG-HND"} and "Privacy Reviewer" not in approver_set:
-        errors.append("Privacy Reviewer is required for UX-RSR and FIG-HND artifacts")
+    if privacy_required and "Privacy Reviewer" not in approver_set:
+        errors.append("Privacy Reviewer is required when privacy evidence is required")
 
     if privacy_required:
         if not isinstance(privacy_evidence, dict):

@@ -2,60 +2,42 @@
 
 ## Scope
 Apply this contract to all `architecture-*` skills.
-Do not redefine ID formats, lifecycle states, or compliance gate rules in individual skill files.
+Use project-specific ID naming rules; example IDs in this document are illustrative only.
+Treat this document as operational guidance, not a mandatory schema.
+When repository-specific rules exist, follow those first; otherwise use this as a default operating method.
 
-## ID Schema (Single Source of Truth)
-- `ARC-DRV-<NNN>`: `^ARC-DRV-[0-9]{3,}$`
-  - Meaning: architecture driver
-  - Issuer: architecture owner
-  - Uniqueness: repository-wide
-- `ARC-PRN-<NNN>`: `^ARC-PRN-[0-9]{3,}$`
-  - Meaning: architecture principle
-  - Issuer: architecture owner
-  - Uniqueness: repository-wide
-- `ARC-OPT-<NNN>`: `^ARC-OPT-[0-9]{3,}$`
-  - Meaning: architecture option
-  - Issuer: architecture owner
-  - Uniqueness: decision-scope-wide
-- `ADR-<YYYYMMDD>-<NNN>`: `^ADR-[0-9]{8}-[0-9]{3,}$`
-  - Meaning: architecture decision record
-  - Issuer: architecture reviewer or owner
-  - Uniqueness: repository-wide
-- `ARC-RSK-<NNN>`: `^ARC-RSK-[0-9]{3,}$`
-  - Meaning: architecture risk
-  - Issuer: risk owner
-  - Uniqueness: repository-wide
-- `C4-CTX-<SYSTEM>-v<NN>`: `^C4-CTX-[A-Z0-9_]+-v[0-9]+$`
-  - Meaning: C4 context diagram
-  - Issuer: architecture owner
-  - Uniqueness: system-wide
-- `C4-CTR-<SYSTEM>-v<NN>`: `^C4-CTR-[A-Z0-9_]+-v[0-9]+$`
-  - Meaning: C4 container diagram
-  - Issuer: architecture owner
-  - Uniqueness: system-wide
-- `C4-CMP-<SYSTEM>-v<NN>`: `^C4-CMP-[A-Z0-9_]+-v[0-9]+$`
-  - Meaning: C4 component diagram
-  - Issuer: architecture owner
-  - Uniqueness: system-wide
-- `ARC-CMP-<YYYYMMDD>-<NNN>`: `^ARC-CMP-[0-9]{8}-[0-9]{3,}$`
-  - Meaning: compliance evidence package
-  - Issuer: compliance gate owner
-  - Uniqueness: release-wide
+## Manifest Profile Model (Canonical)
+Validation profile is inferred from state and field presence.
+
+Profiles:
+- `compliance_evidence_package`
+  - Identified when `compliance_evidence` is present.
+- `risk_like_record`
+  - State in `open | mitigating | closed`.
+- `stateful_architecture_record`
+  - State in `proposed | accepted | rejected | deprecated | superseded`.
+- `stateless_view_record`
+  - State omitted (used for C4 view artifacts).
+
+## ID Format Policy (Project-Defined)
+- `artifact_id` is optional and project-defined.
+- If present, it must be non-empty and follow your repository ID policy.
+- `checks.id_format_validated=true` means validation against that policy has been completed.
 
 ## Issuance and Collision Rules
-- Allocate IDs sequentially inside each prefix namespace.
+- Allocate IDs sequentially inside each project namespace.
 - Never reuse retired IDs.
 - Keep ID-to-artifact mapping append-only.
 - Resolve collisions by issuing a new ID and marking collided ID as `invalid` with reason.
 
 ## Lifecycle Rules
-- `ARC-DRV-*`, `ARC-PRN-*`, `ARC-OPT-*`: `proposed`, `accepted`, `rejected`, `deprecated`
-- `ADR-*`: `proposed`, `accepted`, `rejected`, `superseded`
-- `ARC-RSK-*`: `open`, `mitigating`, `accepted`, `closed`
-- `ARC-CMP-*`: `draft`, `reviewed`, `approved`, `expired`
+- Stateful architecture records: `proposed`, `accepted`, `rejected`, `deprecated`, `superseded`
+- Risk-like records: `open`, `mitigating`, `accepted`, `closed`
+- Compliance evidence package: `draft`, `reviewed`, `approved`, `expired`
+- Stateless view records: `state` is omitted
 
 ## Compliance Evidence Requirements (US, Japan, EU)
-Each `ARC-CMP-*` package must include all required fields:
+Each compliance evidence package must include all required fields:
 - `lawful_basis`
 - `data_categories`
 - `data_residency_map`
@@ -82,22 +64,24 @@ Each `ARC-CMP-*` package must include all required fields:
 - `DPO`
 - `Delegated DPO Approver`
 
-## Machine Validation
-- Run `python3 skills/architecture-principles/scripts/validate_architecture_contract.py --manifest <path/to/manifest.json>`.
-- For CI or batch validation, run `python3 scripts/run_contract_validators.py --architecture-manifest <path/to/manifest.json>`.
-- Manifest must include: `artifact_id`, `approvers`, and `checks`.
-- Include `checks.id_format_validated` as `true`.
-- Include `checks.personal_data_processed` as `true` or `false`.
-- Include `checks.eu_high_risk_processing` as `true` or `false`.
-- Include `checks.system_type` as `greenfield` or `brownfield`.
-- For `checks.system_type = greenfield`, include:
+## Optional Consistency Check
+- Optional: run `python3 skills/architecture-principles/scripts/validate_architecture_contract.py --manifest <path/to/manifest.json>`.
+- Recommended structured manifest fields:
+  - `state`, `approvers`, and `checks`
+  - Optional: `artifact_id`
+- Recommended check flags:
+  - `checks.id_format_validated` as `true`
+  - `checks.personal_data_processed` as `true` or `false`
+  - `checks.eu_high_risk_processing` as `true` or `false`
+  - `checks.system_type` as `greenfield` or `brownfield`
+- For `checks.system_type = greenfield`, recommend:
   - `checks.greenfield_no_fallback` as `true`
   - `checks.failure_exposure_criteria` (non-empty string)
   - `checks.redecision_trigger` (non-empty string)
-- For `checks.system_type = brownfield`, include:
+- For `checks.system_type = brownfield`, recommend:
   - `checks.rollback_trigger_condition` (non-empty string)
   - `checks.rollback_runbook_link` (non-empty string)
-- For `ARC-CMP-*` artifacts, include `compliance_evidence` with:
+- When `compliance_evidence` is present, recommend:
   - `lawful_basis`
   - `data_categories`
   - `data_residency_map`
@@ -107,15 +91,15 @@ Each `ARC-CMP-*` package must include all required fields:
   - `access_control_and_audit_log_location`
   - `data_subject_rights_process`
 
-### Valid Manifest Samples
+### Valid Manifest Samples (Example IDs)
 - `skills/architecture-principles/assets/arc-prn-manifest.valid.json`
 - `skills/architecture-principles/assets/arc-cmp-manifest.valid.json`
 - Field-level guidance: `skills/architecture-principles/references/manifest-field-guide.md`
 
-## Gate Policy
-- Block release when mandatory fields in `ARC-CMP-*` are missing.
-- Block release when required approvers are missing.
-- Block release when ID format validation fails.
+## Operational Handling (Recommended)
+- When compliance evidence fields are missing, escalate and resolve before final approval.
+- When required approvers are missing, hold decision closure until ownership is explicit.
+- When `checks.id_format_validated` is false, run ID policy review or document why ID checks are intentionally not used.
 - For greenfield design:
   - Do not include fallback architecture paths.
   - Require explicit failure exposure criteria and re-decision trigger.

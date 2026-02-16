@@ -17,7 +17,7 @@ Deliver GraphQL contracts that are safe to evolve and efficient at runtime.
 
 ## Shared API Contract (Canonical)
 - Use `../api-design-rest/references/api-governance-contract.md` as the canonical contract.
-- Validate manifests with:
+- Optional consistency checks (only if your repository enforces manifest validation):
   - `python3 ../api-design-rest/scripts/validate_api_contract.py --manifest <path/to/manifest.json>`
 - Use valid templates in `../api-design-rest/assets/`.
 - Use transport decision reference:

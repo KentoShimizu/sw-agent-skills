@@ -14,9 +14,9 @@ description: "Accessibility-first design workflow for ensuring inclusive interac
 Guarantee inclusive user experience through proactive accessibility design.
 
 ## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track checks with `A11Y-CHK-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
+- Track checks with project-defined IDs (for example `A11Y-CHK-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - User journeys and critical UI surfaces
@@ -24,7 +24,7 @@ Guarantee inclusive user experience through proactive accessibility design.
 - Assistive technology support targets
 
 ## Outputs
-- Accessibility checklist and findings with `A11Y-CHK-*` IDs
+- Accessibility checklist and findings with project-defined IDs (for example `A11Y-CHK-*`)
 - Remediation plan with owners and priorities
 - Verification criteria for release gating
 
@@ -33,7 +33,7 @@ Guarantee inclusive user experience through proactive accessibility design.
 2. Audit navigation, semantics, contrast, and feedback patterns.
 3. Document defects with severity and affected user impact.
 4. Design remediation and verify feasibility with engineering.
-5. Re-validate and publish `A11Y-CHK-*` results for review consumption.
+5. Re-validate and publish results under project-defined IDs (for example `A11Y-CHK-*`) for review consumption.
 
 ## Quality Gates
 - Keyboard, focus, and semantics meet baseline requirements.

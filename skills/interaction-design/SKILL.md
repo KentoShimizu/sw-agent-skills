@@ -14,9 +14,9 @@ description: "Interaction design workflow for defining user flows, state transit
 Define predictable and accessible interaction behavior across core flows.
 
 ## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
+- Use `../design-principles/references/design-governance-contract.md` as the primary reference for recommended structure.
 - Assign flow IDs as `UX-FLW-*`.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+- Optional consistency check (only if your repository enforces manifest validation): `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
 
 ## Inputs
 - User tasks and business-critical journeys

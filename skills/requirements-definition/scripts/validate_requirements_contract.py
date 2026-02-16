@@ -5,48 +5,18 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 
 INVALID_STATE = "invalid"
 
-ARTIFACT_ID_PATTERNS: dict[str, re.Pattern[str]] = {
-    "RQM-ELC": re.compile(r"^RQM-ELC-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-DEF": re.compile(r"^RQM-DEF-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-PRI": re.compile(r"^RQM-PRI-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-NFR": re.compile(r"^RQM-NFR-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-ACD": re.compile(r"^RQM-ACD-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-RSK": re.compile(r"^RQM-RSK-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-UCM": re.compile(r"^RQM-UCM-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-STY": re.compile(r"^RQM-STY-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-INT": re.compile(r"^RQM-INT-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-URS": re.compile(r"^RQM-URS-[0-9]{8}-[0-9]{3,}$"),
-    "RQM-CMP": re.compile(r"^RQM-CMP-[0-9]{8}-[0-9]{3,}$"),
-}
-
-BASE_VALID_STATES: dict[str, set[str]] = {
-    "RQM-CMP": {"draft", "reviewed", "approved", "expired"},
-}
-
-DEFAULT_VALID_STATES = {"draft", "reviewed", "approved", "rejected"}
-
-VALID_STATES: dict[str, set[str]] = {
-    prefix: states | {INVALID_STATE}
-    for prefix, states in {
-        **{prefix: DEFAULT_VALID_STATES for prefix in ARTIFACT_ID_PATTERNS if prefix != "RQM-CMP"},
-        **BASE_VALID_STATES,
-    }.items()
-}
-
-WORK_ITEM_ID_PATTERNS: dict[str, re.Pattern[str]] = {
-    "requirements": re.compile(r"^REQ-[A-Z0-9_]+-[0-9]{3,}$"),
-    "nfr": re.compile(r"^NFR-REQ-[A-Z0-9_]+-[0-9]{3,}-[0-9]{2,}$"),
-    "acceptance_criteria": re.compile(r"^AC-REQ-[A-Z0-9_]+-[0-9]{3,}-[0-9]{2,}$"),
-    "risks": re.compile(r"^RSK-REQ-[A-Z0-9_]+-[0-9]{3,}-[0-9]{2,}$"),
-    "interviews": re.compile(r"^INT-[0-9]{8}-[0-9]{2,}$"),
-    "user_research": re.compile(r"^UR-[0-9]{8}-[0-9]{2,}$"),
-    "evidence": re.compile(r"^EVD-[A-Z0-9_]+-[0-9]{3,}$"),
+VALID_STATES = {
+    "draft",
+    "reviewed",
+    "approved",
+    "rejected",
+    "expired",
+    INVALID_STATE,
 }
 
 ALWAYS_REQUIRED_APPROVERS = {"Product Owner", "Engineering Owner"}
@@ -63,16 +33,14 @@ COMMON_REQUIRED_CHECK_KEYS = {
     "regulated_jurisdiction_impact",
 }
 
-PREFIX_REQUIRED_CHECK_KEYS: dict[str, set[str]] = {
-    "RQM-ELC": {"source_authority_recorded"},
-    "RQM-INT": {"source_authority_recorded"},
-    "RQM-URS": {"source_authority_recorded"},
-    "RQM-PRI": {"prioritization_rule_frozen"},
-    "RQM-NFR": {"metric_threshold_defined"},
-    "RQM-ACD": {"acceptance_mapping_complete"},
-    "RQM-RSK": {"mitigation_owner_assigned"},
-    "RQM-UCM": {"exception_flows_documented"},
-    "RQM-STY": {"story_size_validated"},
+PROFILE_REQUIRED_CHECK_KEYS: dict[str, set[str]] = {
+    "evidence_driven": {"source_authority_recorded"},
+    "prioritization": {"prioritization_rule_frozen"},
+    "nfr": {"metric_threshold_defined"},
+    "acceptance_criteria": {"acceptance_mapping_complete"},
+    "risk_analysis": {"mitigation_owner_assigned"},
+    "use_case": {"exception_flows_documented"},
+    "user_story": {"story_size_validated"},
 }
 
 OPTIONAL_TYPED_CHECK_KEYS = {
@@ -104,15 +72,24 @@ COMPLIANCE_EVIDENCE_KEYS = {
     "audit_log_location",
 }
 
-EVIDENCE_DRIVEN_PREFIXES = {"RQM-ELC", "RQM-INT", "RQM-URS"}
-REQUIREMENT_BOUND_PREFIXES = {
-    "RQM-DEF",
-    "RQM-PRI",
-    "RQM-NFR",
-    "RQM-ACD",
-    "RQM-RSK",
-    "RQM-UCM",
-    "RQM-STY",
+LINKED_ID_KEYS = {
+    "requirements",
+    "nfr",
+    "acceptance_criteria",
+    "risks",
+    "interviews",
+    "user_research",
+    "evidence",
+}
+
+REQUIREMENT_BOUND_PROFILES = {
+    "baseline",
+    "prioritization",
+    "nfr",
+    "acceptance_criteria",
+    "risk_analysis",
+    "use_case",
+    "user_story",
 }
 
 
@@ -130,11 +107,45 @@ def load_manifest(path: Path) -> dict[str, object]:
     return data
 
 
-def artifact_prefix(artifact_id: str) -> str | None:
-    for prefix, pattern in ARTIFACT_ID_PATTERNS.items():
-        if pattern.match(artifact_id):
-            return prefix
-    return None
+def infer_profile(manifest: dict[str, object], checks: dict[str, object], linked_ids: dict[str, object], errors: list[str]) -> str:
+    if "compliance_evidence" in manifest:
+        return "compliance"
+
+    profile_signals: dict[str, bool] = {
+        "evidence_driven": "source_authority_recorded" in checks,
+        "prioritization": "prioritization_rule_frozen" in checks,
+        "nfr": "metric_threshold_defined" in checks,
+        "acceptance_criteria": "acceptance_mapping_complete" in checks,
+        "risk_analysis": "mitigation_owner_assigned" in checks,
+        "use_case": "exception_flows_documented" in checks,
+        "user_story": "story_size_validated" in checks,
+    }
+
+    matched_profiles = [name for name, matched in profile_signals.items() if matched]
+    if len(matched_profiles) > 1:
+        errors.append(
+            "manifest includes overlapping profile-specific checks: "
+            + ", ".join(sorted(matched_profiles))
+        )
+        return "invalid"
+    if len(matched_profiles) == 1:
+        return matched_profiles[0]
+
+    evidence_like = 0
+    for key in ("interviews", "user_research", "evidence"):
+        raw = linked_ids.get(key)
+        if isinstance(raw, list) and any(isinstance(item, str) and item.strip() for item in raw):
+            evidence_like += 1
+
+    requirements = linked_ids.get("requirements")
+    requirements_non_empty = isinstance(requirements, list) and any(
+        isinstance(item, str) and item.strip() for item in requirements
+    )
+
+    if evidence_like > 0 and not requirements_non_empty:
+        return "evidence_driven"
+
+    return "baseline"
 
 
 def require_bool_true(checks: dict[str, object], key: str, errors: list[str]) -> None:
@@ -157,10 +168,9 @@ def require_non_empty_string_map(
             errors.append(f"{prefix}.{key} must be a non-empty string")
 
 
-def require_id_list(
+def require_string_list(
     linked_ids: dict[str, object],
     key: str,
-    pattern: re.Pattern[str],
     errors: list[str],
 ) -> list[str]:
     raw_value = linked_ids.get(key)
@@ -172,9 +182,8 @@ def require_id_list(
         return []
 
     values = [item.strip() for item in raw_value]
-    for value in values:
-        if not pattern.match(value):
-            errors.append(f"linked_ids.{key} contains invalid ID format: {value}")
+    if any(not value for value in values):
+        errors.append(f"linked_ids.{key} must not contain empty strings")
     return values
 
 
@@ -189,17 +198,11 @@ def validate_manifest(manifest: dict[str, object]) -> list[str]:
     privacy_evidence = manifest.get("privacy_evidence")
     compliance_evidence = manifest.get("compliance_evidence")
 
-    if not isinstance(artifact_id, str):
-        errors.append("artifact_id must be a string")
-        return errors
+    if artifact_id is not None and (not isinstance(artifact_id, str) or not artifact_id.strip()):
+        errors.append("artifact_id must be a non-empty string when present")
 
-    prefix = artifact_prefix(artifact_id)
-    if prefix is None:
-        errors.append("artifact_id does not match any allowed ID schema")
-        return errors
-
-    if not isinstance(state, str) or state not in VALID_STATES[prefix]:
-        errors.append(f"state must be one of {sorted(VALID_STATES[prefix])}")
+    if not isinstance(state, str) or state not in VALID_STATES:
+        errors.append(f"state must be one of {sorted(VALID_STATES)}")
     is_invalid_state = state == INVALID_STATE
 
     if not isinstance(approvers, list) or not all(isinstance(item, str) for item in approvers):
@@ -215,7 +218,17 @@ def validate_manifest(manifest: dict[str, object]) -> list[str]:
         errors.append("checks must be an object")
         return errors
 
-    required_check_keys = COMMON_REQUIRED_CHECK_KEYS | PREFIX_REQUIRED_CHECK_KEYS.get(prefix, set())
+    if not isinstance(linked_ids, dict):
+        errors.append("linked_ids must be an object")
+        return errors
+
+    profile = infer_profile(manifest, checks, linked_ids, errors)
+    if profile == "invalid":
+        return errors
+
+    required_check_keys = set(COMMON_REQUIRED_CHECK_KEYS)
+    required_check_keys.update(PROFILE_REQUIRED_CHECK_KEYS.get(profile, set()))
+
     for key in sorted(required_check_keys):
         value = checks.get(key)
         if not isinstance(value, bool):
@@ -254,9 +267,9 @@ def validate_manifest(manifest: dict[str, object]) -> list[str]:
                 "privacy_evidence",
             )
 
-    if prefix == "RQM-CMP":
+    if compliance_evidence is not None:
         if not isinstance(compliance_evidence, dict):
-            errors.append("compliance_evidence must be an object for RQM-CMP artifacts")
+            errors.append("compliance_evidence must be an object when present")
         else:
             require_non_empty_string_map(
                 compliance_evidence,
@@ -265,22 +278,18 @@ def validate_manifest(manifest: dict[str, object]) -> list[str]:
                 "compliance_evidence",
             )
 
-    if not isinstance(linked_ids, dict):
-        errors.append("linked_ids must be an object")
-        return errors
-
-    unknown_linked_keys = set(linked_ids.keys()).difference(WORK_ITEM_ID_PATTERNS.keys())
+    unknown_linked_keys = set(linked_ids.keys()).difference(LINKED_ID_KEYS)
     for key in sorted(unknown_linked_keys):
         errors.append(f"linked_ids.{key} is not defined in the canonical contract")
 
     validated_linked_ids: dict[str, list[str]] = {}
-    for key, pattern in WORK_ITEM_ID_PATTERNS.items():
-        validated_linked_ids[key] = require_id_list(linked_ids, key, pattern, errors)
+    for key in sorted(LINKED_ID_KEYS):
+        validated_linked_ids[key] = require_string_list(linked_ids, key, errors)
 
     if is_invalid_state:
         return errors
 
-    if prefix in EVIDENCE_DRIVEN_PREFIXES:
+    if profile == "evidence_driven":
         source_count = (
             len(validated_linked_ids["interviews"])
             + len(validated_linked_ids["user_research"])
@@ -289,20 +298,20 @@ def validate_manifest(manifest: dict[str, object]) -> list[str]:
         if source_count == 0:
             errors.append(
                 "at least one of linked_ids.interviews, linked_ids.user_research, or "
-                "linked_ids.evidence must be present for evidence-driven artifacts"
+                "linked_ids.evidence must be present for evidence-driven manifests"
             )
 
-    if prefix in REQUIREMENT_BOUND_PREFIXES and len(validated_linked_ids["requirements"]) == 0:
-        errors.append("linked_ids.requirements must be non-empty for requirement-bound artifacts")
+    if profile in REQUIREMENT_BOUND_PROFILES and len(validated_linked_ids["requirements"]) == 0:
+        errors.append("linked_ids.requirements must be non-empty for requirement-bound manifests")
 
-    if prefix == "RQM-NFR" and len(validated_linked_ids["nfr"]) == 0:
-        errors.append("linked_ids.nfr must be non-empty for RQM-NFR artifacts")
+    if profile == "nfr" and len(validated_linked_ids["nfr"]) == 0:
+        errors.append("linked_ids.nfr must be non-empty for NFR manifests")
 
-    if prefix == "RQM-ACD" and len(validated_linked_ids["acceptance_criteria"]) == 0:
-        errors.append("linked_ids.acceptance_criteria must be non-empty for RQM-ACD artifacts")
+    if profile == "acceptance_criteria" and len(validated_linked_ids["acceptance_criteria"]) == 0:
+        errors.append("linked_ids.acceptance_criteria must be non-empty for acceptance-criteria manifests")
 
-    if prefix == "RQM-RSK" and len(validated_linked_ids["risks"]) == 0:
-        errors.append("linked_ids.risks must be non-empty for RQM-RSK artifacts")
+    if profile == "risk_analysis" and len(validated_linked_ids["risks"]) == 0:
+        errors.append("linked_ids.risks must be non-empty for risk-analysis manifests")
 
     return errors
 

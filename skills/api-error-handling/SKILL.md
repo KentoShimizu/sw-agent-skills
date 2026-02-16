@@ -18,7 +18,7 @@ Deliver machine-actionable error contracts that are stable across versions.
 
 ## Shared API Contract (Canonical)
 - Use `../api-design-rest/references/api-governance-contract.md` as the canonical contract.
-- Validate manifests with:
+- Optional consistency checks (only if your repository enforces manifest validation):
   - `python3 ../api-design-rest/scripts/validate_api_contract.py --manifest <path/to/manifest.json>`
 - Reuse valid API error templates in `../api-design-rest/assets/`.
 - Use threshold derivation reference:

@@ -5,29 +5,19 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 from typing import Any
 
 MIN_DEPRECATION_WINDOW_DAYS = 90
 
-ARTIFACT_ID_PATTERNS: dict[str, re.Pattern[str]] = {
-    "API-RES": re.compile(r"^API-RES-[0-9]{8}-[0-9]{3,}$"),
-    "API-GQL": re.compile(r"^API-GQL-[0-9]{8}-[0-9]{3,}$"),
-    "API-ERR": re.compile(r"^API-ERR-[0-9]{8}-[0-9]{3,}$"),
-    "API-VER": re.compile(r"^API-VER-[0-9]{8}-[0-9]{3,}$"),
-    "API-CDC": re.compile(r"^API-CDC-[0-9]{8}-[0-9]{3,}$"),
-    "API-CMP": re.compile(r"^API-CMP-[0-9]{8}-[0-9]{3,}$"),
-}
-
-VALID_STATES: dict[str, set[str]] = {
-    "API-RES": {"draft", "reviewed", "approved", "deprecated"},
-    "API-GQL": {"draft", "reviewed", "approved", "deprecated"},
-    "API-ERR": {"draft", "reviewed", "approved", "deprecated"},
-    "API-VER": {"draft", "reviewed", "approved", "deprecated"},
-    "API-CDC": {"draft", "active", "blocked", "deprecated"},
-    "API-CMP": {"draft", "reviewed", "approved", "expired"},
+VALID_STATES_BY_PROFILE: dict[str, set[str]] = {
+    "rest_api_design": {"draft", "reviewed", "approved", "deprecated"},
+    "graphql_api_design": {"draft", "reviewed", "approved", "deprecated"},
+    "error_handling_design": {"draft", "reviewed", "approved", "deprecated"},
+    "versioning_strategy": {"draft", "reviewed", "approved", "deprecated"},
+    "contract_testing_evidence": {"draft", "active", "blocked", "deprecated"},
+    "compliance_evidence_package": {"draft", "reviewed", "approved", "expired"},
 }
 
 ALWAYS_REQUIRED_APPROVERS = {"API Owner", "Engineering Owner"}
@@ -74,27 +64,27 @@ COMMON_TRUE_KEYS = {
     "no_fallback_logic",
 }
 
-PREFIX_REQUIRED_BOOL_KEYS: dict[str, set[str]] = {
-    "API-RES": {"http_semantics_validated", "idempotency_strategy_defined"},
-    "API-GQL": {"query_cost_limits_defined", "n_plus_one_guard_defined"},
-    "API-ERR": {"status_mapping_complete", "error_code_registry_updated"},
-    "API-VER": {
+PROFILE_REQUIRED_BOOL_KEYS: dict[str, set[str]] = {
+    "rest_api_design": {"http_semantics_validated", "idempotency_strategy_defined"},
+    "graphql_api_design": {"query_cost_limits_defined", "n_plus_one_guard_defined"},
+    "error_handling_design": {"status_mapping_complete", "error_code_registry_updated"},
+    "versioning_strategy": {
         "compatibility_matrix_updated",
         "deprecation_policy_defined",
         "has_breaking_change",
     },
-    "API-CDC": {"consumer_matrix_current", "ci_blocking_enabled"},
+    "contract_testing_evidence": {"consumer_matrix_current", "ci_blocking_enabled"},
 }
 
-PREFIX_TRUE_KEYS: dict[str, set[str]] = {
-    "API-RES": {"http_semantics_validated", "idempotency_strategy_defined"},
-    "API-GQL": {"query_cost_limits_defined", "n_plus_one_guard_defined"},
-    "API-ERR": {"status_mapping_complete", "error_code_registry_updated"},
-    "API-VER": {"compatibility_matrix_updated", "deprecation_policy_defined"},
-    "API-CDC": {"consumer_matrix_current", "ci_blocking_enabled"},
+PROFILE_TRUE_KEYS: dict[str, set[str]] = {
+    "rest_api_design": {"http_semantics_validated", "idempotency_strategy_defined"},
+    "graphql_api_design": {"query_cost_limits_defined", "n_plus_one_guard_defined"},
+    "error_handling_design": {"status_mapping_complete", "error_code_registry_updated"},
+    "versioning_strategy": {"compatibility_matrix_updated", "deprecation_policy_defined"},
+    "contract_testing_evidence": {"consumer_matrix_current", "ci_blocking_enabled"},
 }
 
-COMPATIBILITY_MATRIX_REQUIRED_PREFIXES = {"API-VER", "API-CDC"}
+COMPATIBILITY_MATRIX_REQUIRED_PROFILES = {"versioning_strategy", "contract_testing_evidence"}
 
 COMPLIANCE_EVIDENCE_KEYS = {
     "lawful_basis_or_contract",
@@ -130,10 +120,39 @@ def load_manifest(path: Path) -> dict[str, Any]:
     return data
 
 
-def artifact_prefix(artifact_id: str) -> str | None:
-    for prefix, pattern in ARTIFACT_ID_PATTERNS.items():
-        if pattern.match(artifact_id):
-            return prefix
+def infer_profile(manifest: dict[str, Any], checks: dict[str, Any], errors: list[str]) -> str | None:
+    if "compliance_evidence" in manifest:
+        return "compliance_evidence_package"
+
+    profile_signals: dict[str, bool] = {
+        "rest_api_design": any(key in checks for key in {"http_semantics_validated", "idempotency_strategy_defined"}),
+        "graphql_api_design": any(key in checks for key in {"query_cost_limits_defined", "n_plus_one_guard_defined"}),
+        "error_handling_design": any(key in checks for key in {"status_mapping_complete", "error_code_registry_updated"}),
+        "versioning_strategy": any(key in checks for key in {"compatibility_matrix_updated", "deprecation_policy_defined", "has_breaking_change"}),
+        "contract_testing_evidence": any(key in checks for key in {"consumer_matrix_current", "ci_blocking_enabled"}),
+    }
+
+    matched_profiles = [name for name, matched in profile_signals.items() if matched]
+    if len(matched_profiles) == 1:
+        return matched_profiles[0]
+    if len(matched_profiles) > 1:
+        errors.append(
+            "manifest includes overlapping profile-specific checks: "
+            + ", ".join(sorted(matched_profiles))
+        )
+        return None
+
+    context = manifest.get("decision_context")
+    if isinstance(context, dict):
+        primary_transport = context.get("primary_transport")
+        if primary_transport == "graphql":
+            return "graphql_api_design"
+        if primary_transport == "rest":
+            return "rest_api_design"
+
+    errors.append(
+        "unable to infer API profile; include profile-specific checks or decision_context.primary_transport"
+    )
     return None
 
 
@@ -253,6 +272,9 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     errors: list[str] = []
 
     artifact_id = manifest.get("artifact_id")
+    if artifact_id is not None and (not isinstance(artifact_id, str) or not artifact_id.strip()):
+        errors.append("artifact_id must be a non-empty string when present")
+
     state = manifest.get("state")
     approvers = manifest.get("approvers")
     checks = manifest.get("checks")
@@ -261,18 +283,6 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     compatibility_matrix = manifest.get("compatibility_matrix")
     deprecation_plan = manifest.get("deprecation_plan")
     compliance_evidence = manifest.get("compliance_evidence")
-
-    if not isinstance(artifact_id, str):
-        errors.append("artifact_id must be a string")
-        return errors
-
-    prefix = artifact_prefix(artifact_id)
-    if prefix is None:
-        errors.append("artifact_id does not match any allowed ID schema")
-        return errors
-
-    if not isinstance(state, str) or state not in VALID_STATES[prefix]:
-        errors.append(f"state must be one of {sorted(VALID_STATES[prefix])}")
 
     if not isinstance(approvers, list) or not all(isinstance(item, str) for item in approvers):
         errors.append("approvers must be an array of strings")
@@ -287,16 +297,23 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         errors.append("checks must be an object")
         return errors
 
+    profile = infer_profile(manifest, checks, errors)
+    if profile is None:
+        return errors
+
+    if not isinstance(state, str) or state not in VALID_STATES_BY_PROFILE[profile]:
+        errors.append(f"state must be one of {sorted(VALID_STATES_BY_PROFILE[profile])}")
+
     for key in sorted(COMMON_REQUIRED_BOOL_KEYS):
         require_bool(checks, key, errors)
 
     for key in sorted(COMMON_TRUE_KEYS):
         require_bool_true(checks, key, errors)
 
-    for key in sorted(PREFIX_REQUIRED_BOOL_KEYS.get(prefix, set())):
+    for key in sorted(PROFILE_REQUIRED_BOOL_KEYS.get(profile, set())):
         require_bool(checks, key, errors)
 
-    for key in sorted(PREFIX_TRUE_KEYS.get(prefix, set())):
+    for key in sorted(PROFILE_TRUE_KEYS.get(profile, set())):
         require_bool_true(checks, key, errors)
 
     interaction_mode, primary_transport = validate_decision_context(decision_context, errors)
@@ -327,23 +344,23 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     if primary_transport == "queue":
         require_bool_true(checks, "consumer_idempotency_defined", errors)
 
-    if prefix == "API-RES" and primary_transport not in {None, "rest"}:
-        errors.append("API-RES artifacts must use decision_context.primary_transport=rest")
+    if profile == "rest_api_design" and primary_transport not in {None, "rest"}:
+        errors.append("REST design manifests must use decision_context.primary_transport=rest")
 
-    if prefix == "API-GQL" and primary_transport not in {None, "graphql"}:
-        errors.append("API-GQL artifacts must use decision_context.primary_transport=graphql")
+    if profile == "graphql_api_design" and primary_transport not in {None, "graphql"}:
+        errors.append("GraphQL design manifests must use decision_context.primary_transport=graphql")
 
-    if prefix in COMPATIBILITY_MATRIX_REQUIRED_PREFIXES:
+    if profile in COMPATIBILITY_MATRIX_REQUIRED_PROFILES:
         validate_compatibility_matrix(compatibility_matrix, errors)
 
-    if prefix == "API-VER":
+    if profile == "versioning_strategy":
         has_breaking_change = checks.get("has_breaking_change")
         if has_breaking_change is True:
             validate_deprecation_plan(deprecation_plan, errors)
 
-    if prefix == "API-CMP":
+    if profile == "compliance_evidence_package":
         if not isinstance(compliance_evidence, dict):
-            errors.append("compliance_evidence must be an object for API-CMP artifacts")
+            errors.append("compliance_evidence must be an object for compliance evidence manifests")
         else:
             require_non_empty_string_map(
                 compliance_evidence,

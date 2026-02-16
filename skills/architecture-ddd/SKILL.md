@@ -29,7 +29,7 @@ Create domain-aligned architecture boundaries with explicit ubiquitous language 
 ## Compliance & Governance Baseline (US, Japan, EU)
 - Model privacy-sensitive concepts explicitly in ubiquitous language.
 - Isolate regulated data concerns within bounded contexts.
-- Prepare an `ARC-CMP-*` evidence package for governance review.
+- Prepare a project-defined compliance evidence package ID (for example `ARC-CMP-*`) for governance review.
 
 ## Inputs
 - Domain events, processes, and terminology sources
@@ -51,7 +51,7 @@ Create domain-aligned architecture boundaries with explicit ubiquitous language 
 ## Quality Gates
 - Bounded contexts have clear ownership and purpose.
 - Aggregates enforce explicit invariants.
-- `ARC-CMP-*` evidence package is complete and approved.
+- project-defined compliance evidence package ID (for example `ARC-CMP-*`) is complete and approved.
 - Project-specific no-go checks and threshold choices are traceable to requirements, existing-system evidence, and stakeholder direction.
 - Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
 

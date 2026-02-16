@@ -14,12 +14,12 @@ description: Canonical requirement baseline design after evidence collection is 
 Define a testable requirement baseline aligned with business outcomes and decision history.
 
 ## Shared Requirements Contract (Canonical)
-- Use `references/requirements-governance-contract.md` as the single schema and gate source.
-- Track requirements workflow artifacts with `RQM-*` IDs.
-- Run machine validation: `python3 scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+- Use `references/requirements-governance-contract.md` as the primary reference for recommended structure.
+- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
+- Optional consistency check (only if your repository enforces manifest validation): `python3 scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
 - Reference valid samples:
-  - `references/samples/rqm-def-manifest.valid.json`
-  - `references/samples/rqm-cmp-manifest.valid.json`
+  - `assets/rqm-def-manifest.valid.json`
+  - `assets/rqm-cmp-manifest.valid.json`
 - Use field mapping guide:
   - `references/manifest-field-guide.md`
 
