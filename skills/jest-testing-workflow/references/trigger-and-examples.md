@@ -6,13 +6,13 @@
 - User needs explicit test-level decision with traceable rationale.
 
 ## Non-Matching Signals
-- 実ブラウザの導線検証（`playwright`）
-- Pythonテスト設計（`pytest-workflow`）
+- Real browser flow validation (`playwright`).
+- Python-focused test strategy work (`pytest-workflow`).
 
 ## Example Requests That Should Trigger This Skill
-- `Jestでモック境界を見直してテストを安定化したい`
-- `fake timers を使う async テストのフレークを潰したい`
-- `CI向けJest実行プロファイルを整理したい`
+- `Improve Jest mock boundaries and stabilize flaky tests.`
+- `Fix async test flakiness with fake timers and deterministic setup.`
+- `Tune Jest execution profile for CI reliability and speed.`
 
 ## Minimal Deliverable Example
 1. Decision question and constraints

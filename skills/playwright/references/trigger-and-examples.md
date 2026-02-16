@@ -6,13 +6,13 @@
 - User needs explicit test-level decision with traceable rationale.
 
 ## Non-Matching Signals
-- API契約のみの検証（`testing-contract`）
-- 関数単位のロジック検証（`testing-unit`）
+- API contract-only validation (`testing-contract`).
+- Function-level isolated logic validation (`testing-unit`).
 
 ## Example Requests That Should Trigger This Skill
-- `主要ユーザーフローをブラウザ実行で再現証跡付きで確認したい`
-- `DOM更新後の要素参照ミスを防いでE2Eを安定させたい`
-- `失敗時にtrace/screenshot付きで報告したい`
+- `Validate key user journeys in a real browser with reproducible evidence.`
+- `Stabilize E2E selectors after DOM updates.`
+- `Capture trace and screenshot artifacts for failed browser tests.`
 
 ## Minimal Deliverable Example
 1. Decision question and constraints

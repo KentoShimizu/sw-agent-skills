@@ -6,13 +6,13 @@
 - User needs explicit test-level decision with traceable rationale.
 
 ## Non-Matching Signals
-- JS/TSのJest運用（`jest-testing-workflow`）
-- ブラウザE2E導線の検証（`playwright`）
+- JS/TS Jest workflow design (`jest-testing-workflow`).
+- Browser E2E flow validation (`playwright`).
 
 ## Example Requests That Should Trigger This Skill
-- `fixture設計を整理してpytestを安定化したい`
-- `parametrizeで境界ケースを重複なく増やしたい`
-- `遅いpytest群の実行戦略を見直したい`
+- `Stabilize pytest fixtures and remove hidden coupling.`
+- `Use parametrize to expand edge cases without duplication.`
+- `Rework slow pytest execution strategy for CI.`
 
 ## Minimal Deliverable Example
 1. Decision question and constraints
