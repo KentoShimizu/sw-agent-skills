@@ -1,41 +1,48 @@
 ---
 name: redis-caching-patterns
-description: "Redis caching workflow for application performance. Trigger when application latency/throughput targets require caching decisions (cache-aside/write-through strategy, key schema, TTL, invalidation, consistency tradeoffs) using Redis; do not use for repository-wide architecture governance or release management policy."
+description: "Redis caching workflow for latency improvement with explicit key strategy, TTL/invalidation policy, and correctness bounds. Use when Redis-backed caching decisions are required for application performance; do not use for repository-wide architecture governance or release management policy."
 ---
 
 # Redis Caching Patterns
 
-## Trigger Boundary
-- Use when Redis is introduced or tuned for cache/session/queue-like workloads.
-- Do not use for primary relational schema design.
-- Do not use for in-memory caching that does not involve Redis.
+## Overview
+Use this skill to design cache behavior that improves performance without silently violating correctness expectations.
 
-## Goal
-Improve latency and throughput with explicit cache correctness and invalidation policy.
+## Shared References
+- Cache invalidation rules:
+  - `references/cache-invalidation-rules.md`
 
-## Inputs
-- Target read/write hotspots and latency objectives
-- Data freshness and consistency requirements
-- Eviction policy and memory constraints
+## Templates And Assets
+- Redis cache policy template:
+  - `assets/redis-cache-policy-template.md`
+- Cache observability checklist:
+  - `assets/cache-observability-checklist.md`
 
-## Outputs
-- Key namespace and TTL strategy
-- Cache invalidation and degradation behavior plan
-- Observability checklist for hit rate, memory, and evictions
+## Inputs To Gather
+- Read/write hotspots and latency objectives.
+- Freshness and consistency constraints.
+- Redis memory/eviction limits.
+- Failure/degradation expectations.
+
+## Deliverables
+- Key namespace and TTL/invalidation policy.
+- Stampede/hot-key mitigation plan.
+- Cache observability and operational guardrails.
 
 ## Workflow
-1. Identify cache candidates by read amplification and recomputation cost.
-2. Design key schema with clear namespace and versioning.
-3. Define TTL, invalidation triggers, and stale-read tolerance.
-4. Add protection against cache stampede and hot-key concentration.
-5. Monitor hit rate, latency, and eviction behavior to iterate policy.
+1. Define cache policy in `assets/redis-cache-policy-template.md`.
+2. Apply freshness/invalidation rules from `references/cache-invalidation-rules.md`.
+3. Validate stampede and hot-key behavior.
+4. Define failure behavior for cache misses/outages.
+5. Finalize with `assets/cache-observability-checklist.md`.
 
-## Quality Gates
-- Key naming and ownership are consistent across services.
-- Invalidation strategy matches freshness requirements.
-- Cache failures do not silently corrupt correctness expectations.
-- Metrics allow quick detection of cache regressions.
+## Quality Standard
+- Key strategy is consistent and ownership is explicit.
+- Invalidation policy matches correctness requirements.
+- Failure paths preserve system correctness.
+- Observability supports rapid cache regression diagnosis.
 
-## Failure Handling
-- Stop when invalidation policy cannot guarantee correctness bounds.
-- Escalate when cache behavior increases tail latency or error rates.
+## Failure Conditions
+- Stop when invalidation policy cannot satisfy correctness bounds.
+- Stop when cache behavior is unobservable in production.
+- Escalate when caching introduces tail-latency or error regressions.
