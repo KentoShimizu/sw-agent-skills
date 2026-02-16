@@ -1,41 +1,44 @@
 ---
 name: distributed-consensus
-description: Specialized workflow for consensus protocol guarantees, quorum rules, and failure handling. Trigger when correctness depends on multi-node agreement under failures or partitions (leader election, quorum writes, commit guarantees) and consensus properties must be explicit; do not use for single-process application implementation details.
+description: "Design consensus-related decisions (quorum, leader election, commit rules, failure handling) for replicated state correctness. Use when correctness requires coordinated agreement across nodes under faults; do not use for non-replicated single-node workflows."
 ---
 
 # Distributed Consensus
 
-## Trigger Boundary
-- Use when parallel execution, coordination, or distributed failure semantics are central.
-- Do not use for UX interaction design concerns; use design-related skills.
-- Do not use for single-query database tuning only; use `db-query-optimization`.
+## Overview
+Use this skill when system correctness depends on nodes agreeing on state transitions under crashes and partitions.
 
-## Goal
-Ensure correctness and resilience under concurrency and partial failures.
+## Inputs To Gather
+- Replicated state machine requirements.
+- Fault model (crash, partition, byzantine assumptions).
+- Latency/availability targets and quorum constraints.
+- Membership change and recovery expectations.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for consensus protocol guarantees, quorum rules, and failure handling
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Consensus policy decisions (quorum, election, commit semantics).
+- Safety/liveness assumptions and risks.
+- Operational policy for split-brain and degraded mode.
+- Validation plan for failover and rejoin scenarios.
 
-## Outputs
-- Consensus design and fault model document
-- Decision log for consensus protocol guarantees, quorum rules, and failure handling
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- 5-node cluster with quorum = 3.
+- Rule: writes require quorum acknowledgment before commit.
+- Partition handling: minority side serves reads only (or no service) to prevent split-brain writes.
+
+## Quality Standard
+- Safety invariants are explicit (no divergent committed state).
+- Liveness tradeoffs are acknowledged under partition conditions.
+- Membership changes preserve quorum guarantees.
+- Recovery/rejoin behavior is deterministic and tested.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for consensus protocol guarantees, quorum rules, and failure handling.
-2. Produce options and select an approach for consensus protocol guarantees, quorum rules, and failure handling.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using partition and leader-failure simulation.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define safety invariants and availability targets.
+2. Select quorum and leadership policy.
+3. Define partition and recovery behavior.
+4. Define membership change strategy.
+5. Validate with failure simulation and state convergence checks.
 
-## Quality Gates
-- Scope and assumptions for consensus protocol guarantees, quorum rules, and failure handling are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when consensus safety or liveness guarantees are unverified.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when quorum or commit semantics are undefined.
+- Stop when partition behavior can cause split-brain writes.
+- Escalate when membership change procedure risks safety violation.

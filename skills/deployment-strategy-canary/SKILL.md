@@ -1,41 +1,44 @@
 ---
 name: deployment-strategy-canary
-description: Specialized workflow for canary rollout guardrails and progressive risk containment. Trigger when rollout risk must be controlled through staged exposure, metric-based promotion gates, and abort criteria before full traffic rollout; do not use for application-domain algorithm or schema decisions.
+description: "Design canary rollout strategy with progressive traffic steps, guardrail metrics, and automated stop/rollback decisions. Use when releases need incremental risk containment and evidence-based promotion gates; do not use for full-environment cutover planning where blue-green is required."
 ---
 
 # Deployment Strategy Canary
 
-## Trigger Boundary
-- Use when release safety, deployment sequencing, or rollback controls are required.
-- Do not use for business-priority ranking of requirements; use `requirement-prioritization`.
-- Do not use for runtime incident retrospectives; use `incident-postmortem`.
+## Overview
+Use this skill to release changes gradually while measuring real-user impact before broad rollout.
 
-## Goal
-Deliver changes safely with repeatable, auditable release mechanics.
+## Inputs To Gather
+- Critical SLOs and business guardrail metrics.
+- Traffic segmentation options (region, tenant, cohort).
+- Maximum acceptable degradation and rollback thresholds.
+- Release window and incident response readiness.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for canary rollout guardrails and progressive risk containment
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Canary progression plan (percentage/time/gates).
+- Guardrail matrix and promotion rules.
+- Automatic stop/rollback policy.
+- Post-promotion verification and observation window plan.
 
-## Outputs
-- Canary rollout plan with promotion criteria
-- Decision log for canary rollout guardrails and progressive risk containment
-- Verification checklist with measurable pass-fail criteria
+## Quick Progression Example
+- Steps: 1% -> 5% -> 20% -> 50% -> 100%.
+- Hold at each step for fixed minimum time and metric stability checks.
+- Auto-rollback if error rate rises > threshold or SLO drops below floor.
+
+## Quality Standard
+- Promotion gates are objective and pre-registered.
+- Guardrails include technical and business impact signals.
+- Rollback automation/authority is clearly defined.
+- Segment choice avoids exposing highest-risk cohorts first.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for canary rollout guardrails and progressive risk containment.
-2. Produce options and select an approach for canary rollout guardrails and progressive risk containment.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using canary metric and abort-threshold validation.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define canary audience and progression steps.
+2. Set promotion and rollback criteria for each step.
+3. Deploy canary and monitor guardrails in real time.
+4. Promote only when criteria pass; otherwise stop/rollback.
+5. Complete rollout and run post-release verification.
 
-## Quality Gates
-- Scope and assumptions for canary rollout guardrails and progressive risk containment are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when canary promotion criteria or abort rules are undefined.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when promotion criteria are ambiguous or non-measurable.
+- Stop when telemetry cannot detect regressions quickly.
+- Escalate when rollback path is manual-only for high-criticality services.

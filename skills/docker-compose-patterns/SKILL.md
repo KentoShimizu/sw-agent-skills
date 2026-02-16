@@ -1,41 +1,44 @@
 ---
 name: docker-compose-patterns
-description: Specialized workflow for multi-service local orchestration and dependency wiring. Trigger when local integration requires coordinating multiple services (startup order, health dependencies, shared networks/volumes, environment wiring) via Docker Compose; do not use for API contract design or requirement prioritization.
+description: "Design multi-service local orchestration with Docker Compose, including dependency wiring, startup order, health checks, and shared network/storage boundaries. Use when local integration environments need deterministic service composition; do not use for production orchestration policy design."
 ---
 
 # Docker Compose Patterns
 
-## Trigger Boundary
-- Use when runtime packaging, orchestration, or infrastructure controls must be defined.
-- Do not use for product requirement decomposition; use `requirements-*` or `user-story-writing`.
-- Do not use for post-incident review output; use `incident-postmortem`.
+## Overview
+Use this skill to define reliable multi-service local stacks for development, debugging, and integration testing.
 
-## Goal
-Establish reproducible, secure, and operable runtime platforms.
+## Inputs To Gather
+- Services and dependencies required for target workflows.
+- Required startup order and readiness conditions.
+- Shared volumes/networks and data persistence needs.
+- Local resource constraints and isolation requirements.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for multi-service local orchestration and dependency wiring
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Compose service topology with explicit dependency rules.
+- Health-check strategy and startup stabilization policy.
+- Environment and secret handling policy for local use.
+- Developer runbook for common stack operations.
 
-## Outputs
-- Compose topology specification
-- Decision log for multi-service local orchestration and dependency wiring
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- API depends on DB and cache with health-check gating.
+- Use named network; avoid host network unless required.
+- Use profiles to separate optional services (e.g., observability tools).
+
+## Quality Standard
+- Dependency behavior is deterministic and health-driven.
+- Service contracts (ports, env, volumes) are explicit.
+- Local stack startup/shutdown is repeatable.
+- Secret handling avoids committing sensitive defaults.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for multi-service local orchestration and dependency wiring.
-2. Produce options and select an approach for multi-service local orchestration and dependency wiring.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using orchestration startup-order and healthcheck validation.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Map required services and dependency graph.
+2. Define compose services, networks, volumes, and env boundaries.
+3. Add health checks and readiness-aware dependency rules.
+4. Validate full stack startup and critical workflows.
+5. Document operational commands and troubleshooting notes.
 
-## Quality Gates
-- Scope and assumptions for multi-service local orchestration and dependency wiring are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when service dependencies are not consistently reproducible.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when service dependencies are implicit or race-prone.
+- Stop when local stack requires unsafe credential handling.
+- Escalate when resource contention prevents reliable local execution.

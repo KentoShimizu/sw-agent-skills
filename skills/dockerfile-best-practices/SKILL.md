@@ -1,41 +1,45 @@
 ---
 name: dockerfile-best-practices
-description: Specialized workflow for image build efficiency, security posture, and deterministic builds. Trigger when Dockerfiles are created or modified and image size, build speed, supply-chain security, and reproducibility need deliberate optimization decisions; do not use for API contract design or requirement prioritization.
+description: "Design Dockerfiles for secure, deterministic, and efficient image builds with minimal attack surface and reproducible dependencies. Use when image build behavior, layer strategy, and runtime hardening need explicit decisions; do not use for non-container runtime code style concerns."
 ---
 
 # Dockerfile Best Practices
 
-## Trigger Boundary
-- Use when runtime packaging, orchestration, or infrastructure controls must be defined.
-- Do not use for product requirement decomposition; use `requirements-*` or `user-story-writing`.
-- Do not use for post-incident review output; use `incident-postmortem`.
+## Overview
+Use this skill to create images that build reliably, run securely, and minimize size/startup overhead.
 
-## Goal
-Establish reproducible, secure, and operable runtime platforms.
+## Inputs To Gather
+- Runtime requirements and base image constraints.
+- Dependency installation and caching strategy.
+- Security/compliance requirements for runtime image.
+- Build reproducibility and provenance requirements.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for image build efficiency, security posture, and deterministic builds
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Hardened Dockerfile with rationale for key choices.
+- Build-cache strategy and layer ordering notes.
+- Runtime hardening checklist (user, filesystem, capabilities).
+- Image verification steps (size, vulnerabilities, startup behavior).
 
-## Outputs
-- Hardened Dockerfile review checklist
-- Decision log for image build efficiency, security posture, and deterministic builds
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- Multi-stage build: compile in builder, copy only runtime artifacts.
+- Pin dependency versions and base image digest when policy requires.
+- Use non-root user in final stage.
+- Keep only required runtime packages in final image.
+
+## Quality Standard
+- Build is deterministic enough for release confidence.
+- Final image includes minimal required artifacts only.
+- Runtime privileges and writable paths are minimized.
+- Secrets are not baked into image layers.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for image build efficiency, security posture, and deterministic builds.
-2. Produce options and select an approach for image build efficiency, security posture, and deterministic builds.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using image layer and vulnerability scan evidence.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Select base image aligned to runtime and policy.
+2. Design multi-stage build and layer ordering for cache efficiency.
+3. Apply runtime hardening in final stage.
+4. Validate build reproducibility and image behavior.
+5. Verify security and size/performance constraints.
 
-## Quality Gates
-- Scope and assumptions for image build efficiency, security posture, and deterministic builds are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when image includes avoidable risk or non-deterministic build inputs.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when image requires unnecessary root privileges.
+- Stop when build embeds secrets or unstable dependency sources.
+- Escalate when vulnerability posture exceeds accepted threshold.

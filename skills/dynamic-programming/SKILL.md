@@ -1,41 +1,45 @@
 ---
 name: dynamic-programming
-description: Specialized workflow for state definition, transition design, and memoization strategy. Trigger when a problem has overlapping subproblems and optimal-substructure characteristics and needs dynamic-programming modeling to hit correctness and performance targets; do not use for persistence schema design or deployment topology choices.
+description: "Design dynamic programming solutions by defining state, transitions, base cases, and optimization strategy (memoization/tabulation). Use when optimal substructure and overlapping subproblems make brute-force or greedy approaches insufficient; do not use for persistence schema or deployment topology decisions."
 ---
 
 # Dynamic Programming
 
-## Trigger Boundary
-- Use when algorithmic correctness or complexity drives implementation risk.
-- Do not use for persistence-schema decisions; use `db-*`.
-- Do not use for runtime deployment topology; use `deployment-*` or `kubernetes-*`.
+## Overview
+Use this skill to design correct and efficient DP solutions with explicit state modeling and complexity reasoning.
 
-## Goal
-Deliver correct and efficient computational designs with clear tradeoffs.
+## Inputs To Gather
+- Problem objective and correctness constraints.
+- State variables needed to represent subproblems.
+- Transition rules and dependency ordering.
+- Input size limits and memory constraints.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for state definition, transition design, and memoization strategy
-- Operational, compliance, and rollout constraints
+## Deliverables
+- DP formulation (state, transition, base cases).
+- Complexity analysis (time/space) and optimization options.
+- Chosen implementation strategy (top-down/bottom-up).
+- Edge-case and correctness verification plan.
 
-## Outputs
-- DP state-transition specification
-- Decision log for state definition, transition design, and memoization strategy
-- Verification checklist with measurable pass-fail criteria
+## Quick Example
+- Problem: minimum cost path.
+- State: `dp[i][j]` = min cost to reach cell `(i,j)`.
+- Transition: `dp[i][j] = cost[i][j] + min(dp[i-1][j], dp[i][j-1])`.
+- Base: first row/column initialization.
+
+## Quality Standard
+- State definition is complete and non-redundant.
+- Transition uses only valid predecessor states.
+- Base cases cover minimal subproblems correctly.
+- Complexity fits constraints or includes optimization plan.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for state definition, transition design, and memoization strategy.
-2. Produce options and select an approach for state definition, transition design, and memoization strategy.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using state coverage and recurrence correctness checks.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define subproblem state and objective function.
+2. Derive transitions and base cases.
+3. Choose memoization or tabulation strategy.
+4. Optimize memory if full table is unnecessary.
+5. Validate against edge cases and known examples.
 
-## Quality Gates
-- Scope and assumptions for state definition, transition design, and memoization strategy are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when state transitions are incomplete or violate recurrence assumptions.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when state does not capture required decision context.
+- Stop when transition introduces cyclic/invalid dependencies.
+- Escalate when complexity exceeds target constraints without viable optimization.

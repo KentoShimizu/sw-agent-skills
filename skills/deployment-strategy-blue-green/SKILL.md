@@ -1,41 +1,46 @@
 ---
 name: deployment-strategy-blue-green
-description: Specialized workflow for blue-green cutover safety and fast rollback readiness. Trigger when releases require near-zero-downtime environment switching with explicit cutover checks, rollback criteria, and traffic flip procedures; do not use for application-domain algorithm or schema decisions.
+description: "Design blue-green deployment strategy with explicit cutover checks, rollback triggers, and state/data compatibility safeguards. Use when release risk requires fast rollback and environment-level switch control; do not use for canary-percentage experimentation policy design."
 ---
 
 # Deployment Strategy Blue Green
 
-## Trigger Boundary
-- Use when release safety, deployment sequencing, or rollback controls are required.
-- Do not use for business-priority ranking of requirements; use `requirement-prioritization`.
-- Do not use for runtime incident retrospectives; use `incident-postmortem`.
+## Overview
+Use this skill to design low-risk cutovers between two production environments with clear rollback paths.
 
-## Goal
-Deliver changes safely with repeatable, auditable release mechanics.
+## Inputs To Gather
+- Service criticality and acceptable deployment interruption.
+- Data/schema compatibility constraints between old/new versions.
+- Traffic switching mechanism (LB, DNS, gateway, mesh).
+- Health/SLO guardrails and rollback authority.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for blue-green cutover safety and fast rollback readiness
-- Operational, compliance, and rollout constraints
+## Deliverables
+- Blue-green rollout and cutover plan.
+- Readiness checklist for green environment.
+- Rollback trigger matrix and execution runbook.
+- Post-cutover verification checklist.
 
-## Outputs
-- Blue-green deployment runbook
-- Decision log for blue-green cutover safety and fast rollback readiness
-- Verification checklist with measurable pass-fail criteria
+## Quick Cutover Example
+1. Deploy to green and run smoke + synthetic checks.
+2. Mirror a small read-only validation traffic slice.
+3. Switch 100% traffic at cutover window.
+4. Rollback immediately if p95/error guardrails breach for N minutes.
+
+## Quality Standard
+- Green environment parity is validated before switch.
+- Cutover decision uses explicit health/SLO criteria.
+- Rollback path is operationally tested and time-bounded.
+- Stateful compatibility risks are mitigated in advance.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for blue-green cutover safety and fast rollback readiness.
-2. Produce options and select an approach for blue-green cutover safety and fast rollback readiness.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using switch-over rehearsal with rollback timing evidence.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define cutover/rollback criteria and owners.
+2. Validate environment parity and dependencies.
+3. Execute pre-cutover verification in green.
+4. Perform controlled traffic switch.
+5. Monitor guardrails and either stabilize or rollback.
+6. Decommission blue only after stabilization window.
 
-## Quality Gates
-- Scope and assumptions for blue-green cutover safety and fast rollback readiness are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when cutover cannot be reversed within operational limits.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when rollback cannot be executed within required recovery time.
+- Stop when data/schema compatibility between blue/green is unresolved.
+- Escalate when guardrails are missing for critical user paths.
