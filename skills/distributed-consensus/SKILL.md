@@ -1,12 +1,25 @@
 ---
 name: distributed-consensus
-description: "Design consensus-related decisions (quorum, leader election, commit rules, failure handling) for replicated state correctness. Use when correctness requires coordinated agreement across nodes under faults; do not use for non-replicated single-node workflows."
+description: "Consensus workflow for quorum, leader election, commit semantics, and membership change safety. Use when replicated-state correctness requires coordinated agreement across nodes under faults; do not use for non-replicated single-node workflows."
 ---
 
 # Distributed Consensus
 
 ## Overview
-Use this skill when system correctness depends on nodes agreeing on state transitions under crashes and partitions.
+Use this skill when system correctness depends on multiple nodes agreeing on state transitions under crash and partition conditions.
+
+## Use This Skill When
+- Replicated writes require explicit safety/liveness guarantees.
+- Quorum and leadership behavior determine correctness.
+- Membership changes and failover policy must be defined safely.
+
+## Shared References
+- Consensus policy rules:
+  - `references/consensus-policy-rules.md`
+
+## Templates And Assets
+- Consensus policy template:
+  - `assets/consensus-policy-template.md`
 
 ## Inputs To Gather
 - Replicated state machine requirements.
@@ -20,23 +33,19 @@ Use this skill when system correctness depends on nodes agreeing on state transi
 - Operational policy for split-brain and degraded mode.
 - Validation plan for failover and rejoin scenarios.
 
-## Quick Example
-- 5-node cluster with quorum = 3.
-- Rule: writes require quorum acknowledgment before commit.
-- Partition handling: minority side serves reads only (or no service) to prevent split-brain writes.
+## Workflow
+1. Capture policy baseline in `assets/consensus-policy-template.md`.
+2. Define safety invariants and availability targets.
+3. Select quorum, leadership, and commit rules using `references/consensus-policy-rules.md`.
+4. Define partition, degraded-mode, and recovery behavior.
+5. Define membership change strategy and validation sequence.
+6. Validate with failure simulation and state convergence checks.
 
 ## Quality Standard
 - Safety invariants are explicit (no divergent committed state).
 - Liveness tradeoffs are acknowledged under partition conditions.
 - Membership changes preserve quorum guarantees.
 - Recovery/rejoin behavior is deterministic and tested.
-
-## Workflow
-1. Define safety invariants and availability targets.
-2. Select quorum and leadership policy.
-3. Define partition and recovery behavior.
-4. Define membership change strategy.
-5. Validate with failure simulation and state convergence checks.
 
 ## Failure Conditions
 - Stop when quorum or commit semantics are undefined.
