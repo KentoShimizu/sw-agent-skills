@@ -1,46 +1,45 @@
 ---
 name: risk-requirements-analysis
-description: "Requirement-level risk analysis before implementation commitment. Trigger when approved requirements need explicit risk assessment (failure modes, impact/probability, mitigation and contingency) before delivery commitment; do not use for initial requirement elicitation or sprint task breakdown."
+description: "Requirement risk analysis workflow for failure scenarios, scoring, and mitigation before implementation commitment. Use when approved requirements need explicit risk assessment; do not use for initial requirement elicitation or sprint task breakdown."
 ---
 
 # Risk Requirements Analysis
 
-## Trigger Boundary
-- Use when `REQ-*` baseline exists and commitment risk must be evaluated.
-- Do not use for initial requirement discovery; use `requirement-elicitation`.
-- Do not use as the sole prioritization method; integrate with `requirement-prioritization`.
+## Overview
+Use this skill to make requirement-level risk visible before release commitments are locked.
 
-## Goal
-Quantify requirement risk and define controls before release commitments.
+## Shared References
+- Requirement risk scoring rules:
+  - `references/requirement-risk-scoring-rules.md`
 
-## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
-- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- Requirement risk register template:
+  - `assets/requirement-risk-register-template.csv`
 
-## Inputs
-- Approved `REQ-*` and `NFR-*`
-- Dependency map and delivery timeline
-- Incident history and known failure modes
+## Inputs To Gather
+- Approved requirement baseline and dependencies.
+- Incident history and known failure modes.
+- Delivery timeline and operational constraints.
+- Compliance/security criticality context.
 
-## Outputs
-- `RSK-*` register linked to `REQ-*`
-- Preventive controls, detection signals, and contingencies
-- Residual-risk summary for decision makers
+## Deliverables
+- `RSK-*` register linked to `REQ-*`.
+- Mitigation and contingency ownership map.
+- Residual risk summary for decision makers.
 
 ## Workflow
-1. Enumerate failure scenarios by requirement and dependency.
-2. Score impact, likelihood, and detectability for each scenario.
-3. Create `RSK-*` entries and link to affected `REQ-*` IDs.
-4. Define mitigation owner and contingency owner per risk.
-5. Escalate release-blocking risks with decision deadlines.
+1. Identify failure modes per requirement.
+2. Score risks using `references/requirement-risk-scoring-rules.md`.
+3. Record risks in `assets/requirement-risk-register-template.csv`.
+4. Assign mitigation and contingency owners with dates.
+5. Publish residual-risk decision package.
 
-## Quality Gates
-- Critical `REQ-*` items have explicit risk entries.
-- High severity risks have mitigation and contingency ownership.
-- Residual risk is visible before release commitment.
-- Compliance-related risks are not downgraded without legal sign-off.
+## Quality Standard
+- High-risk requirements have explicit risk entries.
+- High-severity risks have mitigation and contingency plans.
+- Risk acceptance authority is explicit.
 
-## Failure Handling
-- Stop when critical risks have no owner or no decision date.
-- Stop when compliance risks are accepted without explicit authority.
+## Failure Conditions
+- Stop when critical risks have no owner or decision date.
+- Stop when compliance risks are accepted without authority.
+- Escalate when residual risk exceeds commitment policy.

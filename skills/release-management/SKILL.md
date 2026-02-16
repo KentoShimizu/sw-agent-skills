@@ -1,41 +1,47 @@
 ---
 name: release-management
-description: Specialized workflow for release readiness coordination and risk sign-off governance. Trigger when a release decision needs explicit go/no-go criteria, cross-team readiness checks, rollback preparedness, and formal risk sign-off; do not use for application-domain algorithm or schema decisions.
+description: "Release management workflow for go/no-go governance, readiness evidence, and rollback preparedness. Use when release decisions require explicit criteria and cross-team sign-off; do not use for application-domain algorithm or schema decisions."
 ---
 
 # Release Management
 
-## Trigger Boundary
-- Use when release safety, deployment sequencing, or rollback controls are required.
-- Do not use for business-priority ranking of requirements; use `requirement-prioritization`.
-- Do not use for runtime incident retrospectives; use `incident-postmortem`.
+## Overview
+Use this skill to run release decisions with auditable evidence and explicit risk ownership.
 
-## Goal
-Deliver changes safely with repeatable, auditable release mechanics.
+## Shared References
+- Release signoff rules:
+  - `references/release-signoff-rules.md`
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for release readiness coordination and risk sign-off governance
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Release readiness checklist:
+  - `assets/release-readiness-checklist-template.md`
+- Go/no-go decision log:
+  - `assets/go-no-go-decision-log-template.md`
 
-## Outputs
-- Release readiness checklist and decision record
-- Decision log for release readiness coordination and risk sign-off governance
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Release scope and risk profile.
+- Quality, security, and operational readiness evidence.
+- Rollout and rollback execution readiness.
+- Required approvers and escalation policy.
+
+## Deliverables
+- Readiness checklist with evidence status.
+- Go/no-go decision record with conditions.
+- Residual-risk log and follow-up owners.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for release readiness coordination and risk sign-off governance.
-2. Produce options and select an approach for release readiness coordination and risk sign-off governance.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using go/no-go review with cross-team evidence.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Assemble readiness evidence with `assets/release-readiness-checklist-template.md`.
+2. Evaluate go/no-go under `references/release-signoff-rules.md`.
+3. Record decision in `assets/go-no-go-decision-log-template.md`.
+4. Confirm rollout/rollback owner readiness.
+5. Publish decision and unresolved risk actions.
 
-## Quality Gates
-- Scope and assumptions for release readiness coordination and risk sign-off governance are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Go/no-go criteria are explicit and met.
+- Decision authority and ownership are auditable.
+- Rollback readiness is verified before release.
 
-## Failure Handling
-- Stop when release decision lacks required evidence or ownership sign-off.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when blocker evidence is missing.
+- Stop when rollback readiness is unverified.
+- Escalate when residual risk exceeds release policy.

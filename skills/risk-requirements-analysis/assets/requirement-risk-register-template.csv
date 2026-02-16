@@ -1,0 +1,2 @@
+risk_id,req_id,failure_mode,impact,likelihood,detectability,mitigation_owner,contingency_owner,status
+RSK-001,REQ-001,incorrect role access control,high,medium,medium,security-team,platform-team,open

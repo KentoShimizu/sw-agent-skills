@@ -1,46 +1,46 @@
 ---
 name: requirement-elicitation
-description: Evidence gathering workflow before requirement writing. Trigger when requirement inputs are incomplete and teams must collect, reconcile, and structure evidence from stakeholders, artifacts, and constraints before drafting formal requirements; do not use for formal baseline synthesis, which belongs to requirements-definition.
+description: "Requirement elicitation workflow for collecting, reconciling, and structuring evidence before requirement baseline writing. Use when requirement inputs are incomplete and teams need high-confidence evidence gathering; do not use for final canonical requirement synthesis."
 ---
 
 # Requirement Elicitation
 
-## Trigger Boundary
-- Use when requirements are not yet explicit and evidence must be gathered.
-- Do not use to finalize canonical requirement wording; use `requirements-definition`.
-- Do not use to rank release scope; use `requirement-prioritization`.
+## Overview
+Use this skill to collect requirement evidence with traceability, confidence, and contradiction visibility.
 
-## Goal
-Collect high-confidence requirement inputs with provenance and conflict visibility.
+## Shared References
+- Evidence strength rules:
+  - `references/evidence-strength-rules.md`
 
-## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the primary reference for recommended structure.
-- Track requirements workflow artifacts with project-defined IDs (for example `RQM-*`).
-- Optional consistency check (only if your repository enforces manifest validation): `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- Evidence intake template:
+  - `assets/evidence-intake-template.csv`
+- Clarification question log:
+  - `assets/clarification-question-log-template.md`
 
-## Inputs
-- Stakeholder list and decision map
-- Existing docs, tickets, incident records, and analytics
-- Initial hypotheses and known constraint areas
+## Inputs To Gather
+- Stakeholder map and decision owners.
+- Existing docs/tickets/incidents/analytics.
+- Known unknowns and contested assumptions.
 
-## Outputs
-- Requirement candidates with confidence and source IDs
-- Conflict list and dependency findings
-- Prioritized clarification questions
+## Deliverables
+- Structured evidence set with confidence scores.
+- Clarification question backlog with owners.
+- Requirement candidate seeds for baseline synthesis.
 
 ## Workflow
-1. Define evidence targets by uncertainty and business impact.
-2. Gather signals from interviews, documents, and system artifacts.
-3. Register findings with `INT-*`, `UR-*`, or `EVD-*` IDs.
-4. Classify findings as requirement, constraint, assumption, or unknown.
-5. Deduplicate terms and normalize vocabulary before handoff.
+1. Capture evidence in `assets/evidence-intake-template.csv`.
+2. Apply confidence/contradiction rules from `references/evidence-strength-rules.md`.
+3. Separate evidence, assumptions, and unknowns.
+4. Track unresolved questions in `assets/clarification-question-log-template.md`.
+5. Publish elicitation package for requirements-definition.
 
-## Quality Gates
-- Every candidate has an auditable source ID.
-- Contradictions are documented, not merged silently.
-- Unknowns are prioritized by delivery risk.
-- Personal data handling controls are defined before circulation.
+## Quality Standard
+- Evidence has source traceability and confidence labels.
+- Contradictions are explicit and unresolved items are owned.
+- Inputs are sufficient for canonical baseline synthesis.
 
-## Failure Handling
-- Re-run collection when findings rely on single weak sources.
-- Stop when lawful basis or retention policy is undefined for collected data.
+## Failure Conditions
+- Stop when evidence depends on weak single-source claims.
+- Stop when critical unknowns have no owner/due date.
+- Escalate when legal/privacy constraints are unclear.
