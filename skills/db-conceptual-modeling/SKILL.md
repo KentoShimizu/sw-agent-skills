@@ -1,44 +1,43 @@
 ---
 name: db-conceptual-modeling
-description: "Model domain entities, relationships, and bounded data responsibilities before logical table design. Use when business concepts, ownership boundaries, or relationship semantics are unclear and must be defined to avoid schema drift; do not use for index tuning or physical storage optimization."
+description: "Conceptual data modeling workflow for domain entities, relationships, and lifecycle boundaries. Use when teams must align on domain meaning before logical/physical schema decisions; do not use for index-only or migration-only tasks."
 ---
 
 # DB Conceptual Modeling
 
 ## Overview
-Use this skill to build a domain-aligned conceptual model that stabilizes later logical and physical design decisions.
+Use this skill to model domain meaning first, so later schema decisions reflect business semantics rather than accidental implementation details.
 
-## Inputs To Gather
-- Core business concepts and terminology.
-- Ownership boundaries across teams/domains.
-- Critical workflows and invariants.
-- Reporting/analytics requirements that influence relationship shape.
+## Use This Skill When
+- Teams disagree on entity meaning or relationship semantics.
+- A new domain area is being introduced.
+- Existing schema complexity suggests conceptual drift.
 
-## Deliverables
-- Entity relationship concept map.
-- Definition of ownership and source-of-truth per concept.
-- Invariant list requiring transactional consistency.
-- Open ambiguity list that blocks logical design.
+## Core Judgments
+- Entity versus value concept boundaries.
+- Cardinality and ownership semantics of relationships.
+- Lifecycle states and temporal meaning.
+- Bounded-context boundaries and shared concepts.
 
-## Quick Example
-- Concept split: `Order` vs `Payment`.
-- Decision: `Order` owns fulfillment lifecycle; `Payment` owns authorization/capture/refund lifecycle.
-- Integration: explicit reference by immutable IDs, not shared mutable fields.
-
-## Quality Standard
-- Entities reflect business language, not implementation artifacts.
-- Ownership boundaries are explicit and non-overlapping.
-- Relationship cardinality and optionality are defined.
-- Invariants are identified before table-level design.
+## Practitioner Heuristics
+- Model business invariants explicitly before table design.
+- Use language from domain experts, not only engineering jargon.
+- Treat temporal facts (history, validity windows) as first-class concepts.
+- Avoid polymorphic catch-all concepts that hide domain distinctions.
 
 ## Workflow
-1. Normalize terminology with domain stakeholders.
-2. Define entities, relationships, and ownership boundaries.
-3. Identify invariants and consistency-sensitive flows.
-4. Validate conceptual model against major use cases.
-5. Publish model and unresolved domain questions.
+1. Identify core concepts, actors, and business events.
+2. Define entity relationships with ownership and lifecycle semantics.
+3. Capture key invariants and conflict rules.
+4. Resolve term collisions across bounded contexts.
+5. Document conceptual assumptions that drive downstream logical design.
+
+## Common Failure Modes
+- Conceptual model mirrors current tables instead of domain reality.
+- Relationship ownership is left implicit, causing write conflicts later.
+- State transitions are not modeled, forcing ad hoc status flags.
 
 ## Failure Conditions
-- Stop when core terms have conflicting meanings.
-- Stop when ownership boundaries remain ambiguous.
-- Escalate when invariants conflict across domains without arbitration.
+- Stop when core terms remain ambiguous across stakeholders.
+- Stop when invariants cannot be expressed at conceptual level.
+- Escalate when bounded context boundaries are politically unresolved.

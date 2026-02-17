@@ -1,47 +1,44 @@
 ---
 name: db-migration-strategy
-description: "Plan safe schema and data migrations with rollout sequencing, backfill controls, and rollback viability. Use when database changes must ship without service disruption across versions; do not use for first-pass conceptual schema modeling."
+description: "Schema migration strategy workflow for sequencing changes, compatibility windows, and rollback-safe rollout in live systems. Use when schema evolution impacts running services; do not use for static greenfield schemas without deployment constraints."
 ---
 
 # DB Migration Strategy
 
 ## Overview
-Use this skill to design migration sequences that remain safe under rolling deployments and partial-version coexistence.
+Use this skill to evolve schemas in production without service disruption or hidden data corruption.
 
-## Inputs To Gather
-- Current and target schema versions.
-- Application rollout model (rolling, blue/green, canary).
-- Data volume and backfill cost.
-- Downtime tolerance and rollback constraints.
+## Use This Skill When
+- Schema changes affect live read/write paths.
+- Multiple service versions must coexist during rollout.
+- Data backfill or contract transition is required.
 
-## Deliverables
-- Migration sequence (expand -> migrate/backfill -> contract).
-- Compatibility matrix by app version and schema state.
-- Backfill execution/monitoring plan.
-- Rollback strategy and decision triggers.
+## Core Judgments
+- Migration pattern: expand-contract, dual-write, shadow-read, or phased cutover.
+- Compatibility window duration and supported versions.
+- Backfill approach and execution safety.
+- Rollback semantics and data reconciliation strategy.
 
-## Quick Example
-- Add non-null column:
-  1. Add nullable column with default handling in code.
-  2. Deploy app that writes both old/new fields.
-  3. Backfill historical rows in batches.
-  4. Enforce non-null constraint.
-  5. Remove old field usage after full cutover.
-
-## Quality Standard
-- Sequence avoids breaking running old/new versions.
-- Backfill is throttled, observable, and resumable.
-- Contract phase occurs only after compatibility is proven.
-- Rollback path is tested for each irreversible step.
+## Practitioner Heuristics
+- Prefer additive/compatible changes before destructive cleanup.
+- Separate schema deployment from application behavior switch.
+- Dual-write without reconciliation plan is a corruption risk.
+- Large backfills need throttling and progress observability tied to business impact.
 
 ## Workflow
-1. Classify migration risk and compatibility constraints.
-2. Design phased sequence with explicit guardrails.
-3. Define backfill strategy (batch size, throttling, retries).
-4. Validate sequence in staging with production-like scale.
-5. Execute progressively with rollback checkpoints.
+1. Define change classes: additive, transitional, destructive.
+2. Sequence schema and application releases for compatibility.
+3. Plan data migration/backfill and failure handling.
+4. Define cutover trigger and rollback decision points.
+5. Execute deprecation/removal only after compatibility window closes.
+6. Document residual migration debt and retirement deadlines.
+
+## Common Failure Modes
+- Breaking changes shipped before all consumers are updated.
+- Backfill jobs compete with production traffic and cause incidents.
+- Rollback plan restores code but not data semantics.
 
 ## Failure Conditions
-- Stop when migration step is not backward/forward compatible as required.
-- Stop when rollback path is undefined for high-risk phase.
-- Escalate when backfill duration threatens release windows or SLOs.
+- Stop when compatibility window cannot be supported operationally.
+- Stop when rollback semantics for migrated data are undefined.
+- Escalate when migration risk exceeds release risk tolerance.

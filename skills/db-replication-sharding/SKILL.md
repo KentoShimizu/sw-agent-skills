@@ -1,46 +1,44 @@
 ---
 name: db-replication-sharding
-description: "Design replication topology and sharding strategy with explicit consistency, failover, and rebalancing policies. Use when scale, availability, or geo-distribution requires multi-node data architecture decisions; do not use for single-instance query micro-optimization."
+description: "Replication and sharding workflow for scaling read/write throughput while managing consistency, failover, and data distribution risk. Use when single-node limits are reached or resilience requires topology changes; do not use for local query tuning only."
 ---
 
 # DB Replication Sharding
 
 ## Overview
-Use this skill to choose replication and sharding patterns that scale safely without hidden consistency failures.
+Use this skill to design data topology that scales safely without hiding consistency and operability costs.
 
-## Inputs To Gather
-- Availability and latency targets by region/tenant.
-- Read/write distribution and growth trajectory.
-- Consistency requirements (strong/eventual/per-operation).
-- Failover and operational maturity constraints.
+## Use This Skill When
+- Throughput, storage, or availability limits exceed single-instance capacity.
+- Read/write scaling requires replication or partitioning.
+- Regional or tenant growth pressures topology redesign.
 
-## Deliverables
-- Replication topology and consistency policy.
-- Shard key strategy and rebalancing approach.
-- Failure/failover behavior expectations.
-- Operational checklist for lag, split-brain, hotspot, and rebalance risk.
+## Core Judgments
+- Replication mode and consistency expectations for read paths.
+- Shard key strategy and future rebalancing feasibility.
+- Cross-shard query/transaction requirements.
+- Failover behavior and recovery-time expectations.
 
-## Quick Example
-- Multi-tenant SaaS with uneven tenant sizes:
-  - initial shard key: `tenant_id`.
-  - hotspot mitigation: heavy-tenant isolation plan.
-  - replication: primary + read replicas with lag guardrails.
-  - failover: promote replica only when lag < threshold.
-
-## Quality Standard
-- Topology matches consistency and latency requirements.
-- Shard key avoids predictable hotspotting under projected growth.
-- Failover policy is explicit and tested.
-- Rebalancing/migration plan minimizes customer impact.
+## Practitioner Heuristics
+- Choose shard keys by access locality and growth distribution, not by convenience.
+- Read replicas are eventually consistent systems; classify which reads can tolerate lag.
+- Cross-shard joins and transactions should be exceptions with explicit ownership.
+- Topology decisions must include operational playbooks for failover and rebalancing.
 
 ## Workflow
-1. Define consistency and availability requirements.
-2. Evaluate replication and shard strategy options.
-3. Choose topology with explicit tradeoffs.
-4. Define failover, lag handling, and rebalance procedures.
-5. Validate with failure simulations and load distribution tests.
+1. Profile read/write distribution and growth projections.
+2. Select replication topology by availability and consistency needs.
+3. Evaluate shard key candidates and hotspot risk.
+4. Design routing, rebalancing, and failover behavior.
+5. Define application-level behaviors for lag, split-brain prevention, and retries.
+6. Document expansion path and de-risking milestones.
+
+## Common Failure Modes
+- Shard key creates unbounded hotspots as tenants grow.
+- Replica lag assumptions leak into business-critical reads.
+- Rebalancing is planned as manual emergency work only.
 
 ## Failure Conditions
-- Stop when consistency expectations conflict with selected topology.
-- Stop when shard key cannot scale without hotspot collapse.
-- Escalate when failover behavior is undefined or untested.
+- Stop when shard key cannot support projected growth distribution.
+- Stop when consistency expectations contradict selected topology.
+- Escalate when failover and rebalancing are operationally infeasible.

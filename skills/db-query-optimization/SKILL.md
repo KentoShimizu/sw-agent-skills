@@ -1,44 +1,44 @@
 ---
 name: db-query-optimization
-description: "Optimize query behavior through rewrites, plan analysis, and access-path adjustments for hot workloads. Use when query latency, throughput, or plan instability blocks SLO targets and concrete query-level fixes are required; do not use for broad schema governance decisions."
+description: "Query optimization workflow for reducing latency and resource cost through plan-aware rewrites and access-path improvements. Use when hot-path query behavior is the bottleneck; do not use for conceptual schema redesign without workload evidence."
 ---
 
 # DB Query Optimization
 
 ## Overview
-Use this skill to reduce query cost and stabilize execution plans for high-impact workloads.
+Use this skill to improve query performance based on execution evidence, not intuition.
 
-## Inputs To Gather
-- Problem queries with actual latency/resource data.
-- Current execution plans and row-estimation quality.
-- Relevant schema/index metadata.
-- Workload context (concurrency, parameter distribution, cache effects).
+## Use This Skill When
+- Hot-path latency or database CPU/IO usage is query-bound.
+- Query plans are unstable across parameter distributions.
+- Workload changes expose previously acceptable query anti-patterns.
 
-## Deliverables
-- Query rewrite and plan-improvement recommendations.
-- Root-cause map (scan amplification, bad join order, misestimation, etc.).
-- Validation plan with baseline vs post-change metrics.
-- Regression watchpoints for future plan drift.
+## Core Judgments
+- Dominant bottleneck: scan cost, join explosion, sort spill, lock wait, network round trips.
+- Rewrite scope: query shape, index changes, schema adjustment, or materialization.
+- Plan stability and parameter-sensitivity risk.
+- Correctness risk from aggressive rewrite or approximation.
 
-## Quick Example
-- Symptom: parameter-sensitive plan regression.
-- Fix options: query shape stabilization, statistics refresh, targeted hint/pattern change.
-- Verification: p95 latency and buffer reads across representative parameter sets.
-
-## Quality Standard
-- Recommendations are rooted in measured plan evidence.
-- Optimization preserves functional correctness.
-- Parameter variability and data skew are explicitly considered.
-- Success criteria include latency and resource metrics.
+## Practitioner Heuristics
+- Start from actual execution plans and runtime metrics.
+- Optimize the highest-impact query families, not one-off outliers.
+- Sargability and predicate selectivity usually dominate early wins.
+- Keep optimization readable; opaque SQL hacks create long-term maintenance debt.
 
 ## Workflow
-1. Establish baseline metrics and capture representative plans.
-2. Diagnose dominant cost driver per query.
-3. Propose rewrite/index/statistics changes.
-4. Test across realistic parameter and concurrency ranges.
-5. Publish optimized form and monitoring guardrails.
+1. Identify high-impact queries by frequency and user/business impact.
+2. Capture plan/runtime evidence under representative parameters.
+3. Propose rewrites and access-path changes with expected effects.
+4. Compare candidates for latency gain versus complexity and risk.
+5. Roll selected change and monitor plan stability and resource usage.
+6. Record conditions that should trigger re-optimization.
+
+## Common Failure Modes
+- Tuning for small dev datasets misleads production behavior.
+- Index-only fixes mask poor query shape.
+- Query changes improve p50 while degrading tail latency.
 
 ## Failure Conditions
 - Stop when no representative workload evidence is available.
-- Stop when optimization changes semantics or correctness.
-- Escalate when plan instability persists across realistic parameter sets.
+- Stop when optimization changes correctness semantics.
+- Escalate when required performance target is unattainable without model changes.

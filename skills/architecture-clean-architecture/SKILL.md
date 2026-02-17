@@ -1,40 +1,44 @@
 ---
 name: architecture-clean-architecture
-description: "Design enforceable dependency direction and layer boundaries using Clean Architecture. Use when domain rules leak into framework code or boundaries are unclear; do not use to choose service topology."
+description: "Clean Architecture workflow for enforcing dependency direction, stable domain boundaries, and use-case-centered application design. Use when teams must separate business rules from frameworks and delivery mechanisms; do not use for isolated module cleanup without boundary implications."
 ---
 
 # Architecture Clean Architecture
 
 ## Overview
-Use this skill to structure code so domain logic remains stable while frameworks and infrastructure can change safely. The output must be enforceable in code review and CI.
+Use this skill to structure systems so business rules remain stable while infrastructure and frameworks evolve.
 
-## Inputs To Gather
-- Domain rules and use-case flows.
-- Current module/dependency graph.
-- Runtime/framework constraints.
-- Non-functional goals (testability, latency, reliability).
+## Use This Skill When
+- Framework and infrastructure details are leaking into domain logic.
+- Dependency direction is inconsistent and change cost is rising.
+- Teams need explicit boundaries between use cases, adapters, and delivery layers.
 
-## Deliverables
-- Layer model and dependency rules.
-- Port/adapter contracts with ownership.
-- Refactoring plan for boundary violations.
-- Enforcement approach for review/CI.
+## Core Judgments
+- Domain boundary: what business rules must stay framework-independent.
+- Use-case orchestration: what belongs in application services versus domain entities.
+- Dependency inversion points: where interfaces must isolate infra concerns.
+- Transaction and consistency scope: where atomicity belongs in the stack.
 
-## Quality Standard
-- Inner layers do not depend on outer technical layers.
-- Use-case logic orchestrates behavior without infrastructure leakage.
-- I/O translation is isolated at adapter boundaries.
-- Transaction and consistency boundaries are explicit per use case.
-- Rules are enforceable by static checks, tests, or review checklist.
+## Practitioner Heuristics
+- Domain layer should not import transport, ORM, queue, or UI frameworks.
+- Application layer coordinates workflows; domain layer owns business invariants.
+- For dynamic languages, define explicit data contracts (schema/types) at boundaries instead of passing untyped `any`/`object` payloads that force downstream casts.
+- Prefer narrow ports with stable semantics over generic "utility" interfaces.
 
 ## Workflow
-1. Define target layers and allowed dependency direction.
-2. Map current violations and classify risk.
-3. Define ports/adapters for external interactions.
-4. Plan incremental remediation with rollback-safe sequencing.
-5. Add enforcement checks to prevent regression.
+1. Map current modules to domain, application, interface-adapter, and infrastructure responsibilities.
+2. Identify dependency violations and hidden framework coupling in business rules.
+3. Define or refine ports where infrastructure currently bleeds into domain logic.
+4. Move orchestration responsibilities to application use cases and invariants to domain objects.
+5. Align transaction boundaries with use-case semantics, not repository convenience.
+6. Record remaining boundary debt and migration sequence.
+
+## Common Failure Modes
+- "Clean" layers exist physically but still share mutable models across boundaries.
+- Domain services become anemic wrappers while business logic moves to adapters.
+- Generic DTOs and untyped maps cross layers, increasing casts and null checks.
 
 ## Failure Conditions
-- Stop when boundary rules are not technically enforceable.
-- Stop when transaction boundaries remain ambiguous.
-- Escalate when high-risk business logic stays in outer layers.
+- Stop when dependency direction cannot be explained by domain intent.
+- Stop when boundary contracts remain implicit or loosely typed.
+- Escalate when required boundary changes are blocked by organizational ownership constraints.

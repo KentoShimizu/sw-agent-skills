@@ -1,44 +1,44 @@
 ---
 name: db-index-strategy
-description: "Design index strategy for critical read/write access paths using query patterns and update cost constraints. Use when query latency or scan amplification depends on index choices and tradeoffs must be explicit; do not use for high-level conceptual modeling."
+description: "Index strategy workflow for balancing read latency, write amplification, and plan stability on critical query paths. Use when query performance depends on index design trade-offs; do not use for high-level conceptual modeling."
 ---
 
 # DB Index Strategy
 
 ## Overview
-Use this skill to choose indexes that improve real workload performance without unacceptable write amplification.
+Use this skill to choose indexes that improve real workloads while controlling write and storage costs.
 
-## Inputs To Gather
-- Top slow/high-frequency queries with predicates and sort patterns.
-- Current execution plans and scan/selectivity metrics.
-- Write volume and mutation cost tolerance.
-- Cardinality and data distribution characteristics.
+## Use This Skill When
+- Query latency hotspots are driven by access-path inefficiency.
+- New query patterns or sort requirements are introduced.
+- Existing indexes show redundancy, bloat, or unstable plans.
 
-## Deliverables
-- Index plan (new/changed/dropped indexes) with rationale.
-- Expected plan changes for critical queries.
-- Write-impact assessment and storage overhead estimate.
-- Verification checklist for post-change performance.
+## Core Judgments
+- Query-path priority by business impact and frequency.
+- Composite key order by filter selectivity and sort usage.
+- Covering/partial/functional index suitability by engine capability.
+- Write amplification and maintenance cost tolerance.
 
-## Quick Example
-- Query: `WHERE tenant_id = ? AND created_at >= ? ORDER BY created_at DESC LIMIT 50`.
-- Candidate index: `(tenant_id, created_at DESC)`.
-- Rejection rationale: single-column `created_at` index causes tenant-wide scan.
-
-## Quality Standard
-- Each index maps to one or more concrete query patterns.
-- Column order matches filter/sort usage, not guesswork.
-- Redundant/unused indexes are identified for cleanup.
-- Write and storage impact are assessed before rollout.
+## Practitioner Heuristics
+- Indexes should be justified by concrete query families, not single ad hoc queries.
+- Composite index order follows filter-first then sort semantics.
+- Prefer fewer high-value indexes over broad index proliferation.
+- Consider plan stability across parameter distribution, not one explain sample.
 
 ## Workflow
-1. Rank critical queries by frequency and impact.
-2. Analyze plans and identify access-path bottlenecks.
-3. Propose index candidates with expected plan effects.
-4. Assess write/storage tradeoffs and redundancy.
-5. Validate with explain/analyze and workload sampling.
+1. Rank critical queries by frequency, latency impact, and SLA relevance.
+2. Inspect current plans and identify scans, misestimation, and sort spills.
+3. Propose candidate indexes with expected plan effects.
+4. Evaluate write/maintenance/storage impact for each candidate.
+5. Decide new, modified, and removable indexes as one portfolio.
+6. Record assumptions that require re-evaluation as data distribution changes.
+
+## Common Failure Modes
+- Indexes tuned for one tenant or parameter pattern only.
+- Redundant indexes remain after query evolution.
+- Index design ignores heavy write paths and causes throughput collapse.
 
 ## Failure Conditions
-- Stop when index choice is not tied to a concrete query path.
+- Stop when index choices are not tied to prioritized workload.
 - Stop when write amplification risk is unbounded.
-- Escalate when plan stability remains poor after candidate evaluation.
+- Escalate when plan stability remains poor after viable candidates.

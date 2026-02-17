@@ -1,44 +1,43 @@
 ---
 name: db-physical-design
-description: "Design physical storage layout, partitioning, and engine-specific settings to meet scale and latency objectives. Use when logical schema is stable and runtime behavior depends on storage organization; do not use for conceptual domain modeling or requirement prioritization."
+description: "Physical database design workflow for storage layout, partitioning, engine settings, and hardware-aware performance behavior. Use when sustained workload efficiency depends on physical data organization; do not use for conceptual modeling tasks."
 ---
 
 # DB Physical Design
 
 ## Overview
-Use this skill to translate logical schema into engine-aware physical design that sustains target scale.
+Use this skill to align storage structures with workload shape, growth patterns, and operational constraints.
 
-## Inputs To Gather
-- Logical schema and query workload profile.
-- Data growth forecast and retention policy.
-- Engine capabilities/limits (partitioning, compression, storage classes).
-- Backup/recovery and maintenance window constraints.
+## Use This Skill When
+- Data volume or access distribution creates storage and latency pressure.
+- Partitioning or table layout decisions affect manageability.
+- Engine-specific behavior requires deliberate configuration.
 
-## Deliverables
-- Partitioning and storage layout strategy.
-- Hot/cold data placement policy.
-- Maintenance strategy (vacuum/reorg/compaction where applicable).
-- Capacity-risk plan with growth triggers.
+## Core Judgments
+- Partitioning strategy (range/hash/list/hybrid) and key choice.
+- Hot/cold data tiering and archival layout.
+- Table/index storage parameters by engine characteristics.
+- Maintenance strategy for bloat, vacuum/reorg, and statistics.
 
-## Quick Example
-- Partition large event table by month and tenant key.
-- Keep last 90 days on fast storage, archive older partitions to cheaper tier.
-- Define partition pruning expectation for key analytics queries.
-
-## Quality Standard
-- Layout choices are tied to workload and growth evidence.
-- Partition key supports both write distribution and dominant queries.
-- Maintenance overhead is budgeted and operationally feasible.
-- Recovery objectives remain achievable under chosen layout.
+## Practitioner Heuristics
+- Partition by access and lifecycle behavior, not by calendar habit.
+- Keep partition count operationally manageable.
+- Co-locate frequently joined data only when it materially improves hot paths.
+- Engine tuning must follow measured workload and failure history, not defaults folklore.
 
 ## Workflow
-1. Profile workload and growth characteristics.
-2. Evaluate storage/partition options supported by engine.
-3. Select layout with capacity and performance tradeoffs.
-4. Define maintenance and archival operations.
-5. Validate expected behavior with representative queries.
+1. Profile data growth, access skew, and latency bottlenecks.
+2. Evaluate physical layout options against workload and operations cost.
+3. Select partition and storage strategies with explicit trade-offs.
+4. Define maintenance cadence for statistics and storage health.
+5. Document scaling and re-partitioning triggers.
+
+## Common Failure Modes
+- Partition key chosen without considering future rebalance complexity.
+- Excessive small partitions degrade planner and maintenance performance.
+- Storage tuning changes applied without workload baseline.
 
 ## Failure Conditions
-- Stop when physical design conflicts with recovery requirements.
-- Stop when partitioning strategy cannot avoid hotspotting.
-- Escalate when capacity risk exceeds planned expansion horizon.
+- Stop when physical layout has no clear workload rationale.
+- Stop when partition strategy cannot support retention/archival requirements.
+- Escalate when operational maintenance burden exceeds team capacity.

@@ -1,40 +1,44 @@
 ---
 name: architecture-decision-records
-description: "Capture high-impact architecture decisions as ADRs with rationale, alternatives, consequences, and lifecycle status. Use when a decision changes risk, cost, ownership, or reliability posture."
+description: "Architecture Decision Record workflow for capturing technical decisions, alternatives, trade-offs, and revision triggers over time. Use when decisions materially affect system behavior, cost, or team workflow; do not use for trivial implementation choices."
 ---
 
 # Architecture Decision Records
 
 ## Overview
-Use this skill to produce ADRs that make architecture decisions traceable and maintainable over time. ADRs are decision artifacts, not brainstorming notes.
+Use this skill to make architecture decisions auditable, reversible when possible, and maintainable as constraints evolve.
 
-## Inputs To Gather
-- Decision statement and scope.
-- Options considered and supporting evidence.
-- Constraints, risks, approvals.
-- Related incidents, diagrams, and requirements.
+## Use This Skill When
+- A technical decision changes long-term system direction.
+- Multiple viable options exist and trade-offs must be explicit.
+- Teams need a durable rationale for future reviewers.
 
-## Deliverables
-- ADR document with lifecycle status.
-- Explicit rationale for accepted and rejected options.
-- Consequences and follow-up actions.
-- Links to superseded or related ADRs.
+## Core Judgments
+- Decision scope: what is affected and what is intentionally out of scope.
+- Option set quality: whether alternatives are truly viable.
+- Reversibility: cost and risk if the decision is later changed.
+- Expiry/revisit trigger: what future signal should force reevaluation.
 
-## Quality Standard
-- Context, decision, alternatives, consequences, and status are complete.
-- Rationale is evidence-based, not preference-based.
-- Operational impact and ownership are explicit.
-- Re-decision triggers are defined.
-- Supersession chain remains navigable.
+## Practitioner Heuristics
+- Record decisions at the same abstraction level as the problem; avoid mixing architecture and local code style debates.
+- Rejected options are as important as selected ones for future context.
+- State assumptions explicitly, especially around traffic, team capacity, and compliance constraints.
+- Include consequences for operations and developer workflow, not only runtime behavior.
 
 ## Workflow
-1. Capture context, constraints, and decision scope.
-2. Summarize alternatives with tradeoff evidence.
-3. Record decision and concrete consequences.
-4. Set status, owner, and approvals.
-5. Link follow-ups and future re-decision triggers.
+1. Define decision question and non-negotiable constraints.
+2. Enumerate realistic options and decision criteria.
+3. Analyze trade-offs including failure modes and operational impact.
+4. Select a decision and capture why alternatives were rejected.
+5. Define measurable revisit triggers and ownership.
+6. Link the record to affected architecture artifacts and implementation work.
+
+## Common Failure Modes
+- ADRs describe outcomes after the fact without real alternative analysis.
+- Decision records never revisit invalidated assumptions.
+- Records duplicate design docs and lose decision focus.
 
 ## Failure Conditions
-- Stop when rationale lacks evidence.
-- Stop when status or ownership is missing.
-- Escalate when high-impact decisions bypass ADR capture.
+- Stop when constraints are incomplete or contradictory.
+- Stop when no meaningful alternatives are considered.
+- Escalate when decision ownership and revisit triggers are undefined.

@@ -1,44 +1,44 @@
 ---
 name: db-backup-recovery
-description: "Design and verify database backup/restore strategy against explicit RPO/RTO targets. Use when data durability, retention, and disaster recovery readiness must be proven with restore evidence; do not use for query tuning or schema modeling tasks."
+description: "Database backup and recovery workflow for defining RPO/RTO-aligned retention, restore strategy, and disaster readiness. Use when data durability and recovery guarantees are in scope; do not use for query-only tuning tasks."
 ---
 
 # DB Backup Recovery
 
 ## Overview
-Use this skill to ensure backups are not only taken but also restorable within required recovery objectives.
+Use this skill to define backup and restore behavior that is credible under incident pressure, not only compliant on paper.
 
-## Inputs To Gather
-- RPO/RTO targets by system criticality.
-- Data retention/legal constraints.
-- Backup mechanisms (snapshot, logical dump, incremental, WAL/binlog).
-- Recovery environments and access controls.
+## Use This Skill When
+- Data loss tolerance and recovery time objectives must be formalized.
+- Backup policy is changing due to scale, compliance, or architecture change.
+- Teams need confidence that restore procedures actually work.
 
-## Deliverables
-- Backup policy (frequency, retention, encryption, storage locations).
-- Restore runbook with role responsibilities.
-- Restore-test evidence and objective compliance report.
-- Gap list with remediation priorities.
+## Core Judgments
+- RPO/RTO targets per data class and business workflow.
+- Backup modality: full, incremental, log-based, snapshot, or hybrid.
+- Retention and immutability policy by legal and business requirements.
+- Restore topology: point-in-time restore, region restore, partial table restore.
 
-## Quick Example
-- Target: `RPO <= 15 min`, `RTO <= 60 min`.
-- Plan: nightly full + 5-min incremental log shipping.
-- Verification: monthly restore drill to isolated environment; measure actual RPO/RTO.
-
-## Quality Standard
-- Backup policy maps directly to RPO/RTO targets.
-- Restore process is scripted/runbooked and repeatedly tested.
-- Integrity verification includes checksum and application-level sanity checks.
-- Access and key-management controls protect backup artifacts.
+## Practitioner Heuristics
+- Start from restore requirements, then derive backup schedule.
+- Separate operational backups from archival/legal-retention copies.
+- Encryption, key rotation, and access logging apply to backups too.
+- Recovery procedures must assume partial infrastructure outage, not ideal environment.
 
 ## Workflow
-1. Define recovery objectives and compliance constraints.
-2. Select backup pattern and retention schedule.
-3. Define restore procedure and required dependencies.
-4. Run restore drills and record measured outcomes.
-5. Close objective gaps with concrete remediation actions.
+1. Define data criticality tiers and required RPO/RTO per tier.
+2. Select backup mechanisms and cadence aligned to write patterns.
+3. Define retention lifecycle and deletion rules.
+4. Design restore paths for common and worst-case incident scenarios.
+5. Establish ownership and escalation for recovery execution.
+6. Document assumptions that invalidate the current strategy.
+
+## Common Failure Modes
+- Backup success is monitored but restore path is untested.
+- One global retention policy ignores data criticality differences.
+- Recovery relies on undocumented manual knowledge.
 
 ## Failure Conditions
-- Stop when restore evidence is missing or stale.
-- Stop when measured RPO/RTO misses required objectives.
-- Escalate when backups are inaccessible, unencrypted, or unverifiable.
+- Stop when RPO/RTO cannot be mapped to concrete mechanisms.
+- Stop when backup policy has no feasible restore path.
+- Escalate when recovery guarantees exceed infrastructure capability.

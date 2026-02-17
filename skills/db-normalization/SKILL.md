@@ -1,44 +1,43 @@
 ---
 name: db-normalization
-description: "Decide normalization level and intentional denormalization boundaries to prevent anomalies while meeting query needs. Use when schema design must balance update integrity against read efficiency; do not use for index-only tuning or query-plan debugging."
+description: "Normalization workflow for reducing update anomalies while balancing query practicality and domain invariants. Use when schema redundancy and inconsistency risk need deliberate trade-off decisions; do not use for physical indexing-only tasks."
 ---
 
 # DB Normalization
 
 ## Overview
-Use this skill to remove harmful redundancy first, then introduce denormalization only where justified by measurable read requirements.
+Use this skill to decide normalization depth intentionally, preserving integrity without ignoring workload realities.
 
-## Inputs To Gather
-- Current/proposed schema and update workflows.
-- Anomaly risks (insert/update/delete anomalies).
-- Read-path requirements and latency targets.
-- Data freshness tolerance for duplicated fields.
+## Use This Skill When
+- Duplicate mutable data causes inconsistency bugs.
+- Schema design needs explicit normalization versus denormalization trade-offs.
+- Teams are preparing for domain growth and evolving query patterns.
 
-## Deliverables
-- Normalization decision record per table group.
-- Intentional denormalization list with refresh strategy.
-- Integrity controls to protect duplicated data.
-- Test cases for anomaly prevention.
+## Core Judgments
+- Normal form target per entity group (3NF/BCNF and justified deviations).
+- Redundancy acceptance criteria and ownership.
+- Denormalization scope and refresh semantics.
+- Constraint placement for anomaly prevention.
 
-## Quick Example
-- Normalize `customer_email` out of `orders` to avoid stale duplication.
-- Denormalize `order_total_cached` only if read hot path requires it.
-- Add refresh rule: update cached total on item mutation transaction.
-
-## Quality Standard
-- Normalization choice is driven by anomaly risk and workload evidence.
-- Every denormalized field has owner, refresh rule, and staleness policy.
-- Integrity checks exist for duplicated business-critical values.
-- Tradeoff between write complexity and read latency is explicit.
+## Practitioner Heuristics
+- Normalize data that changes frequently or has strict consistency needs.
+- Denormalize only for measured read-path benefit with explicit maintenance strategy.
+- Prefer derived data pipelines over ad hoc duplicated writable columns.
+- Document who repairs divergence when denormalized copies drift.
 
 ## Workflow
-1. Identify redundancy and anomaly-prone structures.
-2. Normalize to remove unsafe duplication.
-3. Reintroduce denormalization only for proven hot paths.
-4. Define synchronization and consistency safeguards.
-5. Validate with anomaly-focused test scenarios.
+1. Identify update anomalies and redundancy hotspots.
+2. Model normalized alternatives and expected consistency behavior.
+3. Evaluate read/write trade-offs for selective denormalization.
+4. Define synchronization semantics for intentional redundancy.
+5. Document accepted anomalies and mitigation mechanisms.
+
+## Common Failure Modes
+- Denormalization introduced without ownership of refresh logic.
+- Over-normalization creates excessive joins for latency-critical paths.
+- Hidden duplicated columns diverge silently over time.
 
 ## Failure Conditions
-- Stop when denormalization lacks refresh/consistency strategy.
-- Stop when normalization breaks mandatory read-path latency without mitigation.
-- Escalate when anomaly risk remains unresolved for critical entities.
+- Stop when anomaly prevention responsibilities are undefined.
+- Stop when denormalization has no measurable performance rationale.
+- Escalate when required consistency cannot be maintained at chosen form.

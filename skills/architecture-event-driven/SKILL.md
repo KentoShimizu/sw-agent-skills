@@ -1,40 +1,44 @@
 ---
 name: architecture-event-driven
-description: "Design event-driven architecture with explicit delivery, ordering, schema evolution, and failure-handling guarantees. Use when asynchronous workflows are core and correctness depends on messaging semantics."
+description: "Event-driven architecture workflow for asynchronous integration, decoupled workflows, and failure-tolerant event propagation. Use when temporal decoupling and independent evolution are required; do not use when strict synchronous consistency is mandatory across all steps."
 ---
 
 # Architecture Event Driven
 
 ## Overview
-Use this skill to design reliable asynchronous systems where events are first-class contracts. The output must be implementable and operable under failure.
+Use this skill to design event-driven systems that remain correct under retries, delays, and partial failures.
 
-## Inputs To Gather
-- Event candidates and domain ownership.
-- Throughput, latency, and ordering requirements.
-- Consistency and compensation expectations.
-- Recovery/compliance constraints.
+## Use This Skill When
+- Workflows span multiple bounded contexts or services asynchronously.
+- Temporal decoupling is needed to improve autonomy or resilience.
+- Integration churn is high and direct RPC coupling causes fragility.
 
-## Deliverables
-- Event catalog with schema and owner.
-- Delivery semantics and ordering policy.
-- Retry, DLQ, replay, and idempotency strategy.
-- Schema evolution and compatibility policy.
+## Core Judgments
+- Event semantics: fact versus command and ownership of meaning.
+- Delivery guarantees: at-most-once, at-least-once, effectively-once patterns.
+- Ordering strategy: global ordering, per-key ordering, or order independence.
+- Recovery model: replay, dead-letter, compensating actions, and backfill.
 
-## Quality Standard
-- Event ownership and lifecycle are explicit.
-- Delivery semantics are chosen intentionally per flow.
-- Idempotency and dedupe strategy are testable.
-- Retry and DLQ handling include operational ownership.
-- Compatibility policy supports safe producer/consumer evolution.
+## Practitioner Heuristics
+- Publish events as immutable domain facts from the source of truth.
+- Never rely on "exactly-once" assumptions; design idempotent consumers.
+- Partition keys must align with business consistency boundaries.
+- Version event contracts with additive evolution first; reserve breaking changes for controlled migrations.
 
 ## Workflow
-1. Identify events and ownership boundaries.
-2. Define schema contracts and evolution policy.
-3. Define delivery, ordering, and idempotency guarantees.
-4. Define retry, DLQ, and replay operations.
-5. Validate consistency gaps and compensation design.
+1. Define domain events and ownership boundaries.
+2. Specify producer guarantees and consumer idempotency requirements.
+3. Choose ordering and partitioning strategies by business invariant.
+4. Design failure-handling paths for retry storms, poison messages, and replay.
+5. Align observability with event lifecycle (published, consumed, failed, compensated).
+6. Document contract evolution and deprecation strategy.
+
+## Common Failure Modes
+- Events used as remote procedure calls in disguise.
+- Shared event schema controlled by consumers instead of producers.
+- Unbounded retry loops causing downstream saturation.
 
 ## Failure Conditions
-- Stop when event ownership is undefined.
-- Stop when consistency expectations are implicit.
-- Escalate when compensation cannot bound business risk.
+- Stop when event ownership or semantics are ambiguous.
+- Stop when consumer correctness depends on fragile global ordering.
+- Escalate when replay/compensation behavior is undefined for critical flows.

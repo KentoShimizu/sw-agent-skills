@@ -1,41 +1,44 @@
 ---
 name: architecture-tradeoff-analysis
-description: "Compare viable architecture options using explicit criteria, evidence, and risk weighting. Use when multiple options are still on the table and a transparent decision is required; do not use after direction is fixed."
+description: "Architecture trade-off analysis workflow for comparing options with explicit criteria, weighting, and sensitivity under uncertainty. Use when multiple viable architecture choices exist and rationale must be defensible; do not use after architecture direction is already fixed."
 ---
 
 # Architecture Tradeoff Analysis
 
 ## Overview
-Use this skill to produce a defensible architecture decision from competing options. The result should make decision logic auditable and reusable for future re-evaluation.
+Use this skill to make architecture choices explicit, comparable, and auditable instead of preference-driven.
 
-## Inputs To Gather
-- Decision question and deadline.
-- Option set at the same abstraction level.
-- Hard constraints that cannot be violated.
-- Quality targets and operational constraints.
-- Known uncertainties and assumptions.
+## Use This Skill When
+- There are several plausible architecture options.
+- Decision stakes are high and reversal is expensive.
+- Teams need a shared basis for selecting one option.
 
-## Deliverables
-- Option scorecard (criteria, weights, evidence, assumptions).
-- Sensitivity analysis for uncertain assumptions.
-- Recommendation with residual risk and owner.
-- Re-decision triggers.
+## Core Judgments
+- Option quality: whether candidates are realistic for the current context.
+- Criteria set: business and technical dimensions that actually drive success.
+- Weighting model: which criteria dominate and why.
+- Sensitivity: how decision changes when assumptions shift.
 
-## Quality Standard
-- Constraint filtering happens before scoring.
-- Scoring criteria are defined before evaluating options.
-- Every score links to evidence.
-- Sensitivity analysis is present for high-uncertainty inputs.
-- The recommendation includes operational consequences and reversibility.
+## Practitioner Heuristics
+- Keep criteria small and high-impact; too many criteria hide real priorities.
+- Separate hard constraints from weighted preferences.
+- Include operational burden and team capability as first-class criteria.
+- Document dominant assumptions and the signals that would invalidate them.
 
 ## Workflow
-1. Freeze scope, options, and non-negotiable constraints.
-2. Define criteria and weights from quality priorities.
-3. Score each option with explicit evidence and assumptions.
-4. Run sensitivity checks and identify fragile outcomes.
-5. Recommend one option and document residual risk.
+1. Define decision question, constraints, and decision horizon.
+2. Enumerate candidate options and reject non-viable ones early.
+3. Set criteria and weighting aligned to current strategy.
+4. Score options with evidence-backed rationale per criterion.
+5. Run sensitivity analysis on top-weighted criteria and uncertain assumptions.
+6. Select preferred option and document fallback decision path.
+
+## Common Failure Modes
+- Scoring hides biased assumptions rather than exposing them.
+- Analysis compares abstract patterns, not implementable options.
+- Sensitivity analysis is skipped, leading to brittle conclusions.
 
 ## Failure Conditions
-- Stop when criteria or weights are unstable.
-- Stop when options are not comparable.
-- Escalate when top options remain tied after sensitivity analysis.
+- Stop when decision criteria cannot be agreed.
+- Stop when option scoring lacks evidence for key criteria.
+- Escalate when sensitivity analysis shows no robust winner.
