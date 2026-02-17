@@ -12,12 +12,12 @@ Options:
   --agent <all|codex|claude|opencode>   Target agent (default: all)
   --scope <global|local>                Install scope (default: global)
   --project-root <path>                 Project root for local scope (default: current dir)
-  --force                               Replace existing target directories
   -h, --help                            Show this help
 
 Notes:
   - local scope supports Codex, Claude, and OpenCode.
   - installer downloads the latest release snapshot and installs from it.
+  - installer manages only directories listed in .sw-agent-skills-managed.
 EOF
 }
 
@@ -28,6 +28,40 @@ die() {
 
 require_cmd() {
   command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
+}
+
+is_valid_skill_name() {
+  local skill_name="$1"
+  printf '%s' "${skill_name}" | grep -Eq '^[A-Za-z0-9._-]+$'
+}
+
+array_contains() {
+  local needle="$1"
+  shift
+  local item
+  for item in "$@"; do
+    if [ "${item}" = "${needle}" ]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+read_managed_skill_names() {
+  local managed_state_path="$1"
+  local managed_name
+
+  if [ ! -f "${managed_state_path}" ]; then
+    return 0
+  fi
+
+  while IFS= read -r managed_name; do
+    [ -z "${managed_name}" ] && continue
+    if [ "${managed_name}" = "." ] || [ "${managed_name}" = ".." ] || ! is_valid_skill_name "${managed_name}"; then
+      die "invalid managed skill entry in ${managed_state_path}: ${managed_name}"
+    fi
+    printf '%s\n' "${managed_name}"
+  done < "${managed_state_path}"
 }
 
 resolve_dir() {
@@ -89,7 +123,7 @@ OFFICIAL_RELEASE_REPO_GIT_URL="https://github.com/KentoShimizu/sw-agent-skills.g
 OFFICIAL_RELEASE_ARCHIVE_BASE_URL="https://github.com/KentoShimizu/sw-agent-skills"
 RELEASE_TAG=""
 RELEASE_TEMP_DIR=""
-FORCE=false
+MANAGED_STATE_FILE_NAME=".sw-agent-skills-managed"
 
 cleanup_release_temp_dir() {
   if [ -n "${RELEASE_TEMP_DIR}" ] && [ -d "${RELEASE_TEMP_DIR}" ]; then
@@ -115,10 +149,6 @@ while [ $# -gt 0 ]; do
       [ $# -ge 2 ] || die "--project-root requires a value"
       PROJECT_ROOT="$2"
       shift 2
-      ;;
-    --force)
-      FORCE=true
-      shift
       ;;
     -h|--help)
       usage
@@ -196,25 +226,69 @@ install_skills_into_target_root() {
   local label="$1"
   local target_root="$2"
   local installed_count=0
+  local managed_state_path="${target_root}/${MANAGED_STATE_FILE_NAME}"
+  local managed_state_tmp_path="${managed_state_path}.tmp.$$"
+  local previous_managed_skill_names=()
+  local current_managed_skill_names=()
 
   mkdir -p "${target_root}"
+
+  if [ -f "${managed_state_path}" ]; then
+    while IFS= read -r managed_name; do
+      if ! array_contains "${managed_name}" "${previous_managed_skill_names[@]+"${previous_managed_skill_names[@]}"}"; then
+        previous_managed_skill_names+=("${managed_name}")
+      fi
+    done < <(read_managed_skill_names "${managed_state_path}")
+  else
+    for source_skill_dir in "${VALID_SOURCE_SKILL_DIRS[@]}"; do
+      local source_skill_name
+      source_skill_name="$(basename "${source_skill_dir}")"
+      local source_destination_skill_dir="${target_root}/${source_skill_name}"
+      if [ -e "${source_destination_skill_dir}" ] || [ -L "${source_destination_skill_dir}" ]; then
+        previous_managed_skill_names+=("${source_skill_name}")
+      fi
+    done
+  fi
 
   for source_skill_dir in "${VALID_SOURCE_SKILL_DIRS[@]}"; do
     local skill_name
     skill_name="$(basename "${source_skill_dir}")"
     local destination_skill_dir="${target_root}/${skill_name}"
 
-    if [ -e "${destination_skill_dir}" ] || [ -L "${destination_skill_dir}" ]; then
-      if [ "${FORCE}" != true ]; then
-        die "${label} target exists: ${destination_skill_dir} (use --force to replace)"
-      fi
-      rm -rf "${destination_skill_dir}"
+    if [ "${skill_name}" = "." ] || [ "${skill_name}" = ".." ] || ! is_valid_skill_name "${skill_name}"; then
+      die "invalid source skill directory name: ${skill_name}"
     fi
 
+    if [ -e "${destination_skill_dir}" ] || [ -L "${destination_skill_dir}" ]; then
+      if ! array_contains "${skill_name}" "${previous_managed_skill_names[@]+"${previous_managed_skill_names[@]}"}"; then
+        die "${label} target exists and is not managed by installer: ${destination_skill_dir}"
+      fi
+    fi
+  done
+
+  for managed_skill_name in "${previous_managed_skill_names[@]+"${previous_managed_skill_names[@]}"}"; do
+    local managed_destination_skill_dir="${target_root}/${managed_skill_name}"
+    if [ -e "${managed_destination_skill_dir}" ] || [ -L "${managed_destination_skill_dir}" ]; then
+      rm -rf "${managed_destination_skill_dir}"
+    fi
+  done
+
+  for source_skill_dir in "${VALID_SOURCE_SKILL_DIRS[@]}"; do
+    local skill_name
+    skill_name="$(basename "${source_skill_dir}")"
+    local destination_skill_dir="${target_root}/${skill_name}"
+
     cp -R "${source_skill_dir}" "${destination_skill_dir}"
+    current_managed_skill_names+=("${skill_name}")
 
     installed_count=$((installed_count + 1))
   done
+
+  : > "${managed_state_tmp_path}"
+  for managed_skill_name in "${current_managed_skill_names[@]}"; do
+    printf '%s\n' "${managed_skill_name}" >> "${managed_state_tmp_path}"
+  done
+  mv "${managed_state_tmp_path}" "${managed_state_path}"
 
   printf 'installed: %s (%s) new=%d\n' "${label}" "${target_root}" "${installed_count}"
 }

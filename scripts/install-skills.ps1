@@ -5,9 +5,7 @@ param(
     [ValidateSet("global", "local")]
     [string]$Scope = "global",
 
-    [string]$ProjectRoot = (Get-Location).Path,
-
-    [switch]$Force
+    [string]$ProjectRoot = (Get-Location).Path
 )
 
 Set-StrictMode -Version Latest
@@ -41,10 +39,24 @@ function Resolve-LatestStableReleaseTag {
         Select-Object -Last 1
 }
 
+function Test-ValidSkillName {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$SkillName
+    )
+
+    if ($SkillName -eq "." -or $SkillName -eq "..") {
+        return $false
+    }
+
+    return $SkillName -match "^[A-Za-z0-9._-]+$"
+}
+
 $releaseTag = $null
 $releaseTempDir = $null
 $script:OfficialReleaseRepoGitUrl = "https://github.com/KentoShimizu/sw-agent-skills.git"
 $script:OfficialReleaseArchiveBaseUrl = "https://github.com/KentoShimizu/sw-agent-skills"
+$managedStateFileName = ".sw-agent-skills-managed"
 
 try {
     if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
@@ -116,24 +128,59 @@ try {
 
     foreach ($target in $targets) {
         New-Item -ItemType Directory -Force -Path $target.Path | Out-Null
+        $managedStatePath = Join-Path $target.Path $managedStateFileName
+        $previousManagedSkillNames = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+
+        if (Test-Path -LiteralPath $managedStatePath -PathType Leaf) {
+            $managedStateLines = Get-Content -LiteralPath $managedStatePath
+            foreach ($managedStateLine in $managedStateLines) {
+                $managedSkillName = $managedStateLine.Trim()
+                if ([string]::IsNullOrWhiteSpace($managedSkillName)) {
+                    continue
+                }
+                if (-not (Test-ValidSkillName -SkillName $managedSkillName)) {
+                    throw "invalid managed skill entry in state file: $managedStatePath: $managedSkillName"
+                }
+                [void]$previousManagedSkillNames.Add($managedSkillName)
+            }
+        } else {
+            foreach ($skillDir in $skillEntries) {
+                $legacyDestinationSkillDir = Join-Path $target.Path $skillDir.Name
+                if (Test-Path -LiteralPath $legacyDestinationSkillDir) {
+                    [void]$previousManagedSkillNames.Add($skillDir.Name)
+                }
+            }
+        }
+
+        foreach ($skillDir in $skillEntries) {
+            if (-not (Test-ValidSkillName -SkillName $skillDir.Name)) {
+                throw "invalid source skill directory name: $($skillDir.Name)"
+            }
+
+            $destinationSkillDir = Join-Path $target.Path $skillDir.Name
+            if ((Test-Path -LiteralPath $destinationSkillDir) -and (-not $previousManagedSkillNames.Contains($skillDir.Name))) {
+                throw "$($target.Label) target exists and is not managed by installer: $destinationSkillDir"
+            }
+        }
+
+        foreach ($previousManagedSkillName in $previousManagedSkillNames) {
+            $previousManagedSkillDir = Join-Path $target.Path $previousManagedSkillName
+            if (Test-Path -LiteralPath $previousManagedSkillDir) {
+                Remove-Item -LiteralPath $previousManagedSkillDir -Recurse -Force
+            }
+        }
 
         $installedCount = 0
-
+        $currentManagedSkillNames = [System.Collections.Generic.List[string]]::new()
         foreach ($skillDir in $skillEntries) {
             $destinationSkillDir = Join-Path $target.Path $skillDir.Name
 
-            if (Test-Path -LiteralPath $destinationSkillDir) {
-                if (-not $Force.IsPresent) {
-                    throw "$($target.Label) target exists: $destinationSkillDir (use -Force to replace)"
-                }
-                Remove-Item -LiteralPath $destinationSkillDir -Recurse -Force
-            }
-
             Copy-Item -LiteralPath $skillDir.FullName -Destination $destinationSkillDir -Recurse
-
+            [void]$currentManagedSkillNames.Add($skillDir.Name)
             $installedCount++
         }
 
+        Set-Content -LiteralPath $managedStatePath -Value $currentManagedSkillNames
         Write-Host "installed: $($target.Label) ($($target.Path)) new=$installedCount"
     }
 

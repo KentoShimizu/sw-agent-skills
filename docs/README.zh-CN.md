@@ -55,7 +55,6 @@ cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 | `--agent <all/codex/claude/opencode>` | 否 | 要安装的目标代理。 | `all` |
 | `--scope <global/local>` | 否 | 安装范围。`local` 安装到 `--project-root` 下。 | `global` |
 | `--project-root <path>` | 否 | 仅在 `--scope local` 时使用的项目根目录。 | 当前目录 |
-| `--force` | 否 | 覆盖已存在的目标技能目录。 | 关闭 |
 | `-h`, `--help` | 否 | 显示帮助。 | 关闭 |
 
 ### PowerShell（`scripts/install-skills.ps1`）
@@ -65,7 +64,8 @@ cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 | `-Agent <all/codex/claude/opencode>` | 否 | 要安装的目标代理。 | `all` |
 | `-Scope <global/local>` | 否 | 安装范围。`local` 安装到 `-ProjectRoot` 下。 | `global` |
 | `-ProjectRoot <path>` | 否 | 仅在 `-Scope local` 时使用的项目根目录。 | 当前目录 |
-| `-Force` | 否 | 覆盖已存在的目标技能目录。 | 关闭 |
+
+管理更新说明：安装器会在每个目标目录下使用 `.sw-agent-skills-managed` 跟踪其管理的技能目录。未被该清单跟踪的目录会保留；若与未管理目录发生同名冲突，安装会停止。
 
 ## 参考资料
 

@@ -55,7 +55,6 @@ cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 | `--agent <all/codex/claude/opencode>` | No | Target agent to install. | `all` |
 | `--scope <global/local>` | No | Install scope. `local` installs under `--project-root`. | `global` |
 | `--project-root <path>` | No | Project root used only when `--scope local`. | current directory |
-| `--force` | No | Replace existing destination skill directories. | off |
 | `-h`, `--help` | No | Show command help. | off |
 
 ### PowerShell (`scripts/install-skills.ps1`)
@@ -65,7 +64,8 @@ cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 | `-Agent <all/codex/claude/opencode>` | No | Target agent to install. | `all` |
 | `-Scope <global/local>` | No | Install scope. `local` installs under `-ProjectRoot`. | `global` |
 | `-ProjectRoot <path>` | No | Project root used only when `-Scope local`. | current directory |
-| `-Force` | No | Replace existing destination skill directories. | off |
+
+Managed updates: installer tracks managed skill directories in `.sw-agent-skills-managed` under each target root. Directories not tracked there remain untouched, and install stops on name conflicts with unmanaged directories.
 
 ## References
 

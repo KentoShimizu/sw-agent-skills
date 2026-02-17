@@ -55,7 +55,6 @@ cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 | `--agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
 | `--scope <global/local>` | いいえ | インストール範囲。`local` は `--project-root` 配下へ配置。 | `global` |
 | `--project-root <path>` | いいえ | `--scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
-| `--force` | いいえ | 既存の配置先スキルディレクトリを置換。 | 無効 |
 | `-h`, `--help` | いいえ | ヘルプを表示。 | 無効 |
 
 ### PowerShell (`scripts/install-skills.ps1`)
@@ -65,7 +64,8 @@ cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 | `-Agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
 | `-Scope <global/local>` | いいえ | インストール範囲。`local` は `-ProjectRoot` 配下へ配置。 | `global` |
 | `-ProjectRoot <path>` | いいえ | `-Scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
-| `-Force` | いいえ | 既存の配置先スキルディレクトリを置換。 | 無効 |
+
+管理更新: インストーラーは各配置先ルート配下の `.sw-agent-skills-managed` で管理対象スキルを追跡します。この一覧にないディレクトリは保持され、未管理ディレクトリとの同名衝突がある場合はインストールを停止します。
 
 ## 参考資料
 
