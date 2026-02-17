@@ -8,6 +8,10 @@ description: "Define scalable design-system foundations with clear ownership and
 ## Overview
 Use this skill to establish stable UI foundations that multiple teams can adopt without diverging conventions.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Lifecycle governance guidance:
   - `references/foundation-lifecycle-guidance.md`

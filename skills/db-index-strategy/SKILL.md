@@ -8,7 +8,7 @@ description: "Index strategy workflow for balancing read latency, write amplific
 ## Overview
 Use this skill to choose indexes that improve real workloads while controlling write and storage costs.
 
-## Use This Skill When
+## Scope Boundaries
 - Query latency hotspots are driven by access-path inefficiency.
 - New query patterns or sort requirements are introduced.
 - Existing indexes show redundancy, bloat, or unstable plans.

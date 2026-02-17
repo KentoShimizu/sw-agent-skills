@@ -8,6 +8,10 @@ description: "Run full-scope code review for correctness, maintainability, and r
 ## Overview
 Use this skill for structured merge-readiness review across correctness, readability, maintainability, and change risk.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Diff scope, affected modules, and runtime impact.
 - Change intent and acceptance criteria.

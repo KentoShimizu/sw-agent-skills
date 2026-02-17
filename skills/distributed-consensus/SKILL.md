@@ -8,7 +8,7 @@ description: "Consensus workflow for quorum, leader election, commit semantics, 
 ## Overview
 Use this skill when system correctness depends on multiple nodes agreeing on state transitions under crash and partition conditions.
 
-## Use This Skill When
+## Scope Boundaries
 - Replicated writes require explicit safety/liveness guarantees.
 - Quorum and leadership behavior determine correctness.
 - Membership changes and failover policy must be defined safely.

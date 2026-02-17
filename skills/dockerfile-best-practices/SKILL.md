@@ -8,6 +8,10 @@ description: "Design Dockerfiles for secure, deterministic, and efficient image 
 ## Overview
 Use this skill to create images that build reliably, run securely, and minimize size/startup overhead.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Layer and cache strategy guidance:
   - `references/dockerfile-layer-cache-guidance.md`

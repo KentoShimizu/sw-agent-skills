@@ -5,6 +5,10 @@ description: "Style, review, and refactoring standards for POSIX `sh` scripting.
 
 # SH Style Guide
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 Use this skill to write and review POSIX `sh` scripts that run reliably across environments where Bash features are unavailable.
 
 ## Trigger And Co-activation Reference

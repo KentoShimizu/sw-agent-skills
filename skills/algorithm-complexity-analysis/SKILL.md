@@ -8,6 +8,10 @@ description: "Analyze candidate algorithms for time/space complexity, scalabilit
 ## Overview
 Use this skill to quantify whether candidate approaches can meet performance and resource constraints at expected scale.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Candidate algorithms and dominant operations.
 - Input-scale assumptions (current, expected, and stress ranges).

@@ -8,6 +8,10 @@ description: "Design executable acceptance criteria for approved requirements by
 ## Overview
 Use this skill to translate approved requirements into acceptance criteria that engineering and QA can execute without interpretation drift.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Approved requirements (`REQ-*`) and relevant non-functional requirements (`NFR-*`).
 - Business intent, out-of-scope boundaries, and policy constraints.

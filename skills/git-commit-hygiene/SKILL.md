@@ -8,6 +8,10 @@ description: "Enforce atomic commits, clear commit messages, and auditable chang
 ## Overview
 Use this skill to create commit history that reviewers can reason about and operators can bisect safely.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Commit message quality rules:
   - `references/commit-message-quality-rules.md`

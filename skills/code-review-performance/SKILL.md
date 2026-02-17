@@ -8,6 +8,10 @@ description: "Run performance-focused code review when changes may affect latenc
 ## Overview
 Use this skill to detect performance regressions before merge, especially on hot paths and high-traffic execution flows.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Hot-path endpoints/jobs and current performance budgets.
 - Workload assumptions (QPS, payload size, concurrency, data cardinality).

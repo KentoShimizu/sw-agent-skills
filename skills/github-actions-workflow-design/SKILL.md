@@ -8,6 +8,10 @@ description: "Design and maintain GitHub Actions workflows with explicit trigger
 ## Overview
 Use this skill to design CI/CD workflows that are secure, debuggable, and aligned with repository protection policy.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Permissions matrix:
   - `references/actions-permissions-matrix.md`

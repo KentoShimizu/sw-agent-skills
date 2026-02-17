@@ -8,6 +8,10 @@ description: "Requirement elicitation workflow for collecting, reconciling, and 
 ## Overview
 Use this skill to collect requirement evidence with traceability, confidence, and contradiction visibility.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Evidence strength rules:
   - `references/evidence-strength-rules.md`

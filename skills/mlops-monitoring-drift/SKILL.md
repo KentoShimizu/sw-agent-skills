@@ -8,6 +8,10 @@ description: "MLOps drift monitoring workflow for detecting data drift, concept 
 ## Overview
 Use this skill to detect meaningful model degradation early and trigger appropriate remediation actions.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Drift alerting and escalation rules:
   - `references/drift-alerting-escalation-rules.md`

@@ -8,7 +8,7 @@ description: "Security workflow for secret inventory, storage, distribution, rot
 ## Overview
 Use this skill to prevent secret exposure and ensure secrets remain manageable throughout their lifecycle.
 
-## Use This Skill When
+## Scope Boundaries
 - New secrets are introduced or existing secrets are rotated/migrated.
 - Secret storage and runtime distribution mechanisms are being designed.
 - Secret exposure response and revocation capability need verification.

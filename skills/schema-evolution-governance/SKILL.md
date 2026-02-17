@@ -8,6 +8,10 @@ description: "Schema evolution governance workflow for safe migration sequencing
 ## Overview
 Use this skill to evolve shared schemas without breaking producers, consumers, or historical data integrity.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Compatibility window rules:
   - `references/compatibility-window-rules.md`

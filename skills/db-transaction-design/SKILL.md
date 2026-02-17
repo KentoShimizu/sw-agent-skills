@@ -8,7 +8,7 @@ description: "Transaction design workflow for boundary definition, isolation-lev
 ## Overview
 Use this skill to design transaction behavior that protects invariants while avoiding avoidable contention and deadlocks.
 
-## Use This Skill When
+## Scope Boundaries
 - Concurrent workflows must preserve business invariants.
 - Anomalies (lost update, write skew, phantom) are possible.
 - Lock contention or deadlocks are degrading reliability.

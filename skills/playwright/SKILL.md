@@ -8,6 +8,10 @@ description: "Playwright browser verification workflow for user-journey evidence
 ## Overview
 Use this skill to validate browser-level behavior with reproducible artifacts that engineers can replay exactly.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Trigger examples:
   - `references/trigger-and-examples.md`

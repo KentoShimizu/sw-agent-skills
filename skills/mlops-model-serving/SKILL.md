@@ -8,6 +8,10 @@ description: "MLOps model serving workflow for serving topology, latency SLOs, a
 ## Overview
 Use this skill to deploy models with predictable latency/error behavior and controlled rollout risk.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Serving SLO and rollout rules:
   - `references/serving-slo-and-rollout-rules.md`

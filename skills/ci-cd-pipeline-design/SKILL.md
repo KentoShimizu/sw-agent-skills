@@ -8,6 +8,10 @@ description: "Design CI/CD pipelines with explicit stage order, quality gates, a
 ## Overview
 Use this skill to design delivery pipelines that are deterministic, auditable, and safe under both success and failure paths.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Repository topology (mono-repo/multi-repo), services affected, and deployment targets.
 - Required checks (lint, test, security, compliance, performance) and risk tolerance.

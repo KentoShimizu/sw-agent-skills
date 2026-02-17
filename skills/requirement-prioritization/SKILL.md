@@ -8,6 +8,10 @@ description: "Requirement prioritization workflow for dependency-aware ranking a
 ## Overview
 Use this skill to produce reproducible priority decisions that are executable under real dependency and capacity constraints.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Dependency-aware ranking rules:
   - `references/dependency-aware-ranking-rules.md`

@@ -8,6 +8,10 @@ description: "ML feature engineering workflow for feature definition, lineage, a
 ## Overview
 Use this skill to design features that are useful, explainable, and consistent across training and serving.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Online/offline parity rules:
   - `references/online-offline-parity-rules.md`

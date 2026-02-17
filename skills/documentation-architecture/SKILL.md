@@ -8,6 +8,10 @@ description: "Author architecture documentation that explains boundaries, depend
 ## Overview
 Use this skill to produce architecture documents that improve shared understanding and reduce design/review ambiguity.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Review checklist:
   - `references/architecture-doc-review-checklist.md`

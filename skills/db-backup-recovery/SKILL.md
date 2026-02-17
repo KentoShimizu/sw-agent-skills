@@ -8,7 +8,7 @@ description: "Database backup and recovery workflow for defining RPO/RTO-aligned
 ## Overview
 Use this skill to define backup and restore behavior that is credible under incident pressure, not only compliant on paper.
 
-## Use This Skill When
+## Scope Boundaries
 - Data loss tolerance and recovery time objectives must be formalized.
 - Backup policy is changing due to scale, compliance, or architecture change.
 - Teams need confidence that restore procedures actually work.

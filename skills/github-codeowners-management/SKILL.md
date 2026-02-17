@@ -8,6 +8,10 @@ description: "Govern CODEOWNERS rules so review routing reflects real ownership 
 ## Overview
 Use this skill to keep CODEOWNERS enforceable, low-noise, and aligned with actual maintainer responsibility.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - CODEOWNERS pattern guidance:
   - `references/codeowners-patterns.md`

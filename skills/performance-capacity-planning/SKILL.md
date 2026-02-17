@@ -8,6 +8,10 @@ description: "Performance capacity planning workflow for forecasting demand, def
 ## Overview
 Use this skill to build capacity plans that keep services reliable under growth and peak demand.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Capacity forecast rules:
   - `references/capacity-forecast-rules.md`

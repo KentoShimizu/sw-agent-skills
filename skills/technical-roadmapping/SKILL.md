@@ -8,7 +8,7 @@ description: "Technical roadmap workflow for sequencing initiatives, dependencie
 ## Overview
 Use this skill to produce realistic technical roadmaps that make sequencing, risk, and ownership explicit.
 
-## Use This Skill When
+## Scope Boundaries
 - Multiple initiatives compete for the same engineering capacity.
 - Dependency ordering and milestone timing determine delivery feasibility.
 - Teams need a defensible plan across quarters or release trains.

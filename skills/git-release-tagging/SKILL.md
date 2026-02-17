@@ -8,6 +8,10 @@ description: "Create immutable release tags and traceable release notes from Git
 ## Overview
 Use this skill to cut releases with immutable tags and auditable change boundaries.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Versioning and immutability rules:
   - `references/tag-versioning-and-immutability.md`

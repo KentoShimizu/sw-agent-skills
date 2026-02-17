@@ -8,6 +8,10 @@ description: "Localization QA workflow for language correctness, layout resilien
 ## Overview
 Use this skill to verify that localized experiences remain correct, usable, and release-safe across required locales.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Localization defect severity rules:
   - `references/localization-defect-severity-rules.md`

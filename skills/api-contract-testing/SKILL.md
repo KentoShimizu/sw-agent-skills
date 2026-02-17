@@ -5,7 +5,7 @@ description: "Consumer-provider contract testing and release-gate design for com
 
 # API Contract Testing
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when API compatibility must be continuously validated between producers and consumers.
 - Use proactively when schema/endpoint/protocol diffs exist but executable compatibility evidence is missing.
 - Use when compatibility judgment is currently human-only and needs codified CI gates.

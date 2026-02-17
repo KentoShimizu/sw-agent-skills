@@ -8,7 +8,7 @@ description: "Conceptual data modeling workflow for domain entities, relationshi
 ## Overview
 Use this skill to model domain meaning first, so later schema decisions reflect business semantics rather than accidental implementation details.
 
-## Use This Skill When
+## Scope Boundaries
 - Teams disagree on entity meaning or relationship semantics.
 - A new domain area is being introduced.
 - Existing schema complexity suggests conceptual drift.

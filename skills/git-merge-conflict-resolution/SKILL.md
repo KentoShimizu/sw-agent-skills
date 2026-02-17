@@ -8,6 +8,10 @@ description: "Resolve Git merge/rebase conflicts with explicit intent tracking a
 ## Overview
 Use this skill to resolve conflicts without silently dropping behavior from either side.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Semantic conflict triage:
   - `references/semantic-conflict-triage.md`

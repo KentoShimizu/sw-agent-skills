@@ -8,7 +8,7 @@ description: "End-user research workflow for validating behavior, needs, and pai
 ## Overview
 Use this skill to gather credible evidence from representative users and reduce product decision risk.
 
-## Use This Skill When
+## Scope Boundaries
 - Product assumptions require validation before high-cost implementation.
 - Teams need evidence for unmet needs, friction points, or mental-model mismatch.
 - Competing solution options need user-behavior evidence for prioritization.

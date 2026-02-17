@@ -8,6 +8,10 @@ description: "Locate regression-introducing commits using git bisect with determ
 ## Overview
 Use this skill to isolate first-bad commits quickly and reproducibly, so fixes target root cause instead of symptoms.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Determinism guidance:
   - `references/bisect-determinism-guidance.md`

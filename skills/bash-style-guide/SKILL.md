@@ -5,6 +5,10 @@ description: "Style, review, and refactoring standards for Bash shell scripting.
 
 # Bash Style Guide
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 Use this skill to write and review Bash scripts that are safe, debuggable, and operable in CI and production automation.
 
 ## Trigger And Co-activation Reference

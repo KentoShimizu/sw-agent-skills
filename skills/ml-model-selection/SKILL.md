@@ -8,6 +8,10 @@ description: "ML model selection workflow for transparent trade-offs across accu
 ## Overview
 Use this skill to choose model candidates with explicit trade-off reasoning, not single-metric optimization.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Model selection trade-off rules:
   - `references/model-selection-tradeoff-rules.md`

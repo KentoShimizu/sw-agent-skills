@@ -8,6 +8,10 @@ description: "Respond to GitHub Actions failures with evidence-based triage, roo
 ## Overview
 Use this skill to move failed CI checks from symptoms to verified root-cause fixes without bypassing quality gates.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - CI failure taxonomy:
   - `references/ci-failure-taxonomy.md`

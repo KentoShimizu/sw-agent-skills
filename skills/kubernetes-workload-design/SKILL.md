@@ -8,6 +8,10 @@ description: "Kubernetes workload design workflow for resource sizing, autoscali
 ## Overview
 Use this skill to design Kubernetes workloads that scale predictably and roll out safely under real traffic behavior.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Autoscaling and rollout decision rules:
   - `references/autoscaling-and-rollout-decision-rules.md`

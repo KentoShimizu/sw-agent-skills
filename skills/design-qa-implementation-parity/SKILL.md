@@ -8,6 +8,10 @@ description: "Verify implementation parity against approved design specs with se
 ## Overview
 Use this skill to detect and triage design-to-implementation drift with evidence that engineers and designers can both act on.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Severity classification model:
   - `references/parity-severity-model.md`

@@ -8,7 +8,7 @@ description: "Replication and sharding workflow for scaling read/write throughpu
 ## Overview
 Use this skill to design data topology that scales safely without hiding consistency and operability costs.
 
-## Use This Skill When
+## Scope Boundaries
 - Throughput, storage, or availability limits exceed single-instance capacity.
 - Read/write scaling requires replication or partitioning.
 - Regional or tenant growth pressures topology redesign.

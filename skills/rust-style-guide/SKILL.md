@@ -5,6 +5,10 @@ description: "Style, review, and refactoring standards for Rust codebases. Trigg
 
 # Rust Style Guide
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 Apply this checklist when writing or reviewing Rust code.
 
 ## Trigger Reference

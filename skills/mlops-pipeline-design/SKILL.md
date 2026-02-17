@@ -8,6 +8,10 @@ description: "MLOps pipeline design workflow for orchestrating training, validat
 ## Overview
 Use this skill to design ML pipelines that are reproducible, governable, and promotion-safe.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Promotion gate rules:
   - `references/promotion-gate-rules.md`

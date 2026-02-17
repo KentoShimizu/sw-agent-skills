@@ -8,6 +8,10 @@ description: "Resolve GitHub PR review comments with structured triage, focused 
 ## Overview
 Use this skill to turn review comments into prioritized, verified fixes and explicit thread closure evidence.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Templates And Assets
 - Comment resolution log:
   - `assets/comment-resolution-log-template.md`

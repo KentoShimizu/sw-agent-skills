@@ -8,6 +8,10 @@ description: "Observability tracing workflow for distributed trace coverage and 
 ## Overview
 Use this skill to make critical request flows traceable end-to-end for latency and failure diagnosis.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Span attribute and sampling rules:
   - `references/span-attribute-and-sampling-rules.md`

@@ -8,6 +8,10 @@ description: "Canonical requirement baseline workflow after evidence collection.
 ## Overview
 Use this skill to convert validated evidence into a stable requirement baseline with traceability and ownership.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared Requirements Contract
 - Governance contract:
   - `references/requirements-governance-contract.md`

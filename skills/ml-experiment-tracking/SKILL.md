@@ -8,6 +8,10 @@ description: "ML experiment tracking workflow for reproducibility, metadata inte
 ## Overview
 Use this skill to make ML experiments comparable, reproducible, and audit-friendly.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Reproducibility metadata rules:
   - `references/reproducibility-metadata-rules.md`

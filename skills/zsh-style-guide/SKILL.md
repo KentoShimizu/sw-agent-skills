@@ -5,6 +5,10 @@ description: "Style, review, and refactoring standards for Zsh scripting. Trigge
 
 # ZSH Style Guide
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 Use this skill to write and review Zsh scripts that intentionally rely on Zsh behavior while staying safe and maintainable.
 
 ## Trigger And Co-activation Reference

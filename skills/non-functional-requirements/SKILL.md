@@ -8,6 +8,10 @@ description: "Quality attribute specification workflow after functional requirem
 ## Overview
 Use this skill to define measurable quality constraints that are enforceable before release.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - NFR threshold definition rules:
   - `references/nfr-threshold-definition-rules.md`

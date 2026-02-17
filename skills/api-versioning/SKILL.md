@@ -5,7 +5,7 @@ description: API version lifecycle governance for breaking-change classification
 
 # API Versioning
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when compatibility policy, deprecation lifecycle, or version transition strategy is in scope.
 - Use proactively when API diffs alter semantics, required fields, response shape, or transport guarantees.
 - Use when internal and external consumers have different support windows or migration constraints.

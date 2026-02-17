@@ -8,6 +8,10 @@ description: "Run security-focused code review when changes cross trust boundari
 ## Overview
 Use this skill to identify exploitable weaknesses and data-protection risks before merge.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Changed trust boundaries (external input, authn/authz, storage, outbound calls).
 - Sensitive data categories and handling paths.

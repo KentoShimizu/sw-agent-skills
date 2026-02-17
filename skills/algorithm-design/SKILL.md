@@ -8,6 +8,10 @@ description: "Design algorithms by modeling constraints, enumerating candidate s
 ## Overview
 Use this skill to produce an implementable algorithm decision with explicit correctness reasoning and tradeoff analysis.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Objective, required outputs, and correctness conditions.
 - Input constraints (size ranges, distribution, adversarial cases, update/query patterns).

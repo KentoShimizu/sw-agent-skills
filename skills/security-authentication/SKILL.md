@@ -8,7 +8,7 @@ description: "Security workflow for authentication architecture, credential life
 ## Overview
 Use this skill to design and review authentication flows that resist account takeover while preserving acceptable user friction.
 
-## Use This Skill When
+## Scope Boundaries
 - Authentication factors, login flows, or account-recovery behavior are being introduced or changed.
 - Session management (cookie/token TTL, refresh policy, revocation) needs to be defined.
 - Risk-based controls (MFA, step-up auth, suspicious login handling) are required.

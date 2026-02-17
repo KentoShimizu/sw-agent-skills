@@ -8,6 +8,10 @@ description: "Design and execute controlled chaos experiments to validate resili
 ## Overview
 Use this skill to design safe, evidence-driven fault injection experiments that verify system resilience under realistic failure conditions.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Critical user journeys and service dependency map.
 - Current SLI/SLO and alert signal quality.

@@ -8,6 +8,10 @@ description: "Reconstruct change history using log/show/diff/blame evidence to e
 ## Overview
 Use this skill to produce an auditable evidence chain from symptom to likely root-cause commits.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Evidence quality rules:
   - `references/history-evidence-quality-rules.md`

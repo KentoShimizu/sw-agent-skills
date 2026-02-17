@@ -8,6 +8,10 @@ description: "Project estimation workflow for dependency-aware breakdowns and un
 ## Overview
 Use this skill to create realistic estimates that expose uncertainty and sequencing risk instead of false precision.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Estimation calibration rules:
   - `references/estimation-calibration-rules.md`

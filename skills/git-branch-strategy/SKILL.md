@@ -8,6 +8,10 @@ description: "Define branch topology, lifecycle rules, and merge policy that mat
 ## Overview
 Use this skill to design a branch model that teams can operate consistently under normal delivery and incident pressure.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Existing governance baseline:
   - `references/git-governance-contract.md`

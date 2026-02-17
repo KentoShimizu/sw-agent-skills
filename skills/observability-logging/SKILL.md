@@ -8,6 +8,10 @@ description: "Observability logging workflow for structured schema, correlation,
 ## Overview
 Use this skill to standardize logs so incidents can be diagnosed quickly and safely.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Logging field and retention rules:
   - `references/logging-field-and-retention-rules.md`

@@ -8,6 +8,10 @@ description: "Express API development workflow for production-ready Node.js serv
 ## Overview
 Use this skill to design and implement Express services with explicit middleware ordering, stable API errors, and operationally debuggable behavior.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Middleware ordering guidance:
   - `references/express-middleware-ordering-guidance.md`

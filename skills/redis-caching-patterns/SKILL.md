@@ -8,6 +8,10 @@ description: "Redis caching workflow for latency improvement with explicit key s
 ## Overview
 Use this skill to design cache behavior that improves performance without silently violating correctness expectations.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Cache invalidation rules:
   - `references/cache-invalidation-rules.md`

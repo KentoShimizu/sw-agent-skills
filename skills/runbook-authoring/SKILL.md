@@ -8,6 +8,10 @@ description: "Runbook authoring workflow for clear, executable operational proce
 ## Overview
 Use this skill to produce runbooks responders can execute reliably under incident pressure.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Runbook usability rules:
   - `references/runbook-usability-rules.md`

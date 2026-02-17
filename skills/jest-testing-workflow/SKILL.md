@@ -8,6 +8,10 @@ description: "Jest verification workflow for JavaScript/TypeScript codebases wit
 ## Overview
 Use this skill to design and run Jest suites that are stable, meaningful, and decision-ready for merge gates.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Trigger examples and expected deliverables:
   - `references/trigger-and-examples.md`

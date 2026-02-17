@@ -8,6 +8,10 @@ description: "Design token architecture workflow for semantic, scalable, impleme
 ## Overview
 Use this skill to replace hardcoded visual values with a governed token model that scales across teams and platforms.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Naming rules and anti-patterns:
   - `references/token-naming-rules.md`

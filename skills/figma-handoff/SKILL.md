@@ -8,6 +8,10 @@ description: "Design-to-engineering handoff workflow for packaging implementatio
 ## Overview
 Use this skill to produce implementation-ready handoff artifacts that reduce ambiguity between design and engineering.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Handoff quality gates:
   - `references/figma-handoff-quality-gates.md`

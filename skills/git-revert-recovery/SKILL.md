@@ -8,6 +8,10 @@ description: "Recover safely from problematic merges or commits using explicit r
 ## Overview
 Use this skill to restore stability quickly on shared branches without destructive history rewrite.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Revert scope selection guidance:
   - `references/revert-scope-selection.md`

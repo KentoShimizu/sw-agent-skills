@@ -8,7 +8,7 @@ description: "Clean Architecture workflow for enforcing dependency direction, st
 ## Overview
 Use this skill to structure systems so business rules remain stable while infrastructure and frameworks evolve.
 
-## Use This Skill When
+## Scope Boundaries
 - Framework and infrastructure details are leaking into domain logic.
 - Dependency direction is inconsistent and change cost is rising.
 - Teams need explicit boundaries between use cases, adapters, and delivery layers.

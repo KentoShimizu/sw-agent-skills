@@ -5,7 +5,7 @@ description: "Controlled online experiment workflow for product changes with cau
 
 # Ab Testing
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when product, pricing, ranking, recommendation, or policy changes may impact user/business KPIs and causal validation is required.
 - Use proactively when metric impact is uncertain, stakeholder opinions conflict, or ship/no-ship criteria are not explicit.
 - Use when canary metrics alone are insufficient to support a decision.

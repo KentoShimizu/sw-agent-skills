@@ -8,7 +8,7 @@ description: "Visual design workflow for defining coherent color, typography, sp
 ## Overview
 Use this skill to create visual systems that are consistent, accessible, and implementation-ready.
 
-## Use This Skill When
+## Scope Boundaries
 - Product surfaces need a coherent visual language or redesign.
 - Teams must align brand expression with usability and accessibility constraints.
 - Implementation teams need explicit visual rules rather than isolated mockups.

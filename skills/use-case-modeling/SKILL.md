@@ -8,7 +8,7 @@ description: "Use case modeling workflow for clarifying actor interactions, boun
 ## Overview
 Use this skill to make behavior explicit across actors and system boundaries before coding.
 
-## Use This Skill When
+## Scope Boundaries
 - Approved requirements still leave interaction behavior unclear.
 - Teams need aligned understanding of success, alternate, and failure flows.
 - Boundary responsibilities across systems or roles are disputed.

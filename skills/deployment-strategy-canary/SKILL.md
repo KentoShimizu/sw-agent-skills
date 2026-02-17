@@ -8,6 +8,10 @@ description: "Design canary rollout strategy with progressive traffic steps, gua
 ## Overview
 Use this skill to release changes gradually while measuring real-user impact before broad rollout.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Promotion and stop decision rules:
   - `references/canary-promotion-rules.md`

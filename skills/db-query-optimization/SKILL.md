@@ -8,7 +8,7 @@ description: "Query optimization workflow for reducing latency and resource cost
 ## Overview
 Use this skill to improve query performance based on execution evidence, not intuition.
 
-## Use This Skill When
+## Scope Boundaries
 - Hot-path latency or database CPU/IO usage is query-bound.
 - Query plans are unstable across parameter distributions.
 - Workload changes expose previously acceptable query anti-patterns.

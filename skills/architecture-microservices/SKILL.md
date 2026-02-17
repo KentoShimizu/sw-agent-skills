@@ -8,7 +8,7 @@ description: "Microservices architecture workflow for service boundary design, i
 ## Overview
 Use this skill to design microservice architectures that trade monolithic simplicity for bounded autonomy intentionally.
 
-## Use This Skill When
+## Scope Boundaries
 - Different domain areas change at different speeds and require independent release cadence.
 - Team autonomy and ownership boundaries are blocked by shared code/runtime coupling.
 - Operational platform maturity exists to absorb distributed-system overhead.

@@ -8,7 +8,7 @@ description: "Security incident workflow for triage, containment, eradication, a
 ## Overview
 Use this skill to run a structured response that minimizes blast radius, preserves evidence, and restores service safely.
 
-## Use This Skill When
+## Scope Boundaries
 - Indicators of compromise or security alerts require investigation.
 - Active abuse is suspected and containment decisions are needed.
 - Security incident communications and recovery criteria must be formalized.

@@ -8,6 +8,10 @@ description: "Kubernetes fundamentals workflow for workload deployment, service 
 ## Overview
 Use this skill to define a deployable Kubernetes baseline that is reproducible and operationally verifiable.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Service discovery and probe rules:
   - `references/service-discovery-and-probe-rules.md`

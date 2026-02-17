@@ -8,6 +8,10 @@ description: "Information architecture workflow for navigation structure, conten
 ## Overview
 Use this skill to make product information structures findable, scalable, and consistent across surfaces.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Navigation depth and labeling rules:
   - `references/navigation-depth-and-labeling-rules.md`

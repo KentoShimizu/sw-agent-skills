@@ -8,6 +8,10 @@ description: "ML training optimization workflow for convergence stability, effic
 ## Overview
 Use this skill to improve training throughput and cost while preserving model quality and stability.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Convergence and budget rules:
   - `references/convergence-and-budget-rules.md`

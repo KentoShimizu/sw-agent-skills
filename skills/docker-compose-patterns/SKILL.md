@@ -8,6 +8,10 @@ description: "Design multi-service local orchestration with Docker Compose, incl
 ## Overview
 Use this skill to define reliable multi-service local stacks for development, debugging, and integration testing.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Dependency and startup patterns:
   - `references/compose-dependency-guidance.md`

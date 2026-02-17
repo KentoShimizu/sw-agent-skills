@@ -8,7 +8,7 @@ description: "Serverless architecture workflow for event-driven and bursty workl
 ## Overview
 Use this skill to design serverless systems that are cost-aware, failure-tolerant, and operationally predictable.
 
-## Use This Skill When
+## Scope Boundaries
 - Traffic is variable or bursty and elastic scaling is valuable.
 - Team capacity for infrastructure operations is limited.
 - Workloads are naturally event-driven or request/response with bounded execution.

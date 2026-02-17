@@ -8,6 +8,10 @@ description: "SRE SLI/SLO workflow for reliability target definition, measurable
 ## Overview
 Use this skill to define reliability goals that directly drive operational decisions.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - SLO target setting rules:
   - `references/slo-target-setting-rules.md`

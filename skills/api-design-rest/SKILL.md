@@ -5,7 +5,7 @@ description: Resource-oriented REST/OpenAPI contract design for URI/method seman
 
 # API Design REST
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when REST resources, URI structures, and HTTP behavior are being designed or changed.
 - Use proactively when route, method, status, or schema diffs appear in specs, manifests, or source.
 - Use when request-response transport options are being compared and REST is a candidate.

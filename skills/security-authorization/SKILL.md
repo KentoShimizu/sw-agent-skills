@@ -8,7 +8,7 @@ description: "Security workflow for authorization boundaries, least-privilege po
 ## Overview
 Use this skill to build authorization systems that enforce least privilege across APIs, UI actions, and background jobs.
 
-## Use This Skill When
+## Scope Boundaries
 - Role/permission models are being introduced or revised.
 - Resource-scoped access control must be consistent across services.
 - Privileged workflows require explicit separation-of-duty controls.

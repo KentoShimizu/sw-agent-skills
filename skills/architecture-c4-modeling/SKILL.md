@@ -8,7 +8,7 @@ description: "C4 architecture modeling workflow for context, container, and comp
 ## Overview
 Use this skill to produce C4 views that remove architectural ambiguity and help teams reason about scope, ownership, and risk.
 
-## Use This Skill When
+## Scope Boundaries
 - System boundaries are unclear across teams or services.
 - People disagree on where responsibilities belong.
 - A large change requires shared architecture context before coding.

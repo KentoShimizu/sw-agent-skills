@@ -8,6 +8,10 @@ description: "Release management workflow for go/no-go governance, readiness evi
 ## Overview
 Use this skill to run release decisions with auditable evidence and explicit risk ownership.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Release signoff rules:
   - `references/release-signoff-rules.md`

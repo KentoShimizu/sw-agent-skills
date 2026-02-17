@@ -8,6 +8,10 @@ description: "React component design workflow for state ownership, composition b
 ## Overview
 Use this skill to build React components that are composable, testable, and stable under evolving UI requirements.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Rendering and hooks rules:
   - `references/rendering-and-hooks-rules.md`

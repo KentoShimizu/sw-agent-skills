@@ -8,6 +8,10 @@ description: "Style, review, and refactoring standards for Python codebases with
 ## Overview
 Use this skill to review and improve Python code for correctness, readability, and production reliability.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Trigger Reference
 - Use `references/trigger-matrix.md` as the canonical trigger and co-activation matrix.
 - Resolve skill activation from changed files with `python3 scripts/resolve_style_guides.py <changed-path>...` when automation is available.

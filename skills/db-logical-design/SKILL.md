@@ -8,7 +8,7 @@ description: "Logical database design workflow for table structure, key strategy
 ## Overview
 Use this skill to define schema semantics that preserve integrity and support maintainable application behavior.
 
-## Use This Skill When
+## Scope Boundaries
 - New domain models must be translated into relational schema.
 - Existing schema suffers from integrity drift or unclear constraints.
 - Teams need consistent key and relationship semantics.

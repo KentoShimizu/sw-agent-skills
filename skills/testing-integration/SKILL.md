@@ -8,7 +8,7 @@ description: "Integration-boundary testing for component and service collaborati
 ## Overview
 Use this skill to verify boundary behavior where independently correct units may still fail in combination.
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when correctness depends on integration seams.
 - Typical requests:
   - `Validate repository-to-database behavior including failure paths.`

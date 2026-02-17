@@ -8,6 +8,10 @@ description: "Define architecture principles and review guardrails before choosi
 ## Overview
 Use this skill to produce principle-level guardrails that help agents and humans make consistent architecture decisions. The output must be concrete enough to guide design reviews and implementation planning.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Business outcomes and failure impact.
 - Quality priorities (latency, reliability, security, consistency, cost, delivery speed).

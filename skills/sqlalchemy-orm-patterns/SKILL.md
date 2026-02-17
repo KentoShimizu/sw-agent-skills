@@ -8,6 +8,10 @@ description: "SQLAlchemy ORM workflow for model mapping, session/transaction bou
 ## Overview
 Use this skill to design SQLAlchemy usage that remains correct, efficient, and maintainable under production load.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - ORM loading and session rules:
   - `references/orm-loading-and-session-rules.md`

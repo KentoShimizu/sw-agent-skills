@@ -8,7 +8,7 @@ description: "End-to-end test planning for critical user journeys across integra
 ## Overview
 Use this skill to validate business-critical journeys under integrated runtime conditions.
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when failure risk is in end-to-end user or operator flows.
 - Typical requests:
   - `Validate checkout flow across UI, API, and payment integration.`

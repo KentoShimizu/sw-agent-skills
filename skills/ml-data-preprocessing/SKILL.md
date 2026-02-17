@@ -8,6 +8,10 @@ description: "ML data preprocessing workflow for cleaning, normalization, and le
 ## Overview
 Use this skill to define preprocessing that improves model quality without introducing leakage or unreproducible transforms.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Leakage prevention rules:
   - `references/leakage-prevention-rules.md`

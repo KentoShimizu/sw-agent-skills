@@ -8,7 +8,7 @@ description: "Red-green-refactor workflow for test-first implementation feedback
 ## Overview
 Use this skill to drive implementation through fast red-green-refactor cycles with explicit design feedback.
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when implementation should be guided by failing tests first.
 - Typical requests:
   - `Develop a new feature with strict red-green-refactor discipline.`

@@ -8,6 +8,10 @@ description: "Privacy-by-design workflow for embedding data minimization, lawful
 ## Overview
 Use this skill to make privacy requirements explicit, enforceable, and testable before implementation.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Lawful basis and minimization rules:
   - `references/lawful-basis-and-minimization-rules.md`

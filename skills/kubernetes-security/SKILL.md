@@ -8,6 +8,10 @@ description: "Kubernetes security workflow for cluster hardening, workload isola
 ## Overview
 Use this skill to implement enforceable Kubernetes security controls that reduce blast radius and privilege misuse.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - RBAC and NetworkPolicy baselines:
   - `references/rbac-networkpolicy-baselines.md`

@@ -8,6 +8,10 @@ description: "Interaction design workflow for user flows, state transitions, and
 ## Overview
 Use this skill to define clear, accessible interaction behavior for primary and edge-case user journeys.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Interaction feedback principles:
   - `references/interaction-feedback-principles.md`

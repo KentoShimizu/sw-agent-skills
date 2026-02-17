@@ -8,7 +8,7 @@ description: "Risk-based regression suite curation for release gating under time
 ## Overview
 Use this skill to select regression coverage that maximizes risk reduction within execution constraints.
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when not all tests can run every change and selection policy is required.
 - Typical requests:
   - `Optimize regression coverage under CI time budget.`

@@ -8,7 +8,7 @@ description: "Deterministic unit-test strategy for isolated logic and fast feedb
 ## Overview
 Use this skill to validate small-scope logic quickly and deterministically with strong failure localization.
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when correctness can be validated within isolated units.
 - Typical requests:
   - `Harden branch and edge-case logic with fast deterministic tests.`

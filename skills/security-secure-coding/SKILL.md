@@ -8,7 +8,7 @@ description: "Security workflow for secure-by-default coding decisions and vulne
 ## Overview
 Use this skill to prevent introducing exploitable code patterns and to enforce explicit security invariants during implementation.
 
-## Use This Skill When
+## Scope Boundaries
 - New endpoints, parsers, deserializers, or command execution paths are added.
 - Sensitive data handling or trust-boundary crossing logic changes.
 - High-risk dependency or framework behavior needs secure usage decisions.

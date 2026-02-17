@@ -8,7 +8,7 @@ description: "Distributed-systems workflow for failure-mode analysis, consistenc
 ## Overview
 Use this skill to reason about correctness and reliability in systems where network faults and partial failures are normal.
 
-## Use This Skill When
+## Scope Boundaries
 - Multi-service workflows require explicit consistency and ordering guarantees.
 - Retry/timeout/duplicate-message behavior can change business correctness.
 - Teams need to define reliability primitives before implementation or rollout.

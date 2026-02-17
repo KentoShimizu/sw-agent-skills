@@ -8,7 +8,7 @@ description: "Event-driven architecture workflow for asynchronous integration, d
 ## Overview
 Use this skill to design event-driven systems that remain correct under retries, delays, and partial failures.
 
-## Use This Skill When
+## Scope Boundaries
 - Workflows span multiple bounded contexts or services asynchronously.
 - Temporal decoupling is needed to improve autonomy or resilience.
 - Integration churn is high and direct RPC coupling causes fragility.

@@ -5,7 +5,7 @@ description: API failure-contract design for status mapping, stable error codes,
 
 # API Error Handling
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when API error taxonomy, response schemas, and status mapping are being created or changed.
 - Use proactively when failure handling is implicit, inconsistent, or incident learning needs to be codified in the contract.
 - Use proactively when error payload or status-mapping diffs are detected without explicit retry/backoff policy.

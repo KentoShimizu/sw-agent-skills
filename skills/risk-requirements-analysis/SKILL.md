@@ -8,6 +8,10 @@ description: "Requirement risk analysis workflow for failure scenarios, scoring,
 ## Overview
 Use this skill to make requirement-level risk visible before release commitments are locked.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Requirement risk scoring rules:
   - `references/requirement-risk-scoring-rules.md`

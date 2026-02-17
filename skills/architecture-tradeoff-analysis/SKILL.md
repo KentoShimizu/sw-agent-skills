@@ -8,7 +8,7 @@ description: "Architecture trade-off analysis workflow for comparing options wit
 ## Overview
 Use this skill to make architecture choices explicit, comparable, and auditable instead of preference-driven.
 
-## Use This Skill When
+## Scope Boundaries
 - There are several plausible architecture options.
 - Decision stakes are high and reversal is expensive.
 - Teams need a shared basis for selecting one option.

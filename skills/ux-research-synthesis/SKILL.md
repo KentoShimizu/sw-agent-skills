@@ -8,7 +8,7 @@ description: "UX research synthesis workflow for turning mixed evidence into pri
 ## Overview
 Use this skill to transform fragmented research inputs into coherent and prioritized product/design direction.
 
-## Use This Skill When
+## Scope Boundaries
 - Multiple research sources exist but implications are unclear or conflicting.
 - Teams need to prioritize design actions using evidence, not intuition.
 - Product or design planning requires confidence-weighted insight summaries.

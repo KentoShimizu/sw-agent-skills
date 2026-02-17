@@ -8,6 +8,10 @@ description: "Design and review container runtime basics for reproducible local/
 ## Overview
 Use this skill to ensure containerized workloads are reproducible, debuggable, and operationally safe.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Runtime risk catalog:
   - `references/docker-runtime-risk-catalog.md`

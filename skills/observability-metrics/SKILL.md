@@ -8,6 +8,10 @@ description: "Observability metrics workflow for metric model design aligned to 
 ## Overview
 Use this skill to define metrics that reflect real reliability and business impact, not vanity signals.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Metric cardinality and SLI rules:
   - `references/metric-cardinality-and-sli-rules.md`

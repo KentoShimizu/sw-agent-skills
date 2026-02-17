@@ -8,6 +8,10 @@ description: "Pytest verification workflow for Python changes with deterministic
 ## Overview
 Use this skill to design pytest suites that are fast enough for daily feedback and stable enough for CI gates.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Trigger examples:
   - `references/trigger-and-examples.md`

@@ -8,7 +8,7 @@ description: "Visual evidence capture workflow for reproducible screenshots in e
 ## Overview
 Use this skill to capture reproducible screenshot evidence that is easy to review and trace back to exact system state.
 
-## Use This Skill When
+## Scope Boundaries
 - Bugs or regressions need visual evidence for triage.
 - Before/after comparison is required for implementation validation.
 - QA or review comments require precise state capture.

@@ -8,6 +8,10 @@ description: "FastAPI service development workflow for production-grade Python A
 ## Overview
 Use this skill to build FastAPI services with explicit schema contracts, controlled dependency lifecycles, and predictable async runtime behavior.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Dependency lifecycle guidance:
   - `references/fastapi-dependency-lifecycle-guidance.md`

@@ -8,6 +8,10 @@ description: "Select and apply minimal hotfix commits across branches via cherry
 ## Overview
 Use this skill to backport urgent fixes quickly while controlling dependency spillover and regression risk.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Dependency decision rules:
   - `references/cherry-pick-dependency-rules.md`

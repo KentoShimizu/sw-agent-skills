@@ -8,7 +8,7 @@ description: "Modular monolith architecture workflow for strong domain boundarie
 ## Overview
 Use this skill to design modular monoliths that preserve internal autonomy without introducing distributed-system overhead.
 
-## Use This Skill When
+## Scope Boundaries
 - Product scope or team size favors a single deployable unit.
 - Cross-domain workflows require strong transactional consistency.
 - Operational simplicity is a top constraint.

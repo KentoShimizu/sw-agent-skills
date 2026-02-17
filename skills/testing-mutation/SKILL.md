@@ -8,7 +8,7 @@ description: "Mutation-testing workflow for exposing weak assertions and missing
 ## Overview
 Use this skill to quantify test effectiveness and prioritize strengthening weak assertions.
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when pass-only test status is insufficient for confidence.
 - Typical requests:
   - `Find weak tests that do not fail when behavior is changed.`

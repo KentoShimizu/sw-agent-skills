@@ -8,6 +8,10 @@ description: "Declarative infrastructure change workflow for plan-reviewed opera
 ## Overview
 Use this skill to manage infrastructure changes as reviewable, reproducible code with explicit state and drift controls.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - State safety rules:
   - `references/iac-state-safety-rules.md`

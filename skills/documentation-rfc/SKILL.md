@@ -8,6 +8,10 @@ description: "Author RFC documents for proposed technical changes with clear pro
 ## Overview
 Use this skill to produce decision-ready RFCs that let stakeholders review options with clear tradeoffs and risks.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Decision quality checks:
   - `references/rfc-decision-quality-checks.md`

@@ -8,6 +8,10 @@ description: "Performance load testing workflow for realistic workload simulatio
 ## Overview
 Use this skill to validate performance under realistic and stress conditions before production risk increases.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Workload realism rules:
   - `references/workload-realism-rules.md`

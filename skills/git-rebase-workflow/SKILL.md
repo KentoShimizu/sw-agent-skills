@@ -8,6 +8,10 @@ description: "Linearize local branch history with safe rebase practices before i
 ## Overview
 Use this skill to clean local history for reviewability while avoiding unsafe rewrite on shared branches.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Rebase safety rules:
   - `references/rebase-safety-rules.md`

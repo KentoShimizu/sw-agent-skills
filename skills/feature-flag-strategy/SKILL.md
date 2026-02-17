@@ -8,6 +8,10 @@ description: "Feature flag lifecycle governance workflow for safe rollout, blast
 ## Overview
 Use this skill to manage feature flags as controlled release instruments, not permanent complexity.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Lifecycle decision rules:
   - `references/flag-lifecycle-decision-rules.md`

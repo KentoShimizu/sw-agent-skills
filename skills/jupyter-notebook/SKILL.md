@@ -8,6 +8,10 @@ description: "Notebook delivery workflow for software teams requiring reproducib
 ## Overview
 Use this skill to produce notebooks another engineer can execute and trust without hidden assumptions.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Notebook structure guidance:
   - `references/notebook-structure.md`

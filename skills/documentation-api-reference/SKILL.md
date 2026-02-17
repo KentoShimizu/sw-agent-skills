@@ -8,6 +8,10 @@ description: "Author API reference documentation that is accurate, complete, and
 ## Overview
 Use this skill to produce API references that enable clients to integrate correctly without reverse engineering source code.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Quality gates:
   - `references/api-doc-quality-gates.md`

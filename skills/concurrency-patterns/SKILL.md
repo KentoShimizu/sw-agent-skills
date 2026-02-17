@@ -8,6 +8,10 @@ description: "Design and review concurrency strategy for shared state, coordinat
 ## Overview
 Use this skill to choose concurrency mechanisms that preserve correctness under load and failure.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Shared state model and mutation frequency.
 - Read/write patterns and contention expectations.

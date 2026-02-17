@@ -8,7 +8,7 @@ description: "Domain-driven design workflow for bounded context partitioning, ag
 ## Overview
 Use this skill to model complex domains so teams can evolve behavior without constant cross-team coupling.
 
-## Use This Skill When
+## Scope Boundaries
 - Domain language differs across teams or subsystems.
 - Invariants are hard to maintain because boundaries are unclear.
 - A single model is causing conflicting meanings and high coordination cost.

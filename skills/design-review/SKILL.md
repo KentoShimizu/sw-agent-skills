@@ -8,6 +8,10 @@ description: "Run structured design reviews that produce actionable findings and
 ## Overview
 Use this skill to convert subjective design feedback into prioritized, evidence-based decisions that unblock implementation.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Severity calibration guidance:
   - `references/design-review-severity-guidance.md`

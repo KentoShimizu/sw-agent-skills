@@ -8,6 +8,10 @@ description: "Keep pull request branches synchronized with target branch updates
 ## Overview
 Use this skill to synchronize open PR branches with minimal review disruption and predictable risk control.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Merge vs rebase decision guidance:
   - `references/sync-strategy-selection.md`

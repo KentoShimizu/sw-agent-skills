@@ -8,7 +8,7 @@ description: "Architecture Decision Record workflow for capturing technical deci
 ## Overview
 Use this skill to make architecture decisions auditable, reversible when possible, and maintainable as constraints evolve.
 
-## Use This Skill When
+## Scope Boundaries
 - A technical decision changes long-term system direction.
 - Multiple viable options exist and trade-offs must be explicit.
 - Teams need a durable rationale for future reviewers.

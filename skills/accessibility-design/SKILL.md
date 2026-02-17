@@ -8,7 +8,7 @@ description: "Accessibility-first design workflow for specifying semantics, keyb
 ## Overview
 Use this skill to define concrete accessibility behavior that implementation teams can build and verify without ambiguity.
 
-## Use This Skill When
+## Scope Boundaries
 - Accessibility behavior for flows or components is undefined or inconsistent.
 - Teams need implementation-ready accessibility requirements before release.
 - Design changes risk keyboard, screen-reader, or readability regressions.

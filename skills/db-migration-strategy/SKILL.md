@@ -8,7 +8,7 @@ description: "Schema migration strategy workflow for sequencing changes, compati
 ## Overview
 Use this skill to evolve schemas in production without service disruption or hidden data corruption.
 
-## Use This Skill When
+## Scope Boundaries
 - Schema changes affect live read/write paths.
 - Multiple service versions must coexist during rollout.
 - Data backfill or contract transition is required.

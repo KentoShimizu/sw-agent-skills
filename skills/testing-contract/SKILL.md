@@ -8,7 +8,7 @@ description: "Provider-consumer compatibility testing for service interface chan
 ## Overview
 Use this skill to prevent integration regressions by enforcing provider-consumer contracts in CI.
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when interface compatibility between producer and consumer is a release risk.
 - Typical requests:
   - `Verify an API response change does not break existing consumers.`

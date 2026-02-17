@@ -8,6 +8,10 @@ description: "Design blue-green deployment strategy with explicit cutover checks
 ## Overview
 Use this skill to design low-risk cutovers between two production environments with clear rollback paths.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Data/schema compatibility guidance:
   - `references/blue-green-data-compatibility.md`

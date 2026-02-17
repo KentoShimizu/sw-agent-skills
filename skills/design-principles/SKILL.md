@@ -8,6 +8,10 @@ description: "Define and align product design principles that teams can apply co
 ## Overview
 Use this skill to produce principle-level guardrails that reduce design churn and conflicting decisions across teams.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Baseline governance contract:
   - `references/design-governance-contract.md`

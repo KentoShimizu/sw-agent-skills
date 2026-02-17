@@ -8,6 +8,10 @@ description: "Incident postmortem workflow for evidence-backed root cause analys
 ## Overview
 Use this skill to turn incidents into concrete learning and prevention changes, not just narrative summaries.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Root-cause evidence rules:
   - `references/root-cause-evidence-rules.md`

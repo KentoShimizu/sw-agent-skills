@@ -8,6 +8,10 @@ description: "Performance profiling workflow for CPU/memory/I/O hotspot localiza
 ## Overview
 Use this skill to identify true runtime hotspots and prioritize optimizations by measurable impact.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Profiling evidence rules:
   - `references/profiling-evidence-rules.md`

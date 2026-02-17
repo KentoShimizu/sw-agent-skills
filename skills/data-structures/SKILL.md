@@ -8,6 +8,10 @@ description: "Select data structures using explicit access patterns, mutation be
 ## Overview
 Use this skill to choose data structures with explicit tradeoffs, then justify the choice with workload assumptions and failure modes.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Required operations (`lookup`, `insert`, `delete`, `scan`, `range`, `top-k`).
 - Read/write ratio and mutation frequency.

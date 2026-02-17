@@ -5,6 +5,10 @@ description: "Style, review, and refactoring standards for C#/.NET codebases. Tr
 
 # Csharp Style Guide
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 Use this skill to write and review C# code that is safe, maintainable, and production-ready.
 
 ## Trigger And Co-activation Reference

@@ -8,7 +8,7 @@ description: "Responsive layout design workflow for defining adaptive structure 
 ## Overview
 Use this skill to define responsive behavior that keeps critical workflows usable across supported screen sizes.
 
-## Use This Skill When
+## Scope Boundaries
 - Layouts break, overflow, or lose usability across devices.
 - Teams need explicit breakpoint and adaptation rules before implementation.
 - Localization/content growth increases truncation and wrapping risk.

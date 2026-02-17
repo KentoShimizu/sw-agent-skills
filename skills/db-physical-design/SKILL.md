@@ -8,7 +8,7 @@ description: "Physical database design workflow for storage layout, partitioning
 ## Overview
 Use this skill to align storage structures with workload shape, growth patterns, and operational constraints.
 
-## Use This Skill When
+## Scope Boundaries
 - Data volume or access distribution creates storage and latency pressure.
 - Partitioning or table layout decisions affect manageability.
 - Engine-specific behavior requires deliberate configuration.

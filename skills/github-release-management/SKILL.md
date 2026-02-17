@@ -8,6 +8,10 @@ description: "Package and publish GitHub Releases with exact version/tag mapping
 ## Overview
 Use this skill to publish GitHub Releases that are accurate, traceable, and operationally usable by consumers.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Release note structure guidance:
   - `references/release-note-format.md`

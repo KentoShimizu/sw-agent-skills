@@ -8,6 +8,10 @@ description: "Optimize cloud spend with explicit tradeoffs across cost, performa
 ## Overview
 Use this skill to produce actionable cloud cost reductions that preserve service quality and operational safety.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Inputs To Gather
 - Cost breakdown by service/account/environment/tag.
 - Utilization telemetry (CPU, memory, I/O, request profile, idle windows).

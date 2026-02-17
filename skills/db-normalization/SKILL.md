@@ -8,7 +8,7 @@ description: "Normalization workflow for reducing update anomalies while balanci
 ## Overview
 Use this skill to decide normalization depth intentionally, preserving integrity without ignoring workload realities.
 
-## Use This Skill When
+## Scope Boundaries
 - Duplicate mutable data causes inconsistency bugs.
 - Schema design needs explicit normalization versus denormalization trade-offs.
 - Teams are preparing for domain growth and evolving query patterns.

@@ -5,7 +5,7 @@ description: GraphQL schema and resolver contract design for type boundaries, nu
 
 # API Design GraphQL
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when GraphQL schema boundaries, resolver contracts, and query safety must be defined.
 - Use proactively when GraphQL SDL/resolver diffs appear in specs, manifests, or source.
 - Use when clients need flexible field selection but query safety and authz boundaries are not yet explicit.

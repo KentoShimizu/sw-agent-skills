@@ -8,6 +8,10 @@ description: "Next.js App Router implementation workflow for route structure, se
 ## Overview
 Use this skill to design App Router implementations that are predictable in rendering, caching, and navigation behavior.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Server/client and cache rules:
   - `references/server-client-and-cache-rules.md`

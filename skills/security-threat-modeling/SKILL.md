@@ -8,7 +8,7 @@ description: "Security workflow for threat modeling using assets, trust boundari
 ## Overview
 Use this skill to make security risks explicit early, prioritize mitigations, and prevent costly redesign after implementation.
 
-## Use This Skill When
+## Scope Boundaries
 - New architecture, integration, or data flow introduces fresh trust boundaries.
 - Significant feature changes alter attacker opportunity or impact.
 - Security requirements need prioritization before implementation commitments.

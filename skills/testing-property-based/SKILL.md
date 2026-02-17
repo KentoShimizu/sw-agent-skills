@@ -8,7 +8,7 @@ description: "Property-based testing workflow for invariant validation over broa
 ## Overview
 Use this skill to validate invariants beyond hand-picked test cases by combining generators, shrinking, and reproducible seeds.
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when input space is large and example-based tests are insufficient.
 - Typical requests:
   - `Verify encode/decode roundtrip invariants for arbitrary inputs.`

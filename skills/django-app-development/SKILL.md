@@ -8,6 +8,10 @@ description: "Django application development workflow for production-grade app c
 ## Overview
 Use this skill to implement Django changes with explicit domain boundaries, safe migrations, and operationally predictable behavior.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Layering and boundary guidance:
   - `references/django-layering-guidelines.md`

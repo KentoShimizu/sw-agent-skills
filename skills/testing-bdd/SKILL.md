@@ -8,7 +8,7 @@ description: "Behavior-driven scenario design for shared business language and e
 ## Overview
 Use this skill to encode requirement intent as executable behavior scenarios that product, QA, and engineering can all review.
 
-## Trigger Boundary
+## Scope Boundaries
 - Use when behavior semantics need alignment across stakeholders before or during implementation.
 - Typical requests:
   - `Turn ambiguous requirements into Given-When-Then scenarios.`

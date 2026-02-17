@@ -8,6 +8,10 @@ description: "Observability alerting workflow for signal quality, routing policy
 ## Overview
 Use this skill to design alerting that catches real incidents quickly without overwhelming responders.
 
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
+
 ## Shared References
 - Alert threshold actionability rules:
   - `references/alert-threshold-actionability-rules.md`

@@ -8,7 +8,7 @@ description: "User story authoring workflow for turning prioritized requirements
 ## Overview
 Use this skill to convert prioritized requirements into stories that are small, value-oriented, and verifiable.
 
-## Use This Skill When
+## Scope Boundaries
 - Requirements are approved and ranked, but execution slices are not defined.
 - Teams need sprint-ready stories with explicit acceptance boundaries.
 - Scope must be split to reduce risk and improve delivery predictability.

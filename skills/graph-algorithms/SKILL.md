@@ -8,7 +8,7 @@ description: "Graph algorithm workflow for modeling entities/relations and selec
 ## Overview
 Use this skill to choose and validate graph approaches that are correct for the domain and efficient for expected scale.
 
-## Use This Skill When
+## Scope Boundaries
 - The problem involves reachability, shortest paths, dependencies, connectivity, matching, or flow.
 - Algorithm choice materially affects correctness guarantees or runtime cost.
 - Teams need explicit trade-off rationale between multiple graph approaches.

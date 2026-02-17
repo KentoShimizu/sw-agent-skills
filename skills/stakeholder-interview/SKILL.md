@@ -8,7 +8,7 @@ description: "Internal stakeholder interview workflow for capturing constraints,
 ## Overview
 Use this skill to extract authoritative decisions from internal stakeholders and convert them into traceable engineering constraints.
 
-## Use This Skill When
+## Scope Boundaries
 - Requirements or architecture choices are blocked by missing policy or ownership decisions.
 - Teams disagree about constraints and need documented decision authority.
 - Cross-functional alignment is required before implementation commitments.
