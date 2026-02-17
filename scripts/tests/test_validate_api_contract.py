@@ -206,6 +206,30 @@ class ValidateApiContractTest(unittest.TestCase):
         errors = module.validate_manifest(manifest)
         self.assertIn("checks.backpressure_strategy_defined must be true", errors)
 
+    def test_compliance_profile_rejects_overlapping_profile_signals(self) -> None:
+        module = load_validator_module()
+        manifest = {
+            "artifact_id": "API-COM-20260215-001",
+            "state": "draft",
+            "approvers": ["API Owner", "Engineering Owner"],
+            "checks": {
+                "http_semantics_validated": True,
+            },
+            "compliance_evidence": {
+                "lawful_basis_or_contract": "contract",
+                "data_categories": "profile",
+                "retention_policy": "30 days",
+                "cross_border_transfer_control": "none",
+                "audit_log_location": "s3://audit-log",
+            },
+        }
+
+        errors = module.validate_manifest(manifest)
+        self.assertIn(
+            "manifest includes overlapping profile-specific signals: compliance_evidence_package, rest_api_design",
+            errors,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

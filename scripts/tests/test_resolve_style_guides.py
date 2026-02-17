@@ -150,6 +150,27 @@ class ResolveStyleGuidesRoutingTest(unittest.TestCase):
                 actual,
             )
 
+    def test_ci_workflow_shell_hints_support_shell_options(self) -> None:
+        resolve_skills = load_resolver()
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            workflow_dir = Path(temp_dir) / ".github" / "workflows"
+            workflow_dir.mkdir(parents=True, exist_ok=True)
+
+            bash_with_options_workflow = workflow_dir / "bash-options-ci.yml"
+            bash_with_options_workflow.write_text(
+                "jobs:\n"
+                "  test:\n"
+                "    runs-on: ubuntu-latest\n"
+                "    steps:\n"
+                "      - run: echo hello\n"
+                "        shell: bash -e {0}\n",
+                encoding="utf-8",
+            )
+
+            actual = resolve_skills([str(bash_with_options_workflow)])
+            self.assertEqual(["bash-style-guide"], actual)
+
     def test_extensionless_shebang_detection_for_shell_scripts(self) -> None:
         resolve_skills = load_resolver()
 

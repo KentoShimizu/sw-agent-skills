@@ -121,8 +121,7 @@ def load_manifest(path: Path) -> dict[str, Any]:
 
 
 def infer_profile(manifest: dict[str, Any], checks: dict[str, Any], errors: list[str]) -> str | None:
-    if "compliance_evidence" in manifest:
-        return "compliance_evidence_package"
+    has_compliance_evidence = "compliance_evidence" in manifest
 
     profile_signals: dict[str, bool] = {
         "rest_api_design": any(key in checks for key in {"http_semantics_validated", "idempotency_strategy_defined"}),
@@ -133,11 +132,14 @@ def infer_profile(manifest: dict[str, Any], checks: dict[str, Any], errors: list
     }
 
     matched_profiles = [name for name, matched in profile_signals.items() if matched]
+    if has_compliance_evidence:
+        matched_profiles.append("compliance_evidence_package")
+
     if len(matched_profiles) == 1:
         return matched_profiles[0]
     if len(matched_profiles) > 1:
         errors.append(
-            "manifest includes overlapping profile-specific checks: "
+            "manifest includes overlapping profile-specific signals: "
             + ", ".join(sorted(matched_profiles))
         )
         return None

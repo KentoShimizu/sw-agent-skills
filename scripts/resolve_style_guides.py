@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shlex
 from pathlib import Path, PurePosixPath
 
 BASH = "bash-style-guide"
@@ -159,17 +160,37 @@ def workflow_shell_hints(path: PurePosixPath) -> set[str]:
     except UnicodeDecodeError:
         return hints
 
-    if re.search(r"(?im)^\s*shell\s*:\s*(?:bash|/bin/bash)(?:\s+\{0\})?\s*$", text):
-        hints.add(BASH)
+    shell_to_skill = {
+        "bash": BASH,
+        "/bin/bash": BASH,
+        "sh": SH,
+        "/bin/sh": SH,
+        "zsh": ZSH,
+        "/bin/zsh": ZSH,
+        "pwsh": POWERSHELL,
+        "powershell": POWERSHELL,
+    }
 
-    if re.search(r"(?im)^\s*shell\s*:\s*(?:sh|/bin/sh)(?:\s+\{0\})?\s*$", text):
-        hints.add(SH)
+    for line in text.splitlines():
+        match = re.match(r"^\s*shell\s*:\s*(?P<value>.+?)\s*$", line, flags=re.IGNORECASE)
+        if match is None:
+            continue
 
-    if re.search(r"(?im)^\s*shell\s*:\s*(?:zsh|/bin/zsh)(?:\s+\{0\})?\s*$", text):
-        hints.add(ZSH)
+        raw_value = match.group("value").strip()
+        if not raw_value:
+            continue
 
-    if re.search(r"(?im)^\s*shell\s*:\s*(?:pwsh|powershell)(?:\s+\{0\})?\s*$", text):
-        hints.add(POWERSHELL)
+        try:
+            tokens = shlex.split(raw_value, posix=True)
+        except ValueError:
+            continue
+
+        if not tokens:
+            continue
+
+        skill = shell_to_skill.get(tokens[0].lower())
+        if skill is not None:
+            hints.add(skill)
 
     return hints
 
