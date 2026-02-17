@@ -30,7 +30,7 @@ Use this skill to validate business-critical journeys under integrated runtime c
 
 ## Workflow
 1. Identify journeys that gate release confidence.
-2. Define minimum E2E set by risk and business impact.
+2. Define minimum E2E set by risk and business impact using `assets/critical-journey-template.md`.
 3. Compare execution strategies (full, smoke, tiered) and choose one.
 4. Implement deterministic setup/teardown and evidence capture.
 5. Publish pass/fail status, flake risk, and residual gaps.
@@ -47,3 +47,4 @@ Use this skill to validate business-critical journeys under integrated runtime c
 
 ## Bundled Resources
 - `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.
+- `assets/critical-journey-template.md`: concise template for critical-path E2E scenario definition and evidence capture.

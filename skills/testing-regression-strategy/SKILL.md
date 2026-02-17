@@ -30,7 +30,7 @@ Use this skill to select regression coverage that maximizes risk reduction withi
 
 ## Workflow
 1. Classify system areas by business and technical risk.
-2. Quantify each suite by execution cost and detection value.
+2. Quantify each suite by execution cost and detection value in `assets/regression-tiering-template.csv`.
 3. Compare selection policies and choose one with rationale.
 4. Define trigger rules for conditional suites.
 5. Publish policy, residual risk, and review cadence.
@@ -47,3 +47,4 @@ Use this skill to select regression coverage that maximizes risk reduction withi
 
 ## Bundled Resources
 - `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.
+- `assets/regression-tiering-template.csv`: quick-start matrix for always/conditional/nightly suite selection.

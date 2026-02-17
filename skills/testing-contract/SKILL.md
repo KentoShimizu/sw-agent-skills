@@ -32,8 +32,9 @@ Use this skill to prevent integration regressions by enforcing provider-consumer
 1. Define compatibility policy (backward/forward/strict).
 2. Identify contract surfaces and critical consumers.
 3. Compare enforcement options and choose one with rationale.
-4. Execute provider and consumer verification runs.
-5. Publish failures, migration actions, and residual risk.
+4. Capture provider-consumer compatibility in `assets/contract-compatibility-matrix-template.md`.
+5. Execute provider and consumer verification runs.
+6. Publish failures, migration actions, and residual risk.
 
 ## Quality Gates
 - Compatibility policy is explicit and test-enforced.
@@ -47,3 +48,4 @@ Use this skill to prevent integration regressions by enforcing provider-consumer
 
 ## Bundled Resources
 - `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.
+- `assets/contract-compatibility-matrix-template.md`: compatibility and migration tracking matrix.
