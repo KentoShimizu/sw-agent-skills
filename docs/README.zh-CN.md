@@ -23,10 +23,16 @@
 
 ## 快速安装
 
+从 GitHub Releases 下载最新发布归档并解压后，执行：
+
 ```bash
-git clone https://github.com/KentoShimizu/sw-agent-skills.git
-cd sw-agent-skills
-bash scripts/install-skills.sh --agent all --scope global
+bash /path/to/sw-agent-skills-<version>/scripts/install-skills.sh --agent all --scope global
+```
+
+Windows PowerShell：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\path\to\sw-agent-skills-<version>\scripts\install-skills.ps1 -Agent all -Scope global
 ```
 
 下载发布归档并将 `skills` 目录放到任意路径：
@@ -40,20 +46,6 @@ mkdir -p "${DEST}"
 cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 ```
 
-直接使用当前 checkout 的仓库内容：
-
-```bash
-bash scripts/install-skills.sh --agent all --scope global --source skills
-```
-
-Windows PowerShell:
-
-```powershell
-git clone https://github.com/KentoShimizu/sw-agent-skills.git
-Set-Location sw-agent-skills
-powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all -Scope global
-```
-
 ## 安装选项
 
 ### Bash（`scripts/install-skills.sh`）
@@ -62,7 +54,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `--agent <all/codex/claude/opencode>` | 否 | 要安装的目标代理。 | `all` |
 | `--scope <global/local>` | 否 | 安装范围。`local` 安装到 `--project-root` 下。 | `global` |
-| `--source <path>` | 否 | 技能来源目录。必须包含带 `SKILL.md` 的技能子目录。 | 官方仓库最新稳定发布快照 |
 | `--project-root <path>` | 否 | 仅在 `--scope local` 时使用的项目根目录。 | 当前目录 |
 | `--force` | 否 | 覆盖已存在的目标技能目录。 | 关闭 |
 | `-h`, `--help` | 否 | 显示帮助。 | 关闭 |
@@ -73,7 +64,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `-Agent <all/codex/claude/opencode>` | 否 | 要安装的目标代理。 | `all` |
 | `-Scope <global/local>` | 否 | 安装范围。`local` 安装到 `-ProjectRoot` 下。 | `global` |
-| `-Source <path>` | 否 | 技能来源目录。必须包含带 `SKILL.md` 的技能子目录。 | 官方仓库最新稳定发布快照 |
 | `-ProjectRoot <path>` | 否 | 仅在 `-Scope local` 时使用的项目根目录。 | 当前目录 |
 | `-Force` | 否 | 覆盖已存在的目标技能目录。 | 关闭 |
 

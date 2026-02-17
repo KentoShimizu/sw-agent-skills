@@ -5,8 +5,6 @@ param(
     [ValidateSet("global", "local")]
     [string]$Scope = "global",
 
-    [string]$Source,
-
     [string]$ProjectRoot = (Get-Location).Path,
 
     [switch]$Force
@@ -54,41 +52,36 @@ function Resolve-LatestStableReleaseTag {
         Select-Object -Last 1
 }
 
-$sourceMode = if ($PSBoundParameters.ContainsKey("Source")) { "local" } else { "release" }
 $releaseTag = $null
 $releaseTempDir = $null
 $script:OfficialReleaseRepoGitUrl = "https://github.com/KentoShimizu/sw-agent-skills.git"
 $script:OfficialReleaseArchiveBaseUrl = "https://github.com/KentoShimizu/sw-agent-skills"
 
 try {
-    if ($sourceMode -eq "local") {
-        $sourceResolved = Resolve-DirectoryPath -PathValue $Source -Label "source directory"
-    } else {
-        if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-            throw "required command not found: git"
-        }
-        if (-not (Get-Command tar -ErrorAction SilentlyContinue)) {
-            throw "required command not found: tar"
-        }
-
-        $releaseTag = Resolve-LatestStableReleaseTag
-
-        $releaseTempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("sw-agent-skills-" + [guid]::NewGuid().ToString("N"))
-        New-Item -ItemType Directory -Path $releaseTempDir -Force | Out-Null
-
-        $archivePath = Join-Path $releaseTempDir "release.tar.gz"
-        $archiveUrl = "$script:OfficialReleaseArchiveBaseUrl/archive/refs/tags/$releaseTag.tar.gz"
-        Invoke-WebRequest -Uri $archiveUrl -OutFile $archivePath
-        tar -xzf $archivePath -C $releaseTempDir
-
-        $extractedRoot = Get-ChildItem -LiteralPath $releaseTempDir -Directory | Select-Object -First 1
-        if (-not $extractedRoot) {
-            throw "failed to locate extracted release directory"
-        }
-
-        $Source = Join-Path $extractedRoot.FullName "skills"
-        $sourceResolved = Resolve-DirectoryPath -PathValue $Source -Label "source directory"
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+        throw "required command not found: git"
     }
+    if (-not (Get-Command tar -ErrorAction SilentlyContinue)) {
+        throw "required command not found: tar"
+    }
+
+    $releaseTag = Resolve-LatestStableReleaseTag
+
+    $releaseTempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("sw-agent-skills-" + [guid]::NewGuid().ToString("N"))
+    New-Item -ItemType Directory -Path $releaseTempDir -Force | Out-Null
+
+    $archivePath = Join-Path $releaseTempDir "release.tar.gz"
+    $archiveUrl = "$script:OfficialReleaseArchiveBaseUrl/archive/refs/tags/$releaseTag.tar.gz"
+    Invoke-WebRequest -Uri $archiveUrl -OutFile $archivePath
+    tar -xzf $archivePath -C $releaseTempDir
+
+    $extractedRoot = Get-ChildItem -LiteralPath $releaseTempDir -Directory | Select-Object -First 1
+    if (-not $extractedRoot) {
+        throw "failed to locate extracted release directory"
+    }
+
+    $sourceDirectory = Join-Path $extractedRoot.FullName "skills"
+    $sourceResolved = Resolve-DirectoryPath -PathValue $sourceDirectory -Label "source directory"
 
     if ($Scope -eq "local") {
         $ProjectRoot = Resolve-DirectoryPath -PathValue $ProjectRoot -Label "project root"
@@ -128,10 +121,7 @@ try {
         throw "no installation targets resolved"
     }
 
-    Write-Host "source-mode: $sourceMode"
-    if ($sourceMode -eq "release") {
-        Write-Host "release-version: $releaseTag"
-    }
+    Write-Host "release-version: $releaseTag"
     Write-Host "source: $sourceResolved"
     Write-Host "scope: $Scope"
 

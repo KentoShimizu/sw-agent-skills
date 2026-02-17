@@ -23,10 +23,16 @@ This repository provides:
 
 ## Quick Start
 
+Download the latest release archive from GitHub Releases, extract it, and run:
+
 ```bash
-git clone https://github.com/KentoShimizu/sw-agent-skills.git
-cd sw-agent-skills
-bash scripts/install-skills.sh --agent all --scope global
+bash /path/to/sw-agent-skills-<version>/scripts/install-skills.sh --agent all --scope global
+```
+
+Windows PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\path\to\sw-agent-skills-<version>\scripts\install-skills.ps1 -Agent all -Scope global
 ```
 
 Download from a release archive and place the `skills` folder in any path:
@@ -40,20 +46,6 @@ mkdir -p "${DEST}"
 cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 ```
 
-Install from the checked-out repository content:
-
-```bash
-bash scripts/install-skills.sh --agent all --scope global --source skills
-```
-
-Windows PowerShell:
-
-```powershell
-git clone https://github.com/KentoShimizu/sw-agent-skills.git
-Set-Location sw-agent-skills
-powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all -Scope global
-```
-
 ## Installation Options
 
 ### Bash (`scripts/install-skills.sh`)
@@ -62,7 +54,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `--agent <all/codex/claude/opencode>` | No | Target agent to install. | `all` |
 | `--scope <global/local>` | No | Install scope. `local` installs under `--project-root`. | `global` |
-| `--source <path>` | No | Source skills directory. It must contain skill subdirectories with `SKILL.md`. | latest stable release snapshot from official repository |
 | `--project-root <path>` | No | Project root used only when `--scope local`. | current directory |
 | `--force` | No | Replace existing destination skill directories. | off |
 | `-h`, `--help` | No | Show command help. | off |
@@ -73,7 +64,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `-Agent <all/codex/claude/opencode>` | No | Target agent to install. | `all` |
 | `-Scope <global/local>` | No | Install scope. `local` installs under `-ProjectRoot`. | `global` |
-| `-Source <path>` | No | Source skills directory. It must contain skill subdirectories with `SKILL.md`. | latest stable release snapshot from official repository |
 | `-ProjectRoot <path>` | No | Project root used only when `-Scope local`. | current directory |
 | `-Force` | No | Replace existing destination skill directories. | off |
 

@@ -23,10 +23,16 @@
 
 ## クイックセットアップ
 
+GitHub Releases から最新リリースアーカイブを取得して展開し、次を実行:
+
 ```bash
-git clone https://github.com/KentoShimizu/sw-agent-skills.git
-cd sw-agent-skills
-bash scripts/install-skills.sh --agent all --scope global
+bash /path/to/sw-agent-skills-<version>/scripts/install-skills.sh --agent all --scope global
+```
+
+Windows PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\path\to\sw-agent-skills-<version>\scripts\install-skills.ps1 -Agent all -Scope global
 ```
 
 リリースアーカイブを取得して `skills` フォルダを任意パスへ配置する場合:
@@ -40,20 +46,6 @@ mkdir -p "${DEST}"
 cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 ```
 
-チェックアウト済みリポジトリの内容をそのまま使う場合:
-
-```bash
-bash scripts/install-skills.sh --agent all --scope global --source skills
-```
-
-Windows PowerShell:
-
-```powershell
-git clone https://github.com/KentoShimizu/sw-agent-skills.git
-Set-Location sw-agent-skills
-powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all -Scope global
-```
-
 ## インストールオプション
 
 ### Bash (`scripts/install-skills.sh`)
@@ -62,7 +54,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `--agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
 | `--scope <global/local>` | いいえ | インストール範囲。`local` は `--project-root` 配下へ配置。 | `global` |
-| `--source <path>` | いいえ | スキルのソースディレクトリ。`SKILL.md` を持つサブディレクトリを含む必要があります。 | 公式リポジトリの最新安定リリーススナップショット |
 | `--project-root <path>` | いいえ | `--scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
 | `--force` | いいえ | 既存の配置先スキルディレクトリを置換。 | 無効 |
 | `-h`, `--help` | いいえ | ヘルプを表示。 | 無効 |
@@ -73,7 +64,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `-Agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
 | `-Scope <global/local>` | いいえ | インストール範囲。`local` は `-ProjectRoot` 配下へ配置。 | `global` |
-| `-Source <path>` | いいえ | スキルのソースディレクトリ。`SKILL.md` を持つサブディレクトリを含む必要があります。 | 公式リポジトリの最新安定リリーススナップショット |
 | `-ProjectRoot <path>` | いいえ | `-Scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
 | `-Force` | いいえ | 既存の配置先スキルディレクトリを置換。 | 無効 |
 

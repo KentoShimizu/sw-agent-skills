@@ -11,14 +11,13 @@ Usage:
 Options:
   --agent <all|codex|claude|opencode>   Target agent (default: all)
   --scope <global|local>                Install scope (default: global)
-  --source <path>                       Source skills directory (optional)
   --project-root <path>                 Project root for local scope (default: current dir)
   --force                               Replace existing target directories
   -h, --help                            Show this help
 
 Notes:
   - local scope supports Codex, Claude, and OpenCode.
-  - when --source is omitted, installer downloads a release snapshot and installs from it.
+  - installer downloads the latest release snapshot and installs from it.
 EOF
 }
 
@@ -89,7 +88,6 @@ prepare_release_source() {
 AGENT="all"
 SCOPE="global"
 SOURCE_DIR=""
-SOURCE_MODE="release"
 PROJECT_ROOT="$(pwd)"
 OFFICIAL_RELEASE_REPO_GIT_URL="https://github.com/KentoShimizu/sw-agent-skills.git"
 OFFICIAL_RELEASE_ARCHIVE_BASE_URL="https://github.com/KentoShimizu/sw-agent-skills"
@@ -115,12 +113,6 @@ while [ $# -gt 0 ]; do
     --scope)
       [ $# -ge 2 ] || die "--scope requires a value"
       SCOPE="$2"
-      shift 2
-      ;;
-    --source)
-      [ $# -ge 2 ] || die "--source requires a value"
-      SOURCE_DIR="$2"
-      SOURCE_MODE="local"
       shift 2
       ;;
     --project-root)
@@ -152,12 +144,8 @@ case "${SCOPE}" in
   *) die "--scope must be one of: global, local" ;;
 esac
 
-if [ "${SOURCE_MODE}" = "local" ]; then
-  SOURCE_DIR="$(resolve_dir "${SOURCE_DIR}")"
-else
-  prepare_release_source
-  SOURCE_DIR="$(resolve_dir "${SOURCE_DIR}")"
-fi
+prepare_release_source
+SOURCE_DIR="$(resolve_dir "${SOURCE_DIR}")"
 
 if [ "${SCOPE}" = "local" ]; then
   PROJECT_ROOT="$(resolve_dir "${PROJECT_ROOT}")"
@@ -235,10 +223,7 @@ install_skills_into_target_root() {
   printf 'installed: %s (%s) new=%d\n' "${label}" "${target_root}" "${installed_count}"
 }
 
-printf 'source-mode: %s\n' "${SOURCE_MODE}"
-if [ "${SOURCE_MODE}" = "release" ]; then
-  printf 'release-version: %s\n' "${RELEASE_TAG}"
-fi
+printf 'release-version: %s\n' "${RELEASE_TAG}"
 printf 'source: %s\n' "${SOURCE_DIR}"
 printf 'scope: %s\n' "${SCOPE}"
 
