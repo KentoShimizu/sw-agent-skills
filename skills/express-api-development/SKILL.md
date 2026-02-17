@@ -27,6 +27,7 @@ Use this skill to design and implement Express services with explicit middleware
 - AuthN/AuthZ and rate-limit requirements.
 - Logging and observability expectations.
 - Existing middleware stack and error contract conventions.
+- Request/response shape contracts for boundary-safe handoff to service layer.
 
 ## Deliverables
 - Route and middleware composition plan.
@@ -38,14 +39,16 @@ Use this skill to design and implement Express services with explicit middleware
 1. Define route modules by domain and resource responsibility.
 2. Apply middleware ordering from `references/express-middleware-ordering-guidance.md`.
 3. Implement route handlers using `assets/express-route-module-template.js`.
-4. Centralize and normalize error handling using `references/express-error-handling-guidance.md` and `assets/express-error-catalog-template.md`.
-5. Validate behavior with `assets/express-api-verification-checklist.md`.
+4. Parse and validate `req.params`/`req.query`/`req.body` once, then map to explicit domain input objects.
+5. Centralize and normalize error handling using `references/express-error-handling-guidance.md` and `assets/express-error-catalog-template.md`.
+6. Validate behavior with `assets/express-api-verification-checklist.md`.
 
 ## Quality Standard
 - Middleware order is explicit, deterministic, and testable.
 - Validation failures are client-actionable and consistent.
 - Error responses use stable codes and correlation IDs.
 - Operational signals are sufficient for incident triage.
+- Route handlers do not pass raw request objects or untyped payload bags into core domain services.
 
 ## Failure Conditions
 - Stop when middleware side effects are order-dependent and undocumented.

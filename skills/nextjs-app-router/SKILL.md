@@ -23,6 +23,7 @@ Use this skill to design App Router implementations that are predictable in rend
 - Server/client interaction boundaries.
 - Freshness, SEO, and caching constraints.
 - Error/loading behavior requirements.
+- Route param/search param/request payload contracts and ownership boundaries.
 
 ## Deliverables
 - Route/layout map with rendering strategy.
@@ -33,15 +34,17 @@ Use this skill to design App Router implementations that are predictable in rend
 ## Workflow
 1. Define route/layout architecture in `assets/app-router-architecture-template.md`.
 2. Apply server/client boundary rules from `references/server-client-and-cache-rules.md`.
-3. Configure fetch/cache/revalidation policy per route criticality.
-4. Implement explicit loading/error/not-found boundaries.
-5. Validate with `assets/app-router-checklist.md`.
+3. Parse and normalize route/search/action inputs at boundaries into explicit typed shapes.
+4. Configure fetch/cache/revalidation policy per route criticality.
+5. Implement explicit loading/error/not-found boundaries.
+6. Validate with `assets/app-router-checklist.md`.
 
 ## Quality Standard
 - Route tree and ownership are explicit.
 - Server/client boundaries are minimal and intentional.
 - Cache policy matches data freshness requirements.
 - Navigation preserves data consistency across transitions.
+- Server actions and route handlers avoid repeated cast-heavy shape fixes by using boundary-normalized contracts.
 
 ## Failure Conditions
 - Stop when boundaries between server and client are ambiguous.

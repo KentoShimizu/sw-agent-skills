@@ -27,6 +27,7 @@ Use this skill to build FastAPI services with explicit schema contracts, control
 - Dependency injection graph and external service dependencies.
 - Authentication, validation, and observability requirements.
 - Async I/O boundaries and expected latency constraints.
+- Internal service DTO contracts to avoid untyped `dict[str, Any]` propagation.
 
 ## Deliverables
 - Endpoint map with typed request/response models.
@@ -37,15 +38,17 @@ Use this skill to build FastAPI services with explicit schema contracts, control
 ## Workflow
 1. Define Pydantic models and endpoint contracts first.
 2. Separate routers, service logic, and infrastructure adapters.
-3. Manage shared resources using `references/fastapi-dependency-lifecycle-guidance.md`.
-4. Implement exception mapping with `assets/fastapi-error-model-template.json`.
-5. Validate behavior and docs with `assets/fastapi-service-checklist.md`.
+3. Convert boundary payloads to explicit domain input/output models before service-layer execution.
+4. Manage shared resources using `references/fastapi-dependency-lifecycle-guidance.md`.
+5. Implement exception mapping with `assets/fastapi-error-model-template.json`.
+6. Validate behavior and docs with `assets/fastapi-service-checklist.md`.
 
 ## Quality Standard
 - All endpoints expose explicit typed schemas.
 - Dependency scope and teardown behavior are deterministic.
 - Error responses are stable and machine-parseable.
 - OpenAPI output reflects actual runtime behavior.
+- Internal logic minimizes runtime casts by using precise models at boundaries.
 
 ## Failure Conditions
 - Stop when schema contracts are ambiguous or loosely typed.

@@ -23,6 +23,7 @@ Use this skill to build React components that are composable, testable, and stab
 - Reuse boundaries and design-system constraints.
 - State ownership and data-flow expectations.
 - Performance and accessibility requirements.
+- Prop and state shape contracts (explicit type/interface/schema expectations).
 
 ## Deliverables
 - Component boundary and prop/state contract.
@@ -32,15 +33,17 @@ Use this skill to build React components that are composable, testable, and stab
 ## Workflow
 1. Define component boundaries with `assets/react-component-boundary-template.md`.
 2. Apply state/effect rules from `references/rendering-and-hooks-rules.md`.
-3. Validate state ownership and transitions.
-4. Review loading/empty/error/accessibility behavior.
-5. Finalize with `assets/react-state-flow-checklist.md`.
+3. Define explicit prop/state contracts; avoid `any`/opaque object bags for component boundaries.
+4. Validate state ownership and transitions.
+5. Review loading/empty/error/accessibility behavior.
+6. Finalize with `assets/react-state-flow-checklist.md`.
 
 ## Quality Standard
 - Component responsibilities are single-purpose and explicit.
 - State ownership is minimal and predictable.
 - Effects are scoped and cleanup-safe.
 - Performance choices are evidence-driven.
+- Data shape mismatches are handled at boundary adapters, not via repeated casts in render/effect logic.
 
 ## Failure Conditions
 - Stop when component boundaries are ambiguous or cyclic.

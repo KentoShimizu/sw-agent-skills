@@ -63,6 +63,9 @@ Use this skill to review and improve Python code for correctness, readability, a
 2. Prefer explicit models (`dataclass`, `TypedDict`, Pydantic model) over loose dicts.
 3. Avoid `Any` unless unavoidable and justified inline.
 4. Define precise protocols/interfaces for pluggable dependencies.
+5. Avoid `dict[str, Any]` and `object` for domain payloads when structure is known.
+6. Convert untyped external input into explicit models once at the boundary, then keep inner layers strongly shaped.
+7. Treat repeated `typing.cast(...)` usage as a signal to redesign the underlying type contract.
 
 ### Error handling and control flow
 1. Raise specific exception types with actionable messages.

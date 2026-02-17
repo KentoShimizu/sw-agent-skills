@@ -65,6 +65,9 @@ Use this skill to review and improve JavaScript code for runtime safety, readabi
 2. Avoid untyped, ambiguous object bags for domain-critical paths.
 3. Validate external payloads at boundaries before business logic executes.
 4. Keep serialization/deserialization logic centralized.
+5. Parse once at the boundary and pass validated domain objects inward; avoid repeated shape checks in inner layers.
+6. If the same cast/shape-fix appears in multiple call sites, replace it with an explicit named contract and mapper.
+7. Use narrow JSDoc typedefs or schema-derived types for core payloads instead of broad `object`/`Record` placeholders.
 
 ### Async behavior and error handling
 1. Prefer `async/await` over mixed promise chains.

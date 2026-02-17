@@ -23,6 +23,7 @@ Use this skill to implement Django changes with explicit domain boundaries, safe
 - Existing app/module structure and cross-app dependencies.
 - Data model constraints, traffic profile, and migration risk tolerance.
 - Authentication/authorization expectations and operational requirements.
+- Serializer/form input shapes and domain command object contracts.
 
 ## Deliverables
 - App change design (models, views, forms/serializers, services/managers).
@@ -35,19 +36,22 @@ Use this skill to implement Django changes with explicit domain boundaries, safe
 - Add DB constraints/indexes for integrity and query patterns, not only ORM-level validation.
 - Use explicit transaction boundaries for multi-write critical flows.
 - Fail fast when required environment variables are missing from settings.
+- Convert serializer/form payloads to explicit typed command objects before domain service calls.
 
 ## Quality Standard
 - App boundaries are cohesive and avoid circular dependency patterns.
 - Migrations are reviewed for lock risk, backfill strategy, and reversibility policy.
 - Authn/authz is explicit on every protected path.
 - Error handling and logging expose failures without silent fallback behavior.
+- Domain services receive explicit typed contracts, minimizing repeated casts and shape checks.
 
 ## Workflow
 1. Scope impacted apps and define boundary-safe change plan in `assets/django-change-plan-template.md`.
 2. Implement model and domain logic with explicit constraints.
 3. Update views/forms/serializers while keeping transport and domain concerns separated.
-4. Create and review migrations with operational safety checks from `assets/django-migration-safety-checklist.md`.
-5. Validate with tests and critical-flow verification before release.
+4. Map request payloads to explicit typed structures (`dataclass`/`TypedDict`/Pydantic) rather than passing loose dicts through domain boundaries.
+5. Create and review migrations with operational safety checks from `assets/django-migration-safety-checklist.md`.
+6. Validate with tests and critical-flow verification before release.
 
 ## Failure Conditions
 - Stop when domain responsibilities are spread across unrelated apps.
