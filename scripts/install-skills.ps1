@@ -27,17 +27,6 @@ function Resolve-DirectoryPath {
     return (Resolve-Path -LiteralPath $PathValue).Path
 }
 
-function Invoke-InstallAction {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$Description,
-        [Parameter(Mandatory = $true)]
-        [scriptblock]$Action
-    )
-
-    & $Action
-}
-
 function Resolve-LatestStableReleaseTag {
     $tags = git ls-remote --refs --tags $script:OfficialReleaseRepoGitUrl "v*" |
         ForEach-Object { ($_ -split "/")[2] } |
@@ -126,9 +115,7 @@ try {
     Write-Host "scope: $Scope"
 
     foreach ($target in $targets) {
-        Invoke-InstallAction -Description "mkdir $($target.Path)" -Action {
-            New-Item -ItemType Directory -Force -Path $target.Path | Out-Null
-        }
+        New-Item -ItemType Directory -Force -Path $target.Path | Out-Null
 
         $installedCount = 0
 
@@ -139,14 +126,10 @@ try {
                 if (-not $Force.IsPresent) {
                     throw "$($target.Label) target exists: $destinationSkillDir (use -Force to replace)"
                 }
-                Invoke-InstallAction -Description "remove $destinationSkillDir" -Action {
-                    Remove-Item -LiteralPath $destinationSkillDir -Recurse -Force
-                }
+                Remove-Item -LiteralPath $destinationSkillDir -Recurse -Force
             }
 
-            Invoke-InstallAction -Description "copy $($skillDir.FullName) -> $destinationSkillDir" -Action {
-                Copy-Item -LiteralPath $skillDir.FullName -Destination $destinationSkillDir -Recurse
-            }
+            Copy-Item -LiteralPath $skillDir.FullName -Destination $destinationSkillDir -Recurse
 
             $installedCount++
         }

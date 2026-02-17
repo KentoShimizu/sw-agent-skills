@@ -30,10 +30,6 @@ require_cmd() {
   command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
 }
 
-run_cmd() {
-  "$@"
-}
-
 resolve_dir() {
   local raw="$1"
   [ -d "${raw}" ] || die "directory not found: ${raw}"
@@ -201,7 +197,7 @@ install_skills_into_target_root() {
   local target_root="$2"
   local installed_count=0
 
-  run_cmd mkdir -p "${target_root}"
+  mkdir -p "${target_root}"
 
   for source_skill_dir in "${VALID_SOURCE_SKILL_DIRS[@]}"; do
     local skill_name
@@ -212,10 +208,10 @@ install_skills_into_target_root() {
       if [ "${FORCE}" != true ]; then
         die "${label} target exists: ${destination_skill_dir} (use --force to replace)"
       fi
-      run_cmd rm -rf "${destination_skill_dir}"
+      rm -rf "${destination_skill_dir}"
     fi
 
-    run_cmd cp -R "${source_skill_dir}" "${destination_skill_dir}"
+    cp -R "${source_skill_dir}" "${destination_skill_dir}"
 
     installed_count=$((installed_count + 1))
   done
