@@ -29,12 +29,6 @@ cd sw-agent-skills
 bash scripts/install-skills.sh --agent all --scope global
 ```
 
-特定バージョンを固定する場合:
-
-```bash
-bash scripts/install-skills.sh --agent all --scope global --version vX.Y.Z
-```
-
 リリースアーカイブを取得して `skills` フォルダを任意パスへ配置する場合:
 
 ```bash
@@ -76,8 +70,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | `--scope <global/local>` | いいえ | インストール範囲。`local` は `--project-root` 配下へ配置。 | `global` |
 | `--mode <symlink/copy>` | いいえ | 各スキルディレクトリの配置方式。 | `copy` |
 | `--source <path>` | いいえ | スキルのソースディレクトリ。`SKILL.md` を持つサブディレクトリを含む必要があります。 | 公式リポジトリの最新安定リリーススナップショット |
-| `--version <tag/latest>` | いいえ | `--source` 未指定時に使用するリリースバージョン。 | `latest` |
-| `--release-repo <url>` | いいえ | `--source` 未指定時のリリース解決に使うリポジトリURL。 | `https://github.com/KentoShimizu/sw-agent-skills.git` |
 | `--project-root <path>` | いいえ | `--scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
 | `--dry-run` | いいえ | ファイル変更せず実行内容のみ表示。 | 無効 |
 | `--verbose` | いいえ | 詳細なコマンド出力を表示。 | 無効 |
@@ -92,8 +84,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | `-Scope <global/local>` | いいえ | インストール範囲。`local` は `-ProjectRoot` 配下へ配置。 | `global` |
 | `-Mode <symlink/copy>` | いいえ | 各スキルディレクトリの配置方式。 | `copy` |
 | `-Source <path>` | いいえ | スキルのソースディレクトリ。`SKILL.md` を持つサブディレクトリを含む必要があります。 | 公式リポジトリの最新安定リリーススナップショット |
-| `-Version <tag/latest>` | いいえ | `-Source` 未指定時に使用するリリースバージョン。 | `latest` |
-| `-ReleaseRepo <url>` | いいえ | `-Source` 未指定時のリリース解決に使うリポジトリURL。 | `https://github.com/KentoShimizu/sw-agent-skills.git` |
 | `-ProjectRoot <path>` | いいえ | `-Scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
 | `-DryRun` | いいえ | ファイル変更せず実行内容のみ表示。 | 無効 |
 | `-VerboseList` | いいえ | 詳細な処理ログを表示。 | 無効 |

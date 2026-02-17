@@ -29,12 +29,6 @@ cd sw-agent-skills
 bash scripts/install-skills.sh --agent all --scope global
 ```
 
-安装指定发布版本：
-
-```bash
-bash scripts/install-skills.sh --agent all --scope global --version vX.Y.Z
-```
-
 下载发布归档并将 `skills` 目录放到任意路径：
 
 ```bash
@@ -76,8 +70,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | `--scope <global/local>` | 否 | 安装范围。`local` 安装到 `--project-root` 下。 | `global` |
 | `--mode <symlink/copy>` | 否 | 每个技能目录的安装方式。 | `copy` |
 | `--source <path>` | 否 | 技能来源目录。必须包含带 `SKILL.md` 的技能子目录。 | 官方仓库最新稳定发布快照 |
-| `--version <tag/latest>` | 否 | 未指定 `--source` 时使用的发布版本。 | `latest` |
-| `--release-repo <url>` | 否 | 未指定 `--source` 时用于解析发布版本的仓库地址。 | `https://github.com/KentoShimizu/sw-agent-skills.git` |
 | `--project-root <path>` | 否 | 仅在 `--scope local` 时使用的项目根目录。 | 当前目录 |
 | `--dry-run` | 否 | 仅显示动作，不修改文件。 | 关闭 |
 | `--verbose` | 否 | 输出详细命令日志。 | 关闭 |
@@ -92,8 +84,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | `-Scope <global/local>` | 否 | 安装范围。`local` 安装到 `-ProjectRoot` 下。 | `global` |
 | `-Mode <symlink/copy>` | 否 | 每个技能目录的安装方式。 | `copy` |
 | `-Source <path>` | 否 | 技能来源目录。必须包含带 `SKILL.md` 的技能子目录。 | 官方仓库最新稳定发布快照 |
-| `-Version <tag/latest>` | 否 | 未指定 `-Source` 时使用的发布版本。 | `latest` |
-| `-ReleaseRepo <url>` | 否 | 未指定 `-Source` 时用于解析发布版本的仓库地址。 | `https://github.com/KentoShimizu/sw-agent-skills.git` |
 | `-ProjectRoot <path>` | 否 | 仅在 `-Scope local` 时使用的项目根目录。 | 当前目录 |
 | `-DryRun` | 否 | 仅显示动作，不修改文件。 | 关闭 |
 | `-VerboseList` | 否 | 输出详细执行日志。 | 关闭 |

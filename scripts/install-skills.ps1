@@ -10,10 +10,6 @@ param(
 
     [string]$Source,
 
-    [string]$Version = "latest",
-
-    [string]$ReleaseRepo = "https://github.com/KentoShimizu/sw-agent-skills.git",
-
     [string]$ProjectRoot = (Get-Location).Path,
 
     [switch]$DryRun,
@@ -96,35 +92,13 @@ function Resolve-SymlinkTarget {
     }
 }
 
-function Normalize-ReleaseRepoUrl {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$RepoUrl
-    )
-
-    if ($RepoUrl -notmatch "^https://github\.com/") {
-        throw "-ReleaseRepo must be an HTTPS GitHub URL: $RepoUrl"
-    }
-
-    if ($RepoUrl.EndsWith(".git")) {
-        return $RepoUrl.Substring(0, $RepoUrl.Length - 4)
-    }
-
-    return $RepoUrl
-}
-
 function Resolve-LatestStableReleaseTag {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$RepoUrl
-    )
-
-    $tags = git ls-remote --refs --tags $RepoUrl "v*" |
+    $tags = git ls-remote --refs --tags $script:OfficialReleaseRepoGitUrl "v*" |
         ForEach-Object { ($_ -split "/")[2] } |
         Where-Object { $_ -match "^v\d+\.\d+\.\d+$" }
 
     if (-not $tags) {
-        throw "no stable release tags found in repository: $RepoUrl"
+        throw "no stable release tags found in repository: $script:OfficialReleaseRepoGitUrl"
     }
 
     return $tags |
@@ -135,6 +109,8 @@ function Resolve-LatestStableReleaseTag {
 $sourceMode = if ($PSBoundParameters.ContainsKey("Source")) { "local" } else { "release" }
 $releaseTag = $null
 $releaseTempDir = $null
+$script:OfficialReleaseRepoGitUrl = "https://github.com/KentoShimizu/sw-agent-skills.git"
+$script:OfficialReleaseArchiveBaseUrl = "https://github.com/KentoShimizu/sw-agent-skills"
 
 try {
     if ($sourceMode -eq "local") {
@@ -150,18 +126,13 @@ try {
             throw "required command not found: tar"
         }
 
-        $releaseRepoNormalized = Normalize-ReleaseRepoUrl -RepoUrl $ReleaseRepo
-        $releaseTag = if ($Version -eq "latest") {
-            Resolve-LatestStableReleaseTag -RepoUrl $ReleaseRepo
-        } else {
-            $Version
-        }
+        $releaseTag = Resolve-LatestStableReleaseTag
 
         $releaseTempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("sw-agent-skills-" + [guid]::NewGuid().ToString("N"))
         New-Item -ItemType Directory -Path $releaseTempDir -Force | Out-Null
 
         $archivePath = Join-Path $releaseTempDir "release.tar.gz"
-        $archiveUrl = "$releaseRepoNormalized/archive/refs/tags/$releaseTag.tar.gz"
+        $archiveUrl = "$script:OfficialReleaseArchiveBaseUrl/archive/refs/tags/$releaseTag.tar.gz"
         Invoke-WebRequest -Uri $archiveUrl -OutFile $archivePath
         tar -xzf $archivePath -C $releaseTempDir
 
@@ -214,7 +185,6 @@ try {
 
     Write-Host "source-mode: $sourceMode"
     if ($sourceMode -eq "release") {
-        Write-Host "release-repo: $ReleaseRepo"
         Write-Host "release-version: $releaseTag"
     }
     Write-Host "source: $sourceResolved"

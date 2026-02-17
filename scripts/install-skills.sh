@@ -13,8 +13,6 @@ Options:
   --scope <global|local>                Install scope (default: global)
   --mode <symlink|copy>                 Install mode (default: copy)
   --source <path>                       Source skills directory (optional)
-  --version <tag|latest>                Release version when --source is omitted (default: latest)
-  --release-repo <url>                  Release repository URL (default: official repository)
   --project-root <path>                 Project root for local scope (default: current dir)
   --dry-run                             Print actions without applying changes
   --verbose                             Print per-command details
@@ -63,36 +61,20 @@ resolve_dir() {
   (cd "${raw}" && pwd)
 }
 
-normalize_release_repo_url() {
-  local raw="$1"
-  case "${raw}" in
-    https://github.com/*)
-      printf '%s\n' "${raw%.git}"
-      ;;
-    *)
-      die "--release-repo must be an HTTPS GitHub URL: ${raw}"
-      ;;
-  esac
-}
-
 resolve_latest_release_tag() {
-  local repo_url="$1"
   local tags
 
   tags="$(
-    git ls-remote --refs --tags "${repo_url}" "v*" \
+    git ls-remote --refs --tags "${OFFICIAL_RELEASE_REPO_GIT_URL}" "v*" \
       | awk -F/ '{print $3}' \
       | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' || true
   )"
 
-  [ -n "${tags}" ] || die "no stable release tags found in repository: ${repo_url}"
+  [ -n "${tags}" ] || die "no stable release tags found in repository: ${OFFICIAL_RELEASE_REPO_GIT_URL}"
   printf '%s\n' "${tags}" | sort -V | tail -n 1
 }
 
 prepare_release_source() {
-  local repo_url="$1"
-  local requested_version="$2"
-  local normalized_repo_url
   local resolved_tag
   local archive_url
   local archive_path
@@ -105,16 +87,12 @@ prepare_release_source() {
   require_cmd grep
   require_cmd sort
 
-  normalized_repo_url="$(normalize_release_repo_url "${repo_url}")"
-  resolved_tag="${requested_version}"
-  if [ "${requested_version}" = "latest" ]; then
-    resolved_tag="$(resolve_latest_release_tag "${repo_url}")"
-  fi
+  resolved_tag="$(resolve_latest_release_tag)"
 
   RELEASE_TAG="${resolved_tag}"
   RELEASE_TEMP_DIR="$(mktemp -d)"
   archive_path="${RELEASE_TEMP_DIR}/release.tar.gz"
-  archive_url="${normalized_repo_url}/archive/refs/tags/${resolved_tag}.tar.gz"
+  archive_url="${OFFICIAL_RELEASE_ARCHIVE_BASE_URL}/archive/refs/tags/${resolved_tag}.tar.gz"
 
   curl -fsSL "${archive_url}" -o "${archive_path}" \
     || die "failed to download release archive: ${archive_url}"
@@ -134,8 +112,8 @@ MODE="copy"
 SOURCE_DIR=""
 SOURCE_MODE="release"
 PROJECT_ROOT="$(pwd)"
-RELEASE_VERSION="latest"
-RELEASE_REPO_URL="https://github.com/KentoShimizu/sw-agent-skills.git"
+OFFICIAL_RELEASE_REPO_GIT_URL="https://github.com/KentoShimizu/sw-agent-skills.git"
+OFFICIAL_RELEASE_ARCHIVE_BASE_URL="https://github.com/KentoShimizu/sw-agent-skills"
 RELEASE_TAG=""
 RELEASE_TEMP_DIR=""
 DRY_RUN=false
@@ -171,16 +149,6 @@ while [ $# -gt 0 ]; do
       [ $# -ge 2 ] || die "--source requires a value"
       SOURCE_DIR="$2"
       SOURCE_MODE="local"
-      shift 2
-      ;;
-    --version)
-      [ $# -ge 2 ] || die "--version requires a value"
-      RELEASE_VERSION="$2"
-      shift 2
-      ;;
-    --release-repo)
-      [ $# -ge 2 ] || die "--release-repo requires a value"
-      RELEASE_REPO_URL="$2"
       shift 2
       ;;
     --project-root)
@@ -231,7 +199,7 @@ else
   if [ "${MODE}" = "symlink" ]; then
     die "--mode symlink is unsupported when --source is omitted; use --mode copy or provide --source"
   fi
-  prepare_release_source "${RELEASE_REPO_URL}" "${RELEASE_VERSION}"
+  prepare_release_source
   SOURCE_DIR="$(resolve_dir "${SOURCE_DIR}")"
 fi
 
@@ -338,7 +306,6 @@ install_skills_into_target_root() {
 
 printf 'source-mode: %s\n' "${SOURCE_MODE}"
 if [ "${SOURCE_MODE}" = "release" ]; then
-  printf 'release-repo: %s\n' "${RELEASE_REPO_URL}"
   printf 'release-version: %s\n' "${RELEASE_TAG}"
 fi
 printf 'source: %s\n' "${SOURCE_DIR}"

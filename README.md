@@ -29,12 +29,6 @@ cd sw-agent-skills
 bash scripts/install-skills.sh --agent all --scope global
 ```
 
-Install a specific release:
-
-```bash
-bash scripts/install-skills.sh --agent all --scope global --version vX.Y.Z
-```
-
 Download from a release archive and place the `skills` folder in any path:
 
 ```bash
@@ -76,8 +70,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | `--scope <global/local>` | No | Install scope. `local` installs under `--project-root`. | `global` |
 | `--mode <symlink/copy>` | No | Install method for each skill directory. | `copy` |
 | `--source <path>` | No | Source skills directory. It must contain skill subdirectories with `SKILL.md`. | latest stable release snapshot from official repository |
-| `--version <tag/latest>` | No | Release version used when `--source` is omitted. | `latest` |
-| `--release-repo <url>` | No | Repository URL used for release resolution when `--source` is omitted. | `https://github.com/KentoShimizu/sw-agent-skills.git` |
 | `--project-root <path>` | No | Project root used only when `--scope local`. | current directory |
 | `--dry-run` | No | Show actions without changing files. | off |
 | `--verbose` | No | Print detailed command output. | off |
@@ -92,8 +84,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | `-Scope <global/local>` | No | Install scope. `local` installs under `-ProjectRoot`. | `global` |
 | `-Mode <symlink/copy>` | No | Install method for each skill directory. | `copy` |
 | `-Source <path>` | No | Source skills directory. It must contain skill subdirectories with `SKILL.md`. | latest stable release snapshot from official repository |
-| `-Version <tag/latest>` | No | Release version used when `-Source` is omitted. | `latest` |
-| `-ReleaseRepo <url>` | No | Repository URL used for release resolution when `-Source` is omitted. | `https://github.com/KentoShimizu/sw-agent-skills.git` |
 | `-ProjectRoot <path>` | No | Project root used only when `-Scope local`. | current directory |
 | `-DryRun` | No | Show actions without changing files. | off |
 | `-VerboseList` | No | Print detailed action output. | off |
