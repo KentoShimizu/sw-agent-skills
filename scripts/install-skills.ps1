@@ -6,9 +6,13 @@ param(
     [string]$Scope = "global",
 
     [ValidateSet("symlink", "copy")]
-    [string]$Mode = "symlink",
+    [string]$Mode = "copy",
 
     [string]$Source,
+
+    [string]$Version = "latest",
+
+    [string]$ReleaseRepo = "https://github.com/KentoShimizu/sw-agent-skills.git",
 
     [string]$ProjectRoot = (Get-Location).Path,
 
@@ -92,95 +96,178 @@ function Resolve-SymlinkTarget {
     }
 }
 
-$repoRoot = Split-Path -Parent $PSScriptRoot
-if (-not $Source) {
-    $Source = Join-Path -Path $repoRoot -ChildPath "skills"
+function Normalize-ReleaseRepoUrl {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$RepoUrl
+    )
+
+    if ($RepoUrl -notmatch "^https://github\.com/") {
+        throw "-ReleaseRepo must be an HTTPS GitHub URL: $RepoUrl"
+    }
+
+    if ($RepoUrl.EndsWith(".git")) {
+        return $RepoUrl.Substring(0, $RepoUrl.Length - 4)
+    }
+
+    return $RepoUrl
 }
 
-$sourceResolved = Resolve-DirectoryPath -PathValue $Source -Label "source directory"
-if ($Scope -eq "local") {
-    $ProjectRoot = Resolve-DirectoryPath -PathValue $ProjectRoot -Label "project root"
+function Resolve-LatestStableReleaseTag {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$RepoUrl
+    )
+
+    $tags = git ls-remote --refs --tags $RepoUrl "v*" |
+        ForEach-Object { ($_ -split "/")[2] } |
+        Where-Object { $_ -match "^v\d+\.\d+\.\d+$" }
+
+    if (-not $tags) {
+        throw "no stable release tags found in repository: $RepoUrl"
+    }
+
+    return $tags |
+        Sort-Object { [version]($_.TrimStart("v")) } |
+        Select-Object -Last 1
 }
 
-$skillEntries = Get-ChildItem -LiteralPath $sourceResolved -Directory |
-    Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md") -PathType Leaf }
-if ($skillEntries.Count -eq 0) {
-    throw "no skills found under source directory: $sourceResolved"
-}
+$sourceMode = if ($PSBoundParameters.ContainsKey("Source")) { "local" } else { "release" }
+$releaseTag = $null
+$releaseTempDir = $null
 
-$targets = [System.Collections.Generic.List[object]]::new()
-
-if ($Scope -eq "global") {
-    if ($Agent -eq "all" -or $Agent -eq "codex") {
-        $targets.Add([pscustomobject]@{ Label = "codex"; Path = (Join-Path $HOME ".codex/skills") })
-    }
-    if ($Agent -eq "all" -or $Agent -eq "claude") {
-        $targets.Add([pscustomobject]@{ Label = "claude"; Path = (Join-Path $HOME ".claude/skills") })
-    }
-    if ($Agent -eq "all" -or $Agent -eq "opencode") {
-        $targets.Add([pscustomobject]@{ Label = "opencode"; Path = (Join-Path $HOME ".config/opencode/skills") })
-    }
-} else {
-    if ($Agent -eq "all" -or $Agent -eq "codex") {
-        $targets.Add([pscustomobject]@{ Label = "codex(local)"; Path = (Join-Path $ProjectRoot ".codex/skills") })
-    }
-    if ($Agent -eq "all" -or $Agent -eq "claude") {
-        $targets.Add([pscustomobject]@{ Label = "claude(local)"; Path = (Join-Path $ProjectRoot ".claude/skills") })
-    }
-    if ($Agent -eq "all" -or $Agent -eq "opencode") {
-        $targets.Add([pscustomobject]@{ Label = "opencode(local)"; Path = (Join-Path $ProjectRoot ".opencode/skills") })
-    }
-}
-
-if ($targets.Count -eq 0) {
-    throw "no installation targets resolved"
-}
-
-Write-Host "source: $sourceResolved"
-Write-Host "scope: $Scope"
-Write-Host "mode: $Mode"
-Write-Host "dry-run: $($DryRun.IsPresent)"
-Write-Host "verbose: $($VerboseList.IsPresent)"
-
-foreach ($target in $targets) {
-    Invoke-InstallAction -Description "mkdir $($target.Path)" -Action {
-        New-Item -ItemType Directory -Force -Path $target.Path | Out-Null
-    }
-
-    $installedCount = 0
-    $skippedCount = 0
-
-    foreach ($skillDir in $skillEntries) {
-        $destinationSkillDir = Join-Path $target.Path $skillDir.Name
-        $existingLinkTarget = Resolve-SymlinkTarget -TargetPath $destinationSkillDir
-        if ($existingLinkTarget -and $existingLinkTarget -eq $skillDir.FullName) {
-            $skippedCount++
-            continue
-        }
-
-        if (Test-Path -LiteralPath $destinationSkillDir) {
-            if (-not $Force.IsPresent) {
-                throw "$($target.Label) target exists: $destinationSkillDir (use -Force to replace)"
-            }
-            Invoke-InstallAction -Description "remove $destinationSkillDir" -Action {
-                Remove-Item -LiteralPath $destinationSkillDir -Recurse -Force
-            }
-        }
-
+try {
+    if ($sourceMode -eq "local") {
+        $sourceResolved = Resolve-DirectoryPath -PathValue $Source -Label "source directory"
+    } else {
         if ($Mode -eq "symlink") {
-            Invoke-InstallAction -Description "link $destinationSkillDir -> $($skillDir.FullName)" -Action {
-                New-Item -ItemType SymbolicLink -Path $destinationSkillDir -Target $skillDir.FullName | Out-Null
-            }
-        } else {
-            Invoke-InstallAction -Description "copy $($skillDir.FullName) -> $destinationSkillDir" -Action {
-                Copy-Item -LiteralPath $skillDir.FullName -Destination $destinationSkillDir -Recurse
-            }
+            throw "-Mode symlink is unsupported when -Source is omitted; use -Mode copy or provide -Source"
+        }
+        if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+            throw "required command not found: git"
+        }
+        if (-not (Get-Command tar -ErrorAction SilentlyContinue)) {
+            throw "required command not found: tar"
         }
 
-        $installedCount++
+        $releaseRepoNormalized = Normalize-ReleaseRepoUrl -RepoUrl $ReleaseRepo
+        $releaseTag = if ($Version -eq "latest") {
+            Resolve-LatestStableReleaseTag -RepoUrl $ReleaseRepo
+        } else {
+            $Version
+        }
+
+        $releaseTempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("sw-agent-skills-" + [guid]::NewGuid().ToString("N"))
+        New-Item -ItemType Directory -Path $releaseTempDir -Force | Out-Null
+
+        $archivePath = Join-Path $releaseTempDir "release.tar.gz"
+        $archiveUrl = "$releaseRepoNormalized/archive/refs/tags/$releaseTag.tar.gz"
+        Invoke-WebRequest -Uri $archiveUrl -OutFile $archivePath
+        tar -xzf $archivePath -C $releaseTempDir
+
+        $extractedRoot = Get-ChildItem -LiteralPath $releaseTempDir -Directory | Select-Object -First 1
+        if (-not $extractedRoot) {
+            throw "failed to locate extracted release directory"
+        }
+
+        $Source = Join-Path $extractedRoot.FullName "skills"
+        $sourceResolved = Resolve-DirectoryPath -PathValue $Source -Label "source directory"
     }
 
-    Write-Host "installed: $($target.Label) ($($target.Path)) new=$installedCount skipped=$skippedCount"
-}
+    if ($Scope -eq "local") {
+        $ProjectRoot = Resolve-DirectoryPath -PathValue $ProjectRoot -Label "project root"
+    }
 
-Write-Host "done."
+    $skillEntries = Get-ChildItem -LiteralPath $sourceResolved -Directory |
+        Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md") -PathType Leaf }
+    if ($skillEntries.Count -eq 0) {
+        throw "no skills found under source directory: $sourceResolved"
+    }
+
+    $targets = [System.Collections.Generic.List[object]]::new()
+
+    if ($Scope -eq "global") {
+        if ($Agent -eq "all" -or $Agent -eq "codex") {
+            $targets.Add([pscustomobject]@{ Label = "codex"; Path = (Join-Path $HOME ".codex/skills") })
+        }
+        if ($Agent -eq "all" -or $Agent -eq "claude") {
+            $targets.Add([pscustomobject]@{ Label = "claude"; Path = (Join-Path $HOME ".claude/skills") })
+        }
+        if ($Agent -eq "all" -or $Agent -eq "opencode") {
+            $targets.Add([pscustomobject]@{ Label = "opencode"; Path = (Join-Path $HOME ".config/opencode/skills") })
+        }
+    } else {
+        if ($Agent -eq "all" -or $Agent -eq "codex") {
+            $targets.Add([pscustomobject]@{ Label = "codex(local)"; Path = (Join-Path $ProjectRoot ".codex/skills") })
+        }
+        if ($Agent -eq "all" -or $Agent -eq "claude") {
+            $targets.Add([pscustomobject]@{ Label = "claude(local)"; Path = (Join-Path $ProjectRoot ".claude/skills") })
+        }
+        if ($Agent -eq "all" -or $Agent -eq "opencode") {
+            $targets.Add([pscustomobject]@{ Label = "opencode(local)"; Path = (Join-Path $ProjectRoot ".opencode/skills") })
+        }
+    }
+
+    if ($targets.Count -eq 0) {
+        throw "no installation targets resolved"
+    }
+
+    Write-Host "source-mode: $sourceMode"
+    if ($sourceMode -eq "release") {
+        Write-Host "release-repo: $ReleaseRepo"
+        Write-Host "release-version: $releaseTag"
+    }
+    Write-Host "source: $sourceResolved"
+    Write-Host "scope: $Scope"
+    Write-Host "mode: $Mode"
+    Write-Host "dry-run: $($DryRun.IsPresent)"
+    Write-Host "verbose: $($VerboseList.IsPresent)"
+
+    foreach ($target in $targets) {
+        Invoke-InstallAction -Description "mkdir $($target.Path)" -Action {
+            New-Item -ItemType Directory -Force -Path $target.Path | Out-Null
+        }
+
+        $installedCount = 0
+        $skippedCount = 0
+
+        foreach ($skillDir in $skillEntries) {
+            $destinationSkillDir = Join-Path $target.Path $skillDir.Name
+            $existingLinkTarget = Resolve-SymlinkTarget -TargetPath $destinationSkillDir
+            if ($existingLinkTarget -and $existingLinkTarget -eq $skillDir.FullName) {
+                $skippedCount++
+                continue
+            }
+
+            if (Test-Path -LiteralPath $destinationSkillDir) {
+                if (-not $Force.IsPresent) {
+                    throw "$($target.Label) target exists: $destinationSkillDir (use -Force to replace)"
+                }
+                Invoke-InstallAction -Description "remove $destinationSkillDir" -Action {
+                    Remove-Item -LiteralPath $destinationSkillDir -Recurse -Force
+                }
+            }
+
+            if ($Mode -eq "symlink") {
+                Invoke-InstallAction -Description "link $destinationSkillDir -> $($skillDir.FullName)" -Action {
+                    New-Item -ItemType SymbolicLink -Path $destinationSkillDir -Target $skillDir.FullName | Out-Null
+                }
+            } else {
+                Invoke-InstallAction -Description "copy $($skillDir.FullName) -> $destinationSkillDir" -Action {
+                    Copy-Item -LiteralPath $skillDir.FullName -Destination $destinationSkillDir -Recurse
+                }
+            }
+
+            $installedCount++
+        }
+
+        Write-Host "installed: $($target.Label) ($($target.Path)) new=$installedCount skipped=$skippedCount"
+    }
+
+    Write-Host "done."
+}
+finally {
+    if ($releaseTempDir -and (Test-Path -LiteralPath $releaseTempDir)) {
+        Remove-Item -LiteralPath $releaseTempDir -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}

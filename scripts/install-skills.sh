@@ -11,8 +11,10 @@ Usage:
 Options:
   --agent <all|codex|claude|opencode>   Target agent (default: all)
   --scope <global|local>                Install scope (default: global)
-  --mode <symlink|copy>                 Install mode (default: symlink)
-  --source <path>                       Source skills directory (default: <repo>/skills)
+  --mode <symlink|copy>                 Install mode (default: copy)
+  --source <path>                       Source skills directory (optional)
+  --version <tag|latest>                Release version when --source is omitted (default: latest)
+  --release-repo <url>                  Release repository URL (default: official repository)
   --project-root <path>                 Project root for local scope (default: current dir)
   --dry-run                             Print actions without applying changes
   --verbose                             Print per-command details
@@ -21,12 +23,17 @@ Options:
 
 Notes:
   - local scope supports Codex, Claude, and OpenCode.
+  - when --source is omitted, installer downloads a release snapshot and installs from it.
 EOF
 }
 
 die() {
   printf 'error: %s\n' "$*" >&2
   exit 1
+}
+
+require_cmd() {
+  command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
 }
 
 run_cmd() {
@@ -56,16 +63,92 @@ resolve_dir() {
   (cd "${raw}" && pwd)
 }
 
+normalize_release_repo_url() {
+  local raw="$1"
+  case "${raw}" in
+    https://github.com/*)
+      printf '%s\n' "${raw%.git}"
+      ;;
+    *)
+      die "--release-repo must be an HTTPS GitHub URL: ${raw}"
+      ;;
+  esac
+}
+
+resolve_latest_release_tag() {
+  local repo_url="$1"
+  local tags
+
+  tags="$(
+    git ls-remote --refs --tags "${repo_url}" "v*" \
+      | awk -F/ '{print $3}' \
+      | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' || true
+  )"
+
+  [ -n "${tags}" ] || die "no stable release tags found in repository: ${repo_url}"
+  printf '%s\n' "${tags}" | sort -V | tail -n 1
+}
+
+prepare_release_source() {
+  local repo_url="$1"
+  local requested_version="$2"
+  local normalized_repo_url
+  local resolved_tag
+  local archive_url
+  local archive_path
+  local extracted_root
+
+  require_cmd git
+  require_cmd curl
+  require_cmd tar
+  require_cmd awk
+  require_cmd grep
+  require_cmd sort
+
+  normalized_repo_url="$(normalize_release_repo_url "${repo_url}")"
+  resolved_tag="${requested_version}"
+  if [ "${requested_version}" = "latest" ]; then
+    resolved_tag="$(resolve_latest_release_tag "${repo_url}")"
+  fi
+
+  RELEASE_TAG="${resolved_tag}"
+  RELEASE_TEMP_DIR="$(mktemp -d)"
+  archive_path="${RELEASE_TEMP_DIR}/release.tar.gz"
+  archive_url="${normalized_repo_url}/archive/refs/tags/${resolved_tag}.tar.gz"
+
+  curl -fsSL "${archive_url}" -o "${archive_path}" \
+    || die "failed to download release archive: ${archive_url}"
+  tar -xzf "${archive_path}" -C "${RELEASE_TEMP_DIR}" \
+    || die "failed to extract release archive: ${archive_path}"
+
+  extracted_root="$(find "${RELEASE_TEMP_DIR}" -mindepth 1 -maxdepth 1 -type d | head -n 1)"
+  [ -n "${extracted_root}" ] || die "failed to locate extracted release directory"
+
+  SOURCE_DIR="${extracted_root}/skills"
+  [ -d "${SOURCE_DIR}" ] || die "skills directory not found in release archive: ${SOURCE_DIR}"
+}
+
 AGENT="all"
 SCOPE="global"
-MODE="symlink"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-SOURCE_DIR="${REPO_ROOT}/skills"
+MODE="copy"
+SOURCE_DIR=""
+SOURCE_MODE="release"
 PROJECT_ROOT="$(pwd)"
+RELEASE_VERSION="latest"
+RELEASE_REPO_URL="https://github.com/KentoShimizu/sw-agent-skills.git"
+RELEASE_TAG=""
+RELEASE_TEMP_DIR=""
 DRY_RUN=false
 VERBOSE=false
 FORCE=false
+
+cleanup_release_temp_dir() {
+  if [ -n "${RELEASE_TEMP_DIR}" ] && [ -d "${RELEASE_TEMP_DIR}" ]; then
+    rm -rf "${RELEASE_TEMP_DIR}"
+  fi
+}
+
+trap cleanup_release_temp_dir EXIT
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -87,6 +170,17 @@ while [ $# -gt 0 ]; do
     --source)
       [ $# -ge 2 ] || die "--source requires a value"
       SOURCE_DIR="$2"
+      SOURCE_MODE="local"
+      shift 2
+      ;;
+    --version)
+      [ $# -ge 2 ] || die "--version requires a value"
+      RELEASE_VERSION="$2"
+      shift 2
+      ;;
+    --release-repo)
+      [ $# -ge 2 ] || die "--release-repo requires a value"
+      RELEASE_REPO_URL="$2"
       shift 2
       ;;
     --project-root)
@@ -131,7 +225,16 @@ case "${MODE}" in
   *) die "--mode must be one of: symlink, copy" ;;
 esac
 
-SOURCE_DIR="$(resolve_dir "${SOURCE_DIR}")"
+if [ "${SOURCE_MODE}" = "local" ]; then
+  SOURCE_DIR="$(resolve_dir "${SOURCE_DIR}")"
+else
+  if [ "${MODE}" = "symlink" ]; then
+    die "--mode symlink is unsupported when --source is omitted; use --mode copy or provide --source"
+  fi
+  prepare_release_source "${RELEASE_REPO_URL}" "${RELEASE_VERSION}"
+  SOURCE_DIR="$(resolve_dir "${SOURCE_DIR}")"
+fi
+
 if [ "${SCOPE}" = "local" ]; then
   PROJECT_ROOT="$(resolve_dir "${PROJECT_ROOT}")"
 fi
@@ -233,6 +336,11 @@ install_skills_into_target_root() {
   printf 'installed: %s (%s) new=%d skipped=%d\n' "${label}" "${target_root}" "${installed_count}" "${skipped_count}"
 }
 
+printf 'source-mode: %s\n' "${SOURCE_MODE}"
+if [ "${SOURCE_MODE}" = "release" ]; then
+  printf 'release-repo: %s\n' "${RELEASE_REPO_URL}"
+  printf 'release-version: %s\n' "${RELEASE_TAG}"
+fi
 printf 'source: %s\n' "${SOURCE_DIR}"
 printf 'scope: %s\n' "${SCOPE}"
 printf 'mode: %s\n' "${MODE}"
