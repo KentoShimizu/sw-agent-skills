@@ -202,6 +202,9 @@ def resolve_skills(changed_paths: list[str]) -> list[str]:
                 resolved.add(BASH)
             elif sh_shebang:
                 resolved.add(SH)
+            elif zsh_shebang:
+                # Explicit zsh shebang is unambiguous even when extension is `.sh`.
+                pass
             else:
                 # `.sh` without explicit shebang is ambiguous; run both shell style guides.
                 resolved.add(BASH)

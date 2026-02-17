@@ -217,7 +217,7 @@ def validate_deprecation_plan(plan: Any, errors: list[str]) -> None:
     require_non_empty_string(plan, "migration_guide_link", errors, "deprecation_plan")
 
     window_days = plan.get("deprecation_window_days")
-    if not isinstance(window_days, int):
+    if isinstance(window_days, bool) or not isinstance(window_days, int):
         errors.append("deprecation_plan.deprecation_window_days must be an integer")
     elif window_days < MIN_DEPRECATION_WINDOW_DAYS:
         errors.append(

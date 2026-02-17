@@ -91,7 +91,7 @@ def require_numeric(
     prefix: str,
 ) -> float | None:
     value = obj.get(key)
-    if not isinstance(value, (int, float)):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
         errors.append(f"{prefix}.{key} must be numeric")
         return None
     return float(value)
@@ -105,7 +105,7 @@ def require_integer_min(
     prefix: str,
 ) -> int | None:
     value = obj.get(key)
-    if not isinstance(value, int):
+    if isinstance(value, bool) or not isinstance(value, int):
         errors.append(f"{prefix}.{key} must be an integer")
         return None
     if value < minimum:

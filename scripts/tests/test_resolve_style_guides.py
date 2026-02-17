@@ -166,6 +166,16 @@ class ResolveStyleGuidesRoutingTest(unittest.TestCase):
             actual = resolve_skills([str(sh_script), str(zsh_script)])
             self.assertEqual(["sh-style-guide", "zsh-style-guide"], actual)
 
+    def test_sh_extension_with_explicit_zsh_shebang_triggers_only_zsh(self) -> None:
+        resolve_skills = load_resolver()
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            script_path = Path(temp_dir) / "deploy.sh"
+            script_path.write_text("#!/usr/bin/env zsh\nprint hello\n", encoding="utf-8")
+
+            actual = resolve_skills([str(script_path)])
+            self.assertEqual(["zsh-style-guide"], actual)
+
 
 if __name__ == "__main__":
     unittest.main()
