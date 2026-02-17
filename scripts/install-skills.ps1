@@ -5,16 +5,9 @@ param(
     [ValidateSet("global", "local")]
     [string]$Scope = "global",
 
-    [ValidateSet("symlink", "copy")]
-    [string]$Mode = "copy",
-
     [string]$Source,
 
     [string]$ProjectRoot = (Get-Location).Path,
-
-    [switch]$DryRun,
-
-    [switch]$VerboseList,
 
     [switch]$Force
 )
@@ -44,52 +37,7 @@ function Invoke-InstallAction {
         [scriptblock]$Action
     )
 
-    if ($DryRun.IsPresent) {
-        if ($VerboseList.IsPresent) {
-            Write-Host "[dry-run] $Description"
-        }
-        return
-    }
-    if ($VerboseList.IsPresent) {
-        Write-Host "[run] $Description"
-    }
     & $Action
-}
-
-function Resolve-SymlinkTarget {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$TargetPath
-    )
-
-    if (-not (Test-Path -LiteralPath $TargetPath)) {
-        return $null
-    }
-
-    $item = Get-Item -LiteralPath $TargetPath -Force
-    if (-not ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint)) {
-        return $null
-    }
-
-    $rawTarget = $item.Target
-    if ($rawTarget -is [array]) {
-        $rawTarget = $rawTarget[0]
-    }
-    if (-not $rawTarget) {
-        return $null
-    }
-
-    $candidate = if ([System.IO.Path]::IsPathRooted($rawTarget)) {
-        $rawTarget
-    } else {
-        Join-Path -Path $item.Directory.FullName -ChildPath $rawTarget
-    }
-
-    try {
-        return (Resolve-Path -LiteralPath $candidate).Path
-    } catch {
-        return $null
-    }
 }
 
 function Resolve-LatestStableReleaseTag {
@@ -116,9 +64,6 @@ try {
     if ($sourceMode -eq "local") {
         $sourceResolved = Resolve-DirectoryPath -PathValue $Source -Label "source directory"
     } else {
-        if ($Mode -eq "symlink") {
-            throw "-Mode symlink is unsupported when -Source is omitted; use -Mode copy or provide -Source"
-        }
         if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
             throw "required command not found: git"
         }
@@ -189,9 +134,6 @@ try {
     }
     Write-Host "source: $sourceResolved"
     Write-Host "scope: $Scope"
-    Write-Host "mode: $Mode"
-    Write-Host "dry-run: $($DryRun.IsPresent)"
-    Write-Host "verbose: $($VerboseList.IsPresent)"
 
     foreach ($target in $targets) {
         Invoke-InstallAction -Description "mkdir $($target.Path)" -Action {
@@ -199,15 +141,9 @@ try {
         }
 
         $installedCount = 0
-        $skippedCount = 0
 
         foreach ($skillDir in $skillEntries) {
             $destinationSkillDir = Join-Path $target.Path $skillDir.Name
-            $existingLinkTarget = Resolve-SymlinkTarget -TargetPath $destinationSkillDir
-            if ($existingLinkTarget -and $existingLinkTarget -eq $skillDir.FullName) {
-                $skippedCount++
-                continue
-            }
 
             if (Test-Path -LiteralPath $destinationSkillDir) {
                 if (-not $Force.IsPresent) {
@@ -218,20 +154,14 @@ try {
                 }
             }
 
-            if ($Mode -eq "symlink") {
-                Invoke-InstallAction -Description "link $destinationSkillDir -> $($skillDir.FullName)" -Action {
-                    New-Item -ItemType SymbolicLink -Path $destinationSkillDir -Target $skillDir.FullName | Out-Null
-                }
-            } else {
-                Invoke-InstallAction -Description "copy $($skillDir.FullName) -> $destinationSkillDir" -Action {
-                    Copy-Item -LiteralPath $skillDir.FullName -Destination $destinationSkillDir -Recurse
-                }
+            Invoke-InstallAction -Description "copy $($skillDir.FullName) -> $destinationSkillDir" -Action {
+                Copy-Item -LiteralPath $skillDir.FullName -Destination $destinationSkillDir -Recurse
             }
 
             $installedCount++
         }
 
-        Write-Host "installed: $($target.Label) ($($target.Path)) new=$installedCount skipped=$skippedCount"
+        Write-Host "installed: $($target.Label) ($($target.Path)) new=$installedCount"
     }
 
     Write-Host "done."

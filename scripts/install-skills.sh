@@ -11,11 +11,8 @@ Usage:
 Options:
   --agent <all|codex|claude|opencode>   Target agent (default: all)
   --scope <global|local>                Install scope (default: global)
-  --mode <symlink|copy>                 Install mode (default: copy)
   --source <path>                       Source skills directory (optional)
   --project-root <path>                 Project root for local scope (default: current dir)
-  --dry-run                             Print actions without applying changes
-  --verbose                             Print per-command details
   --force                               Replace existing target directories
   -h, --help                            Show this help
 
@@ -35,23 +32,6 @@ require_cmd() {
 }
 
 run_cmd() {
-  if [ "${DRY_RUN}" = true ]; then
-    if [ "${VERBOSE}" = true ]; then
-      printf '[dry-run]'
-      for arg in "$@"; do
-        printf ' %q' "$arg"
-      done
-      printf '\n'
-    fi
-    return 0
-  fi
-  if [ "${VERBOSE}" = true ]; then
-    printf '[run]'
-    for arg in "$@"; do
-      printf ' %q' "$arg"
-    done
-    printf '\n'
-  fi
   "$@"
 }
 
@@ -108,7 +88,6 @@ prepare_release_source() {
 
 AGENT="all"
 SCOPE="global"
-MODE="copy"
 SOURCE_DIR=""
 SOURCE_MODE="release"
 PROJECT_ROOT="$(pwd)"
@@ -116,8 +95,6 @@ OFFICIAL_RELEASE_REPO_GIT_URL="https://github.com/KentoShimizu/sw-agent-skills.g
 OFFICIAL_RELEASE_ARCHIVE_BASE_URL="https://github.com/KentoShimizu/sw-agent-skills"
 RELEASE_TAG=""
 RELEASE_TEMP_DIR=""
-DRY_RUN=false
-VERBOSE=false
 FORCE=false
 
 cleanup_release_temp_dir() {
@@ -140,11 +117,6 @@ while [ $# -gt 0 ]; do
       SCOPE="$2"
       shift 2
       ;;
-    --mode)
-      [ $# -ge 2 ] || die "--mode requires a value"
-      MODE="$2"
-      shift 2
-      ;;
     --source)
       [ $# -ge 2 ] || die "--source requires a value"
       SOURCE_DIR="$2"
@@ -155,14 +127,6 @@ while [ $# -gt 0 ]; do
       [ $# -ge 2 ] || die "--project-root requires a value"
       PROJECT_ROOT="$2"
       shift 2
-      ;;
-    --dry-run)
-      DRY_RUN=true
-      shift
-      ;;
-    --verbose)
-      VERBOSE=true
-      shift
       ;;
     --force)
       FORCE=true
@@ -188,17 +152,9 @@ case "${SCOPE}" in
   *) die "--scope must be one of: global, local" ;;
 esac
 
-case "${MODE}" in
-  symlink|copy) ;;
-  *) die "--mode must be one of: symlink, copy" ;;
-esac
-
 if [ "${SOURCE_MODE}" = "local" ]; then
   SOURCE_DIR="$(resolve_dir "${SOURCE_DIR}")"
 else
-  if [ "${MODE}" = "symlink" ]; then
-    die "--mode symlink is unsupported when --source is omitted; use --mode copy or provide --source"
-  fi
   prepare_release_source
   SOURCE_DIR="$(resolve_dir "${SOURCE_DIR}")"
 fi
@@ -252,22 +208,10 @@ if [ ${#TARGET_PATHS[@]} -eq 0 ]; then
   die "no installation targets resolved"
 fi
 
-resolve_link_target() {
-  local target="$1"
-  local raw
-  raw="$(readlink "${target}")" || return 1
-  if [[ "${raw}" = /* ]]; then
-    (cd "${raw}" 2>/dev/null && pwd) || return 1
-    return 0
-  fi
-  (cd "$(dirname "${target}")" && cd "${raw}" 2>/dev/null && pwd) || return 1
-}
-
 install_skills_into_target_root() {
   local label="$1"
   local target_root="$2"
   local installed_count=0
-  local skipped_count=0
 
   run_cmd mkdir -p "${target_root}"
 
@@ -276,15 +220,6 @@ install_skills_into_target_root() {
     skill_name="$(basename "${source_skill_dir}")"
     local destination_skill_dir="${target_root}/${skill_name}"
 
-    if [ -L "${destination_skill_dir}" ]; then
-      local resolved
-      resolved="$(resolve_link_target "${destination_skill_dir}")" || resolved=""
-      if [ -n "${resolved}" ] && [ "${resolved}" = "${source_skill_dir}" ]; then
-        skipped_count=$((skipped_count + 1))
-        continue
-      fi
-    fi
-
     if [ -e "${destination_skill_dir}" ] || [ -L "${destination_skill_dir}" ]; then
       if [ "${FORCE}" != true ]; then
         die "${label} target exists: ${destination_skill_dir} (use --force to replace)"
@@ -292,16 +227,12 @@ install_skills_into_target_root() {
       run_cmd rm -rf "${destination_skill_dir}"
     fi
 
-    if [ "${MODE}" = "symlink" ]; then
-      run_cmd ln -s "${source_skill_dir}" "${destination_skill_dir}"
-    else
-      run_cmd cp -R "${source_skill_dir}" "${destination_skill_dir}"
-    fi
+    run_cmd cp -R "${source_skill_dir}" "${destination_skill_dir}"
 
     installed_count=$((installed_count + 1))
   done
 
-  printf 'installed: %s (%s) new=%d skipped=%d\n' "${label}" "${target_root}" "${installed_count}" "${skipped_count}"
+  printf 'installed: %s (%s) new=%d\n' "${label}" "${target_root}" "${installed_count}"
 }
 
 printf 'source-mode: %s\n' "${SOURCE_MODE}"
@@ -310,9 +241,6 @@ if [ "${SOURCE_MODE}" = "release" ]; then
 fi
 printf 'source: %s\n' "${SOURCE_DIR}"
 printf 'scope: %s\n' "${SCOPE}"
-printf 'mode: %s\n' "${MODE}"
-printf 'dry-run: %s\n' "${DRY_RUN}"
-printf 'verbose: %s\n' "${VERBOSE}"
 
 for i in "${!TARGET_PATHS[@]}"; do
   install_skills_into_target_root "${TARGET_LABELS[$i]}" "${TARGET_PATHS[$i]}"

@@ -43,13 +43,7 @@ cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 直接使用当前 checkout 的仓库内容：
 
 ```bash
-bash scripts/install-skills.sh --agent all --scope global --source skills --mode symlink
-```
-
-仅预览（不修改文件）：
-
-```bash
-bash scripts/install-skills.sh --agent all --scope global --dry-run
+bash scripts/install-skills.sh --agent all --scope global --source skills
 ```
 
 Windows PowerShell:
@@ -68,11 +62,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `--agent <all/codex/claude/opencode>` | 否 | 要安装的目标代理。 | `all` |
 | `--scope <global/local>` | 否 | 安装范围。`local` 安装到 `--project-root` 下。 | `global` |
-| `--mode <symlink/copy>` | 否 | 每个技能目录的安装方式。 | `copy` |
 | `--source <path>` | 否 | 技能来源目录。必须包含带 `SKILL.md` 的技能子目录。 | 官方仓库最新稳定发布快照 |
 | `--project-root <path>` | 否 | 仅在 `--scope local` 时使用的项目根目录。 | 当前目录 |
-| `--dry-run` | 否 | 仅显示动作，不修改文件。 | 关闭 |
-| `--verbose` | 否 | 输出详细命令日志。 | 关闭 |
 | `--force` | 否 | 覆盖已存在的目标技能目录。 | 关闭 |
 | `-h`, `--help` | 否 | 显示帮助。 | 关闭 |
 
@@ -82,11 +73,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `-Agent <all/codex/claude/opencode>` | 否 | 要安装的目标代理。 | `all` |
 | `-Scope <global/local>` | 否 | 安装范围。`local` 安装到 `-ProjectRoot` 下。 | `global` |
-| `-Mode <symlink/copy>` | 否 | 每个技能目录的安装方式。 | `copy` |
 | `-Source <path>` | 否 | 技能来源目录。必须包含带 `SKILL.md` 的技能子目录。 | 官方仓库最新稳定发布快照 |
 | `-ProjectRoot <path>` | 否 | 仅在 `-Scope local` 时使用的项目根目录。 | 当前目录 |
-| `-DryRun` | 否 | 仅显示动作，不修改文件。 | 关闭 |
-| `-VerboseList` | 否 | 输出详细执行日志。 | 关闭 |
 | `-Force` | 否 | 覆盖已存在的目标技能目录。 | 关闭 |
 
 ## 参考资料

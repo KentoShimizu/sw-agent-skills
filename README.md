@@ -43,13 +43,7 @@ cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 Install from the checked-out repository content:
 
 ```bash
-bash scripts/install-skills.sh --agent all --scope global --source skills --mode symlink
-```
-
-Preview only (no file changes):
-
-```bash
-bash scripts/install-skills.sh --agent all --scope global --dry-run
+bash scripts/install-skills.sh --agent all --scope global --source skills
 ```
 
 Windows PowerShell:
@@ -68,11 +62,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `--agent <all/codex/claude/opencode>` | No | Target agent to install. | `all` |
 | `--scope <global/local>` | No | Install scope. `local` installs under `--project-root`. | `global` |
-| `--mode <symlink/copy>` | No | Install method for each skill directory. | `copy` |
 | `--source <path>` | No | Source skills directory. It must contain skill subdirectories with `SKILL.md`. | latest stable release snapshot from official repository |
 | `--project-root <path>` | No | Project root used only when `--scope local`. | current directory |
-| `--dry-run` | No | Show actions without changing files. | off |
-| `--verbose` | No | Print detailed command output. | off |
 | `--force` | No | Replace existing destination skill directories. | off |
 | `-h`, `--help` | No | Show command help. | off |
 
@@ -82,11 +73,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `-Agent <all/codex/claude/opencode>` | No | Target agent to install. | `all` |
 | `-Scope <global/local>` | No | Install scope. `local` installs under `-ProjectRoot`. | `global` |
-| `-Mode <symlink/copy>` | No | Install method for each skill directory. | `copy` |
 | `-Source <path>` | No | Source skills directory. It must contain skill subdirectories with `SKILL.md`. | latest stable release snapshot from official repository |
 | `-ProjectRoot <path>` | No | Project root used only when `-Scope local`. | current directory |
-| `-DryRun` | No | Show actions without changing files. | off |
-| `-VerboseList` | No | Print detailed action output. | off |
 | `-Force` | No | Replace existing destination skill directories. | off |
 
 ## References
