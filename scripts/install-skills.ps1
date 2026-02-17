@@ -75,6 +75,9 @@ try {
     $archiveUrl = "$script:OfficialReleaseArchiveBaseUrl/archive/refs/tags/$releaseTag.tar.gz"
     Invoke-WebRequest -Uri $archiveUrl -OutFile $archivePath
     tar -xzf $archivePath -C $releaseTempDir
+    if ($LASTEXITCODE -ne 0) {
+        throw "failed to extract release archive: $archivePath (exit code: $LASTEXITCODE)"
+    }
 
     $extractedRoot = Get-ChildItem -LiteralPath $releaseTempDir -Directory | Select-Object -First 1
     if (-not $extractedRoot) {
