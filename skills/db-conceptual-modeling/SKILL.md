@@ -1,41 +1,43 @@
 ---
 name: db-conceptual-modeling
-description: Specialized workflow for domain entities, relationships, and bounded context boundaries. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: "Conceptual data modeling workflow for domain entities, relationships, and lifecycle boundaries. Use when teams must align on domain meaning before logical/physical schema decisions; do not use for index-only or migration-only tasks."
 ---
 
-# Db Conceptual Modeling
+# DB Conceptual Modeling
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to model domain meaning first, so later schema decisions reflect business semantics rather than accidental implementation details.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Scope Boundaries
+- Teams disagree on entity meaning or relationship semantics.
+- A new domain area is being introduced.
+- Existing schema complexity suggests conceptual drift.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for domain entities, relationships, and bounded context boundaries
-- Operational, compliance, and rollout constraints
+## Core Judgments
+- Entity versus value concept boundaries.
+- Cardinality and ownership semantics of relationships.
+- Lifecycle states and temporal meaning.
+- Bounded-context boundaries and shared concepts.
 
-## Outputs
-- Conceptual domain model with entity relationship map
-- Decision log for domain entities, relationships, and bounded context boundaries
-- Verification checklist with measurable pass-fail criteria
+## Practitioner Heuristics
+- Model business invariants explicitly before table design.
+- Use language from domain experts, not only engineering jargon.
+- Treat temporal facts (history, validity windows) as first-class concepts.
+- Avoid polymorphic catch-all concepts that hide domain distinctions.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for domain entities, relationships, and bounded context boundaries.
-2. Produce options and select an approach for domain entities, relationships, and bounded context boundaries.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using domain walkthrough with conflict and ambiguity checks.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Identify core concepts, actors, and business events.
+2. Define entity relationships with ownership and lifecycle semantics.
+3. Capture key invariants and conflict rules.
+4. Resolve term collisions across bounded contexts.
+5. Document conceptual assumptions that drive downstream logical design.
 
-## Quality Gates
-- Scope and assumptions for domain entities, relationships, and bounded context boundaries are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Common Failure Modes
+- Conceptual model mirrors current tables instead of domain reality.
+- Relationship ownership is left implicit, causing write conflicts later.
+- State transitions are not modeled, forcing ad hoc status flags.
 
-## Failure Handling
-- Stop when core entities or relationships remain ambiguous.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when core terms remain ambiguous across stakeholders.
+- Stop when invariants cannot be expressed at conceptual level.
+- Escalate when bounded context boundaries are politically unresolved.

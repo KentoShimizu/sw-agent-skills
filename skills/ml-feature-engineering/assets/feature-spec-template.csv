@@ -1,0 +1,2 @@
+feature_name,definition,data_source,transformation,owner,offline_online_parity_check,status
+example_feature,rolling 7d purchase count,orders,window_7d,sum,ml-team,required,draft

@@ -1,41 +1,59 @@
 ---
 name: docker-basics
-description: Specialized workflow for container runtime fundamentals and reproducible local execution. Use when container, orchestration, or infrastructure runtime configuration is central; do not use for API contract design or requirement prioritization.
+description: "Design and review container runtime basics for reproducible local/service execution using Docker. Use when container build/run behavior, networking, volumes, and runtime isolation need explicit decisions; do not use for API contract or requirement prioritization tasks."
 ---
 
 # Docker Basics
 
-## Trigger Boundary
-- Use when runtime packaging, orchestration, or infrastructure controls must be defined.
-- Do not use for product requirement decomposition; use `requirements-*` or `user-story-writing`.
-- Do not use for post-incident review output; use `incident-postmortem`.
+## Overview
+Use this skill to ensure containerized workloads are reproducible, debuggable, and operationally safe.
 
-## Goal
-Establish reproducible, secure, and operable runtime platforms.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for container runtime fundamentals and reproducible local execution
-- Operational, compliance, and rollout constraints
+## Shared References
+- Runtime risk catalog:
+  - `references/docker-runtime-risk-catalog.md`
 
-## Outputs
-- Container runtime baseline checklist
-- Decision log for container runtime fundamentals and reproducible local execution
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Runtime contract template:
+  - `assets/container-runtime-contract-template.md`
+- Runtime checklist:
+  - `assets/docker-runtime-checklist.md`
+
+## Inputs To Gather
+- Application runtime requirements and dependencies.
+- Local/dev/prod run differences.
+- Required network ports, volumes, and environment variables.
+- Security constraints (user, capabilities, filesystem access).
+
+## Deliverables
+- Container run policy (entrypoint, env, ports, volumes, user).
+- Local reproducibility checklist.
+- Runtime risk list (permissions, secrets, mutable state).
+- Verification steps for startup and health checks.
+
+## Quick Example
+- Run as non-root user.
+- Mount only required volume paths.
+- Fail fast if required env vars are missing.
+- Expose health endpoint and readiness check.
+
+## Quality Standard
+- Runtime config is minimal and explicit.
+- Container behavior is reproducible across environments.
+- Security posture follows least-privilege defaults.
+- Health and failure signals are observable.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for container runtime fundamentals and reproducible local execution.
-2. Produce options and select an approach for container runtime fundamentals and reproducible local execution.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using clean-environment image run verification.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define container runtime contract using `assets/container-runtime-contract-template.md`.
+2. Configure networking, storage, and environment boundaries.
+3. Validate startup/health behavior.
+4. Verify security constraints and secret handling using `assets/docker-runtime-checklist.md`.
+5. Document reproducible run commands.
 
-## Quality Gates
-- Scope and assumptions for container runtime fundamentals and reproducible local execution are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when container behavior differs from documented runtime assumptions.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when required runtime dependencies are implicit.
+- Stop when container requires unnecessary privileged execution.
+- Escalate when runtime differences make behavior non-reproducible.

@@ -1,0 +1,40 @@
+catalogVersion: "1.0.0"
+owner: "<team_or_role>"
+
+defaults:
+  traceIdRequired: true
+  retryableFieldRequired: true
+  docLinkBase: "https://example.com/errors/"
+
+errors:
+  - code: API_VALIDATION_INVALID_INPUT
+    category: validation
+    httpStatus: 400
+    retryable: false
+    messageTemplate: "Input validation failed."
+    clientAction: "Fix input and retry manually."
+    owner: "<team_or_role>"
+    deprecationStatus: active
+    docPath: "API_VALIDATION_INVALID_INPUT"
+  - code: API_AUTH_UNAUTHORIZED
+    category: authorization
+    httpStatus: 401
+    retryable: false
+    messageTemplate: "Authentication failed."
+    clientAction: "Refresh credentials and retry."
+    owner: "<team_or_role>"
+    deprecationStatus: active
+    docPath: "API_AUTH_UNAUTHORIZED"
+  - code: API_DEPENDENCY_TIMEOUT
+    category: dependency
+    httpStatus: 503
+    retryable: true
+    messageTemplate: "Upstream dependency timed out."
+    clientAction: "Retry with backoff."
+    owner: "<team_or_role>"
+    deprecationStatus: active
+    docPath: "API_DEPENDENCY_TIMEOUT"
+
+retirementPolicy:
+  requiresMigrationGuide: true
+  minimumDeprecationDays: 90

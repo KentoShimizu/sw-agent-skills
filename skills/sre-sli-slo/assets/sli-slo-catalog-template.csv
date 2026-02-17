@@ -1,0 +1,2 @@
+service,sli_name,measurement,window,slo_target,error_budget,owner
+checkout,availability,success_ratio,30d,99.9%,0.1%,sre-team

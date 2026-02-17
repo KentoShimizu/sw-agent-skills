@@ -1,46 +1,52 @@
 ---
 name: git-revert-recovery
-description: "Specialized workflow for recovering safely from problematic merges or commits using explicit revert strategy. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Recover safely from problematic merges or commits using explicit revert strategy and validation. Use when a bad commit/merge has landed and rollback intent plus blast radius must be controlled; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Revert Recovery
 
-## Trigger Boundary
-- Use when already-pushed commits must be undone safely.
-- Do not use for private local history cleanup; use `git-rebase-workflow`.
-- Do not use as a substitute for root-cause analysis in incidents.
+## Overview
+Use this skill to restore stability quickly on shared branches without destructive history rewrite.
 
-## Goal
-Restore stable behavior quickly without destructive history rewriting.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track revert artifacts with `GIT-RVT-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Revert scope selection guidance:
+  - `references/revert-scope-selection.md`
 
-## Inputs
-- Problematic commit or merge identifiers
-- Blast radius and urgency assessment
-- Verification and communication requirements
+## Templates And Assets
+- Revert runbook template:
+  - `assets/revert-execution-runbook-template.md`
+- Revert communication template:
+  - `assets/revert-communication-template.md`
 
-## Outputs
-- `GIT-RVT-*` revert execution record
-- Validation results for recovered branch state
-- Follow-up action list for permanent fix
+## Inputs To Gather
+- Problematic commit/merge identifiers.
+- Blast radius, urgency, and rollback success criteria.
+- Verification scope for critical user paths.
+- Communication and ownership requirements.
+
+## Deliverables
+- Revert execution runbook and results.
+- Validation evidence for recovered state.
+- Impact communication and follow-up action ownership.
 
 ## Workflow
-1. Confirm rollback target and expected recovered behavior.
-2. Choose revert scope (single commit, range, or merge revert).
-3. Execute revert and resolve any secondary conflicts.
-4. Validate critical paths and regression-sensitive flows.
-5. Communicate rollback impact with security review evidence.
+1. Define revert target and expected recovered behavior.
+2. Choose scope via `references/revert-scope-selection.md`.
+3. Execute and track steps in `assets/revert-execution-runbook-template.md`.
+4. Validate critical/regression-prone flows.
+5. Communicate impact using `assets/revert-communication-template.md`.
 
-## Quality Gates
-- Revert target is explicitly identified and justified.
-- Recovery validation passes for critical user paths.
-- Rollback communication includes impact and ownership.
-- Security Reviewer approval is present for `GIT-RVT-*` artifacts.
+## Quality Standard
+- Revert scope is minimal but sufficient for stability recovery.
+- Recovery validation covers critical user/business paths.
+- Communication includes impact, owner, and follow-up timeline.
+- Permanent fix path is recorded separately from emergency rollback.
 
-## Failure Handling
-- Stop when revert scope is ambiguous or unverified.
-- Escalate when rollback does not restore expected stability.
+## Failure Conditions
+- Stop when revert target/scope is ambiguous.
+- Stop when rollback cannot be validated against expected stable behavior.
+- Escalate when revert does not restore stability within required window.

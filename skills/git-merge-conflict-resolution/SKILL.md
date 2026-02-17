@@ -1,46 +1,52 @@
 ---
 name: git-merge-conflict-resolution
-description: "Specialized workflow for resolving Git merge conflicts with explicit intent tracking and verification. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Resolve Git merge/rebase conflicts with explicit intent tracking and post-resolution verification. Use when conflicts occur and intent-preserving resolution is required before integration; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Merge Conflict Resolution
 
-## Trigger Boundary
-- Use when merge operations produce textual or semantic conflicts.
-- Do not use for product-level requirement prioritization; use `requirement-prioritization`.
-- Do not use for post-incident rollback strategy; use `git-revert-recovery`.
+## Overview
+Use this skill to resolve conflicts without silently dropping behavior from either side.
 
-## Goal
-Resolve conflicts deterministically while preserving both correctness and intent.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track conflict resolution artifacts with `GIT-MRG-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Semantic conflict triage:
+  - `references/semantic-conflict-triage.md`
 
-## Inputs
-- Conflicted files and conflict markers
-- Intent of each conflicting change set
-- Required tests and verification scope
+## Templates And Assets
+- Resolution log template:
+  - `assets/conflict-resolution-log-template.md`
+- Verification checklist:
+  - `assets/conflict-verification-checklist.md`
 
-## Outputs
-- `GIT-MRG-*` conflict resolution record
-- File-level intent mapping for resolved hunks
-- Verification evidence for resolved behavior
+## Inputs To Gather
+- Conflicted files and conflict types.
+- Intent of each conflicting change set.
+- Required tests and high-risk behavioral paths.
+- Domain-owner contacts for ambiguous semantic conflicts.
+
+## Deliverables
+- Conflict resolution decisions with rationale.
+- File-level intent mapping for resolved hunks.
+- Verification evidence for resolved behavior.
 
 ## Workflow
-1. Classify conflicts by domain and behavioral impact.
-2. Compare both sides' intent before editing conflict regions.
-3. Resolve conflicts with minimal unintended side effects.
-4. Re-run targeted and regression tests for affected paths.
-5. Publish resolution record with contract validation evidence.
+1. Classify conflicts by behavioral impact and risk.
+2. Resolve textual conflicts while preserving intent from both sides.
+3. Log rationale in `assets/conflict-resolution-log-template.md`.
+4. Validate with `assets/conflict-verification-checklist.md`.
+5. Escalate unresolved semantic ambiguity using `references/semantic-conflict-triage.md`.
 
-## Quality Gates
-- Every resolved conflict has a clear intent rationale.
-- No conflict markers remain in tracked files.
-- Affected tests pass after conflict resolution.
-- History rewrite policy and branch protections remain compliant.
+## Quality Standard
+- Every resolved hunk has explicit intent rationale.
+- No conflict markers remain.
+- Affected behaviors are re-verified by tests/manual checks.
+- High-risk semantic merges receive domain-owner review.
 
-## Failure Handling
-- Stop when conflict intent cannot be reconstructed reliably.
-- Escalate when semantic conflicts require domain-owner arbitration.
+## Failure Conditions
+- Stop when change intent cannot be reconstructed confidently.
+- Stop when semantic correctness cannot be verified post-resolution.
+- Escalate when domain arbitration is needed for ambiguous merges.

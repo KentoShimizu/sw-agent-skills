@@ -12,14 +12,13 @@ This repository provides:
 
 - A standard structure for reusable skills
 - Installation scripts for Codex, Claude Code, and OpenCode
-- Validation scripts for link/path integrity
 
 ## Repository Structure
 
 - `skills/<skill-name>/SKILL.md`: required skill definition
 - `skills/<skill-name>/scripts/`: optional helper scripts
 - `skills/<skill-name>/references/`: optional reference documents
-- `scripts/`: installer and validator scripts
+- `scripts/`: installer scripts
 - `docs/`: localized README files
 
 ## Quick Start
@@ -70,13 +69,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | `-DryRun` | No | Show actions without changing files. | off |
 | `-VerboseList` | No | Print detailed action output. | off |
 | `-Force` | No | Replace existing destination skill directories. | off |
-
-## Validation
-
-```bash
-python3 scripts/validate_skill_links.py
-python3 scripts/validate_no_absolute_paths.py
-```
 
 ## References
 

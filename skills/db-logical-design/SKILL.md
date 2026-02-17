@@ -1,41 +1,44 @@
 ---
 name: db-logical-design
-description: Specialized workflow for table structure, keys, constraints, and relational consistency. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: "Logical database design workflow for table structure, key strategy, constraints, and relational consistency. Use when durable schema semantics must be defined before physical tuning; do not use for query-only optimization tasks."
 ---
 
-# Db Logical Design
+# DB Logical Design
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to define schema semantics that preserve integrity and support maintainable application behavior.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Scope Boundaries
+- New domain models must be translated into relational schema.
+- Existing schema suffers from integrity drift or unclear constraints.
+- Teams need consistent key and relationship semantics.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for table structure, keys, constraints, and relational consistency
-- Operational, compliance, and rollout constraints
+## Core Judgments
+- Primary and alternate key strategy.
+- Nullability and optionality semantics.
+- Referential integrity rules and cascade behavior.
+- Audit and lifecycle columns (created/updated/deleted/effective time).
 
-## Outputs
-- Logical schema specification with key and constraint definitions
-- Decision log for table structure, keys, constraints, and relational consistency
-- Verification checklist with measurable pass-fail criteria
+## Practitioner Heuristics
+- Model constraints in the database when they are universal invariants.
+- Use explicit unique constraints to encode business identity rules.
+- Avoid ambiguous nullable fields that represent multiple meanings.
+- For dynamic-language apps, define explicit typed schema mappings to avoid broad `object` payloads and repetitive casts at repository boundaries.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for table structure, keys, constraints, and relational consistency.
-2. Produce options and select an approach for table structure, keys, constraints, and relational consistency.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using schema rule checks for integrity and referential consistency.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Map conceptual entities to relational structures.
+2. Define keys, uniqueness, and relationship cardinality rules.
+3. Specify integrity constraints and lifecycle semantics.
+4. Validate design against expected write/read workflows.
+5. Identify migration implications and compatibility constraints.
+6. Document deferred trade-offs and boundary assumptions.
 
-## Quality Gates
-- Scope and assumptions for table structure, keys, constraints, and relational consistency are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Common Failure Modes
+- Business identity handled only in application code.
+- Soft-delete semantics conflict with uniqueness and reporting.
+- Overloaded JSON columns hide core relational structure.
 
-## Failure Handling
-- Stop when key constraints or integrity rules are missing.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when key strategy cannot guarantee entity identity.
+- Stop when critical invariants rely on informal conventions.
+- Escalate when logical model conflicts with required consistency semantics.

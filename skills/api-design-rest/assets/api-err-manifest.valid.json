@@ -1,0 +1,52 @@
+{
+  "artifact_id": "API-ERR-20260215-001",
+  "state": "approved",
+  "approvers": [
+    "API Owner",
+    "Engineering Owner"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "backward_compatibility_reviewed": true,
+    "transport_selection_documented": true,
+    "naming_convention_defined": true,
+    "authz_modeled": true,
+    "error_contract_defined": true,
+    "observability_fields_defined": true,
+    "runbook_updated": true,
+    "timeout_budget_defined": true,
+    "delivery_semantics_defined": true,
+    "backpressure_strategy_defined": false,
+    "connection_lifecycle_defined": false,
+    "consumer_idempotency_defined": false,
+    "no_fallback_logic": true,
+    "rate_limit_policy_defined": false,
+    "handles_sensitive_data": false,
+    "external_public_api": false,
+    "regulated_jurisdiction_impact": false,
+    "status_mapping_complete": true,
+    "error_code_registry_updated": true
+  },
+  "decision_context": {
+    "api_audience": "both",
+    "interaction_mode": "sync",
+    "primary_transport": "rest",
+    "selection_rationale": "A unified error contract is required for both internal and public consumers across HTTP APIs.",
+    "alternatives_considered": [
+      "graphql",
+      "grpc"
+    ],
+    "naming_convention_summary": "Error codes are namespaced machine-readable identifiers and are stable across versions.",
+    "threshold_method_summary": "Timeout and retry/error thresholds are derived from dependency SLA and incident recovery objectives."
+  },
+  "threshold_policy": {
+    "latency_target_derivation": "Error-path latency targets are derived from normal-path SLO and incident triage expectations.",
+    "availability_target_derivation": "Availability targets align with service criticality and client impact class.",
+    "timeout_budget_derivation": "Timeout budgets are split across upstream dependency boundaries to preserve fail-fast behavior.",
+    "capacity_headroom_derivation": "Headroom accounts for incident-time retry storms and degraded dependency behavior.",
+    "payload_limit_derivation": "Error payload size limits prevent sensitive leakage and logging overhead.",
+    "concurrency_limit_derivation": "Concurrency limits use thread-pool and connection-pool saturation analysis.",
+    "retry_backoff_derivation": "Retry/backoff policy is tied to retryable error categories and idempotency constraints.",
+    "delivery_semantics_derivation": "Error responses define deterministic client action semantics for retry, abort, or user correction."
+  }
+}

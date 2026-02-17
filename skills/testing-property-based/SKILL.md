@@ -1,41 +1,49 @@
 ---
 name: testing-property-based
-description: Specialized workflow for invariant validation using randomized and generative inputs. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: "Property-based testing workflow for invariant validation over broad input spaces. Use when correctness depends on rules that must hold across many generated inputs; do not use for narrow deterministic examples only."
 ---
 
-# Testing Property Based
+# Testing Property-Based
 
-## Trigger Boundary
-- Use when verification strategy or release confidence evidence must be designed.
-- Do not use for production observability ownership; use `observability-*`.
-- Do not use for architecture topology selection.
+## Overview
+Use this skill to validate invariants beyond hand-picked test cases by combining generators, shrinking, and reproducible seeds.
 
-## Goal
-Build sufficient verification evidence to prevent regressions.
+## Scope Boundaries
+- Use when input space is large and example-based tests are insufficient.
+- Typical requests:
+  - `Verify encode/decode roundtrip invariants for arbitrary inputs.`
+  - `Stress aggregate invariants with generated data.`
+  - `Catch edge cases that fixed examples miss.`
+- Do not use when:
+  - A small deterministic unit test set is sufficient (`testing-unit`).
+  - The primary scope is UI journey validation (`testing-e2e`).
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for invariant validation using randomized and generative inputs
-- Operational, compliance, and rollout constraints
+- Invariants and domain constraints
+- Generator strategy and seed reproducibility requirements
+- Runtime budget and flaky-risk tolerance
 
 ## Outputs
-- Property specification and generator definition
-- Decision log for invariant validation using randomized and generative inputs
-- Verification checklist with measurable pass-fail criteria
+- Property definitions and generator coverage strategy
+- Decision record for shrinking and seed policy
+- Verification checklist with failing-case reproduction guidance
 
 ## Workflow
-1. Clarify outcomes and hard constraints for invariant validation using randomized and generative inputs.
-2. Produce options and select an approach for invariant validation using randomized and generative inputs.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using property test runs with shrinking evidence.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Formalize invariants and invalid-state assumptions.
+2. Design generators that reflect realistic and adversarial inputs.
+3. Compare generation/shrinking strategies and choose one.
+4. Run property tests with reproducible seeds.
+5. Triages failures with shrunk counterexamples and publish fixes.
 
 ## Quality Gates
-- Scope and assumptions for invariant validation using randomized and generative inputs are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Core invariants are explicit and testable.
+- Generators cover edge and adversarial shapes.
+- Failures are reproducible via seed and shrunk case.
+- Residual unknowns are documented.
 
 ## Failure Handling
-- Stop when core invariants are not expressible or repeatedly violated.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when invariants are undefined or contradictory.
+- Escalate when generator quality is too weak for meaningful coverage.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.

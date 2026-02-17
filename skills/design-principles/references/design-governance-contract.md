@@ -1,114 +1,68 @@
-# Design Governance Contract
+# Design Governance Defaults (Project-First)
 
 ## Scope
-Apply this contract to all design-related skills:
-- `design-*`
-- `interaction-design`
-- `information-architecture`
-- `localization-qa`
-- `visual-design`
-- `accessibility-design`
-- `responsive-layout-design`
-- `ux-research-synthesis`
-- `figma-handoff`
+Use this reference for design and UX skills when a project does not already define governance rules.
+It is intentionally advisory and non-binding.
 
-Do not redefine ID formats, lifecycle states, approval gates, or privacy gates in individual skill files.
+## Rule Precedence
+Always apply rules in this order:
+1. Existing repository or organization rules
+2. Product/team conventions documented in the project
+3. This default reference (only when 1 and 2 are missing)
 
-## ID Schema (Single Source of Truth)
-- `DSN-PRN-<NNN>`: `^DSN-PRN-[0-9]{3,}$`
-  - Design principle ID
-- `DSN-SYS-<NNN>`: `^DSN-SYS-[0-9]{3,}$`
-  - Design system foundation item ID
-- `DSN-TOK-<CATEGORY>-<NNN>`: `^DSN-TOK-[A-Z0-9_]+-[0-9]{3,}$`
-  - Design token ID
-- `UX-FLW-<NNN>`: `^UX-FLW-[0-9]{3,}$`
-  - Interaction flow ID
-- `IA-NAV-<NNN>`: `^IA-NAV-[0-9]{3,}$`
-  - Information architecture structure ID
-- `VIS-SPEC-<NNN>`: `^VIS-SPEC-[0-9]{3,}$`
-  - Visual spec ID
-- `A11Y-CHK-<NNN>`: `^A11Y-CHK-[0-9]{3,}$`
-  - Accessibility checklist ID
-- `RESP-RUL-<NNN>`: `^RESP-RUL-[0-9]{3,}$`
-  - Responsive layout rule ID
-- `UX-RSR-<YYYYMMDD>-<NNN>`: `^UX-RSR-[0-9]{8}-[0-9]{3,}$`
-  - User research synthesis ID
-- `FIG-HND-<YYYYMMDD>-<NNN>`: `^FIG-HND-[0-9]{8}-[0-9]{3,}$`
-  - Figma handoff package ID
-- `DREV-<YYYYMMDD>-<NNN>`: `^DREV-[0-9]{8}-[0-9]{3,}$`
-  - Design review result ID
+## ID Policy
+- Use project-defined ID naming if it already exists.
+- If no naming policy exists, define a provisional ID pattern in the artifact itself.
+- Treat any example IDs in skills as non-binding.
+- Do not force a global prefix across unrelated projects.
 
-## Issuance Rules
-- Allocate IDs sequentially per prefix.
-- Keep IDs immutable and append-only.
-- Never reuse retired IDs.
-- On collision, issue a new ID and mark old one as `invalid` with reason.
+## Lifecycle Policy
+- Use project-defined lifecycle states when available.
+- If missing, a lightweight default is acceptable (for example: `draft`, `reviewed`, `approved`, `rejected`).
+- Keep lifecycle policy explicit in each artifact package.
 
-## Lifecycle States
-- `DSN-PRN-*`: `proposed`, `accepted`, `deprecated`
-- `DSN-SYS-*`: `proposed`, `accepted`, `deprecated`
-- `DSN-TOK-*`: `proposed`, `accepted`, `deprecated`
-- `UX-FLW-*`: `draft`, `reviewed`, `approved`, `deprecated`
-- `IA-NAV-*`: `draft`, `reviewed`, `approved`, `deprecated`
-- `VIS-SPEC-*`: `draft`, `reviewed`, `approved`, `deprecated`
-- `A11Y-CHK-*`: `draft`, `reviewed`, `approved`, `rejected`
-- `RESP-RUL-*`: `draft`, `reviewed`, `approved`, `deprecated`
-- `UX-RSR-*`: `draft`, `reviewed`, `approved`, `rejected`
-- `FIG-HND-*`: `prepared`, `reviewed`, `released`, `superseded`
-- `DREV-*`: `draft`, `reviewed`, `approved`, `rejected`
+## Review and Approval Policy
+- Required approvers are project-defined.
+- If no policy exists, use a minimal default:
+  - Design owner for all design artifacts
+  - Engineering owner when implementation is affected
+  - Accessibility, Privacy, Legal reviewers only when risk profile requires them
 
-## Accessibility and Localization Gates
-- Target WCAG 2.2 AA as minimum baseline (`checks.wcag_aa`).
-- Validate keyboard navigation (`checks.keyboard_navigation`).
-- Validate visible focus states (`checks.visible_focus_states`).
-- Validate color contrast (`checks.color_contrast`).
-- Validate semantic structure (`checks.semantic_structure`).
-- Validate screen reader reading order for key flows (`checks.screen_reader_order`).
-- Validate localization for US English (`en-US`), Japanese (`ja-JP`), and at least two EU locales (`checks.locales`).
-- Validate text expansion (`checks.text_expansion`) and truncation behavior (`checks.text_truncation`).
+## Localization and Privacy Policy
+- Locale coverage is project-defined. Do not enforce fixed locale sets.
+- Privacy evidence is required only when personal data handling or project policy requires it.
+- Avoid forcing privacy/legal fields for documentation-only deliverables unless explicitly requested.
 
-## Privacy Evidence Requirements
-A privacy evidence package is mandatory for:
-- all `UX-RSR-*` artifacts
-- all `FIG-HND-*` artifacts
-- any manifest where `checks.user_facing_change` is `true`
+## Validation Policy
+- For documentation-only workflows, validation is optional by default.
+- Run validation only when the project explicitly opts into governed mode.
+- The validator should enforce only project-declared requirements, not organization-specific hardcoded rules.
 
-Include the following fields:
-- `lawful_basis_or_consent`
-- `pii_data_inventory`
-- `data_minimization_decision`
-- `retention_and_deletion_policy`
-- `cross_border_transfer_control`
-- `data_subject_rights_process`
-- `redaction_and_access_control`
+## Optional Manifest Hints
+Projects that want governed validation can declare requirements in a manifest `policy` block.
 
-## Approval Matrix
-- Required: Design Owner
-- Required: Engineering Owner for implementation feasibility
-- Required: Accessibility Reviewer for user-facing changes
-- Required always for `UX-RSR-*`: Privacy Reviewer
-- Required always for `FIG-HND-*`: Privacy Reviewer
-- Required when legal/compliance-sensitive UX is affected: Legal Reviewer
+Example (non-binding):
 
-## Machine Validation
-- Run `python3 scripts/validate_design_contract.py --manifest <path/to/manifest.json>` from `skills/design-principles`.
-- For CI or batch validation, run `python3 scripts/run_contract_validators.py --design-manifest <path/to/manifest.json>` from repository root.
-- Manifest must include: `artifact_id`, `state`, `approvers`, and `checks`.
-- Include `checks.user_facing_change` as `true` or `false`.
-- Use the canonical accessibility check keys:
-  - `checks.wcag_aa`
-  - `checks.keyboard_navigation`
-  - `checks.visible_focus_states`
-  - `checks.color_contrast`
-  - `checks.semantic_structure`
-  - `checks.screen_reader_order`
-  - `checks.text_expansion`
-  - `checks.text_truncation`
+```json
+{
+  "artifact_id": "PROJECT-123",
+  "state": "reviewed",
+  "approvers": ["Design Owner", "Engineering Owner"],
+  "checks": {
+    "id_format_validated": true,
+    "a11y_reviewed": true,
+    "locales": ["ja-JP", "en-US"]
+  },
+  "policy": {
+    "require_artifact_id": true,
+    "allowed_states": ["draft", "reviewed", "approved", "rejected"],
+    "required_approvers": ["Design Owner"],
+    "required_checks": ["id_format_validated"],
+    "required_locales": ["ja-JP"]
+  }
+}
+```
 
-## Gate Policy
-- Block release when required IDs are missing or malformed.
-- Block release when lifecycle state is invalid for the artifact type.
-- Block release when required approvers are missing.
-- Block release when accessibility or localization checks fail.
-- Block release when privacy evidence requirements are incomplete.
-- Do not add fallback UI logic for new designs; define explicit failure and empty states instead.
+## Operational Handling
+- Escalate only when project-required fields are missing.
+- If no project policy exists, keep outputs practical and do not block delivery with governance-only checks.

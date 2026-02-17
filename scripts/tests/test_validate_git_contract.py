@@ -81,14 +81,25 @@ class ValidateGitContractTest(unittest.TestCase):
         errors = module.validate_manifest(manifest)
         self.assertEqual([], errors)
 
-    def test_non_invalid_state_still_requires_prs_execution_keys(self) -> None:
+    def test_non_invalid_state_without_prs_signals_does_not_require_execution_keys(self) -> None:
         module = load_validator_module()
         manifest = build_manifest("GIT-PRS-20260215-001", "executed")
         errors = module.validate_manifest(manifest)
-        self.assertIn("checks.pr_opened must be a boolean", errors)
-        self.assertIn("checks.merge_sync_used must be a boolean", errors)
-        self.assertIn("checks.rebase_used must be a boolean", errors)
-        self.assertIn("checks.repository_merge_only_policy must be a boolean", errors)
+        self.assertEqual([], errors)
+
+    def test_prs_signal_requires_execution_consistency(self) -> None:
+        module = load_validator_module()
+        manifest = build_manifest(
+            "GIT-PRS-20260215-001",
+            "executed",
+            checks_extra={"pr_opened": True},
+        )
+        errors = module.validate_manifest(manifest)
+        self.assertIn(
+            "one of checks.merge_sync_used or checks.rebase_used must be true for "
+            "PR-sync style manifests",
+            errors,
+        )
 
 
 if __name__ == "__main__":

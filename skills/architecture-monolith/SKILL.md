@@ -1,52 +1,44 @@
 ---
 name: architecture-monolith
-description: "Modular monolith architecture design for systems that prioritize transactional consistency, simple operations, and fast team iteration in a single deployable unit. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Modular monolith architecture workflow for strong domain boundaries, transactional consistency, and operational simplicity in a single deployable. Use when teams need fast delivery and coherent data consistency with controlled complexity; do not use when independent runtime scaling boundaries are mandatory."
 ---
 
 # Architecture Monolith
 
-## Trigger Boundary
-- Use when one deployable unit is acceptable and operational simplicity is prioritized.
-- Do not use when independent scaling or deployment by domain is mandatory; use `architecture-microservices`.
-- Do not use for async integration-first topology; use `architecture-event-driven`.
+## Overview
+Use this skill to design modular monoliths that preserve internal autonomy without introducing distributed-system overhead.
 
-## Goal
-Design a modular monolith with clear internal boundaries and low coupling.
+## Scope Boundaries
+- Product scope or team size favors a single deployable unit.
+- Cross-domain workflows require strong transactional consistency.
+- Operational simplicity is a top constraint.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Do not define local ID formats or alternate state machines.
+## Core Judgments
+- Module boundaries: domain cohesion and dependency direction inside one codebase.
+- Internal contracts: which module APIs are allowed and how enforced.
+- Data ownership in shared database: logical ownership and write access discipline.
+- Future extraction seams: where boundaries should support later service splits.
 
-## Compliance & Governance Baseline (US, Japan, EU)
-- Isolate sensitive data handling modules and enforce least privilege.
-- Centralize audit logging and retention controls for regulated data.
-- Prepare an `ARC-CMP-*` evidence package for governance review.
-
-## Inputs
-- Domain boundaries and transactional requirements
-- Team size and release cadence
-- Performance, reliability, and compliance constraints
-
-## Outputs
-- Module boundary map and dependency rules
-- Internal contract definitions and ownership map
-- Evolution seams for future extraction if needed
+## Practitioner Heuristics
+- Treat modules like products with stable public interfaces.
+- Forbid cross-module database writes except through explicit module APIs.
+- Keep shared kernel minimal and intentionally versioned.
+- In dynamic languages, define explicit module interface types to avoid ad hoc maps and pervasive casts at boundaries.
 
 ## Workflow
-1. Partition domains into high-cohesion modules.
-2. Define strict dependency direction across modules.
-3. Establish module-level API contracts and ownership.
-4. Design transactional boundaries and failure behavior.
-5. Identify extraction seams and record migration risks.
+1. Partition core domains into modules with clear responsibility.
+2. Define allowed dependency directions and anti-corruption boundaries.
+3. Specify module-level contracts for commands, queries, and events.
+4. Align transactional scope with module invariants.
+5. Add observability by module to expose coupling hotspots.
+6. Record extraction candidates and triggers for future decomposition.
 
-## Quality Gates
-- Module boundaries align with domain responsibilities.
-- Cross-module dependencies follow explicit rules.
-- `ARC-CMP-*` evidence package is complete and approved.
-- Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
+## Common Failure Modes
+- Modular monolith degrades into "big ball of mud" via unrestricted imports.
+- Shared tables bypass module contracts and break ownership.
+- Runtime simplicity hides growing conceptual complexity.
 
-## Failure Handling
-- Rework when cyclic dependencies appear between modules.
-- Stop when canonical contract validation fails.
-- Escalate when module ownership cannot be assigned clearly.
+## Failure Conditions
+- Stop when module boundaries cannot be enforced in code review/tooling.
+- Stop when critical invariants span modules without clear ownership.
+- Escalate when required independent scaling/deployment is no longer feasible.

@@ -1,41 +1,51 @@
 ---
 name: observability-metrics
-description: Specialized workflow for metric model design aligned to service health and business impact. Use when telemetry signal design, alertability, and operational detection policy are in scope; do not use for business-feature implementation logic.
+description: "Observability metrics workflow for metric model design aligned to service health and business impact. Use when teams define or revise service metrics/SLIs for reliable health and capacity decisions; do not use for business-feature implementation logic."
 ---
 
 # Observability Metrics
 
-## Trigger Boundary
-- Use when production visibility, reliability targets, or incident response workflows are needed.
-- Do not use for feature-level functional spec writing; use `requirements-*`.
-- Do not use for pure code-style conformance checks.
+## Overview
+Use this skill to define metrics that reflect real reliability and business impact, not vanity signals.
 
-## Goal
-Maintain production reliability through measurable operational controls.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for metric model design aligned to service health and business impact
-- Operational, compliance, and rollout constraints
+## Shared References
+- Metric cardinality and SLI rules:
+  - `references/metric-cardinality-and-sli-rules.md`
 
-## Outputs
-- Metrics taxonomy and dashboard contract
-- Decision log for metric model design aligned to service health and business impact
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Metrics taxonomy template:
+  - `assets/metrics-taxonomy-template.csv`
+- Metrics quality checklist:
+  - `assets/metrics-quality-checklist.md`
+
+## Inputs To Gather
+- Service health objectives and user-impact expectations.
+- Capacity and performance decision needs.
+- Current metric set and cardinality risks.
+- Dashboard and alert consumer requirements.
+
+## Deliverables
+- Metrics taxonomy and ownership mapping.
+- SLI-aligned metric set.
+- Dashboard/alert readiness evidence.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for metric model design aligned to service health and business impact.
-2. Produce options and select an approach for metric model design aligned to service health and business impact.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using metric cardinality and SLI correlation review.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define metric taxonomy in `assets/metrics-taxonomy-template.csv`.
+2. Apply SLI/cardinality rules from `references/metric-cardinality-and-sli-rules.md`.
+3. Validate coverage and quality with `assets/metrics-quality-checklist.md`.
+4. Tune labels and aggregation for operability.
+5. Publish metric governance and maintenance plan.
 
-## Quality Gates
-- Scope and assumptions for metric model design aligned to service health and business impact are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Metrics support reliability and capacity decisions.
+- Label strategy avoids high-cardinality failure.
+- Ownership and operational usage are explicit.
 
-## Failure Handling
+## Failure Conditions
 - Stop when key health indicators are missing or misleading.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when cardinality makes metrics operationally unstable.
+- Escalate when metric gaps block incident response.

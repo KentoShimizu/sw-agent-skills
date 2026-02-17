@@ -12,14 +12,13 @@
 
 - 可复用 skills 的标准目录结构
 - 面向 Codex、Claude Code、OpenCode 的安装脚本
-- 用于校验链接与路径完整性的验证脚本
 
 ## 仓库结构
 
 - `skills/<skill-name>/SKILL.md`: 必需的技能定义
 - `skills/<skill-name>/scripts/`: 可选辅助脚本
 - `skills/<skill-name>/references/`: 可选参考文档
-- `scripts/`: 安装与校验脚本
+- `scripts/`: 安装脚本
 - `docs/`: 多语言 README
 
 ## 快速安装
@@ -70,13 +69,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | `-DryRun` | 否 | 仅显示动作，不修改文件。 | 关闭 |
 | `-VerboseList` | 否 | 输出详细执行日志。 | 关闭 |
 | `-Force` | 否 | 覆盖已存在的目标技能目录。 | 关闭 |
-
-## 校验
-
-```bash
-python3 scripts/validate_skill_links.py
-python3 scripts/validate_no_absolute_paths.py
-```
 
 ## 参考资料
 

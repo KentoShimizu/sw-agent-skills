@@ -1,54 +1,44 @@
 ---
 name: architecture-tradeoff-analysis
-description: "Structured architecture option evaluation with explicit criteria, weighting, and sensitivity checks. Use when evaluating competing architecture options with explicit criteria and risk weighting; do not use after the architecture direction is already fixed."
+description: "Architecture trade-off analysis workflow for comparing options with explicit criteria, weighting, and sensitivity under uncertainty. Use when multiple viable architecture choices exist and rationale must be defensible; do not use after architecture direction is already fixed."
 ---
 
 # Architecture Tradeoff Analysis
 
-## Trigger Boundary
-- Use when multiple architecture options exist and a defensible choice is required.
-- Do not use to document final decision history; use `architecture-decision-records`.
-- Do not use to produce communication diagrams only; use `architecture-c4-modeling`.
+## Overview
+Use this skill to make architecture choices explicit, comparable, and auditable instead of preference-driven.
 
-## Goal
-Select architecture options through transparent, evidence-based evaluation.
+## Scope Boundaries
+- There are several plausible architecture options.
+- Decision stakes are high and reversal is expensive.
+- Teams need a shared basis for selecting one option.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Do not define local ID formats or alternate state machines.
+## Core Judgments
+- Option quality: whether candidates are realistic for the current context.
+- Criteria set: business and technical dimensions that actually drive success.
+- Weighting model: which criteria dominate and why.
+- Sensitivity: how decision changes when assumptions shift.
 
-## Compliance & Governance Baseline (US, Japan, EU)
-- Include legal and privacy constraints as hard gates, not soft preferences.
-- Reject options that require non-compliant data handling assumptions.
-- Prepare an `ARC-CMP-*` evidence package for governance review.
-
-## Inputs
-- Decision question and candidate options
-- Architecture drivers and quality attributes
-- Constraints, risks, and cost assumptions
-
-## Outputs
-- Option scorecard with criteria and weights
-- Sensitivity analysis on uncertain assumptions
-- Recommended option with explicit risks and re-decision trigger
-- Brownfield only: rollback strategy with trigger condition and runbook link
+## Practitioner Heuristics
+- Keep criteria small and high-impact; too many criteria hide real priorities.
+- Separate hard constraints from weighted preferences.
+- Include operational burden and team capability as first-class criteria.
+- Document dominant assumptions and the signals that would invalidate them.
 
 ## Workflow
-1. Define decision scope and non-negotiable constraints.
-2. Enumerate at least two viable architecture options.
-3. Score options against weighted criteria.
-4. Perform sensitivity checks on uncertain inputs.
-5. For greenfield, define failure exposure criteria and re-decision trigger.
-6. For brownfield, add rollback trigger and runbook reference.
+1. Define decision question, constraints, and decision horizon.
+2. Enumerate candidate options and reject non-viable ones early.
+3. Set criteria and weighting aligned to current strategy.
+4. Score options with evidence-backed rationale per criterion.
+5. Run sensitivity analysis on top-weighted criteria and uncertain assumptions.
+6. Select preferred option and document fallback decision path.
 
-## Quality Gates
-- Criteria and weights are defined before scoring.
-- Options are comparable at equal abstraction level.
-- `ARC-CMP-*` evidence package is complete and approved.
-- Greenfield output does not contain fallback or rollback architecture paths.
+## Common Failure Modes
+- Scoring hides biased assumptions rather than exposing them.
+- Analysis compares abstract patterns, not implementable options.
+- Sensitivity analysis is skipped, leading to brittle conclusions.
 
-## Failure Handling
-- Stop when decision criteria are missing or unstable.
-- Stop when canonical contract validation fails.
-- Escalate when top options are statistically indistinguishable under sensitivity checks.
+## Failure Conditions
+- Stop when decision criteria cannot be agreed.
+- Stop when option scoring lacks evidence for key criteria.
+- Escalate when sensitivity analysis shows no robust winner.

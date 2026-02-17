@@ -1,9 +1,13 @@
 ---
 name: sql-style-guide
-description: "Style, review, and refactoring standards for SQL schema, migration, and query artifacts. Use when editing or reviewing `.sql` files, migration directories containing SQL migrations, schema definitions, or query templates regardless of application language. Do not use for ORM-only code changes with no SQL artifacts, or for non-SQL data modeling documents. Use together with language-specific style guides only when both SQL and application code are modified."
+description: "Style, review, and refactoring standards for SQL schema, migration, and query artifacts. Trigger when `.sql` schema/query/migration artifacts are created, changed, or reviewed and SQL-specific quality rules (naming, migration safety, query clarity, and performance intent) must be enforced. Do not use for ORM-only code changes with no SQL artifacts, or for non-SQL data modeling documents. Use together with language-specific style guides only when both SQL and application code are modified."
 ---
 
 # Sql Style Guide
+
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
 Apply this checklist when writing or reviewing SQL.
 

@@ -1,92 +1,133 @@
 ---
 name: csharp-style-guide
-description: "Style, review, and refactoring standards for C#/.NET codebases. Use when editing or reviewing `.cs`, `.csproj`, `.sln`, `.props`, `.targets`, or `.razor` files, or `dotnet`-compiled application/test code. Do not use for Java/Kotlin or JavaScript/TypeScript style concerns unless C# artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
+description: "Style, review, and refactoring standards for C#/.NET codebases. Trigger when `.cs`, `.csproj`, `.sln`, `.props`, `.targets`, or `.razor` artifacts are created, modified, or reviewed and C#-specific quality rules (naming, nullability, async patterns, API design consistency) must be enforced. Do not use for Java/Kotlin or JavaScript/TypeScript style concerns unless C# artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
 ---
 
 # Csharp Style Guide
 
-Apply this checklist when writing or reviewing C# code.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Trigger Reference
+Use this skill to write and review C# code that is safe, maintainable, and production-ready.
 
-- Use `references/trigger-matrix.md` as the canonical trigger and co-activation matrix.
-- Resolve skill activation from changed files with `python3 scripts/resolve_style_guides.py <changed-path>...` when automation is available.
-- Validate trigger matrix consistency with `python3 scripts/validate_trigger_matrix_sync.py`.
+## Trigger And Co-activation Reference
 
-## Architecture and module boundaries
-## Quality Gate Reference
+- If available, use `references/trigger-matrix.md` as the canonical trigger/co-activation matrix.
+- If available, resolve style-guide activation from changed files with `python3 scripts/resolve_style_guides.py <changed-path>...`.
+- If available, validate trigger matrix consistency with `python3 scripts/validate_trigger_matrix_sync.py`.
 
-- Use `references/quality-gate-command-matrix.md` for CI check-only vs local autofix command mapping.
+## Quality Gate Command Reference
 
-1. Keep dependency direction explicit: domain -> application -> infrastructure.
+- If available, use `references/quality-gate-command-matrix.md` for CI check-only vs local autofix mapping.
+
+## Quick Start Snippets
+
+### Startup options validation (fail fast)
+
+```csharp
+builder.Services
+    .AddOptions<MyServiceOptions>()
+    .Bind(builder.Configuration.GetSection("MyService"))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+```
+
+### CancellationToken propagation
+
+```csharp
+public async Task<OrderDto> GetOrderAsync(Guid orderId, CancellationToken cancellationToken)
+{
+    var entity = await _repository.FindByIdAsync(orderId, cancellationToken);
+    return entity is null ? throw new NotFoundException(orderId) : Map(entity);
+}
+```
+
+### Specific exception handling at boundary
+
+```csharp
+try
+{
+    await _publisher.PublishAsync(message, cancellationToken);
+}
+catch (TimeoutException ex)
+{
+    _logger.LogWarning(ex, "Publish timeout for message {MessageId}", message.Id);
+    throw new TransientDependencyException("Publish timed out", ex);
+}
+```
+
+## Architecture And Module Boundaries
+
+1. Keep dependency direction explicit (domain -> application -> infrastructure).
 2. Isolate side effects (I/O, DB, network) behind interfaces.
-3. Keep controllers/handlers thin; move business rules into services.
-4. Avoid god classes; split by responsibility and bounded context.
+3. Keep controllers/handlers thin; move business rules into domain/application services.
+4. Split classes by responsibility; avoid god classes.
 
-## Naming and code structure
+## Naming And Code Structure
 
 1. Use PascalCase for types/methods/properties, camelCase for locals/parameters.
-2. Use descriptive names that capture intent, not implementation detail.
-3. Keep methods focused; extract private methods for complex branches.
+2. Use intent-revealing names instead of implementation detail names.
+3. Keep methods focused; extract private helpers for complex branches.
 4. Replace magic numbers with named constants including units (`RetryDelayMilliseconds`).
 
-## Types and data modeling
+## Types And Data Modeling
 
 1. Enable nullable reference types and treat warnings as actionable.
-2. Prefer explicit DTO/value objects over `dynamic` or loosely typed maps.
+2. Prefer explicit DTO/value objects over `dynamic` or loosely typed dictionaries.
 3. Use `record` for immutable data where semantics fit.
-4. Define clear request/response contracts at boundaries.
+4. Define explicit boundary contracts for request/response models.
 
-## Error handling and async behavior
+## Error Handling And Async Behavior
 
 1. Throw specific exception types with actionable context.
-2. Catch exceptions at boundaries to map behavior intentionally (retry/log/translate/rethrow).
-3. Avoid blanket `catch (Exception)` unless rethrowing after required logging/cleanup.
-4. Pass `CancellationToken` through async call chains.
-5. Avoid sync-over-async patterns (`.Result`, `.Wait()`).
+2. Catch exceptions at boundaries and map intentionally (retry/log/translate/rethrow).
+3. Avoid blanket `catch (Exception)` unless rethrowing after required handling.
+4. Pass `CancellationToken` through async chains.
+5. Avoid sync-over-async (`.Result`, `.Wait()`).
 
-## Configuration and environment
+## Configuration And Environment
 
-1. Bind configuration to typed options classes and validate on startup.
-2. Fail application startup when required environment variables are missing.
-3. Do not assign fallback defaults for required environment variables.
-4. Keep secrets in secret stores; do not hardcode credentials.
+1. Bind configuration to typed options and validate at startup.
+2. Fail startup when required environment variables/config are missing.
+3. Do not add silent fallback defaults for required configuration.
+4. Keep secrets in secret stores, not source code.
 
-## Security and compliance
+## Security And Compliance
 
-1. Validate and sanitize all external input.
+1. Validate/sanitize external input.
 2. Use parameterized queries/ORM bindings; never concatenate SQL.
-3. Enforce auth/authz checks close to entry points.
+3. Enforce authn/authz close to entry points.
 4. Avoid logging sensitive data (tokens, passwords, PII).
 
-## Performance and resource usage
+## Performance And Resource Usage
 
-1. Avoid unnecessary allocations in hot paths; profile before micro-optimizing.
+1. Profile before micro-optimization.
 2. Use streaming/pagination for large datasets.
-3. Reuse `HttpClient` through factory patterns.
-4. Respect cancellation and timeouts for outbound I/O.
+3. Reuse outbound clients (`IHttpClientFactory`).
+4. Respect cancellation and timeout policies for outbound I/O.
 
-## Testing and verification
+## Testing And Verification
 
-1. Add unit tests for business logic and integration tests for external boundaries.
-2. Cover edge cases: nullability, cancellation, timeout, invalid payloads, concurrency.
-3. Add regression tests for each fixed bug.
-4. Document manual verification when automation is not feasible.
+1. Add unit tests for business logic and integration tests for boundaries.
+2. Cover nullability, cancellation, timeout, invalid payloads, and concurrency edges.
+3. Add regression tests for each fixed defect.
+4. Document manual verification when automation is infeasible.
 
-## Observability and operations
+## Observability And Operations
 
 1. Use structured logs with correlation/request IDs.
 2. Emit metrics for latency, errors, and dependency calls.
-3. Map errors to stable operational signals (status codes, error codes).
-4. Ensure logs and metrics are sufficient for incident triage.
+3. Map failures to stable operational signals (status/error codes).
+4. Ensure telemetry supports incident triage.
 
-## CI required quality gates (check-only)
+## CI Required Quality Gates (check-only)
 
 1. Run `dotnet format --verify-no-changes`.
 2. Run `dotnet build -warnaserror`.
 3. Run `dotnet test`.
 4. Reject changes that hide failures with broad fallbacks.
 
-## Optional autofix commands (local)
+## Optional Autofix Commands (local)
 
-1. Run `dotnet format` to apply style fixes.
+1. Run `dotnet format`.

@@ -1,41 +1,49 @@
 ---
 name: mlops-model-serving
-description: Specialized workflow for serving architecture, latency SLOs, and rollout safety. Use when ML deployment, monitoring, and pipeline operations are in scope; do not use for model-architecture research decisions.
+description: "MLOps model serving workflow for serving topology, latency SLOs, and safe rollout controls. Use when deploying ML models to production serving paths with explicit reliability and rollback requirements; do not use for model-architecture research decisions."
 ---
 
 # Mlops Model Serving
 
-## Trigger Boundary
-- Use when ML data, model, training, evaluation, or serving choices are being made.
-- Do not use for generic API lifecycle governance; use `api-*`.
-- Do not use for non-ML database administration concerns.
+## Overview
+Use this skill to deploy models with predictable latency/error behavior and controlled rollout risk.
 
-## Goal
-Produce reliable ML lifecycle decisions from data to production monitoring.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for serving architecture, latency SLOs, and rollout safety
-- Operational, compliance, and rollout constraints
+## Shared References
+- Serving SLO and rollout rules:
+  - `references/serving-slo-and-rollout-rules.md`
 
-## Outputs
-- Model serving deployment specification
-- Decision log for serving architecture, latency SLOs, and rollout safety
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Serving readiness checklist:
+  - `assets/serving-readiness-checklist.md`
+
+## Inputs To Gather
+- Serving topology and traffic profile.
+- Latency/error SLO and error budget constraints.
+- Rollout strategy and rollback capability.
+- Observability and incident response expectations.
+
+## Deliverables
+- Serving architecture and rollout plan.
+- SLO-aligned guardrails and alert thresholds.
+- Readiness evidence and rollback criteria.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for serving architecture, latency SLOs, and rollout safety.
-2. Produce options and select an approach for serving architecture, latency SLOs, and rollout safety.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using load and canary behavior validation for serving endpoints.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define serving constraints and topology.
+2. Apply `references/serving-slo-and-rollout-rules.md` for rollout policy.
+3. Validate readiness with `assets/serving-readiness-checklist.md`.
+4. Execute staged rollout and monitor guardrails.
+5. Publish serving decision and residual risk ownership.
 
-## Quality Gates
-- Scope and assumptions for serving architecture, latency SLOs, and rollout safety are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Serving SLOs are measurable and enforced.
+- Rollout blast radius is controlled.
+- Rollback decisions are objective and fast.
 
-## Failure Handling
-- Stop when serving latency or reliability targets are not met.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when serving cannot meet latency/reliability targets.
+- Stop when rollback path is unverified.
+- Escalate when rollout risk exceeds policy thresholds.

@@ -1,0 +1,6 @@
+{
+  "code": "EXAMPLE_ERROR_CODE",
+  "message": "Human-readable summary",
+  "trace_id": "request-correlation-id",
+  "retryable": false
+}

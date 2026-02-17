@@ -1,0 +1,2 @@
+metric_name,type,description,labels,sli_mapping,owner
+http_request_duration_ms,histogram,request latency,service,yes,platform-team

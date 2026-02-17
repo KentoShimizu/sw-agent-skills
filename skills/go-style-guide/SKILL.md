@@ -1,9 +1,13 @@
 ---
 name: go-style-guide
-description: "Style, review, and refactoring standards for Go codebases. Use when editing or reviewing `.go`, `go.mod`, `go.sum`, or `go.work`, or Go services/CLI code built with `go`. Do not use for generic shell scripts, SQL-only changes, or non-Go runtime style concerns unless Go artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
+description: "Style, review, and refactoring standards for Go codebases. Trigger when `.go`, `go.mod`, `go.sum`, or `go.work` files are created, changed, or reviewed and Go-specific quality rules (error handling, concurrency patterns, interface design, package boundaries) must be enforced. Do not use for generic shell scripts, SQL-only changes, or non-Go runtime style concerns unless Go artifacts are also changed. In multi-language pull requests, run together with other applicable `*-style-guide` skills."
 ---
 
 # Go Style Guide
+
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
 Apply this checklist when writing or reviewing Go code.
 

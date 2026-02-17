@@ -1,0 +1,52 @@
+provider:
+  service: "<provider-service-name>"
+  contract_source: "<openapi_or_graphql_or_asyncapi_or_custom>"
+  versions:
+    - "v1"
+    - "v2"
+
+consumers:
+  - name: "<consumer-a>"
+    type: "<internal_or_external>"
+    criticality: "<high_or_medium_or_low>"
+    supported_provider_versions:
+      - "v1"
+  - name: "<consumer-b>"
+    type: "<internal_or_external>"
+    criticality: "<high_or_medium_or_low>"
+    supported_provider_versions:
+      - "v1"
+      - "v2"
+
+interaction_modes:
+  - sync
+  - async
+
+transport_coverage:
+  - rest
+  - queue
+
+contracts:
+  - id: CT-001
+    scenario: "create resource success"
+    consumer: "<consumer-a>"
+    providerVersion: "v1"
+    interactionMode: sync
+    transport: rest
+    required: true
+  - id: CT-002
+    scenario: "resource.created event consumption"
+    consumer: "<consumer-b>"
+    providerVersion: "v2"
+    interactionMode: async
+    transport: queue
+    required: true
+
+ci_gate:
+  blocking: true
+  fail_on_missing_required_contract: true
+  fail_on_regression: true
+  reporting:
+    include_impacted_consumers: true
+    include_owner: true
+    include_rollback_guidance: true

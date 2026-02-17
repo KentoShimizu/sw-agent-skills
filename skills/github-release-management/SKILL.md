@@ -1,34 +1,43 @@
 ---
 name: github-release-management
-description: "GitHub release packaging process. Use when GitHub-native workflows, review routing, checks, or releases are the primary scope; do not use for non-GitHub runtime architecture or data-layer design."
+description: "Package and publish GitHub Releases with exact version/tag mapping, accurate release notes, and artifact integrity controls. Use when release publication on GitHub must be prepared or updated; do not use for non-GitHub runtime architecture or data-layer design."
 ---
 
 # Github Release Management
 
-## Trigger Boundary
-- Use when creating GitHub Releases for production or staged delivery.
-- Do not use for generic git tag mechanics alone; use `git-release-tagging`.
-- Do not use for deployment orchestration details; use `ci-cd-pipeline-design`.
+## Overview
+Use this skill to publish GitHub Releases that are accurate, traceable, and operationally usable by consumers.
 
-## Goal
-Publish clear and auditable GitHub Releases with correct artifact mapping.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Version target and release branch/commit
-- Changelog source (PRs, commits, issues)
-- Release artifact inventory and checksum policy
+## Shared References
+- Release note structure guidance:
+  - `references/release-note-format.md`
 
-## Outputs
-- Release draft/final package with notes
-- Tagged commit linkage and artifact references
-- Post-release verification checklist
+## Templates And Assets
+- Release publication checklist:
+  - `assets/github-release-checklist.md`
+
+## Inputs To Gather
+- Version target and release tag/commit mapping.
+- Changelog sources (PRs, commits, issues).
+- Artifact inventory, integrity policy, and compatibility notes.
+- Approval and communication requirements.
+
+## Deliverables
+- Draft/final GitHub Release package.
+- Release notes with upgrade and breaking-change guidance.
+- Verified artifact links and integrity evidence.
+- Post-release verification record.
 
 ## Workflow
 1. Confirm release scope and freeze target commit.
-2. Generate release notes from merged changes and notable fixes.
-3. Validate artifacts, checksums, and compatibility notes.
-4. Publish release with clear upgrade and rollback guidance.
-5. Record post-release verification and follow-up actions.
+2. Generate notes with `scripts/draft_release_notes.py`.
+3. Validate notes format and completeness via `references/release-note-format.md`.
+4. Verify publication readiness with `assets/github-release-checklist.md`.
+5. Publish release and capture verification/follow-up actions.
 
 ## Scripts
 - Generate draft notes from commit range:
@@ -36,15 +45,13 @@ Publish clear and auditable GitHub Releases with correct artifact mapping.
 - Write output file:
   - `python3 scripts/draft_release_notes.py --repo . --version v1.2.3 --from-ref <base_ref> --to-ref HEAD --out /tmp/release-notes.md`
 
-## Quality Gates
-- Release notes reflect actual shipped changes.
+## Quality Standard
+- Release notes reflect shipped changes without ambiguity.
 - Version/tag mapping is exact and immutable.
-- Critical migration or breaking changes are explicit.
-- Artifacts are downloadable and integrity-checked.
+- Breaking changes and migration guidance are explicit.
+- Artifacts are available and integrity-verified.
 
-## Failure Handling
-- Stop when release scope or artifact set is inconsistent.
-- Escalate when breaking-change guidance is incomplete.
-
-## References
-- `references/release-note-format.md`
+## Failure Conditions
+- Stop when release scope, version, or tag mapping is inconsistent.
+- Stop when artifact integrity cannot be verified.
+- Escalate when breaking-change guidance is incomplete for public release.

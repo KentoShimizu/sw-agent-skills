@@ -1,41 +1,44 @@
 ---
 name: db-replication-sharding
-description: Specialized workflow for replication topology, shard strategy, and consistency trade-offs. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: "Replication and sharding workflow for scaling read/write throughput while managing consistency, failover, and data distribution risk. Use when single-node limits are reached or resilience requires topology changes; do not use for local query tuning only."
 ---
 
-# Db Replication Sharding
+# DB Replication Sharding
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to design data topology that scales safely without hiding consistency and operability costs.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Scope Boundaries
+- Throughput, storage, or availability limits exceed single-instance capacity.
+- Read/write scaling requires replication or partitioning.
+- Regional or tenant growth pressures topology redesign.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for replication topology, shard strategy, and consistency trade-offs
-- Operational, compliance, and rollout constraints
+## Core Judgments
+- Replication mode and consistency expectations for read paths.
+- Shard key strategy and future rebalancing feasibility.
+- Cross-shard query/transaction requirements.
+- Failover behavior and recovery-time expectations.
 
-## Outputs
-- Replication and sharding topology decision
-- Decision log for replication topology, shard strategy, and consistency trade-offs
-- Verification checklist with measurable pass-fail criteria
+## Practitioner Heuristics
+- Choose shard keys by access locality and growth distribution, not by convenience.
+- Read replicas are eventually consistent systems; classify which reads can tolerate lag.
+- Cross-shard joins and transactions should be exceptions with explicit ownership.
+- Topology decisions must include operational playbooks for failover and rebalancing.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for replication topology, shard strategy, and consistency trade-offs.
-2. Produce options and select an approach for replication topology, shard strategy, and consistency trade-offs.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using failover and rebalance simulations.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Profile read/write distribution and growth projections.
+2. Select replication topology by availability and consistency needs.
+3. Evaluate shard key candidates and hotspot risk.
+4. Design routing, rebalancing, and failover behavior.
+5. Define application-level behaviors for lag, split-brain prevention, and retries.
+6. Document expansion path and de-risking milestones.
 
-## Quality Gates
-- Scope and assumptions for replication topology, shard strategy, and consistency trade-offs are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Common Failure Modes
+- Shard key creates unbounded hotspots as tenants grow.
+- Replica lag assumptions leak into business-critical reads.
+- Rebalancing is planned as manual emergency work only.
 
-## Failure Handling
-- Stop when consistency guarantees or failover behavior are undefined.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when shard key cannot support projected growth distribution.
+- Stop when consistency expectations contradict selected topology.
+- Escalate when failover and rebalancing are operationally infeasible.

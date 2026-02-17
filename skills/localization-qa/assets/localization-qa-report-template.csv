@@ -1,0 +1,2 @@
+locale,screen_or_flow,severity,issue_type,description,owner,status,retest_result
+ja-JP,checkout,blocker,truncation,primary CTA text clipped,frontend-team,open,pending

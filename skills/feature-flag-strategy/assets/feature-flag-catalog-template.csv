@@ -1,0 +1,3 @@
+flag_key,owner,flag_type,default_state,rollout_scope,kill_switch,expiry_date,retirement_status
+checkout.new-summary,checkout-team,release,off,internal-cohort,yes,YYYY-MM-DD,planned
+pricing.new-rule,pricing-team,experiment,off,5-percent-traffic,yes,YYYY-MM-DD,planned

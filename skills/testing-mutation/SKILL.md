@@ -1,41 +1,49 @@
 ---
 name: testing-mutation
-description: Specialized workflow for mutation score improvement and weak assertion detection. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: "Mutation-testing workflow for exposing weak assertions and missing behavioral checks. Use when tests pass but confidence is low and objective robustness evidence is needed; do not use before baseline tests exist."
 ---
 
 # Testing Mutation
 
-## Trigger Boundary
-- Use when verification strategy or release confidence evidence must be designed.
-- Do not use for production observability ownership; use `observability-*`.
-- Do not use for architecture topology selection.
+## Overview
+Use this skill to quantify test effectiveness and prioritize strengthening weak assertions.
 
-## Goal
-Build sufficient verification evidence to prevent regressions.
+## Scope Boundaries
+- Use when pass-only test status is insufficient for confidence.
+- Typical requests:
+  - `Find weak tests that do not fail when behavior is changed.`
+  - `Use surviving mutants to guide assertion hardening.`
+  - `Quantify test robustness for critical modules.`
+- Do not use when:
+  - Baseline unit/integration coverage is missing.
+  - The primary goal is load or capacity benchmarking (`performance-*`).
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for mutation score improvement and weak assertion detection
-- Operational, compliance, and rollout constraints
+- Existing tests and module criticality
+- Mutation tooling constraints and runtime budget
+- Release risk tolerance
 
 ## Outputs
-- Mutation analysis report with surviving mutants
-- Decision log for mutation score improvement and weak assertion detection
-- Verification checklist with measurable pass-fail criteria
+- Mutation report with surviving mutant triage
+- Decision record for target score and remediation strategy
+- Verification checklist for strengthened assertions
 
 ## Workflow
-1. Clarify outcomes and hard constraints for mutation score improvement and weak assertion detection.
-2. Produce options and select an approach for mutation score improvement and weak assertion detection.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using mutation testing execution with kill-rate targets.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Select mutation scope by business risk and runtime budget.
+2. Define acceptable mutation score and exception policy.
+3. Run mutation analysis and triage surviving mutants.
+4. Strengthen tests or implementation assertions based on triage.
+5. Re-run and publish deltas, residual risk, and follow-up plan.
 
 ## Quality Gates
-- Scope and assumptions for mutation score improvement and weak assertion detection are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Surviving mutants are triaged with explicit rationale.
+- Critical-path mutants have remediation plan.
+- Runtime cost is balanced with risk coverage.
+- Evidence is reproducible and comparable over time.
 
 ## Failure Handling
-- Stop when surviving mutants expose untested behavior.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when critical survivors remain without remediation owner.
+- Escalate when mutation runtime cost blocks practical adoption.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.

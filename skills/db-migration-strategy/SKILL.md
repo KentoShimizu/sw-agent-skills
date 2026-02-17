@@ -1,41 +1,44 @@
 ---
 name: db-migration-strategy
-description: Specialized workflow for schema migration sequencing, rollout safety, and rollback viability. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: "Schema migration strategy workflow for sequencing changes, compatibility windows, and rollback-safe rollout in live systems. Use when schema evolution impacts running services; do not use for static greenfield schemas without deployment constraints."
 ---
 
-# Db Migration Strategy
+# DB Migration Strategy
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to evolve schemas in production without service disruption or hidden data corruption.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Scope Boundaries
+- Schema changes affect live read/write paths.
+- Multiple service versions must coexist during rollout.
+- Data backfill or contract transition is required.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for schema migration sequencing, rollout safety, and rollback viability
-- Operational, compliance, and rollout constraints
+## Core Judgments
+- Migration pattern: expand-contract, dual-write, shadow-read, or phased cutover.
+- Compatibility window duration and supported versions.
+- Backfill approach and execution safety.
+- Rollback semantics and data reconciliation strategy.
 
-## Outputs
-- Migration execution plan with stage gates
-- Decision log for schema migration sequencing, rollout safety, and rollback viability
-- Verification checklist with measurable pass-fail criteria
+## Practitioner Heuristics
+- Prefer additive/compatible changes before destructive cleanup.
+- Separate schema deployment from application behavior switch.
+- Dual-write without reconciliation plan is a corruption risk.
+- Large backfills need throttling and progress observability tied to business impact.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for schema migration sequencing, rollout safety, and rollback viability.
-2. Produce options and select an approach for schema migration sequencing, rollout safety, and rollback viability.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using dry-run migration and rollback rehearsal.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define change classes: additive, transitional, destructive.
+2. Sequence schema and application releases for compatibility.
+3. Plan data migration/backfill and failure handling.
+4. Define cutover trigger and rollback decision points.
+5. Execute deprecation/removal only after compatibility window closes.
+6. Document residual migration debt and retirement deadlines.
 
-## Quality Gates
-- Scope and assumptions for schema migration sequencing, rollout safety, and rollback viability are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Common Failure Modes
+- Breaking changes shipped before all consumers are updated.
+- Backfill jobs compete with production traffic and cause incidents.
+- Rollback plan restores code but not data semantics.
 
-## Failure Handling
-- Stop when rollback path is undefined for destructive or high-risk steps.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when compatibility window cannot be supported operationally.
+- Stop when rollback semantics for migrated data are undefined.
+- Escalate when migration risk exceeds release risk tolerance.

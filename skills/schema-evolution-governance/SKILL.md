@@ -1,41 +1,51 @@
 ---
 name: schema-evolution-governance
-description: "Data schema evolution governance workflow for safe forward migration, compatibility control, and rollback readiness in operated systems. Use when coordinating cross-service schema compatibility and migration safety over time; do not use for isolated query micro-optimizations without schema lifecycle impact."
+description: "Schema evolution governance workflow for safe migration sequencing, compatibility control, and rollback readiness across dependent systems. Use when shared schemas change and end-to-end compatibility governance is required; do not use for isolated query micro-optimizations."
 ---
 
 # Schema Evolution Governance
 
-## Trigger Boundary
-- Use when schema changes affect multiple services or historical data compatibility.
-- Do not use for one-off query tuning; use `db-query-optimization`.
-- Do not use for API consumer contract tests only; use `api-contract-testing`.
+## Overview
+Use this skill to evolve shared schemas without breaking producers, consumers, or historical data integrity.
 
-## Goal
-Evolve schemas safely without breaking data integrity or dependent systems.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Current schema and migration history
-- Dependent services, jobs, and consumer contracts
-- Data volume, retention, and rollback constraints
+## Shared References
+- Compatibility window rules:
+  - `references/compatibility-window-rules.md`
 
-## Outputs
-- Compatibility-aware schema change plan
-- Migration sequence with validation checkpoints
-- Rollback and recovery readiness criteria
+## Templates And Assets
+- Schema change plan template:
+  - `assets/schema-change-plan-template.md`
+- Schema compatibility checklist:
+  - `assets/schema-compatibility-checklist.md`
+
+## Inputs To Gather
+- Current schema and migration history.
+- Producer/consumer dependency map.
+- Data volume, retention, and rollback constraints.
+- Release window and coordination limits.
+
+## Deliverables
+- Compatibility-aware schema change plan.
+- Phased migration sequence with checkpoints.
+- Rollback and data-recovery readiness criteria.
 
 ## Workflow
-1. Classify change type and compatibility impact.
-2. Define phased migration strategy for operated systems.
-3. Validate read/write compatibility across dependent systems.
-4. Define rollback trigger, data recovery, and cutover criteria.
-5. Publish execution and verification checklist.
+1. Define change impact in `assets/schema-change-plan-template.md`.
+2. Apply compatibility rules from `references/compatibility-window-rules.md`.
+3. Validate consumer migration sequence and cutover plan.
+4. Verify rollback/data integrity with `assets/schema-compatibility-checklist.md`.
+5. Publish execution ownership and residual risk log.
 
-## Quality Gates
-- Compatibility impact is explicitly documented.
-- Migration and rollback paths are both testable.
-- Data integrity checks pass before and after cutover.
-- Ownership exists for every migration phase.
+## Quality Standard
+- Compatibility impact is explicit and testable.
+- Migration and rollback paths are both validated.
+- Consumer coordination is planned before destructive changes.
 
-## Failure Handling
-- Stop when backward/forward compatibility is unverified.
-- Escalate when rollback path is missing for operated systems.
+## Failure Conditions
+- Stop when forward/backward compatibility is unverified.
+- Stop when rollback or data recovery path is missing.
+- Escalate when migration risk exceeds governance policy.

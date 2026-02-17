@@ -1,41 +1,51 @@
 ---
 name: testing-contract
-description: Specialized workflow for provider-consumer contract compatibility across service boundaries. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: "Provider-consumer compatibility testing for service interface changes. Use when APIs or event schemas evolve and executable contract checks must guard compatibility before release; do not use for UI-only validation or architecture topology decisions."
 ---
 
 # Testing Contract
 
-## Trigger Boundary
-- Use when verification strategy or release confidence evidence must be designed.
-- Do not use for production observability ownership; use `observability-*`.
-- Do not use for architecture topology selection.
+## Overview
+Use this skill to prevent integration regressions by enforcing provider-consumer contracts in CI.
 
-## Goal
-Build sufficient verification evidence to prevent regressions.
+## Scope Boundaries
+- Use when interface compatibility between producer and consumer is a release risk.
+- Typical requests:
+  - `Verify an API response change does not break existing consumers.`
+  - `Enforce event schema compatibility in CI.`
+  - `Add provider-consumer contract gates before merge.`
+- Do not use when:
+  - The scope is visual/UI behavior only (`testing-e2e` or `playwright`).
+  - The scope is isolated unit logic (`testing-unit`).
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for provider-consumer contract compatibility across service boundaries
-- Operational, compliance, and rollout constraints
+- Contract definitions and compatibility policy
+- Provider/consumer versioning constraints
+- Release and rollback requirements
 
 ## Outputs
-- Versioned consumer-provider contract set
-- Decision log for provider-consumer contract compatibility across service boundaries
-- Verification checklist with measurable pass-fail criteria
+- Versioned contract suite and compatibility matrix
+- Decision record for contract strategy and migration path
+- Verification checklist for provider and consumer pipelines
 
 ## Workflow
-1. Clarify outcomes and hard constraints for provider-consumer contract compatibility across service boundaries.
-2. Produce options and select an approach for provider-consumer contract compatibility across service boundaries.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using contract verification in CI for both provider and consumer.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define compatibility policy (backward/forward/strict).
+2. Identify contract surfaces and critical consumers.
+3. Compare enforcement options and choose one with rationale.
+4. Capture provider-consumer compatibility in `assets/contract-compatibility-matrix-template.md`.
+5. Execute provider and consumer verification runs.
+6. Publish failures, migration actions, and residual risk.
 
 ## Quality Gates
-- Scope and assumptions for provider-consumer contract compatibility across service boundaries are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Compatibility policy is explicit and test-enforced.
+- Breaking changes include migration and communication plan.
+- Contract evidence is reproducible in CI.
+- Residual compatibility risk is owned and tracked.
 
 ## Failure Handling
-- Stop when contract mismatches break backward expectations between services.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when required compatibility policy is violated.
+- Escalate when no feasible migration path exists.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.
+- `assets/contract-compatibility-matrix-template.md`: compatibility and migration tracking matrix.

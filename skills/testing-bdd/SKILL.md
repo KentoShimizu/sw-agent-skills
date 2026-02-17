@@ -1,41 +1,49 @@
 ---
 name: testing-bdd
-description: Specialized workflow for behavior-driven scenarios and ubiquitous language alignment. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: "Behavior-driven scenario design for shared business language and executable acceptance evidence. Use when teams must align on Given-When-Then scenarios before implementation sign-off or release; do not use for performance benchmarking or deployment policy design."
 ---
 
-# Testing Bdd
+# Testing BDD
 
-## Trigger Boundary
-- Use when verification strategy or release confidence evidence must be designed.
-- Do not use for production observability ownership; use `observability-*`.
-- Do not use for architecture topology selection.
+## Overview
+Use this skill to encode requirement intent as executable behavior scenarios that product, QA, and engineering can all review.
 
-## Goal
-Build sufficient verification evidence to prevent regressions.
+## Scope Boundaries
+- Use when behavior semantics need alignment across stakeholders before or during implementation.
+- Typical requests:
+  - `Turn ambiguous requirements into Given-When-Then scenarios.`
+  - `Align PO, QA, and engineering on acceptance behavior.`
+  - `Define executable acceptance evidence before release.`
+- Do not use when:
+  - The primary task is load/performance benchmark design (`performance-*`).
+  - The task is operational monitoring/alert policy (`observability-*`).
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for behavior-driven scenarios and ubiquitous language alignment
-- Operational, compliance, and rollout constraints
+- Requirement candidates and acceptance concerns
+- Domain language and business rules
+- Existing test policy and release constraints
 
 ## Outputs
-- Given-When-Then scenario suite
-- Decision log for behavior-driven scenarios and ubiquitous language alignment
-- Verification checklist with measurable pass-fail criteria
+- Scenario suite in Given-When-Then format with requirement mapping
+- Decision record describing scenario strategy and assumptions
+- Verification checklist with pass/fail signals
 
 ## Workflow
-1. Clarify outcomes and hard constraints for behavior-driven scenarios and ubiquitous language alignment.
-2. Produce options and select an approach for behavior-driven scenarios and ubiquitous language alignment.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using stakeholder-readable scenario execution evidence.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Clarify behavior decisions and non-negotiable constraints.
+2. Model happy-path, alternate, and failure behavior in ubiquitous language.
+3. Compare scenario granularity options and choose one with rationale.
+4. Make scenarios executable and traceable to acceptance decisions.
+5. Publish residual risks and unresolved semantic disputes.
 
 ## Quality Gates
-- Scope and assumptions for behavior-driven scenarios and ubiquitous language alignment are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Scenarios are understandable by non-engineering stakeholders.
+- Acceptance semantics are explicit and testable.
+- Assumptions and confidence are documented.
+- Evidence is reproducible and linked to requirements.
 
 ## Failure Handling
-- Stop when critical business behaviors are not captured as executable scenarios.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when critical behavior cannot be expressed unambiguously.
+- Escalate when stakeholder interpretations remain incompatible.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.

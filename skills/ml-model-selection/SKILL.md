@@ -1,41 +1,49 @@
 ---
 name: ml-model-selection
-description: Specialized workflow for candidate model trade-offs across accuracy, latency, and cost. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: "ML model selection workflow for transparent trade-offs across accuracy, latency, cost, and operability. Use when choosing among multiple model candidates for production use; do not use for generic API-layer or infrastructure-only changes."
 ---
 
 # Ml Model Selection
 
-## Trigger Boundary
-- Use when ML data, model, training, evaluation, or serving choices are being made.
-- Do not use for generic API lifecycle governance; use `api-*`.
-- Do not use for non-ML database administration concerns.
+## Overview
+Use this skill to choose model candidates with explicit trade-off reasoning, not single-metric optimization.
 
-## Goal
-Produce reliable ML lifecycle decisions from data to production monitoring.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for candidate model trade-offs across accuracy, latency, and cost
-- Operational, compliance, and rollout constraints
+## Shared References
+- Model selection trade-off rules:
+  - `references/model-selection-tradeoff-rules.md`
 
-## Outputs
-- Model selection decision log
-- Decision log for candidate model trade-offs across accuracy, latency, and cost
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Model comparison matrix:
+  - `assets/model-comparison-matrix-template.csv`
+
+## Inputs To Gather
+- Candidate models and benchmark evidence.
+- Serving constraints (latency, throughput, hardware, cost).
+- Risk requirements (robustness, fairness, explainability).
+- Operational ownership and rollback constraints.
+
+## Deliverables
+- Candidate comparison matrix with decision rationale.
+- Selected model and fallback candidate.
+- Risk register and rollout recommendation.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for candidate model trade-offs across accuracy, latency, and cost.
-2. Produce options and select an approach for candidate model trade-offs across accuracy, latency, and cost.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using head-to-head benchmark and robustness comparison.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Capture candidate metrics in `assets/model-comparison-matrix-template.csv`.
+2. Apply trade-off policy from `references/model-selection-tradeoff-rules.md`.
+3. Validate decision against production constraints.
+4. Document rejected alternatives and why.
+5. Publish selection and fallback plan.
 
-## Quality Gates
-- Scope and assumptions for candidate model trade-offs across accuracy, latency, and cost are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Selection criteria include accuracy + latency + cost + operability.
+- Decision is evidence-backed and reproducible.
+- Fallback strategy exists for failed rollout.
 
-## Failure Handling
-- Stop when selected model lacks evidence against viable alternatives.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when selection ignores production constraints.
+- Stop when alternatives are not evaluated comparably.
+- Escalate when no viable candidate meets minimum requirements.

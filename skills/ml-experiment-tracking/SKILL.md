@@ -1,41 +1,49 @@
 ---
 name: ml-experiment-tracking
-description: Specialized workflow for experiment metadata integrity, reproducibility, and comparison traceability. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: "ML experiment tracking workflow for reproducibility, metadata integrity, and run comparison traceability. Use when multiple ML runs must be compared or reproduced reliably; do not use for generic API-layer or infrastructure-only changes."
 ---
 
 # Ml Experiment Tracking
 
-## Trigger Boundary
-- Use when ML data, model, training, evaluation, or serving choices are being made.
-- Do not use for generic API lifecycle governance; use `api-*`.
-- Do not use for non-ML database administration concerns.
+## Overview
+Use this skill to make ML experiments comparable, reproducible, and audit-friendly.
 
-## Goal
-Produce reliable ML lifecycle decisions from data to production monitoring.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for experiment metadata integrity, reproducibility, and comparison traceability
-- Operational, compliance, and rollout constraints
+## Shared References
+- Reproducibility metadata rules:
+  - `references/reproducibility-metadata-rules.md`
 
-## Outputs
-- Experiment tracking schema and logging plan
-- Decision log for experiment metadata integrity, reproducibility, and comparison traceability
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Tracking schema template:
+  - `assets/experiment-tracking-schema-template.md`
+
+## Inputs To Gather
+- Required metadata fields (code/data/config/artifacts).
+- Tooling constraints for run logging and artifact storage.
+- Reproducibility requirements by project risk level.
+- Comparison dimensions for model decisions.
+
+## Deliverables
+- Experiment tracking schema and mandatory fields.
+- Run comparison protocol.
+- Reproducibility verification checklist.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for experiment metadata integrity, reproducibility, and comparison traceability.
-2. Produce options and select an approach for experiment metadata integrity, reproducibility, and comparison traceability.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using re-run reproducibility checks from tracked metadata.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define required metadata with `assets/experiment-tracking-schema-template.md`.
+2. Validate sufficiency using `references/reproducibility-metadata-rules.md`.
+3. Enforce run logging and artifact lineage.
+4. Re-run selected experiments from metadata only.
+5. Publish reproducibility confidence and gaps.
 
-## Quality Gates
-- Scope and assumptions for experiment metadata integrity, reproducibility, and comparison traceability are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Every decision-grade run is reproducible.
+- Artifact lineage is complete and queryable.
+- Comparison views are consistent across runs.
 
-## Failure Handling
-- Stop when experiment runs cannot be reproduced from recorded artifacts.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when runs cannot be reproduced from recorded metadata.
+- Stop when artifact lineage is incomplete.
+- Escalate when tracking gaps block release decisions.

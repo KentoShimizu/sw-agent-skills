@@ -1,49 +1,55 @@
 ---
 name: figma-handoff
-description: "Design-to-engineering handoff workflow for packaging implementation-ready Figma specifications, assets, and acceptance criteria. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Design-to-engineering handoff workflow for packaging implementation-ready Figma specifications, assets, and acceptance criteria. Trigger when approved Figma designs must be translated into engineering-ready handoff materials (specs, assets, states, acceptance criteria) before implementation starts; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Figma Handoff
 
-## Trigger Boundary
-- Use when design outputs must be converted into engineering-ready handoff artifacts.
-- Do not use for defining new principles or token architecture; use `design-principles` or `design-tokens`.
-- Do not use for exploratory research synthesis; use `ux-research-synthesis`.
+## Overview
+Use this skill to produce implementation-ready handoff artifacts that reduce ambiguity between design and engineering.
 
-## Goal
-Deliver unambiguous handoff artifacts that reduce implementation drift.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track handoff packages with `FIG-HND-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Handoff quality gates:
+  - `references/figma-handoff-quality-gates.md`
 
-## Inputs
-- Finalized Figma frames, components, and variants
-- Token and interaction specifications
-- Accessibility and localization constraints
+## Templates And Assets
+- Handoff package template:
+  - `assets/figma-handoff-package-template.md`
+- Asset inventory template:
+  - `assets/figma-asset-inventory-template.csv`
+- Acceptance checklist:
+  - `assets/figma-acceptance-checklist-template.md`
 
-## Outputs
-- `FIG-HND-*` handoff package
-- Asset inventory and spec mapping
-- Acceptance checklist for engineering verification
-- Privacy evidence package for handoff artifacts
+## Inputs To Gather
+- Finalized Figma frames, components, and variants.
+- Token, interaction, and responsive behavior specs.
+- Accessibility and localization constraints.
+- Engineering constraints and implementation boundaries.
+
+## Deliverables
+- Handoff package with scope, states, and implementation notes.
+- Asset inventory with source mapping and export spec.
+- Acceptance checklist for engineering sign-off.
+- Explicit open issues and follow-up owners.
 
 ## Workflow
-1. Confirm design artifacts are final and versioned.
-2. Export required assets with naming and usage rules.
-3. Map tokens, states, and interactions to implementation notes.
-4. Add accessibility and localization checkpoints.
-5. Publish handoff package with owner, review status, and privacy evidence.
+1. Lock design source versions and confirm in-scope artifacts.
+2. Build handoff package using `assets/figma-handoff-package-template.md`.
+3. Export and register assets in `assets/figma-asset-inventory-template.csv`.
+4. Add acceptance checks with `assets/figma-acceptance-checklist-template.md`.
+5. Validate readiness against `references/figma-handoff-quality-gates.md`.
 
-## Quality Gates
-- Handoff includes all required assets and spec references.
-- States and variants are fully documented.
-- Accessibility and localization checks are explicit.
-- Privacy Reviewer approval is always present.
-- Engineering owner confirms implementability.
+## Quality Standard
+- Handoff scope is versioned, complete, and unambiguous.
+- States, variants, and interactions are implementation-ready.
+- Accessibility and localization constraints are explicit.
+- Engineering owner can implement without inferred design intent.
 
-## Failure Handling
+## Failure Conditions
 - Stop when source designs are not version-locked.
-- Stop when Privacy Reviewer approval is missing.
-- Escalate when critical specs or assets are missing.
+- Stop when required assets/spec details are missing.
+- Escalate when implementation constraints conflict with design assumptions.

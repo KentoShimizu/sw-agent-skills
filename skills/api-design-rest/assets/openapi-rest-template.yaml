@@ -1,0 +1,231 @@
+openapi: 3.1.0
+info:
+  title: Example REST API
+  version: 1.0.0
+  description: >
+    Resource-oriented REST API contract template.
+    Fill every placeholder before review.
+
+servers:
+  - url: https://api.example.com
+    description: production
+  - url: https://staging-api.example.com
+    description: staging
+
+x-api-decision-context:
+  api_audience: both
+  interaction_mode: sync
+  primary_transport: rest
+  selection_rationale: "<why rest is the primary transport>"
+  alternatives_considered:
+    - graphql
+    - grpc
+  naming_convention_summary: "<path/query/field naming policy>"
+  threshold_method_summary: "<how thresholds are derived from SLO and risk>"
+
+x-threshold-policy:
+  latency_target_derivation: "<p95/p99 derivation method>"
+  availability_target_derivation: "<availability and error-budget derivation>"
+  timeout_budget_derivation: "<client/edge/service timeout split>"
+  capacity_headroom_derivation: "<headroom derivation>"
+  payload_limit_derivation: "<payload limit derivation>"
+  concurrency_limit_derivation: "<concurrency limit derivation>"
+  retry_backoff_derivation: "<retry and backoff derivation>"
+  delivery_semantics_derivation: "<ordering/duplication semantics derivation>"
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/resources:
+    get:
+      summary: List resources
+      operationId: listResources
+      parameters:
+        - in: query
+          name: cursor
+          schema:
+            type: string
+          description: Opaque pagination cursor.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          description: Page size.
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListResourcesResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create resource
+      operationId: createResource
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: true
+          schema:
+            type: string
+          description: Required for retry-safe create calls.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateResourceRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Resource"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /v1/resources/{resourceId}:
+    get:
+      summary: Get resource
+      operationId: getResource
+      parameters:
+        - in: path
+          name: resourceId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Resource"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Resource:
+      type: object
+      required:
+        - id
+        - createdAt
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateResourceRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+
+    ListResourcesResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Resource"
+        nextCursor:
+          type: string
+          nullable: true
+
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+        - traceId
+        - retryable
+      properties:
+        code:
+          type: string
+          description: Stable machine-readable error code.
+        message:
+          type: string
+          description: Human-readable summary.
+        traceId:
+          type: string
+          description: Correlation ID for support and logging.
+        retryable:
+          type: boolean
+          description: Whether automated retry is allowed.
+
+  responses:
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Unauthorized:
+      description: Authentication required or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Conflict:
+      description: Write conflict or duplicate operation.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    TooManyRequests:
+      description: Rate limit exceeded.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Retry delay in seconds.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    InternalServerError:
+      description: Unhandled internal failure.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"

@@ -1,46 +1,59 @@
 ---
 name: design-system-foundations
-description: "Design system foundation workflow for defining reusable component foundations, patterns, and ownership boundaries. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Define scalable design-system foundations with clear ownership and adoption boundaries. Use when multiple teams need shared component standards, foundational patterns, and ownership rules to deliver consistent UI across products; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design System Foundations
 
-## Trigger Boundary
-- Use when reusable foundation elements are missing or fragmented.
-- Do not use for token schema design; use `design-tokens`.
-- Do not use for page-level navigation structure; use `information-architecture`.
+## Overview
+Use this skill to establish stable UI foundations that multiple teams can adopt without diverging conventions.
 
-## Goal
-Create a coherent and maintainable design system foundation.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track foundation elements with `DSN-SYS-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Lifecycle governance guidance:
+  - `references/foundation-lifecycle-guidance.md`
 
-## Inputs
-- Existing UI inventory and inconsistency map
-- Product surface priorities
-- Engineering implementation constraints
+## Templates And Assets
+- Foundation inventory:
+  - `assets/foundation-inventory-template.csv`
+- Ownership and lifecycle model:
+  - `assets/foundation-ownership-model-template.md`
 
-## Outputs
-- Foundation map with `DSN-SYS-*` IDs
-- Pattern ownership and lifecycle definitions
-- Component adoption roadmap
+## Inputs To Gather
+- Current component inventory, duplication hotspots, and drift patterns.
+- Product surface priorities and expected growth areas.
+- Engineering constraints (frameworks, theming model, release cadence).
+- Governance expectations (ownership, review, and change control model).
+
+## Deliverables
+- Foundation architecture map (primitives, composition rules, and boundaries).
+- Ownership model with lifecycle states (draft/active/deprecated/retired).
+- Adoption strategy with migration sequence and risk notes.
+- Decision log for rejected alternatives and rationale.
+
+## Quick Example
+- Primitive ownership: typography, spacing, and color scale managed centrally.
+- Shared component ownership: cross-product components owned by design system team.
+- Product extension policy: local variants allowed only with expiration and convergence plan.
+- Lifecycle rule: deprecated components blocked for new usage after defined cutoff.
+
+## Quality Standard
+- Foundation boundaries are explicit and do not overlap ambiguously.
+- Ownership and lifecycle are defined for every foundation artifact.
+- Adoption plan minimizes breaking migrations for active teams.
+- Accessibility and localization constraints are baked into foundation definitions.
 
 ## Workflow
-1. Audit current components and usage fragmentation.
+1. Audit existing UI patterns and capture inventory in `assets/foundation-inventory-template.csv`.
 2. Define foundational primitives and composition boundaries.
-3. Specify ownership and lifecycle state per foundation item.
-4. Align foundation patterns with implementation constraints.
-5. Publish adoption plan with migration sequence.
+3. Assign ownership and lifecycle governance per foundation area using `assets/foundation-ownership-model-template.md`.
+4. Validate technical feasibility with implementation teams.
+5. Publish adoption plan with phased migration guidance and lifecycle policy from `references/foundation-lifecycle-guidance.md`.
 
-## Quality Gates
-- Foundation scope is complete for target product surfaces.
-- Ownership and lifecycle are explicit for each item.
-- Patterns are implementable without hidden dependencies.
-- Accessibility requirements are part of foundation definitions.
-
-## Failure Handling
-- Stop when foundation boundaries overlap ambiguously.
-- Escalate when ownership model cannot be established.
+## Failure Conditions
+- Stop when foundation scope is too broad to govern consistently.
+- Stop when ownership is undefined for shared artifacts.
+- Escalate when migration cost is known but lacks mitigation plan.

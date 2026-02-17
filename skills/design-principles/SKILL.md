@@ -1,46 +1,61 @@
 ---
 name: design-principles
-description: "Design principle definition workflow for establishing stable UX guardrails before visual or component-level work. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Define and align product design principles that teams can apply consistently across UX decisions. Use when product or UX direction is ambiguous and teams need explicit decision guardrails before detailed screens or components are produced; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Principles
 
-## Trigger Boundary
-- Use when team-level design principles are missing or inconsistent.
-- Do not use for component inventory design; use `design-system-foundations`.
-- Do not use for visual polish-only tasks; use `visual-design`.
+## Overview
+Use this skill to produce principle-level guardrails that reduce design churn and conflicting decisions across teams.
 
-## Goal
-Define clear principles that guide interaction, visual, and content decisions.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Design Contract (Canonical)
-- Use `references/design-governance-contract.md` as the single schema and gate source.
-- Validate principle IDs as `DSN-PRN-*` and keep append-only history.
-- Run machine validation: `python3 scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Baseline governance contract:
+  - `references/design-governance-contract.md`
+- Principle quality heuristics:
+  - `references/principle-quality-heuristics.md`
 
-## Inputs
-- Product strategy and user outcomes
-- Existing design inconsistencies and pain points
-- Accessibility and localization requirements
+## Templates And Assets
+- Principle set template:
+  - `assets/design-principles-template.md`
+- Review checklist:
+  - `assets/design-principle-review-checklist.md`
 
-## Outputs
-- Principle catalog with `DSN-PRN-*` IDs
-- Principle rationale and anti-pattern examples
-- Review checklist aligned to principles
+## Inputs To Gather
+- Product outcomes, user success criteria, and business constraints.
+- Recurring design conflicts and inconsistency examples.
+- Accessibility, localization, privacy, and brand constraints.
+- Existing governance rules or review process already used in the project.
+
+## Deliverables
+- Principle set written as actionable decision rules.
+- Principle rationale with explicit trade-offs and anti-patterns.
+- Practical review checklist mapped one-to-one to each principle.
+- Ownership and update cadence for principle maintenance.
+
+## Quick Example
+- Principle: "Optimize for task completion over visual novelty."
+- Applies to: interaction density, information hierarchy, and default states.
+- Anti-pattern: decorative elements that hide primary actions.
+- Review check: critical action is visible without hover or tooltip dependency.
+
+## Quality Standard
+- Each principle is testable in design review, not just aspirational wording.
+- Principles do not conflict with each other or with required constraints.
+- Trade-offs are explicit so teams can resolve edge cases consistently.
+- Checklist items are concrete enough for independent reviewers to agree.
 
 ## Workflow
-1. Convert user and business outcomes into principle candidates.
-2. Define principles as actionable and testable statements.
-3. Attach anti-pattern examples for each principle.
-4. Validate principles against accessibility and localization gates.
-5. Publish principle set with ownership and revision policy.
+1. Identify repeated decision conflicts from current product/design work.
+2. Draft candidate principles in `assets/design-principles-template.md`.
+3. Add anti-patterns and boundary conditions for each principle.
+4. Validate against accessibility/localization/privacy constraints and run `assets/design-principle-review-checklist.md`.
+5. Publish approved principles with ownership and revision policy.
 
-## Quality Gates
-- Each principle is specific and reviewable.
-- Principle set has no unresolved contradiction.
-- Accessibility and localization constraints are represented.
-- Review checklist maps directly to principles.
-
-## Failure Handling
-- Stop when principles are abstract slogans without test criteria.
-- Escalate when principles conflict with mandatory compliance constraints.
+## Failure Conditions
+- Stop when principles are abstract slogans without observable checks.
+- Stop when principles directly conflict with mandatory compliance requirements.
+- Escalate when ownership is unclear and no team can enforce the principles.

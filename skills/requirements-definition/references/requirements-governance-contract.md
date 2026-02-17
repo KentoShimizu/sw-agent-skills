@@ -13,51 +13,52 @@ Apply this contract to all requirement workflow skills:
 - `stakeholder-interview`
 - `user-research`
 
-Do not redefine ID formats, lifecycle states, approval gates, or compliance evidence rules in individual `SKILL.md` files.
+Use project-specific ID naming rules. Example ID patterns in this contract are non-binding.
+Treat this document as operational guidance, not a mandatory schema.
+When repository-specific rules exist, follow those first; otherwise use this as a default operating method.
 
-## ID Schema (Single Source of Truth)
-### Requirement Work Item IDs
-- `REQ-<DOMAIN>-<NNN>`: `^REQ-[A-Z0-9_]+-[0-9]{3,}$`
-  - Canonical requirement item
-- `NFR-<REQ_ID>-<NN>`: `^NFR-REQ-[A-Z0-9_]+-[0-9]{3,}-[0-9]{2,}$`
-  - Non-functional requirement tied to `REQ-*`
-- `AC-<REQ_ID>-<NN>`: `^AC-REQ-[A-Z0-9_]+-[0-9]{3,}-[0-9]{2,}$`
-  - Acceptance criteria tied to `REQ-*`
-- `RSK-<REQ_ID>-<NN>`: `^RSK-REQ-[A-Z0-9_]+-[0-9]{3,}-[0-9]{2,}$`
-  - Requirement risk entry tied to `REQ-*`
-- `INT-<YYYYMMDD>-<NN>`: `^INT-[0-9]{8}-[0-9]{2,}$`
-  - Stakeholder interview record
-- `UR-<YYYYMMDD>-<NN>`: `^UR-[0-9]{8}-[0-9]{2,}$`
-  - User research record
-- `EVD-<SOURCE>-<NNN>`: `^EVD-[A-Z0-9_]+-[0-9]{3,}$`
-  - Evidence record
+## Profile Inference Contract (Canonical)
+Do not require `artifact_kind` in manifests.
+Infer profile from manifest signals:
+- Evidence-driven profile: `checks.source_authority_recorded` is present, or evidence links exist without requirement links.
+- Prioritization profile: `checks.prioritization_rule_frozen` is present.
+- NFR profile: `checks.metric_threshold_defined` is present.
+- Acceptance criteria profile: `checks.acceptance_mapping_complete` is present.
+- Risk analysis profile: `checks.mitigation_owner_assigned` is present.
+- Use-case profile: `checks.exception_flows_documented` is present.
+- User story profile: `checks.story_size_validated` is present.
+- Compliance evidence profile: `compliance_evidence` is present.
+- Baseline profile: none of the profile-specific signals above are present.
 
-### Validation Artifact IDs
-- `RQM-ELC-<YYYYMMDD>-<NNN>`: elicitation output package
-- `RQM-DEF-<YYYYMMDD>-<NNN>`: requirements baseline package
-- `RQM-PRI-<YYYYMMDD>-<NNN>`: prioritization package
-- `RQM-NFR-<YYYYMMDD>-<NNN>`: NFR package
-- `RQM-ACD-<YYYYMMDD>-<NNN>`: acceptance criteria package
-- `RQM-RSK-<YYYYMMDD>-<NNN>`: risk analysis package
-- `RQM-UCM-<YYYYMMDD>-<NNN>`: use case package
-- `RQM-STY-<YYYYMMDD>-<NNN>`: user story package
-- `RQM-INT-<YYYYMMDD>-<NNN>`: stakeholder interview synthesis package
-- `RQM-URS-<YYYYMMDD>-<NNN>`: user research synthesis package
-- `RQM-CMP-<YYYYMMDD>-<NNN>`: compliance evidence package
+For repository operations, filename and location are valid project-level routing controls.
 
-Regex (single source):
-- `^RQM-(ELC|DEF|PRI|NFR|ACD|RSK|UCM|STY|INT|URS|CMP)-[0-9]{8}-[0-9]{3,}$`
+## ID Format Policy (Project-Defined)
+- `artifact_id` is optional and project-defined.
+- Keep one repository-level ID policy and enforce it consistently.
+- `checks.id_format_validated=true` must represent validation against that policy.
+- Example IDs (non-binding):
+  - `RQM-ELC-20260214-001`
+  - `RQM-DEF-20260214-001`
+  - `RQM-PRI-20260214-001`
+  - `RQM-NFR-20260214-001`
+  - `RQM-ACD-20260214-001`
+  - `RQM-RSK-20260214-001`
+  - `RQM-UCM-20260214-001`
+  - `RQM-STY-20260214-001`
+  - `RQM-INT-20260214-001`
+  - `RQM-URS-20260214-001`
+  - `RQM-CMP-20260214-001`
 
 ## Issuance Rules
-- Allocate IDs sequentially per prefix namespace.
+- Allocate IDs sequentially per project namespace.
 - Keep IDs immutable and append-only.
 - Never reuse retired IDs.
 - On collision, issue a new ID and mark the old ID as `invalid` with reason.
 
 ## Lifecycle States
-- `RQM-CMP-*`: `draft`, `reviewed`, `approved`, `expired`
-- Other `RQM-*`: `draft`, `reviewed`, `approved`, `rejected`
-- `invalid` is allowed for all `RQM-*` prefixes only to retire collided or voided IDs.
+- Compliance evidence profile: `draft`, `reviewed`, `approved`, `expired`
+- Other profiles: `draft`, `reviewed`, `approved`, `rejected`
+- `invalid` is allowed for all profiles only to retire collided or voided IDs.
 
 ## Compliance Baseline (US, Japan, EU)
 - Record lawful basis before collecting or linking personal data.
@@ -66,8 +67,8 @@ Regex (single source):
 - Capture cross-border transfer control before sharing regulated evidence.
 - Preserve auditable approvals and change history for requirement decisions.
 
-## Required Check Keys
-Manifest `checks` must include all of the following common keys:
+## Recommended Check Keys
+Recommended common keys in `checks`:
 - `id_format_validated` (boolean)
 - `traceability_verified` (boolean)
 - `decision_owner_assigned` (boolean)
@@ -76,43 +77,46 @@ Manifest `checks` must include all of the following common keys:
 - `handles_personal_data` (boolean)
 - `regulated_jurisdiction_impact` (boolean)
 
-Prefix-specific required keys:
-- `RQM-ELC-*`, `RQM-INT-*`, `RQM-URS-*`
+Profile-specific keys (recommended when applicable):
+- Evidence-driven profile
   - `source_authority_recorded` (boolean)
-- `RQM-PRI-*`
+- Prioritization profile
   - `prioritization_rule_frozen` (boolean)
-- `RQM-NFR-*`
+- NFR profile
   - `metric_threshold_defined` (boolean)
-- `RQM-ACD-*`
+- Acceptance criteria profile
   - `acceptance_mapping_complete` (boolean)
-- `RQM-RSK-*`
+- Risk analysis profile
   - `mitigation_owner_assigned` (boolean)
-- `RQM-UCM-*`
+- Use-case profile
   - `exception_flows_documented` (boolean)
-- `RQM-STY-*`
+- User story profile
   - `story_size_validated` (boolean)
-- `RQM-DEF-*`, `RQM-CMP-*`
+- Baseline profile, compliance evidence profile
   - No additional required check keys beyond the common set
 
-## Linked IDs Schema
-Manifest `linked_ids` is mandatory and must satisfy:
-- `requirements`: array of `REQ-*`
-- `nfr`: array of `NFR-*`
-- `acceptance_criteria`: array of `AC-*`
-- `risks`: array of `RSK-*`
-- `interviews`: array of `INT-*`
-- `user_research`: array of `UR-*`
-- `evidence`: array of `EVD-*`
+## Linked IDs Guidance
+Use `linked_ids` with these keys when applicable:
+- `requirements`
+- `nfr`
+- `acceptance_criteria`
+- `risks`
+- `interviews`
+- `user_research`
+- `evidence`
 
+Linked ID naming format is project-defined and validated outside this contract.
 Presence rules:
-- `RQM-ELC-*`, `RQM-INT-*`, `RQM-URS-*`: at least one of `interviews`, `user_research`, or `evidence` must be non-empty.
-- `RQM-DEF-*`, `RQM-PRI-*`, `RQM-NFR-*`, `RQM-ACD-*`, `RQM-RSK-*`, `RQM-UCM-*`, `RQM-STY-*`: `requirements` must be non-empty.
-- `RQM-NFR-*`: `nfr` must be non-empty.
-- `RQM-ACD-*`: `acceptance_criteria` must be non-empty.
-- `RQM-RSK-*`: `risks` must be non-empty.
+- Evidence-driven profile:
+  at least one of `interviews`, `user_research`, or `evidence` must be non-empty.
+- Requirement-bound profiles (baseline, prioritization, nfr, acceptance criteria, risk analysis, use case, user story):
+  `requirements` must be non-empty.
+- NFR profile: `nfr` must be non-empty.
+- Acceptance criteria profile: `acceptance_criteria` must be non-empty.
+- Risk analysis profile: `risks` must be non-empty.
 
-## Privacy Evidence Requirements
-When `checks.handles_personal_data` is `true`, `privacy_evidence` is mandatory and must include:
+## Privacy Evidence Guidance
+When `checks.handles_personal_data` is `true`, include `privacy_evidence` with:
 - `lawful_basis_or_consent`
 - `pii_data_inventory`
 - `data_minimization_decision`
@@ -121,8 +125,8 @@ When `checks.handles_personal_data` is `true`, `privacy_evidence` is mandatory a
 - `data_subject_rights_process`
 - `redaction_and_access_control`
 
-## Compliance Evidence Requirements
-For `RQM-CMP-*`, `compliance_evidence` is mandatory and must include:
+## Compliance Evidence Guidance
+For the compliance evidence profile (`compliance_evidence` is present), include:
 - `jurisdiction_scope`
 - `lawful_basis_summary`
 - `retention_policy_reference`
@@ -139,15 +143,16 @@ For `RQM-CMP-*`, `compliance_evidence` is mandatory and must include:
 - Required when `checks.regulated_jurisdiction_impact` is `true`:
   - Legal Reviewer
 
-## Machine Validation
-- Run `python3 skills/requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>` from repository root.
-- Manifest must include `artifact_id`, `state`, `approvers`, `checks`, and `linked_ids`.
+## Optional Consistency Check
+- Optional: `python3 skills/requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>` from repository root.
+- Recommended structured fields: `state`, `approvers`, `checks`, and `linked_ids`.
+- `artifact_id` is optional. If present, keep it non-empty.
 
-## Gate Policy
-- Block approval when IDs are malformed.
-- Block approval when lifecycle state is invalid for the artifact type.
-- Block approval when required approvers are missing.
-- Block approval when required checks are not all `true`.
-- Block approval when required linked ID sets are missing.
-- Block approval when privacy or compliance evidence is incomplete.
-- When `state` is `invalid`, prefix-specific execution checks are not enforced.
+## Operational Handling (Recommended)
+- Escalate when identifier policy checks fail (`checks.id_format_validated=false`).
+- Escalate when lifecycle state is invalid.
+- Escalate when required approvers are missing.
+- Escalate when critical checks are not all `true`.
+- Escalate when required linked ID sets are missing for the selected profile.
+- Escalate when privacy or compliance evidence is incomplete.
+- When `state` is `invalid`, context-specific execution checks are not enforced.

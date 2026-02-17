@@ -1,41 +1,51 @@
 ---
 name: observability-logging
-description: Specialized workflow for structured logging schema and incident triage utility. Use when telemetry signal design, alertability, and operational detection policy are in scope; do not use for business-feature implementation logic.
+description: "Observability logging workflow for structured schema, correlation, and incident triage utility. Use when services need logging standards or revisions for diagnosable incidents; do not use for business-feature implementation logic."
 ---
 
 # Observability Logging
 
-## Trigger Boundary
-- Use when production visibility, reliability targets, or incident response workflows are needed.
-- Do not use for feature-level functional spec writing; use `requirements-*`.
-- Do not use for pure code-style conformance checks.
+## Overview
+Use this skill to standardize logs so incidents can be diagnosed quickly and safely.
 
-## Goal
-Maintain production reliability through measurable operational controls.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for structured logging schema and incident triage utility
-- Operational, compliance, and rollout constraints
+## Shared References
+- Logging field and retention rules:
+  - `references/logging-field-and-retention-rules.md`
 
-## Outputs
-- Logging schema and retention policy
-- Decision log for structured logging schema and incident triage utility
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Logging schema template:
+  - `assets/logging-schema-template.md`
+- Log triage checklist:
+  - `assets/log-triage-checklist.md`
+
+## Inputs To Gather
+- Incident triage requirements and common failure modes.
+- Required correlation fields and security constraints.
+- Retention, redaction, and access policy requirements.
+- Queryability needs for on-call workflows.
+
+## Deliverables
+- Logging schema and policy baseline.
+- Redaction/retention controls.
+- Triage validation evidence for key incident scenarios.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for structured logging schema and incident triage utility.
-2. Produce options and select an approach for structured logging schema and incident triage utility.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using searchability and correlation tests with incident scenarios.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define schema in `assets/logging-schema-template.md`.
+2. Apply retention/redaction policy from `references/logging-field-and-retention-rules.md`.
+3. Validate triage utility using `assets/log-triage-checklist.md`.
+4. Fix gaps in correlation and error context fields.
+5. Publish logging standard and ownership.
 
-## Quality Gates
-- Scope and assumptions for structured logging schema and incident triage utility are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Logs contain required triage context and correlation IDs.
+- Sensitive data handling is explicit and enforced.
+- Retention and access are policy-compliant.
 
-## Failure Handling
-- Stop when logs lack required context for troubleshooting.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when logs lack required incident context.
+- Stop when sensitive data redaction is not reliable.
+- Escalate when logging policy conflicts with compliance requirements.

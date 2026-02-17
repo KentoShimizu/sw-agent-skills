@@ -1,46 +1,53 @@
 ---
 name: git-cherry-pick-hotfix
-description: "Specialized workflow for selecting and applying minimal hotfix commits across branches via cherry-pick. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Select and apply minimal hotfix commits across branches via cherry-pick with dependency risk control. Use when urgent fixes must be propagated without pulling unrelated changes; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Cherry Pick Hotfix
 
-## Trigger Boundary
-- Use when a fix from one branch must be ported to another without full merge.
-- Do not use for broad release synchronization; use `git-pr-sync-workflow`.
-- Do not use for feature migration involving many dependent commits.
+## Overview
+Use this skill to backport urgent fixes quickly while controlling dependency spillover and regression risk.
 
-## Goal
-Backport urgent fixes safely with minimal unrelated change propagation.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track hotfix backports with `GIT-CHP-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Dependency decision rules:
+  - `references/cherry-pick-dependency-rules.md`
 
-## Inputs
-- Source fix commit hashes and dependency notes
-- Target branch release constraints
-- Verification scope for target environment
+## Templates And Assets
+- Hotfix cherry-pick plan:
+  - `assets/hotfix-cherry-pick-plan-template.md`
+- Verification checklist:
+  - `assets/hotfix-verification-checklist.md`
 
-## Outputs
-- `GIT-CHP-*` cherry-pick execution record
-- Dependency and risk annotation per picked commit
-- Target-branch verification checklist and result
+## Inputs To Gather
+- Source fix commit hashes and dependency notes.
+- Target branch constraints and release timeline.
+- Verification scope for target environment.
+- Rollback expectations for failed backport.
+
+## Deliverables
+- Cherry-pick plan with dependency analysis.
+- Source-to-target commit mapping record.
+- Post-pick verification evidence.
+- Rollback notes if target behavior diverges.
 
 ## Workflow
-1. Identify minimal commit set required for the fix.
-2. Validate hidden dependencies before cherry-pick.
-3. Apply commits in dependency-safe order.
-4. Resolve conflicts and verify target branch behavior.
-5. Record source-to-target mapping with security review evidence.
+1. Build plan in `assets/hotfix-cherry-pick-plan-template.md`.
+2. Validate dependency scope using `references/cherry-pick-dependency-rules.md`.
+3. Apply minimal commit set in dependency-safe order.
+4. Resolve conflicts and run target-branch verification.
+5. Finalize with `assets/hotfix-verification-checklist.md`.
 
-## Quality Gates
-- Picked commits exclude unrelated feature changes.
-- Dependency assumptions are explicitly validated.
-- Target branch tests pass for impacted flows.
-- Security Reviewer approval is present for `GIT-CHP-*` artifacts.
+## Quality Standard
+- Picked commits are minimal and intent-preserving.
+- Hidden dependencies are explicitly documented.
+- Target branch behavior matches fix objective.
+- Rollback path exists before production rollout.
 
-## Failure Handling
-- Stop when hotfix requires broad dependency migration.
-- Escalate when target branch behavior diverges from source assumptions.
+## Failure Conditions
+- Stop when backport requires broad dependency migration.
+- Stop when target branch cannot satisfy fix prerequisites.
+- Escalate when behavior diverges from source assumptions after pick.

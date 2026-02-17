@@ -1,0 +1,55 @@
+protocol: websocket
+version: v1
+
+connection:
+  endpoint: wss://api.example.com/realtime
+  auth:
+    method: bearer_token
+    rotation_policy: "<set>"
+  heartbeat:
+    ping_interval_seconds: "<set>"
+    pong_timeout_seconds: "<set>"
+  reconnect:
+    strategy: exponential_backoff
+    max_backoff_seconds: "<set>"
+    resume_token_supported: "<true_or_false>"
+
+message_envelope:
+  required_fields:
+    - messageId
+    - messageType
+    - messageVersion
+    - occurredAt
+    - traceId
+    - payload
+  example:
+    messageId: "<uuid>"
+    messageType: "<event_or_command_name>"
+    messageVersion: "v1"
+    occurredAt: "2026-02-16T00:00:00Z"
+    traceId: "<trace-id>"
+    payload: {}
+
+client_to_server:
+  - messageType: subscribe.resource
+    payload_schema: "<reference>"
+    idempotency_required: true
+  - messageType: unsubscribe.resource
+    payload_schema: "<reference>"
+    idempotency_required: true
+
+server_to_client:
+  - messageType: resource.updated
+    payload_schema: "<reference>"
+    ordering_scope: resource_id
+    replay_supported: "<true_or_false>"
+
+flow_control:
+  backpressure_strategy: "<drop_or_buffer_or_throttle>"
+  session_concurrency_limit: "<set>"
+  outbound_queue_limit: "<set>"
+
+error_contract:
+  code_namespace: "WS_"
+  retryable_field_required: true
+  trace_id_required: true

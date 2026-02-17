@@ -1,46 +1,55 @@
 ---
 name: information-architecture
-description: "Information architecture workflow for structuring navigation, content hierarchy, and labeling across product surfaces. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Information architecture workflow for navigation structure, content hierarchy, and labeling clarity across product surfaces. Use when content/navigation structure is unclear and teams need explicit hierarchy and taxonomy decisions before screen-level design; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Information Architecture
 
-## Trigger Boundary
-- Use when users cannot find content or navigation structure is inconsistent.
-- Do not use for flow-level state behavior; use `interaction-design`.
-- Do not use for design system token decisions; use `design-tokens`.
+## Overview
+Use this skill to make product information structures findable, scalable, and consistent across surfaces.
 
-## Goal
-Create clear, scalable, and discoverable information structures.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track structures with `IA-NAV-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Navigation depth and labeling rules:
+  - `references/navigation-depth-and-labeling-rules.md`
 
-## Inputs
-- Content inventory and navigation pain points
-- User mental models and task priorities
-- Localization constraints and terminology rules
+## Templates And Assets
+- Sitemap template:
+  - `assets/sitemap-template.md`
+- Taxonomy glossary template:
+  - `assets/taxonomy-glossary-template.csv`
+- IA validation checklist:
+  - `assets/ia-validation-checklist.md`
 
-## Outputs
-- Information hierarchy and sitemap with `IA-NAV-*` IDs
-- Labeling and taxonomy recommendations
-- Navigation risk and ambiguity log
+## Inputs To Gather
+- Content inventory and navigation pain points.
+- User mental models and primary task priorities.
+- Localization constraints and terminology rules.
+- Product growth expectations affecting hierarchy scale.
+
+## Deliverables
+- Hierarchy and sitemap definition.
+- Taxonomy and labeling rules with ownership.
+- Navigation risks and ambiguity log.
+- Discoverability validation results.
 
 ## Workflow
 1. Audit current hierarchy and duplicate pathways.
-2. Group content by user intent and task relevance.
-3. Define navigation levels and cross-links.
-4. Validate labeling for clarity and localization fit.
-5. Test discoverability against key user tasks.
+2. Draft hierarchy in `assets/sitemap-template.md`.
+3. Define taxonomy in `assets/taxonomy-glossary-template.csv`.
+4. Validate labels with `references/navigation-depth-and-labeling-rules.md`.
+5. Run `assets/ia-validation-checklist.md` against key user tasks.
 
-## Quality Gates
-- Hierarchy depth and breadth remain navigable.
-- Labels are unambiguous across supported locales.
-- Critical tasks are reachable in predictable steps.
-- Structural decisions are traceable to user needs.
+## Quality Standard
+- Hierarchy is navigable without unnecessary depth.
+- Labels are clear across supported locales.
+- Critical tasks are discoverable in predictable steps.
+- Taxonomy ownership is defined for future changes.
 
-## Failure Handling
+## Failure Conditions
 - Stop when taxonomy terms conflict across core surfaces.
-- Escalate when key tasks remain undiscoverable.
+- Stop when navigation choices cannot explain task findability.
+- Escalate when critical tasks remain undiscoverable after redesign.

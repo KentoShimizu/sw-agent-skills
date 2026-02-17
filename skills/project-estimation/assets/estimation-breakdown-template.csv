@@ -1,0 +1,2 @@
+work_item,dependency,optimistic_days,likely_days,pessimistic_days,owner,notes
+feature-a,none,2,4,7,team-a,baseline estimate

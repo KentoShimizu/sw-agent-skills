@@ -1,41 +1,57 @@
 ---
 name: feature-flag-strategy
-description: Specialized workflow for flag lifecycle governance and blast-radius control. Use when runtime flag lifecycle, rollout safety, and kill-switch governance are in scope; do not use for statistical experiment design and analysis.
+description: "Feature flag lifecycle governance workflow for safe rollout, blast-radius control, and cleanup discipline. Use when feature rollout needs runtime controls (targeting, staged exposure, kill-switch policy, ownership, and retirement lifecycle) and those rules are not yet explicit; do not use for statistical experiment design and analysis."
 ---
 
 # Feature Flag Strategy
 
-## Trigger Boundary
-- Use when release safety, deployment sequencing, or rollback controls are required.
-- Do not use for business-priority ranking of requirements; use `requirement-prioritization`.
-- Do not use for runtime incident retrospectives; use `incident-postmortem`.
+## Overview
+Use this skill to manage feature flags as controlled release instruments, not permanent complexity.
 
-## Goal
-Deliver changes safely with repeatable, auditable release mechanics.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for flag lifecycle governance and blast-radius control
-- Operational, compliance, and rollout constraints
+## Shared References
+- Lifecycle decision rules:
+  - `references/flag-lifecycle-decision-rules.md`
+- Targeting and blast-radius guidance:
+  - `references/flag-targeting-risk-guidance.md`
 
-## Outputs
-- Feature flag catalog with ownership and expiry
-- Decision log for flag lifecycle governance and blast-radius control
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Flag catalog template:
+  - `assets/feature-flag-catalog-template.csv`
+- Rollout plan template:
+  - `assets/flag-rollout-plan-template.md`
+- Retirement checklist:
+  - `assets/flag-retirement-checklist.md`
+
+## Inputs To Gather
+- Rollout objective, user segments, and release risk tolerance.
+- Blast-radius constraints and required kill-switch latency.
+- Operational/compliance constraints and on-call readiness.
+- Flag platform capabilities, dependency behavior, and telemetry coverage.
+
+## Deliverables
+- Flag definition with owner, type, kill-switch, and expiry.
+- Rollout plan with progression gates and rollback policy.
+- Lifecycle decision record including retirement criteria.
+- Verification evidence for targeting and disable behavior.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for flag lifecycle governance and blast-radius control.
-2. Produce options and select an approach for flag lifecycle governance and blast-radius control.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using flag targeting and kill-switch behavior verification.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Decide whether a flag is warranted using `references/flag-lifecycle-decision-rules.md`.
+2. Register flags in `assets/feature-flag-catalog-template.csv` with ownership and expiry.
+3. Define rollout and rollback using `assets/flag-rollout-plan-template.md`.
+4. Validate targeting safety using `references/flag-targeting-risk-guidance.md`.
+5. Retire flags using `assets/flag-retirement-checklist.md` once control is no longer needed.
 
-## Quality Gates
-- Scope and assumptions for flag lifecycle governance and blast-radius control are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Every flag has owner, kill-switch, and retirement date.
+- Rollout and rollback criteria are measurable and pre-defined.
+- Targeting rules are auditable and operationally safe.
+- Retired flags are removed from code paths, not just disabled.
 
-## Failure Handling
-- Stop when feature flags lack ownership, expiry, or safe disable paths.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when flags lack ownership, expiry, or safe disable paths.
+- Stop when targeting rules create unbounded or opaque blast radius.
+- Escalate when accepted rollout risk exceeds policy thresholds.

@@ -6,6 +6,9 @@ Use this matrix to run check-only CI gates and optional local autofix commands c
 | Skill | CI required (check-only) | Optional local autofix |
 | --- | --- | --- |
 | `bash-style-guide` | `shellcheck`<br>`shfmt -d`<br>`bats test/` (or project test path) | `shfmt -w` |
+| `sh-style-guide` | `shellcheck -s sh`<br>`shfmt -d -ln posix`<br>`shunit2`/project shell tests | `shfmt -w -ln posix` |
+| `zsh-style-guide` | `zsh -n` (syntax check)<br>`shellcheck` where applicable<br>`zunit`/project shell tests | formatter/lint autofix where project tooling supports it |
+| `powershell-style-guide` | `Invoke-ScriptAnalyzer` (fail on issues)<br>`Invoke-Formatter -Check` (or repo equivalent)<br>`Invoke-Pester` | `Invoke-Formatter`<br>`Invoke-ScriptAnalyzer -Fix` |
 | `csharp-style-guide` | `dotnet format --verify-no-changes`<br>`dotnet build -warnaserror`<br>`dotnet test` | `dotnet format` |
 | `go-style-guide` | `gofmt -l .` (empty output)<br>`go vet ./...`<br>`staticcheck ./...` (if available)<br>`go test ./... -race` | `gofmt -w .` or `go fmt ./...` |
 | `java-style-guide` | `spotlessCheck` (or equivalent formatter check)<br>`checkstyle`/configured lint<br>`errorprone`/`spotbugs` (if configured)<br>`./gradlew test` or `mvn test` | `spotlessApply` (or project formatter autofix) |
