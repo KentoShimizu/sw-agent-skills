@@ -23,22 +23,27 @@
 
 ## クイックセットアップ
 
-```bash
-git clone https://github.com/KentoShimizu/sw-agent-skills.git
-cd sw-agent-skills
-bash scripts/install-skills.sh --agent all --scope global
-```
-
-プレビューのみ（ファイル変更なし）:
+GitHub Releases から最新リリースアーカイブを取得して展開し、次を実行:
 
 ```bash
-bash scripts/install-skills.sh --agent all --scope global --dry-run
+bash /path/to/sw-agent-skills-<version>/scripts/install-skills.sh --agent all --scope global
 ```
 
 Windows PowerShell:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all -Scope global
+powershell -ExecutionPolicy Bypass -File C:\path\to\sw-agent-skills-<version>\scripts\install-skills.ps1 -Agent all -Scope global
+```
+
+リリースアーカイブを取得して `skills` フォルダを任意パスへ配置する場合:
+
+```bash
+TAG=vX.Y.Z # 例: v0.1.0
+DEST=/path/to/skills
+curl -fsSL -o sw-agent-skills.zip "https://github.com/KentoShimizu/sw-agent-skills/archive/refs/tags/${TAG}.zip"
+unzip -q sw-agent-skills.zip
+mkdir -p "${DEST}"
+cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 ```
 
 ## インストールオプション
@@ -49,12 +54,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `--agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
 | `--scope <global/local>` | いいえ | インストール範囲。`local` は `--project-root` 配下へ配置。 | `global` |
-| `--mode <symlink/copy>` | いいえ | 各スキルディレクトリの配置方式。 | `symlink` |
-| `--source <path>` | いいえ | スキルのソースディレクトリ。`SKILL.md` を持つサブディレクトリを含む必要があります。 | `<repo>/skills` |
 | `--project-root <path>` | いいえ | `--scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
-| `--dry-run` | いいえ | ファイル変更せず実行内容のみ表示。 | 無効 |
-| `--verbose` | いいえ | 詳細なコマンド出力を表示。 | 無効 |
-| `--force` | いいえ | 既存の配置先スキルディレクトリを置換。 | 無効 |
 | `-h`, `--help` | いいえ | ヘルプを表示。 | 無効 |
 
 ### PowerShell (`scripts/install-skills.ps1`)
@@ -63,12 +63,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `-Agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
 | `-Scope <global/local>` | いいえ | インストール範囲。`local` は `-ProjectRoot` 配下へ配置。 | `global` |
-| `-Mode <symlink/copy>` | いいえ | 各スキルディレクトリの配置方式。 | `symlink` |
-| `-Source <path>` | いいえ | スキルのソースディレクトリ。`SKILL.md` を持つサブディレクトリを含む必要があります。 | `<repo>/skills` |
 | `-ProjectRoot <path>` | いいえ | `-Scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
-| `-DryRun` | いいえ | ファイル変更せず実行内容のみ表示。 | 無効 |
-| `-VerboseList` | いいえ | 詳細な処理ログを表示。 | 無効 |
-| `-Force` | いいえ | 既存の配置先スキルディレクトリを置換。 | 無効 |
+
+管理更新: インストーラーは各配置先ルート配下の `.sw-agent-skills-managed` で管理対象スキルを追跡します。この一覧にないディレクトリは保持され、未管理ディレクトリとの同名衝突がある場合はインストールを停止します。
 
 ## 参考資料
 

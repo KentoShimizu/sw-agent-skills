@@ -23,22 +23,27 @@ This repository provides:
 
 ## Quick Start
 
-```bash
-git clone https://github.com/KentoShimizu/sw-agent-skills.git
-cd sw-agent-skills
-bash scripts/install-skills.sh --agent all --scope global
-```
-
-Preview only (no file changes):
+Download the latest release archive from GitHub Releases, extract it, and run:
 
 ```bash
-bash scripts/install-skills.sh --agent all --scope global --dry-run
+bash /path/to/sw-agent-skills-<version>/scripts/install-skills.sh --agent all --scope global
 ```
 
 Windows PowerShell:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all -Scope global
+powershell -ExecutionPolicy Bypass -File C:\path\to\sw-agent-skills-<version>\scripts\install-skills.ps1 -Agent all -Scope global
+```
+
+Download from a release archive and place the `skills` folder in any path:
+
+```bash
+TAG=vX.Y.Z # e.g. v0.1.0
+DEST=/path/to/skills
+curl -fsSL -o sw-agent-skills.zip "https://github.com/KentoShimizu/sw-agent-skills/archive/refs/tags/${TAG}.zip"
+unzip -q sw-agent-skills.zip
+mkdir -p "${DEST}"
+cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
 ```
 
 ## Installation Options
@@ -49,12 +54,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `--agent <all/codex/claude/opencode>` | No | Target agent to install. | `all` |
 | `--scope <global/local>` | No | Install scope. `local` installs under `--project-root`. | `global` |
-| `--mode <symlink/copy>` | No | Install method for each skill directory. | `symlink` |
-| `--source <path>` | No | Source skills directory. It must contain skill subdirectories with `SKILL.md`. | `<repo>/skills` |
 | `--project-root <path>` | No | Project root used only when `--scope local`. | current directory |
-| `--dry-run` | No | Show actions without changing files. | off |
-| `--verbose` | No | Print detailed command output. | off |
-| `--force` | No | Replace existing destination skill directories. | off |
 | `-h`, `--help` | No | Show command help. | off |
 
 ### PowerShell (`scripts/install-skills.ps1`)
@@ -63,12 +63,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all
 | --- | --- | --- | --- |
 | `-Agent <all/codex/claude/opencode>` | No | Target agent to install. | `all` |
 | `-Scope <global/local>` | No | Install scope. `local` installs under `-ProjectRoot`. | `global` |
-| `-Mode <symlink/copy>` | No | Install method for each skill directory. | `symlink` |
-| `-Source <path>` | No | Source skills directory. It must contain skill subdirectories with `SKILL.md`. | `<repo>/skills` |
 | `-ProjectRoot <path>` | No | Project root used only when `-Scope local`. | current directory |
-| `-DryRun` | No | Show actions without changing files. | off |
-| `-VerboseList` | No | Print detailed action output. | off |
-| `-Force` | No | Replace existing destination skill directories. | off |
+
+Managed updates: installer tracks managed skill directories in `.sw-agent-skills-managed` under each target root. Directories not tracked there remain untouched, and install stops on name conflicts with unmanaged directories.
 
 ## References
 
