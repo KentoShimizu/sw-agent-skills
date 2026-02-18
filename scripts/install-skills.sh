@@ -47,23 +47,6 @@ array_contains() {
   return 1
 }
 
-read_managed_skill_names() {
-  local managed_state_path="$1"
-  local managed_name
-
-  if [ ! -f "${managed_state_path}" ]; then
-    return 0
-  fi
-
-  while IFS= read -r managed_name; do
-    [ -z "${managed_name}" ] && continue
-    if [ "${managed_name}" = "." ] || [ "${managed_name}" = ".." ] || ! is_valid_skill_name "${managed_name}"; then
-      die "invalid managed skill entry in ${managed_state_path}: ${managed_name}"
-    fi
-    printf '%s\n' "${managed_name}"
-  done < "${managed_state_path}"
-}
-
 resolve_dir() {
   local raw="$1"
   [ -d "${raw}" ] || die "directory not found: ${raw}"
@@ -234,11 +217,16 @@ install_skills_into_target_root() {
   mkdir -p "${target_root}"
 
   if [ -f "${managed_state_path}" ]; then
+    local managed_name
     while IFS= read -r managed_name; do
+      [ -z "${managed_name}" ] && continue
+      if [ "${managed_name}" = "." ] || [ "${managed_name}" = ".." ] || ! is_valid_skill_name "${managed_name}"; then
+        die "invalid managed skill entry in ${managed_state_path}: ${managed_name}"
+      fi
       if ! array_contains "${managed_name}" "${previous_managed_skill_names[@]+"${previous_managed_skill_names[@]}"}"; then
         previous_managed_skill_names+=("${managed_name}")
       fi
-    done < <(read_managed_skill_names "${managed_state_path}")
+    done < "${managed_state_path}"
   else
     for source_skill_dir in "${VALID_SOURCE_SKILL_DIRS[@]}"; do
       local source_skill_name
