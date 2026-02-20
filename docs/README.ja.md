@@ -11,68 +11,59 @@
 このリポジトリには、次の内容が含まれます。
 
 - 再利用可能な skills の標準ディレクトリ構成
-- Codex、Claude Code、OpenCode 向けインストールスクリプト
+- Codex、Claude Code、OpenCode 向けに配布可能な skills
+- リンクやパス整合性を確認する検証スクリプト
 
 ## リポジトリ構成
 
 - `skills/<skill-name>/SKILL.md`: 必須のスキル定義
 - `skills/<skill-name>/scripts/`: 任意の補助スクリプト
 - `skills/<skill-name>/references/`: 任意の参考資料
-- `scripts/`: インストーラー
+- `scripts/`: バリデーターとメンテナンス用スクリプト
 - `docs/`: 多言語 README
 
-## クイックセットアップ
-
-GitHub Releases から最新リリースアーカイブを取得して展開し、次を実行:
+## クイックセットアップ（Release ダウンロード）
 
 ```bash
-bash /path/to/sw-agent-skills-<version>/scripts/install-skills.sh --agent all --scope global
+TAG=vX.Y.Z  # Releases で確認したタグに置き換え
+curl -L -o sw-agent-skills.tar.gz "https://github.com/KentoShimizu/sw-agent-skills/archive/refs/tags/${TAG}.tar.gz"
+tar -xzf sw-agent-skills.tar.gz
+cd "sw-agent-skills-${TAG#v}"
 ```
 
-Windows PowerShell:
+展開後は、必要な skill ディレクトリ（例: `skills/testing-unit`）を選び、各サービスの公式手順で追加してください。
 
-```powershell
-powershell -ExecutionPolicy Bypass -File C:\path\to\sw-agent-skills-<version>\scripts\install-skills.ps1 -Agent all -Scope global
-```
+### エージェント別セットアップ（公式リファレンス）
 
-リリースアーカイブを取得して `skills` フォルダを任意パスへ配置する場合:
+1. Codex（[openai/skills](https://github.com/openai/skills)、[Codex settings: Skills](https://developers.openai.com/codex/settings#skills)）
+   - 個人スキル: `~/.agents/skills/<skill-name>/SKILL.md`
+   - プロジェクト単位: `<project>/.agents/skills/<skill-name>/SKILL.md`
+   - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
+2. Claude Code（[Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)）
+   - グローバル: `~/.claude/skills/<skill-name>/SKILL.md`
+   - プロジェクト単位: `<project>/.claude/skills/<skill-name>/SKILL.md`
+   - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
+3. OpenCode（[OpenCode Skills](https://open-code.ai/en/docs/skills)）
+   - グローバル: `~/.config/opencode/skills/<skill-name>/SKILL.md`
+   - プロジェクト単位: `<project>/.opencode/skills/<skill-name>/SKILL.md`
+   - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
+   - OpenCode は `.claude/skills` と `.agents/skills` も検出できます。
+
+## 検証
 
 ```bash
-TAG=vX.Y.Z # 例: v0.1.0
-DEST=/path/to/skills
-curl -fsSL -o sw-agent-skills.zip "https://github.com/KentoShimizu/sw-agent-skills/archive/refs/tags/${TAG}.zip"
-unzip -q sw-agent-skills.zip
-mkdir -p "${DEST}"
-cp -R "sw-agent-skills-${TAG#v}/skills/." "${DEST}/"
+python3 scripts/validate_skill_links.py
+python3 scripts/validate_no_absolute_paths.py
 ```
-
-## インストールオプション
-
-### Bash (`scripts/install-skills.sh`)
-
-| オプション | 必須 | 説明 | デフォルト |
-| --- | --- | --- | --- |
-| `--agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
-| `--scope <global/local>` | いいえ | インストール範囲。`local` は `--project-root` 配下へ配置。 | `global` |
-| `--project-root <path>` | いいえ | `--scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
-| `-h`, `--help` | いいえ | ヘルプを表示。 | 無効 |
-
-### PowerShell (`scripts/install-skills.ps1`)
-
-| オプション | 必須 | 説明 | デフォルト |
-| --- | --- | --- | --- |
-| `-Agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
-| `-Scope <global/local>` | いいえ | インストール範囲。`local` は `-ProjectRoot` 配下へ配置。 | `global` |
-| `-ProjectRoot <path>` | いいえ | `-Scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
-
-管理更新: インストーラーは各配置先ルート配下の `.sw-agent-skills-managed` で管理対象スキルを追跡します。この一覧にないディレクトリは保持され、未管理ディレクトリとの同名衝突がある場合はインストールを停止します。
 
 ## 参考資料
 
+- [Releases](https://github.com/KentoShimizu/sw-agent-skills/releases)
 - [Agent Skills](https://agentskills.io/home)
-- [Codex](https://developers.openai.com/codex/skills)
-- [Claude](https://docs.claude.com/en/docs/claude-code/skills)
-- [OpenCode](https://opencode.ai/docs/skills)
+- [Codex Skills (openai/skills)](https://github.com/openai/skills)
+- [Codex Settings: Skills](https://developers.openai.com/codex/settings#skills)
+- [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)
+- [OpenCode Skills](https://open-code.ai/en/docs/skills)
 
 ## ライセンス
 
