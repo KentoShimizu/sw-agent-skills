@@ -35,7 +35,7 @@ After extraction, pick the skill directories you need (for example `skills/testi
 
 ### Agent Setup (Official References)
 
-1. Codex ([openai/skills](https://github.com/openai/skills), [Codex settings: Skills](https://developers.openai.com/codex/settings#skills))
+1. Codex ([openai/skills](https://github.com/openai/skills), [Codex Skills docs](https://developers.openai.com/codex/skills))
    - Personal skills: `~/.agents/skills/<skill-name>/SKILL.md`
    - Project skills: `<project>/.agents/skills/<skill-name>/SKILL.md`
    - `SKILL.md` must include frontmatter with at least `name` and `description`.
@@ -61,6 +61,6 @@ python3 scripts/validate_no_absolute_paths.py
 - [Releases](https://github.com/KentoShimizu/sw-agent-skills/releases)
 - [Agent Skills](https://agentskills.io/home)
 - [Codex Skills (openai/skills)](https://github.com/openai/skills)
-- [Codex Settings: Skills](https://developers.openai.com/codex/settings#skills)
+- [Codex Skills docs](https://developers.openai.com/codex/skills)
 - [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)
 - [OpenCode Skills](https://open-code.ai/en/docs/skills)
