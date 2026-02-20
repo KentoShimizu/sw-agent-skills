@@ -35,15 +35,10 @@ After extraction, pick the skill directories you need (for example `skills/testi
 
 ### Agent Setup (Official References)
 
-1. Codex ([openai/skills](https://github.com/openai/skills))
-   - Run the installer command with a local path:
-     ```bash
-     $skill-installer /absolute/path/to/sw-agent-skills/skills/testing-unit
-     ```
-   - Or install directly from a GitHub skill URL:
-     ```bash
-     $skill-installer https://github.com/openai/skills/tree/main/skills/testing-unit
-     ```
+1. Codex ([openai/skills](https://github.com/openai/skills), [Codex settings: Skills](https://developers.openai.com/codex/settings#skills))
+   - Personal skills: `~/.agents/skills/<skill-name>/SKILL.md`
+   - Project skills: `<project>/.agents/skills/<skill-name>/SKILL.md`
+   - `SKILL.md` must include frontmatter with at least `name` and `description`.
 2. Claude Code ([Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills))
    - Global skills: `~/.claude/skills/<skill-name>/SKILL.md`
    - Project skills: `<project>/.claude/skills/<skill-name>/SKILL.md`
@@ -66,5 +61,6 @@ python3 scripts/validate_no_absolute_paths.py
 - [Releases](https://github.com/KentoShimizu/sw-agent-skills/releases)
 - [Agent Skills](https://agentskills.io/home)
 - [Codex Skills (openai/skills)](https://github.com/openai/skills)
+- [Codex Settings: Skills](https://developers.openai.com/codex/settings#skills)
 - [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)
 - [OpenCode Skills](https://open-code.ai/en/docs/skills)

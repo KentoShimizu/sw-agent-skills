@@ -35,15 +35,10 @@ cd "sw-agent-skills-${TAG#v}"
 
 ### 按代理配置（官方参考）
 
-1. Codex（[openai/skills](https://github.com/openai/skills)）
-   - 使用本地路径执行安装命令：
-     ```bash
-     $skill-installer /absolute/path/to/sw-agent-skills/skills/testing-unit
-     ```
-   - 或直接使用 GitHub skill URL：
-     ```bash
-     $skill-installer https://github.com/openai/skills/tree/main/skills/testing-unit
-     ```
+1. Codex（[openai/skills](https://github.com/openai/skills)、[Codex settings: Skills](https://developers.openai.com/codex/settings#skills)）
+   - 个人技能：`~/.agents/skills/<skill-name>/SKILL.md`
+   - 项目级：`<project>/.agents/skills/<skill-name>/SKILL.md`
+   - `SKILL.md` 至少需要包含 `name` 和 `description` 的 frontmatter。
 2. Claude Code（[Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)）
    - 全局：`~/.claude/skills/<skill-name>/SKILL.md`
    - 项目级：`<project>/.claude/skills/<skill-name>/SKILL.md`
@@ -66,6 +61,7 @@ python3 scripts/validate_no_absolute_paths.py
 - [Releases](https://github.com/KentoShimizu/sw-agent-skills/releases)
 - [Agent Skills 官网](https://agentskills.io/home)
 - [Codex Skills (openai/skills)](https://github.com/openai/skills)
+- [Codex Settings: Skills](https://developers.openai.com/codex/settings#skills)
 - [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)
 - [OpenCode Skills](https://open-code.ai/en/docs/skills)
 

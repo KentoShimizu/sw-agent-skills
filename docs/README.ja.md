@@ -35,15 +35,10 @@ cd "sw-agent-skills-${TAG#v}"
 
 ### エージェント別セットアップ（公式リファレンス）
 
-1. Codex（[openai/skills](https://github.com/openai/skills)）
-   - ローカルパスを指定して実行:
-     ```bash
-     $skill-installer /absolute/path/to/sw-agent-skills/skills/testing-unit
-     ```
-   - または GitHub 上の skill URL を直接指定:
-     ```bash
-     $skill-installer https://github.com/openai/skills/tree/main/skills/testing-unit
-     ```
+1. Codex（[openai/skills](https://github.com/openai/skills)、[Codex settings: Skills](https://developers.openai.com/codex/settings#skills)）
+   - 個人スキル: `~/.agents/skills/<skill-name>/SKILL.md`
+   - プロジェクト単位: `<project>/.agents/skills/<skill-name>/SKILL.md`
+   - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
 2. Claude Code（[Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)）
    - グローバル: `~/.claude/skills/<skill-name>/SKILL.md`
    - プロジェクト単位: `<project>/.claude/skills/<skill-name>/SKILL.md`
@@ -66,6 +61,7 @@ python3 scripts/validate_no_absolute_paths.py
 - [Releases](https://github.com/KentoShimizu/sw-agent-skills/releases)
 - [Agent Skills](https://agentskills.io/home)
 - [Codex Skills (openai/skills)](https://github.com/openai/skills)
+- [Codex Settings: Skills](https://developers.openai.com/codex/settings#skills)
 - [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)
 - [OpenCode Skills](https://open-code.ai/en/docs/skills)
 
