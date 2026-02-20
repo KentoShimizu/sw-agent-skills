@@ -12,14 +12,13 @@ This repository provides:
 
 - A standard structure for reusable skills
 - Release-distributed reusable skills for Codex, Claude Code, and OpenCode
-- Validation scripts for link/path integrity
 
 ## Repository Structure
 
 - `skills/<skill-name>/SKILL.md`: required skill definition
 - `skills/<skill-name>/scripts/`: optional helper scripts
 - `skills/<skill-name>/references/`: optional reference documents
-- `scripts/`: validator and maintenance scripts
+- `scripts/`: maintenance scripts
 - `docs/`: localized README files
 
 ## Quick Start (Download a Release)
@@ -48,13 +47,6 @@ After extraction, pick the skill directories you need (for example `skills/testi
    - Project skills: `<project>/.opencode/skills/<skill-name>/SKILL.md`
    - `SKILL.md` must include frontmatter with at least `name` and `description`.
    - OpenCode also discovers `.claude/skills` and `.agents/skills`.
-
-## Validation
-
-```bash
-python3 scripts/validate_skill_links.py
-python3 scripts/validate_no_absolute_paths.py
-```
 
 ## References
 

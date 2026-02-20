@@ -12,14 +12,13 @@
 
 - 再利用可能な skills の標準ディレクトリ構成
 - Codex、Claude Code、OpenCode 向けに配布可能な skills
-- リンクやパス整合性を確認する検証スクリプト
 
 ## リポジトリ構成
 
 - `skills/<skill-name>/SKILL.md`: 必須のスキル定義
 - `skills/<skill-name>/scripts/`: 任意の補助スクリプト
 - `skills/<skill-name>/references/`: 任意の参考資料
-- `scripts/`: バリデーターとメンテナンス用スクリプト
+- `scripts/`: メンテナンス用スクリプト
 - `docs/`: 多言語 README
 
 ## クイックセットアップ（Release ダウンロード）
@@ -48,13 +47,6 @@ cd "sw-agent-skills-${TAG#v}"
    - プロジェクト単位: `<project>/.opencode/skills/<skill-name>/SKILL.md`
    - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
    - OpenCode は `.claude/skills` と `.agents/skills` も検出できます。
-
-## 検証
-
-```bash
-python3 scripts/validate_skill_links.py
-python3 scripts/validate_no_absolute_paths.py
-```
 
 ## 参考資料
 

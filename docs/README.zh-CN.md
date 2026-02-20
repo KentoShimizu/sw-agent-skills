@@ -12,14 +12,13 @@
 
 - 可复用 skills 的标准目录结构
 - 面向 Codex、Claude Code、OpenCode 可分发的 skills
-- 用于校验链接与路径完整性的验证脚本
 
 ## 仓库结构
 
 - `skills/<skill-name>/SKILL.md`: 必需的技能定义
 - `skills/<skill-name>/scripts/`: 可选辅助脚本
 - `skills/<skill-name>/references/`: 可选参考文档
-- `scripts/`: 校验与维护脚本
+- `scripts/`: 维护脚本
 - `docs/`: 多语言 README
 
 ## 快速安装（下载 Release）
@@ -48,13 +47,6 @@ cd "sw-agent-skills-${TAG#v}"
    - 项目级：`<project>/.opencode/skills/<skill-name>/SKILL.md`
    - `SKILL.md` 至少需要包含 `name` 和 `description` 的 frontmatter。
    - OpenCode 也会发现 `.claude/skills` 和 `.agents/skills`。
-
-## 校验
-
-```bash
-python3 scripts/validate_skill_links.py
-python3 scripts/validate_no_absolute_paths.py
-```
 
 ## 参考资料
 
