@@ -11,7 +11,7 @@
 このリポジトリには、次の内容が含まれます。
 
 - 再利用可能な skills の標準ディレクトリ構成
-- Codex、Claude Code、OpenCode 向けインストールスクリプト
+- Codex、Claude Code、OpenCode 向けに配布可能な skills
 - リンクやパス整合性を確認する検証スクリプト
 
 ## リポジトリ構成
@@ -19,57 +19,40 @@
 - `skills/<skill-name>/SKILL.md`: 必須のスキル定義
 - `skills/<skill-name>/scripts/`: 任意の補助スクリプト
 - `skills/<skill-name>/references/`: 任意の参考資料
-- `scripts/`: インストーラーとバリデーター
+- `scripts/`: バリデーターとメンテナンス用スクリプト
 - `docs/`: 多言語 README
 
-## クイックセットアップ
+## クイックセットアップ（Release ダウンロード）
 
 ```bash
-git clone https://github.com/KentoShimizu/sw-agent-skills.git
-cd sw-agent-skills
-bash scripts/install-skills.sh --agent all --scope global
+TAG=vX.Y.Z  # Releases で確認したタグに置き換え
+curl -L -o sw-agent-skills.tar.gz "https://github.com/KentoShimizu/sw-agent-skills/archive/refs/tags/${TAG}.tar.gz"
+tar -xzf sw-agent-skills.tar.gz
+cd "sw-agent-skills-${TAG#v}"
 ```
 
-プレビューのみ（ファイル変更なし）:
+展開後は、必要な skill ディレクトリ（例: `skills/testing-unit`）を選び、各サービスの公式手順で追加してください。
 
-```bash
-bash scripts/install-skills.sh --agent all --scope global --dry-run
-```
+### エージェント別セットアップ（公式リファレンス）
 
-Windows PowerShell:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install-skills.ps1 -Agent all -Scope global
-```
-
-## インストールオプション
-
-### Bash (`scripts/install-skills.sh`)
-
-| オプション | 必須 | 説明 | デフォルト |
-| --- | --- | --- | --- |
-| `--agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
-| `--scope <global/local>` | いいえ | インストール範囲。`local` は `--project-root` 配下へ配置。 | `global` |
-| `--mode <symlink/copy>` | いいえ | 各スキルディレクトリの配置方式。 | `symlink` |
-| `--source <path>` | いいえ | スキルのソースディレクトリ。`SKILL.md` を持つサブディレクトリを含む必要があります。 | `<repo>/skills` |
-| `--project-root <path>` | いいえ | `--scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
-| `--dry-run` | いいえ | ファイル変更せず実行内容のみ表示。 | 無効 |
-| `--verbose` | いいえ | 詳細なコマンド出力を表示。 | 無効 |
-| `--force` | いいえ | 既存の配置先スキルディレクトリを置換。 | 無効 |
-| `-h`, `--help` | いいえ | ヘルプを表示。 | 無効 |
-
-### PowerShell (`scripts/install-skills.ps1`)
-
-| オプション | 必須 | 説明 | デフォルト |
-| --- | --- | --- | --- |
-| `-Agent <all/codex/claude/opencode>` | いいえ | インストール対象のエージェント。 | `all` |
-| `-Scope <global/local>` | いいえ | インストール範囲。`local` は `-ProjectRoot` 配下へ配置。 | `global` |
-| `-Mode <symlink/copy>` | いいえ | 各スキルディレクトリの配置方式。 | `symlink` |
-| `-Source <path>` | いいえ | スキルのソースディレクトリ。`SKILL.md` を持つサブディレクトリを含む必要があります。 | `<repo>/skills` |
-| `-ProjectRoot <path>` | いいえ | `-Scope local` 時に使うプロジェクトルート。 | カレントディレクトリ |
-| `-DryRun` | いいえ | ファイル変更せず実行内容のみ表示。 | 無効 |
-| `-VerboseList` | いいえ | 詳細な処理ログを表示。 | 無効 |
-| `-Force` | いいえ | 既存の配置先スキルディレクトリを置換。 | 無効 |
+1. Codex（[openai/skills](https://github.com/openai/skills)）
+   - ローカルパスを指定して実行:
+     ```bash
+     $skill-installer /absolute/path/to/sw-agent-skills/skills/testing-unit
+     ```
+   - または GitHub 上の skill URL を直接指定:
+     ```bash
+     $skill-installer https://github.com/openai/skills/tree/main/skills/testing-unit
+     ```
+2. Claude Code（[Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)）
+   - グローバル: `~/.claude/skills/<skill-name>/SKILL.md`
+   - プロジェクト単位: `<project>/.claude/skills/<skill-name>/SKILL.md`
+   - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
+3. OpenCode（[OpenCode Skills](https://open-code.ai/en/docs/skills)）
+   - グローバル: `~/.config/opencode/skills/<skill-name>/SKILL.md`
+   - プロジェクト単位: `<project>/.opencode/skills/<skill-name>/SKILL.md`
+   - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
+   - OpenCode は `.claude/skills` と `.agents/skills` も検出できます。
 
 ## 検証
 
@@ -80,10 +63,11 @@ python3 scripts/validate_no_absolute_paths.py
 
 ## 参考資料
 
+- [Releases](https://github.com/KentoShimizu/sw-agent-skills/releases)
 - [Agent Skills](https://agentskills.io/home)
-- [Codex](https://developers.openai.com/codex/skills)
-- [Claude](https://docs.claude.com/en/docs/claude-code/skills)
-- [OpenCode](https://opencode.ai/docs/skills)
+- [Codex Skills (openai/skills)](https://github.com/openai/skills)
+- [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)
+- [OpenCode Skills](https://open-code.ai/en/docs/skills)
 
 ## ライセンス
 
