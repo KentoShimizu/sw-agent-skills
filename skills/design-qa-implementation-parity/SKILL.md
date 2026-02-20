@@ -1,48 +1,59 @@
 ---
 name: design-qa-implementation-parity
-description: "UI parity verification workflow between design specs and implemented interfaces. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Verify implementation parity against approved design specs with severity-based decisions and fix guidance. Use when implemented UI must be compared against approved specs before release or sign-off; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Qa Implementation Parity
 
-## Trigger Boundary
-- Use when implemented UI must be validated against approved design artifacts.
-- Do not use for creating new visual specifications; use `visual-design`.
-- Do not use for accessibility remediation planning; use `accessibility-design`.
+## Overview
+Use this skill to detect and triage design-to-implementation drift with evidence that engineers and designers can both act on.
 
-## Goal
-Prevent design-to-implementation drift with objective parity evidence.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track parity review artifacts with `DREV-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Severity classification model:
+  - `references/parity-severity-model.md`
 
-## Inputs
-- Approved design artifacts and version identifiers
-- Implemented UI build or staging environment
-- Scope of screens, states, and variants under validation
+## Templates And Assets
+- Findings log:
+  - `assets/parity-findings-template.csv`
+- Sign-off decision document:
+  - `assets/parity-signoff-template.md`
 
-## Outputs
-- `DREV-*` parity report with mismatch severity and ownership
-- Screen/state-level pass-fail checklist
-- Remediation actions with priority and due date
+## Inputs To Gather
+- Approved design source and exact version/snapshot.
+- Target implementation build, environment, and feature flags.
+- Scope list of screens, states, breakpoints, and locales to validate.
+- Existing acceptance criteria or release gates for UI parity.
+
+## Deliverables
+- Parity findings report with severity, scope, owner, and reproduction steps.
+- State-level pass/fail checklist for critical flows.
+- Prioritized remediation plan with release impact notes.
+- Sign-off decision (approve/conditional/reject) with clear rationale.
+
+## Quick Example
+- Blocker: CTA button hidden on mobile breakpoint in checkout summary.
+- Major: loading state typography differs from approved scale and causes truncation.
+- Minor: icon spacing deviates by 2px without usability impact.
+- Decision: reject until blocker fixed; allow major/minor with dated follow-up only if policy permits.
+
+## Quality Standard
+- Source versions are locked so comparisons are deterministic.
+- Coverage includes critical states: loading, empty, error, success.
+- Every mismatch includes reproducible evidence and ownership.
+- Severity rules are consistent and tied to user/business impact.
 
 ## Workflow
-1. Lock design and implementation versions before comparison.
-2. Validate layout, spacing, typography, and component states.
-3. Validate interaction behavior and transition timing.
-4. Record mismatches with reproducible evidence.
-5. Publish parity decision and remediation backlog with contract validation evidence.
+1. Freeze source design and implementation versions for the review window.
+2. Compare critical flows first, then secondary and edge states.
+3. Classify mismatches by severity and release impact using `references/parity-severity-model.md`.
+4. Record findings in `assets/parity-findings-template.csv`, assign owners, and define remediation order.
+5. Publish sign-off outcome in `assets/parity-signoff-template.md` with unresolved risk explicitly documented.
 
-## Quality Gates
-- Critical user flows have zero unresolved blocker mismatches.
-- State coverage includes loading, empty, error, and success states.
-- Findings are reproducible across reviewers.
-- Ownership is assigned for every mismatch.
-- Contract validation passes for `DREV-*` artifact manifests.
-- When `checks.user_facing_change` is `true`, Privacy Reviewer approval and privacy evidence are present.
-
-## Failure Handling
-- Stop parity sign-off when source versions are not locked.
-- Escalate when blocker mismatches remain unresolved.
+## Failure Conditions
+- Stop sign-off when source versions are not locked.
+- Stop when critical flows are missing parity coverage.
+- Escalate when blocker-level mismatches remain unresolved near release.

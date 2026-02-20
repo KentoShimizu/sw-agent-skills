@@ -1,41 +1,49 @@
 ---
 name: ml-data-preprocessing
-description: Specialized workflow for data cleaning, normalization, and leakage prevention rules. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: "ML data preprocessing workflow for cleaning, normalization, and leakage-safe dataset preparation. Use when training/inference data pipelines need explicit preprocessing decisions; do not use for generic API-layer or infrastructure-only changes."
 ---
 
 # Ml Data Preprocessing
 
-## Trigger Boundary
-- Use when ML data, model, training, evaluation, or serving choices are being made.
-- Do not use for generic API lifecycle governance; use `api-*`.
-- Do not use for non-ML database administration concerns.
+## Overview
+Use this skill to define preprocessing that improves model quality without introducing leakage or unreproducible transforms.
 
-## Goal
-Produce reliable ML lifecycle decisions from data to production monitoring.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for data cleaning, normalization, and leakage prevention rules
-- Operational, compliance, and rollout constraints
+## Shared References
+- Leakage prevention rules:
+  - `references/leakage-prevention-rules.md`
 
-## Outputs
-- Data preprocessing pipeline specification
-- Decision log for data cleaning, normalization, and leakage prevention rules
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Preprocessing spec template:
+  - `assets/preprocessing-spec-template.md`
+
+## Inputs To Gather
+- Source datasets, schema quality, and time boundaries.
+- Missing/outlier characteristics and domain constraints.
+- Train/validation/test split policy.
+- Reproducibility and compliance requirements.
+
+## Deliverables
+- Preprocessing specification with transformation rationale.
+- Leakage and data-quality validation plan.
+- Reproducibility notes and versioning requirements.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for data cleaning, normalization, and leakage prevention rules.
-2. Produce options and select an approach for data cleaning, normalization, and leakage prevention rules.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using dataset quality checks and leakage audit.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Draft transform plan with `assets/preprocessing-spec-template.md`.
+2. Validate temporal and label safety via `references/leakage-prevention-rules.md`.
+3. Define split-safe transformations and quality checks.
+4. Verify transform repeatability across runs.
+5. Publish preprocessing contract and residual risks.
 
-## Quality Gates
-- Scope and assumptions for data cleaning, normalization, and leakage prevention rules are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Transformations are deterministic and versioned.
+- Leakage risk is explicitly checked and mitigated.
+- Data loss/quality trade-offs are documented.
 
-## Failure Handling
-- Stop when preprocessing introduces label leakage or irreversible data loss.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when preprocessing introduces label or temporal leakage.
+- Stop when transforms are not reproducible.
+- Escalate when data quality blocks decision-grade training.

@@ -1,0 +1,4 @@
+metric_name,source,threshold_type,threshold_value,window,action_on_breach
+error_rate,apm,upper_bound,0.5%,5m,rollback
+p95_latency,apm,upper_bound,500ms,5m,hold
+checkout_success_rate,business,lower_bound,98.0%,15m,rollback

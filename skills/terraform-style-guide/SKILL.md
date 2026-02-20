@@ -1,9 +1,13 @@
 ---
 name: terraform-style-guide
-description: "Style, review, and refactoring standards for Terraform infrastructure-as-code. Use when editing or reviewing `.tf`/`.tfvars` files, Terraform modules, or Terraform plan/apply workflow configuration. Do not use for CloudFormation, Pulumi, or application-runtime coding conventions unless Terraform artifacts are also changed. Combine with language-specific guides only when application code and IaC both change."
+description: "Style, review, and refactoring standards for Terraform infrastructure-as-code. Trigger when `.tf` or `.tfvars` source/modules/workflow configuration is created, changed, or reviewed and IaC-specific quality rules (module boundaries, variable typing, state safety, plan/apply discipline) must be enforced. Do not use for CloudFormation, Pulumi, or application-runtime coding conventions unless Terraform artifacts are also changed. Combine with language-specific guides only when application code and IaC both change."
 ---
 
 # Terraform Style Guide
+
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
 Apply this checklist when writing or reviewing Terraform code.
 

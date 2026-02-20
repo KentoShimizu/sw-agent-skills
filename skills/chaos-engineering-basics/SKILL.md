@@ -1,41 +1,61 @@
 ---
 name: chaos-engineering-basics
-description: "Foundational chaos engineering workflow for validating resilience assumptions through controlled fault injection in non-production and guarded production contexts. Use when designing controlled resilience experiments with explicit blast-radius controls; do not use for active incident command or postmortem document authoring."
+description: "Design and execute controlled chaos experiments to validate resilience assumptions with explicit steady-state metrics, blast-radius limits, and abort rules. Use when reliability claims need evidence before wider rollout; do not use for active incident command or postmortem-only reporting."
 ---
 
 # Chaos Engineering Basics
 
-## Trigger Boundary
-- Use when resilience assumptions need validation through controlled failure experiments.
-- Do not use for incident postmortem documentation only; use `incident-postmortem`.
-- Do not use when observability signals are not yet established; use `observability-*` first.
+## Overview
+Use this skill to design safe, evidence-driven fault injection experiments that verify system resilience under realistic failure conditions.
 
-## Goal
-Improve reliability confidence by exposing hidden failure modes safely.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Service criticality and dependency map
-- Existing SLO/SLI and alerting baseline
-- Operational guardrails and blast-radius constraints
+## Inputs To Gather
+- Critical user journeys and service dependency map.
+- Current SLI/SLO and alert signal quality.
+- Failure budget, allowed blast radius, and rollback authority.
+- Existing runbooks and on-call escalation paths.
 
-## Outputs
-- Chaos experiment plan with safety controls
-- Hypothesis and expected steady-state metrics
-- Findings, remediation actions, and re-test criteria
+## Deliverables
+- Experiment charter (hypothesis, steady state, blast radius, abort criteria).
+- Fault-injection plan (what fails, where, for how long, at what traffic share).
+- Observation plan (metrics, logs, traces, and decision thresholds).
+- Findings with remediation owners and re-test schedule.
+
+## Quick Start Example
+
+### Example experiment charter
+- Hypothesis: "API p95 remains < 400ms when one cache node fails."
+- Steady-state metrics: p95 latency, error rate, queue depth.
+- Blast radius: 5% traffic, one AZ only, 10 minutes max.
+- Abort immediately if:
+  - error rate > 2x baseline for 3 minutes,
+  - user checkout success drops below threshold,
+  - paging alerts fire in unrelated services.
+
+### Example decision rule
+- `pass`: steady-state metrics remain inside pre-registered limits.
+- `fail`: any hard guardrail breaches abort threshold.
+- `inconclusive`: observability gaps prevent causal interpretation.
+
+## Quality Standard
+- Steady state is measurable and agreed before injection.
+- Abort/rollback conditions are explicit and executable.
+- Blast radius is bounded by environment, traffic, and time.
+- Experiment outcomes produce owned remediation actions.
+- Re-test conditions are defined for failed assumptions.
 
 ## Workflow
-1. Define steady-state behavior and safety guardrails.
-2. Select one controlled fault scenario and blast radius.
-3. Execute experiment with live monitoring and abort criteria.
-4. Analyze impact against expected resilience behavior.
-5. Publish remediation and schedule follow-up verification.
+1. Select one reliability assumption tied to a business-critical flow.
+2. Define steady-state metrics and hard guardrails.
+3. Design smallest useful fault experiment with bounded blast radius.
+4. Run experiment under live observation with explicit abort authority.
+5. Classify result (pass/fail/inconclusive) and capture learning.
+6. Assign remediation and schedule follow-up verification.
 
-## Quality Gates
-- Experiment has explicit abort and rollback criteria.
-- Observability is sufficient to detect degradation quickly.
-- Blast radius remains within approved limits.
-- Findings produce owned remediation actions.
-
-## Failure Handling
-- Stop when guardrails or abort conditions are undefined.
-- Escalate when experiment risk exceeds approved blast radius.
+## Failure Conditions
+- Stop when steady-state metric or abort threshold is undefined.
+- Stop when observability cannot detect degradation quickly.
+- Escalate when proposed blast radius exceeds approved risk budget.

@@ -1,41 +1,52 @@
 ---
 name: sqlalchemy-orm-patterns
-description: "SQLAlchemy ORM design workflow. Use when framework-specific application structure and runtime behavior must be implemented or revised; do not use for repository-wide architecture governance or release management policy."
+description: "SQLAlchemy ORM workflow for model mapping, session/transaction boundaries, and query loading strategy. Use when SQLAlchemy ORM behavior must be implemented or revised with explicit persistence decisions; do not use for repository-wide architecture governance or release policy decisions."
 ---
 
 # Sqlalchemy Orm Patterns
 
-## Trigger Boundary
-- Use when Python services rely on SQLAlchemy ORM/core patterns.
-- Do not use for database-agnostic conceptual modeling only.
-- Do not use for migration tooling policy without ORM context.
+## Overview
+Use this skill to design SQLAlchemy usage that remains correct, efficient, and maintainable under production load.
 
-## Goal
-Build clear ORM mappings and query patterns with controlled transaction and session behavior.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Domain entities and relationship constraints
-- Session lifecycle and transaction requirements
-- Query performance and consistency expectations
+## Shared References
+- ORM loading and session rules:
+  - `references/orm-loading-and-session-rules.md`
 
-## Outputs
-- ORM model and relationship design
-- Session and transaction boundary policy
-- Query optimization and loading-strategy checklist
+## Templates And Assets
+- ORM modeling template:
+  - `assets/sqlalchemy-modeling-template.py`
+- Session/transaction checklist:
+  - `assets/sqlalchemy-session-transaction-checklist.md`
+
+## Inputs To Gather
+- Domain model and relationship constraints.
+- Transaction consistency requirements.
+- Query access patterns and performance constraints.
+- Session lifecycle boundaries.
+
+## Deliverables
+- ORM model and relationship design.
+- Session and transaction boundary policy.
+- Query loading strategy with hotspot validation.
 
 ## Workflow
-1. Define model mappings with explicit constraints and indexes.
-2. Choose loading strategy (`joinedload`, `selectinload`, etc.) by access pattern.
-3. Scope sessions per request/unit-of-work to avoid leaks.
-4. Guard transaction boundaries with explicit rollback semantics.
-5. Validate generated SQL and performance on hot queries.
+1. Draft model structure using `assets/sqlalchemy-modeling-template.py`.
+2. Define session/transaction boundaries.
+3. Apply loading strategy rules from `references/orm-loading-and-session-rules.md`.
+4. Validate SQL behavior for hot queries.
+5. Finalize with `assets/sqlalchemy-session-transaction-checklist.md`.
 
-## Quality Gates
-- Session lifecycle is explicit and leak-free.
-- Transactions are atomic for business-critical operations.
-- Query strategy avoids avoidable N+1 and overfetching.
-- Model constraints align with database integrity rules.
+## Quality Standard
+- Session ownership is explicit and leak-free.
+- Transaction boundaries preserve business atomicity.
+- Query strategy avoids N+1/overfetch patterns.
+- ORM abstractions remain transparent for critical SQL paths.
 
-## Failure Handling
+## Failure Conditions
 - Stop when session ownership is ambiguous across layers.
-- Escalate when ORM abstractions hide critical SQL behavior.
+- Stop when ORM hides critical SQL behavior on hot paths.
+- Escalate when transaction guarantees cannot be met safely.

@@ -1,41 +1,43 @@
 ---
 name: db-physical-design
-description: Specialized workflow for storage layout, partitioning, and engine-specific performance controls. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: "Physical database design workflow for storage layout, partitioning, engine settings, and hardware-aware performance behavior. Use when sustained workload efficiency depends on physical data organization; do not use for conceptual modeling tasks."
 ---
 
-# Db Physical Design
+# DB Physical Design
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to align storage structures with workload shape, growth patterns, and operational constraints.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Scope Boundaries
+- Data volume or access distribution creates storage and latency pressure.
+- Partitioning or table layout decisions affect manageability.
+- Engine-specific behavior requires deliberate configuration.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for storage layout, partitioning, and engine-specific performance controls
-- Operational, compliance, and rollout constraints
+## Core Judgments
+- Partitioning strategy (range/hash/list/hybrid) and key choice.
+- Hot/cold data tiering and archival layout.
+- Table/index storage parameters by engine characteristics.
+- Maintenance strategy for bloat, vacuum/reorg, and statistics.
 
-## Outputs
-- Physical storage design specification
-- Decision log for storage layout, partitioning, and engine-specific performance controls
-- Verification checklist with measurable pass-fail criteria
+## Practitioner Heuristics
+- Partition by access and lifecycle behavior, not by calendar habit.
+- Keep partition count operationally manageable.
+- Co-locate frequently joined data only when it materially improves hot paths.
+- Engine tuning must follow measured workload and failure history, not defaults folklore.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for storage layout, partitioning, and engine-specific performance controls.
-2. Produce options and select an approach for storage layout, partitioning, and engine-specific performance controls.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using I/O and storage footprint profiling under target workloads.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Profile data growth, access skew, and latency bottlenecks.
+2. Evaluate physical layout options against workload and operations cost.
+3. Select partition and storage strategies with explicit trade-offs.
+4. Define maintenance cadence for statistics and storage health.
+5. Document scaling and re-partitioning triggers.
 
-## Quality Gates
-- Scope and assumptions for storage layout, partitioning, and engine-specific performance controls are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Common Failure Modes
+- Partition key chosen without considering future rebalance complexity.
+- Excessive small partitions degrade planner and maintenance performance.
+- Storage tuning changes applied without workload baseline.
 
-## Failure Handling
-- Stop when storage layout cannot sustain expected load or growth.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when physical layout has no clear workload rationale.
+- Stop when partition strategy cannot support retention/archival requirements.
+- Escalate when operational maintenance burden exceeds team capacity.

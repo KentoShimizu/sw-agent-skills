@@ -1,52 +1,44 @@
 ---
 name: architecture-ddd
-description: "Domain-driven design workflow for modeling bounded contexts, aggregates, and context maps in complex domains. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Domain-driven design workflow for bounded context partitioning, aggregate design, and context mapping in complex domains. Use when domain complexity or organizational scaling requires explicit model boundaries; do not use for small CRUD domains without competing language models."
 ---
 
-# Architecture Ddd
+# Architecture DDD
 
-## Trigger Boundary
-- Use when domain complexity or terminology conflicts drive design risk.
-- Do not use for implementation-layer dependency rules; use `architecture-clean-architecture`.
-- Do not use for diagram-only communication; use `architecture-c4-modeling`.
+## Overview
+Use this skill to model complex domains so teams can evolve behavior without constant cross-team coupling.
 
-## Goal
-Create domain-aligned architecture boundaries with explicit ubiquitous language and ownership.
+## Scope Boundaries
+- Domain language differs across teams or subsystems.
+- Invariants are hard to maintain because boundaries are unclear.
+- A single model is causing conflicting meanings and high coordination cost.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Do not define local ID formats or alternate state machines.
+## Core Judgments
+- Bounded context cuts: where language and invariants legitimately diverge.
+- Aggregate boundaries: where consistency must be immediate versus eventual.
+- Context integration style: ACL, conformist, published language, or shared kernel.
+- Ownership model: which team can change which part without global coordination.
 
-## Compliance & Governance Baseline (US, Japan, EU)
-- Model privacy-sensitive concepts explicitly in ubiquitous language.
-- Isolate regulated data concerns within bounded contexts.
-- Prepare an `ARC-CMP-*` evidence package for governance review.
-
-## Inputs
-- Domain events, processes, and terminology sources
-- Stakeholder language conflicts and ownership boundaries
-- Business invariants and critical consistency rules
-
-## Outputs
-- Bounded context map with integration relationships
-- Aggregate and entity boundary definitions
-- Ubiquitous language glossary and ownership model
+## Practitioner Heuristics
+- Bound contexts by change patterns and invariants, not by database tables.
+- Aggregates should protect invariants with minimal transactional scope.
+- Cross-context communication should exchange explicit contracts, not internal models.
+- In dynamic languages, model entities/value objects with explicit typed schemas instead of broad maps that require repetitive casting.
 
 ## Workflow
-1. Discover domain language and conflicting meanings.
-2. Define bounded contexts and ownership boundaries.
-3. Model aggregates around consistency invariants.
-4. Create context map with integration and anti-corruption patterns.
-5. Align team boundaries with context ownership.
+1. Build ubiquitous language per domain area and identify conflicting terms.
+2. Partition bounded contexts by invariants, autonomy, and change cadence.
+3. Design aggregates with clear consistency and lifecycle rules.
+4. Define context map and integration contracts between contexts.
+5. Identify anti-corruption needs and translation responsibilities.
+6. Document residual ambiguity and model evolution triggers.
 
-## Quality Gates
-- Bounded contexts have clear ownership and purpose.
-- Aggregates enforce explicit invariants.
-- `ARC-CMP-*` evidence package is complete and approved.
-- Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
+## Common Failure Modes
+- "DDD" applied as folder naming without boundary behavior changes.
+- Aggregates oversized, causing lock contention and slow writes.
+- Shared database schema used as de facto integration API.
 
-## Failure Handling
-- Stop when context boundaries are purely technical.
-- Stop when canonical contract validation fails.
-- Escalate when invariant ownership is ambiguous across teams.
+## Failure Conditions
+- Stop when bounded contexts cannot be separated by language/invariant boundaries.
+- Stop when aggregate consistency needs conflict with transaction feasibility.
+- Escalate when cross-context contracts remain uncontrolled.

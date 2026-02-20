@@ -1,41 +1,56 @@
 ---
 name: cost-optimization-cloud
-description: "Cloud cost optimization workflow balancing spend, performance, and reliability. Use when cloud spend reduction must be balanced against reliability and performance constraints; do not use for purely functional product behavior design."
+description: "Optimize cloud spend with explicit tradeoffs across cost, performance, and reliability. Use when spend or forecast misses budget targets and teams need concrete optimization actions without violating SLOs or compliance constraints; do not use for purely functional product behavior design."
 ---
 
 # Cost Optimization Cloud
 
-## Trigger Boundary
-- Use when cloud spend must be reduced without violating SLO or compliance.
-- Do not use for one-off performance micro-optimizations; use `performance-*`.
-- Do not use for architecture decision history management; use `architecture-decision-records`.
+## Overview
+Use this skill to produce actionable cloud cost reductions that preserve service quality and operational safety.
 
-## Goal
-Reduce spend while preserving reliability and user outcomes.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Cost breakdown by service and environment
-- Utilization and traffic seasonality data
-- Reliability, compliance, and performance constraints
+## Inputs To Gather
+- Cost breakdown by service/account/environment/tag.
+- Utilization telemetry (CPU, memory, I/O, request profile, idle windows).
+- Reliability and performance guardrails (SLO, latency, availability).
+- Contractual/compliance constraints and migration limits.
 
-## Outputs
-- Prioritized cost optimization actions with impact estimate
-- Risk-aware implementation sequence
-- Verification plan for savings and regression detection
+## Deliverables
+- Prioritized optimization backlog with savings estimate and confidence.
+- Risk-assessed rollout sequence.
+- Verification plan for savings and regression detection.
+- Reversal plan for harmful optimizations.
+
+## Optimization Decision Buckets
+- `waste removal`: idle resources, overprovisioned instances, orphaned storage.
+- `efficiency`: rightsizing, autoscaling policy tuning, query/request optimization.
+- `pricing`: reservations/savings plans, spot usage where safe.
+- `architecture`: storage tiering, cache strategy, async/off-peak processing.
+
+## Quick Example
+- Observation: cluster CPU < 15% for 14 days, memory < 25%.
+- Action: downsize node class + adjust autoscaling floor.
+- Guardrail: p95 latency and error rate must remain within pre-change bounds.
+- Rollback: revert size within one deployment window if guardrail breaches.
+
+## Quality Standard
+- Every recommendation includes expected savings, confidence, and risk.
+- Recommendations explicitly state SLO/compliance impact.
+- Rollout uses low-blast-radius sequence.
+- Post-change metrics and rollback triggers are pre-defined.
 
 ## Workflow
 1. Identify top cost drivers with workload attribution.
-2. Propose optimization options and quantify expected impact.
-3. Evaluate performance and reliability side effects.
-4. Prioritize actions by ROI and implementation risk.
-5. Validate savings and monitor for regressions after change.
+2. Generate candidate actions by decision bucket.
+3. Quantify savings, risk, and implementation effort.
+4. Sequence actions by ROI and operational safety.
+5. Execute incrementally with guardrail monitoring.
+6. Validate realized savings and capture lessons.
 
-## Quality Gates
-- Savings estimate and confidence are explicit.
-- Recommendations preserve reliability and compliance constraints.
-- Implementation sequence minimizes blast radius.
-- Post-change verification metrics are defined.
-
-## Failure Handling
-- Stop when cost actions violate reliability/compliance constraints.
-- Escalate when savings estimates lack sufficient evidence.
+## Failure Conditions
+- Stop when savings action violates SLO/compliance constraints.
+- Stop when cost attribution confidence is too low for safe action.
+- Escalate when forecast variance remains unexplained after top-driver analysis.

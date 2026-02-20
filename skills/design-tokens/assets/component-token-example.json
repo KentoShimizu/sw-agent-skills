@@ -1,0 +1,32 @@
+{
+  "button": {
+    "primary": {
+      "background": {
+        "default": "{color.action.primary.default}",
+        "hover": "{color.action.primary.hover}",
+        "active": "{color.action.primary.active}",
+        "disabled": "{color.action.primary.disabled}"
+      },
+      "foreground": {
+        "default": "{color.text.inverse.default}",
+        "disabled": "{color.text.inverse.disabled}"
+      },
+      "border": {
+        "default": "{color.border.action.primary.default}",
+        "focus": "{color.border.focus.default}"
+      },
+      "spacing": {
+        "padding_inline": "{space.component.button.inline}",
+        "padding_block": "{space.component.button.block}",
+        "gap": "{space.component.button.gap}"
+      },
+      "typography": {
+        "label": "{type.label.medium}"
+      },
+      "motion": {
+        "transition": "{motion.duration.fast}",
+        "easing": "{motion.easing.standard}"
+      }
+    }
+  }
+}

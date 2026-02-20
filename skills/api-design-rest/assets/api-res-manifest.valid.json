@@ -1,0 +1,53 @@
+{
+  "artifact_id": "API-RES-20260215-001",
+  "state": "approved",
+  "approvers": [
+    "API Owner",
+    "Engineering Owner",
+    "API Governance Reviewer"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "backward_compatibility_reviewed": true,
+    "transport_selection_documented": true,
+    "naming_convention_defined": true,
+    "authz_modeled": true,
+    "error_contract_defined": true,
+    "observability_fields_defined": true,
+    "runbook_updated": true,
+    "timeout_budget_defined": true,
+    "delivery_semantics_defined": true,
+    "backpressure_strategy_defined": false,
+    "connection_lifecycle_defined": false,
+    "consumer_idempotency_defined": false,
+    "no_fallback_logic": true,
+    "rate_limit_policy_defined": true,
+    "handles_sensitive_data": false,
+    "external_public_api": true,
+    "regulated_jurisdiction_impact": false,
+    "http_semantics_validated": true,
+    "idempotency_strategy_defined": true
+  },
+  "decision_context": {
+    "api_audience": "external",
+    "interaction_mode": "sync",
+    "primary_transport": "rest",
+    "selection_rationale": "Public CRUD and search endpoints require broad client interoperability with cache-aware HTTP semantics.",
+    "alternatives_considered": [
+      "graphql",
+      "grpc"
+    ],
+    "naming_convention_summary": "REST resources are plural lowercase nouns with hyphen-safe path segments and stable query key names.",
+    "threshold_method_summary": "Thresholds are derived from journey-level SLO budgets and adjusted by measured peak traffic and failure-domain risk."
+  },
+  "threshold_policy": {
+    "latency_target_derivation": "Set p95 target from user-facing page SLA budget minus frontend and dependency budgets.",
+    "availability_target_derivation": "Set availability target using service criticality tier and error-budget policy.",
+    "timeout_budget_derivation": "Split timeout budget across client, edge, and service call graph depth.",
+    "capacity_headroom_derivation": "Reserve headroom from seasonal peak forecast and deployment surge margin.",
+    "payload_limit_derivation": "Set payload limits from mobile-network constraints and serializer CPU cost.",
+    "concurrency_limit_derivation": "Define limits using worker pool size and downstream saturation point.",
+    "retry_backoff_derivation": "Retry budget and backoff are derived from idempotency guarantees and dependency failure modes.",
+    "delivery_semantics_derivation": "Synchronous calls require deterministic request-response semantics with no duplicate side effects."
+  }
+}

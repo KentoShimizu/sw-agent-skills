@@ -1,41 +1,53 @@
 ---
 name: code-review-security
-description: Specialized workflow for vulnerability exposure, data protection, and abuse-path risks. Use during code review when vulnerability exposure, trust boundaries, and data protection risks must be assessed; do not use for non-security quality concerns.
+description: "Run security-focused code review when changes cross trust boundaries or may affect authentication, authorization, input validation, secrets handling, or sensitive-data exposure. Use for merge decisions requiring explicit security findings; do not use for non-security-only review scope."
 ---
 
 # Code Review Security
 
-## Trigger Boundary
-- Use when code changes need merge-readiness evaluation with explicit findings.
-- Do not use for architecture option selection; use `architecture-tradeoff-analysis`.
-- Do not use for writing implementation code directly; use relevant domain skills.
+## Overview
+Use this skill to identify exploitable weaknesses and data-protection risks before merge.
 
-## Goal
-Find high-risk defects early and unblock high-confidence merges.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for vulnerability exposure, data protection, and abuse-path risks
-- Operational, compliance, and rollout constraints
+## Inputs To Gather
+- Changed trust boundaries (external input, authn/authz, storage, outbound calls).
+- Sensitive data categories and handling paths.
+- Existing security controls (validation, encoding, policy checks, audit logs).
+- Threat model assumptions relevant to the changed area.
 
-## Outputs
-- Security review finding set with remediation priority
-- Decision log for vulnerability exposure, data protection, and abuse-path risks
-- Verification checklist with measurable pass-fail criteria
+## Deliverables
+- Security findings with exploit path and severity.
+- Risk acceptance/escalation items for unresolved issues.
+- Required remediation and verification actions.
+
+## Finding Focus Areas
+- Input validation and injection paths.
+- Authn/authz bypass and privilege escalation.
+- Secret leakage in code, logs, or telemetry.
+- Sensitive data exposure at rest/in transit/in logs.
+- Unsafe defaults, fallback auth, or policy bypass paths.
+
+## Quick Example
+- Diff adds debug log containing full JWT token.
+- Finding: high-severity secret exposure risk.
+- Fix direction: redact token, log token hash/metadata only.
+
+## Quality Standard
+- Findings describe concrete exploit scenario, not vague concern.
+- Severity reflects impact + exploitability.
+- Fix guidance removes root cause and prevents recurrence.
+- Residual risk is explicit when immediate full fix is infeasible.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for vulnerability exposure, data protection, and abuse-path risks.
-2. Produce options and select an approach for vulnerability exposure, data protection, and abuse-path risks.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using threat-informed review against attack surfaces.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Map changed code to trust boundaries and assets.
+2. Evaluate exploit paths across input, auth, and data handling.
+3. Verify security controls are present and correctly ordered.
+4. Identify regressions introduced by fallback or bypass logic.
+5. Publish prioritized findings and remediation requirements.
 
-## Quality Gates
-- Scope and assumptions for vulnerability exposure, data protection, and abuse-path risks are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when high-severity security risks are unresolved.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when high-severity vulnerabilities remain unresolved.
+- Escalate when risk acceptance exceeds policy or lacks approver.

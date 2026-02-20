@@ -1,41 +1,51 @@
 ---
 name: performance-capacity-planning
-description: Specialized workflow for resource forecasting, headroom policy, and growth scenario readiness. Use when throughput, latency, or resource-efficiency bottlenecks must be measured and mitigated; do not use for non-performance functional acceptance decisions.
+description: "Performance capacity planning workflow for forecasting demand, defining headroom policy, and preventing saturation-related SLO breaches. Use when traffic growth or workload forecasts require explicit capacity and threshold decisions; do not use for non-performance functional acceptance decisions."
 ---
 
 # Performance Capacity Planning
 
-## Trigger Boundary
-- Use when latency, throughput, or resource saturation must be measured and improved.
-- Do not use for product roadmap prioritization; use `project-estimation` or `technical-roadmapping`.
-- Do not use for compliance control reviews alone; use `security-*`.
+## Overview
+Use this skill to build capacity plans that keep services reliable under growth and peak demand.
 
-## Goal
-Improve system performance with measurable and sustainable gains.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for resource forecasting, headroom policy, and growth scenario readiness
-- Operational, compliance, and rollout constraints
+## Shared References
+- Capacity forecast rules:
+  - `references/capacity-forecast-rules.md`
 
-## Outputs
-- Capacity planning model and threshold policy
-- Decision log for resource forecasting, headroom policy, and growth scenario readiness
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Capacity model template:
+  - `assets/capacity-model-template.md`
+- Headroom policy template:
+  - `assets/headroom-policy-template.md`
+
+## Inputs To Gather
+- Current workload profile and growth assumptions.
+- SLO/error-budget and availability constraints.
+- Scaling mechanics and provisioning lead times.
+- Peak-event and failure-mode scenarios.
+
+## Deliverables
+- Capacity model with risk-based thresholds.
+- Headroom policy by service tier.
+- Forecast-driven scaling and escalation plan.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for resource forecasting, headroom policy, and growth scenario readiness.
-2. Produce options and select an approach for resource forecasting, headroom policy, and growth scenario readiness.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using traffic-growth simulation against capacity assumptions.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Build model in `assets/capacity-model-template.md`.
+2. Apply growth/headroom policy via `references/capacity-forecast-rules.md`.
+3. Define thresholds and escalation points.
+4. Validate against plausible growth and burst scenarios.
+5. Publish ownership and review cadence.
 
-## Quality Gates
-- Scope and assumptions for resource forecasting, headroom policy, and growth scenario readiness are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Forecast assumptions are explicit and testable.
+- Headroom policy aligns with reliability objectives.
+- Saturation thresholds trigger actionable responses.
 
-## Failure Handling
-- Stop when capacity plan cannot support forecasted demand.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when plan cannot support forecasted demand.
+- Stop when thresholds are non-actionable.
+- Escalate when capacity risk exceeds policy tolerance.

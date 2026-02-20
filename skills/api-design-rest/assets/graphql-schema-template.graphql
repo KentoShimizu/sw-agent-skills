@@ -1,0 +1,79 @@
+"""GraphQL SDL template with schema evolution and query-safety placeholders."""
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+scalar DateTime
+scalar Cursor
+
+type Query {
+  resource(id: ID!): Resource
+  resources(first: Int!, after: Cursor): ResourceConnection!
+}
+
+type Mutation {
+  createResource(input: CreateResourceInput!): CreateResourcePayload!
+  updateResource(id: ID!, input: UpdateResourceInput!): UpdateResourcePayload!
+}
+
+type Subscription {
+  resourceUpdated(id: ID!): Resource!
+}
+
+type Resource {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type ResourceConnection {
+  edges: [ResourceEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ResourceEdge {
+  cursor: Cursor!
+  node: Resource!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: Cursor
+}
+
+input CreateResourceInput {
+  name: String!
+}
+
+input UpdateResourceInput {
+  name: String
+}
+
+type CreateResourcePayload {
+  resource: Resource
+  errors: [ApiError!]!
+}
+
+type UpdateResourcePayload {
+  resource: Resource
+  errors: [ApiError!]!
+}
+
+type ApiError {
+  code: String!
+  message: String!
+  retryable: Boolean!
+  traceId: ID!
+}
+
+"""
+Implementation notes:
+- Enforce complexity/depth limits in gateway/runtime.
+- Apply field-level authz in resolvers.
+- Use batching (for example dataloader) for relation-heavy paths.
+- Mark removals with @deprecated and include migration guidance.
+"""

@@ -1,0 +1,5 @@
+source_location,source_value,token_layer,proposed_token_id,current_state,owner,migration_phase,risk_note
+web/src/components/Button.tsx,#0057D9,semantic,color.action.primary.default,approved,design-system-team,phase-1,none
+web/src/components/Button.tsx,8px,semantic,space.layout.section.gap,approved,design-system-team,phase-1,none
+ios/Feature/CheckoutView.swift,#0057D9,semantic,color.action.primary.default,draft,mobile-design,phase-2,contrast-recheck-required
+android/ui/theme/Color.kt,#0057D9,semantic,color.action.primary.default,draft,mobile-design,phase-2,dark-mode-mapping-required

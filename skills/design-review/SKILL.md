@@ -1,46 +1,59 @@
 ---
 name: design-review
-description: "Structured design review workflow for validating UX quality, implementation readiness, and governance compliance before delivery. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Run structured design reviews that produce actionable findings and clear approval decisions. Use when a design artifact needs formal review for usability, accessibility, consistency, and implementation readiness before handoff or approval; do not use for backend data-model or deployment pipeline decisions."
 ---
 
 # Design Review
 
-## Trigger Boundary
-- Use when a design artifact is ready for formal review before implementation or release.
-- Do not use for creating principles from scratch; use `design-principles`.
-- Do not use for designing accessibility remediation plans; use `accessibility-design`.
+## Overview
+Use this skill to convert subjective design feedback into prioritized, evidence-based decisions that unblock implementation.
 
-## Goal
-Identify design risks early and provide concrete, reviewable fixes.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Validate IDs, lifecycle states, and approval requirements against this contract.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Severity calibration guidance:
+  - `references/design-review-severity-guidance.md`
 
-## Inputs
-- Design artifact and review scope
-- Relevant flow IDs and spec IDs
-- Accessibility and localization constraints
+## Templates And Assets
+- Findings template:
+  - `assets/design-review-findings-template.md`
+- Approval decision log:
+  - `assets/design-review-decision-log-template.md`
 
-## Outputs
-- `DREV-*` findings list with severity and owner
-- Approval decision with blockers and conditions
-- Follow-up action log with due dates
+## Inputs To Gather
+- Review target (screens, flows, interaction states) and intended users.
+- Acceptance criteria and non-negotiable constraints.
+- Accessibility and localization expectations for in-scope surfaces.
+- Delivery timeline and risk tolerance for unresolved issues.
+
+## Deliverables
+- Findings list with severity, user impact, engineering impact, and owner.
+- Explicit approval decision: approved, conditional approval, or rejected.
+- Remediation plan with due dates and verification method.
+- Residual risk statement for any deferred non-blocker issues.
+
+## Quick Example
+- Blocker: keyboard focus order breaks checkout completion.
+- Major: ambiguous copy causes wrong destructive action selection.
+- Minor: visual rhythm inconsistency without measurable task impact.
+- Decision: reject due to blocker; re-review only affected flow after fix.
+
+## Quality Standard
+- Findings are reproducible and linked to concrete evidence.
+- Severity reflects impact, not reviewer preference.
+- Blockers are separated from improvements and tracked independently.
+- Approval decision is auditable and tied to explicit criteria.
 
 ## Workflow
-1. Confirm review scope and acceptance criteria.
-2. Check usability, consistency, and implementation feasibility.
-3. Verify accessibility gate status using existing `A11Y-CHK-*` results.
-4. Record findings with severity, owner, and remediation path.
-5. Conclude approval or rejection with explicit rationale.
+1. Confirm review scope, criteria, and decision authority.
+2. Evaluate critical user journeys before secondary surfaces.
+3. Log findings with impact, severity, and remediation guidance in `assets/design-review-findings-template.md`.
+4. Resolve or defer issues using explicit risk acceptance rules and `references/design-review-severity-guidance.md`.
+5. Publish final decision and follow-up actions in `assets/design-review-decision-log-template.md`.
 
-## Quality Gates
-- Findings are evidence-based and reproducible.
-- Blockers are clearly separated from improvements.
-- Required approvers are assigned and traceable.
-- Contract validation passes for IDs and gates.
-
-## Failure Handling
-- Stop review when scope or artifact is ambiguous.
-- Stop release recommendation when blocker findings remain unresolved.
+## Failure Conditions
+- Stop when review scope or acceptance criteria are ambiguous.
+- Stop when critical flows cannot be validated end-to-end.
+- Escalate when blocker findings remain open near implementation handoff.

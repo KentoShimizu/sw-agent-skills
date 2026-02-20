@@ -1,41 +1,53 @@
 ---
 name: distributed-consensus
-description: Specialized workflow for consensus protocol guarantees, quorum rules, and failure handling. Use when multi-node consistency, partition tolerance, and fault-handling semantics are central; do not use for single-process application implementation details.
+description: "Consensus workflow for quorum, leader election, commit semantics, and membership change safety. Use when replicated-state correctness requires coordinated agreement across nodes under faults; do not use for non-replicated single-node workflows."
 ---
 
 # Distributed Consensus
 
-## Trigger Boundary
-- Use when parallel execution, coordination, or distributed failure semantics are central.
-- Do not use for UX interaction design concerns; use design-related skills.
-- Do not use for single-query database tuning only; use `db-query-optimization`.
+## Overview
+Use this skill when system correctness depends on multiple nodes agreeing on state transitions under crash and partition conditions.
 
-## Goal
-Ensure correctness and resilience under concurrency and partial failures.
+## Scope Boundaries
+- Replicated writes require explicit safety/liveness guarantees.
+- Quorum and leadership behavior determine correctness.
+- Membership changes and failover policy must be defined safely.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for consensus protocol guarantees, quorum rules, and failure handling
-- Operational, compliance, and rollout constraints
+## Shared References
+- Consensus policy rules:
+  - `references/consensus-policy-rules.md`
 
-## Outputs
-- Consensus design and fault model document
-- Decision log for consensus protocol guarantees, quorum rules, and failure handling
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Consensus policy template:
+  - `assets/consensus-policy-template.md`
+
+## Inputs To Gather
+- Replicated state machine requirements.
+- Fault model (crash, partition, byzantine assumptions).
+- Latency/availability targets and quorum constraints.
+- Membership change and recovery expectations.
+
+## Deliverables
+- Consensus policy decisions (quorum, election, commit semantics).
+- Safety/liveness assumptions and risks.
+- Operational policy for split-brain and degraded mode.
+- Validation plan for failover and rejoin scenarios.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for consensus protocol guarantees, quorum rules, and failure handling.
-2. Produce options and select an approach for consensus protocol guarantees, quorum rules, and failure handling.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using partition and leader-failure simulation.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Capture policy baseline in `assets/consensus-policy-template.md`.
+2. Define safety invariants and availability targets.
+3. Select quorum, leadership, and commit rules using `references/consensus-policy-rules.md`.
+4. Define partition, degraded-mode, and recovery behavior.
+5. Define membership change strategy and validation sequence.
+6. Validate with failure simulation and state convergence checks.
 
-## Quality Gates
-- Scope and assumptions for consensus protocol guarantees, quorum rules, and failure handling are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Safety invariants are explicit (no divergent committed state).
+- Liveness tradeoffs are acknowledged under partition conditions.
+- Membership changes preserve quorum guarantees.
+- Recovery/rejoin behavior is deterministic and tested.
 
-## Failure Handling
-- Stop when consensus safety or liveness guarantees are unverified.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when quorum or commit semantics are undefined.
+- Stop when partition behavior can cause split-brain writes.
+- Escalate when membership change procedure risks safety violation.

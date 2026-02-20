@@ -1,46 +1,50 @@
 ---
 name: user-research
-description: End-user behavior research workflow for validating user needs and pain points. Use only when Codex must gather evidence from representative users; do not use for internal stakeholder policy or governance decisions.
+description: "End-user research workflow for validating behavior, needs, and pain points with representative evidence. Use when product decisions need direct user evidence through interviews, usability studies, or observed usage; do not use for internal stakeholder governance decisions."
 ---
 
 # User Research
 
-## Trigger Boundary
-- Use when user behavior evidence is required to validate product assumptions.
-- Do not use for internal policy constraints; use `stakeholder-interview`.
-- Do not use to finalize requirement wording; hand off to `requirements-definition`.
+## Overview
+Use this skill to gather credible evidence from representative users and reduce product decision risk.
 
-## Goal
-Produce evidence-backed user insights that improve requirement quality and priority.
+## Scope Boundaries
+- Product assumptions require validation before high-cost implementation.
+- Teams need evidence for unmet needs, friction points, or mental-model mismatch.
+- Competing solution options need user-behavior evidence for prioritization.
 
-## Shared Requirements Contract (Canonical)
-- Use `../requirements-definition/references/requirements-governance-contract.md` as the single schema and gate source.
-- Track requirements workflow artifacts with `RQM-*` IDs.
-- Run machine validation: `python3 ../requirements-definition/scripts/validate_requirements_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- Research plan template:
+  - `assets/user-research-plan-template.md`
+- Research evidence log:
+  - `assets/user-research-evidence-log-template.md`
 
-## Inputs
-- Research hypotheses and decision questions
-- Target segments and recruitment criteria
-- Existing analytics and support signals
+## Inputs To Gather
+- Decision questions and hypotheses to test.
+- Target segments, inclusion/exclusion criteria, and sample constraints.
+- Existing analytics, support data, and prior research artifacts.
+- Privacy and consent requirements for research operations.
 
-## Outputs
-- `UR-*` session records and synthesized insights
-- Evidence links (`EVD-*`) backing findings
-- Requirement implications and confidence levels
+## Deliverables
+- Research plan with method choice and participant strategy.
+- Evidence-backed findings with confidence and sampling limitations.
+- Decision implications and recommended next actions.
 
 ## Workflow
-1. Define decision-linked research questions and success criteria.
-2. Select method aligned to risk, timeline, and evidence gap.
-3. Recruit representative participants and document sampling risk.
-4. Capture structured observations and assign `UR-*` / `EVD-*` IDs.
-5. Synthesize insights and map implications to `REQ-*` candidates.
+1. Define decision-linked hypotheses and success/failure criteria.
+2. Choose method by evidence gap, timeline, and risk tolerance.
+3. Recruit representative participants and document sampling risks.
+4. Run sessions with consistent prompts and structured note capture.
+5. Distinguish observed behavior from interpretation.
+6. Synthesize findings, confidence, and implications for product decisions.
 
-## Quality Gates
-- Findings are traceable to auditable evidence IDs.
-- Sample limitations and confidence levels are explicit.
-- Sensitive data is protected in all shared artifacts.
-- Requirement implications are clearly linked and testable.
+## Quality Standard
+- Findings are traceable to raw evidence.
+- Sampling limitations and confidence are explicit.
+- Sensitive information handling follows privacy requirements.
+- Outputs clearly state what should change and why.
 
-## Failure Handling
-- Reject conclusions from non-representative or underpowered samples.
-- Stop publication when consent, retention, or access controls are undefined.
+## Failure Conditions
+- Stop when participant sample is clearly non-representative for the decision.
+- Stop when consent or data-retention requirements are not met.
+- Escalate when findings are contradictory and decision cannot proceed safely.

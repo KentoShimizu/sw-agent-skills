@@ -13,45 +13,45 @@ Apply this contract to all `git-*` skills:
 - `git-release-tagging`
 - `git-pr-sync-workflow`
 
-Do not redefine ID formats, lifecycle states, approval gates, or synchronization policy in individual skill files.
+Use project-specific ID naming rules. Example ID patterns in this contract are non-binding.
+Treat this document as operational guidance, not a mandatory schema.
+When repository-specific rules exist, follow those first; otherwise use this as a default operating method.
 
-## ID Schema (Single Source of Truth)
-- `GIT-BRN-<NNN>`: `^GIT-BRN-[0-9]{3,}$`
-  - Branch strategy policy
-- `GIT-CMT-<YYYYMMDD>-<NNN>`: `^GIT-CMT-[0-9]{8}-[0-9]{3,}$`
-  - Commit hygiene evidence package
-- `GIT-RBS-<YYYYMMDD>-<NNN>`: `^GIT-RBS-[0-9]{8}-[0-9]{3,}$`
-  - Rebase execution record
-- `GIT-MRG-<YYYYMMDD>-<NNN>`: `^GIT-MRG-[0-9]{8}-[0-9]{3,}$`
-  - Merge conflict resolution record
-- `GIT-CHP-<YYYYMMDD>-<NNN>`: `^GIT-CHP-[0-9]{8}-[0-9]{3,}$`
-  - Cherry-pick hotfix record
-- `GIT-HIS-<YYYYMMDD>-<NNN>`: `^GIT-HIS-[0-9]{8}-[0-9]{3,}$`
-  - History investigation report
-- `GIT-BIS-<YYYYMMDD>-<NNN>`: `^GIT-BIS-[0-9]{8}-[0-9]{3,}$`
-  - Bisect evidence record
-- `GIT-RVT-<YYYYMMDD>-<NNN>`: `^GIT-RVT-[0-9]{8}-[0-9]{3,}$`
-  - Revert recovery record
-- `GIT-REL-<YYYYMMDD>-<NNN>`: `^GIT-REL-[0-9]{8}-[0-9]{3,}$`
-  - Release tagging record
-- `GIT-PRS-<YYYYMMDD>-<NNN>`: `^GIT-PRS-[0-9]{8}-[0-9]{3,}$`
-  - PR synchronization record
-- `GIT-CMP-<YYYYMMDD>-<NNN>`: `^GIT-CMP-[0-9]{8}-[0-9]{3,}$`
-  - Compliance evidence package
+## Profile Inference Contract (Canonical)
+Do not require `artifact_kind` in manifests.
+Determine artifact profile from execution context and manifest content:
+- Strategy and policy records: no execution-specific check keys are present.
+- PR-sync records: `checks.pr_opened` plus sync-mode keys are present.
+- Rebase execution records: `checks.pr_opened=false` and `checks.rebase_used=true`.
+- Release tag records: `checks.signed_tag_verified=true`.
+- Compliance evidence records: `privacy_evidence` is present and complete.
 
-## Issuance Rules
-- Allocate IDs sequentially per prefix namespace.
-- Keep IDs immutable and append-only.
-- Never reuse retired IDs.
-- On collision, issue a new ID and mark the old ID as `invalid` with reason.
+For repository operations, filename and location are valid project-level routing controls.
+
+## ID Format Policy (Project-Defined)
+- `artifact_id` is optional and project-defined.
+- Keep one repository-level ID policy and enforce it consistently.
+- `checks.id_format_validated=true` must represent validation against that policy.
+- Example IDs (non-binding):
+  - `GIT-BRN-001`
+  - `GIT-CMT-20260214-001`
+  - `GIT-RBS-20260214-001`
+  - `GIT-MRG-20260214-001`
+  - `GIT-CHP-20260214-001`
+  - `GIT-HIS-20260214-001`
+  - `GIT-BIS-20260214-001`
+  - `GIT-RVT-20260214-001`
+  - `GIT-REL-20260214-001`
+  - `GIT-PRS-20260214-001`
+  - `GIT-CMP-20260214-001`
 
 ## Lifecycle States
-- `GIT-BRN-*`: `draft`, `reviewed`, `approved`, `deprecated`
-- `GIT-REL-*`: `prepared`, `reviewed`, `released`, `superseded`
-- `GIT-CMP-*`: `draft`, `reviewed`, `approved`, `expired`
-- `GIT-CMT-*`, `GIT-RBS-*`, `GIT-MRG-*`, `GIT-CHP-*`, `GIT-HIS-*`, `GIT-BIS-*`, `GIT-RVT-*`, `GIT-PRS-*`:
+- Strategy/policy records: `draft`, `reviewed`, `approved`, `deprecated`
+- Release tag records: `prepared`, `reviewed`, `released`, `superseded`
+- Compliance evidence records: `draft`, `reviewed`, `approved`, `expired`
+- Execution records (`rebase`, `merge conflict`, `cherry-pick`, `history`, `bisect`, `revert`, `pr sync`):
   - `draft`, `reviewed`, `executed`, `rejected`
-- `invalid` is allowed for all prefixes only to retire collided or voided IDs.
+- `invalid` is allowed for all profiles only to retire collided or voided IDs.
 
 ## Compliance Baseline (US, Japan, EU)
 - Prevent personal data and secrets from entering commit history.
@@ -59,8 +59,8 @@ Do not redefine ID formats, lifecycle states, approval gates, or synchronization
 - Preserve auditability of approvals, execution records, and rollback decisions.
 - Enforce retention and deletion policy for exported logs or evidence artifacts.
 
-## Required Check Keys
-Manifest `checks` must include all of the following common keys:
+## Recommended Check Keys
+Recommended common keys in `checks`:
 - `id_format_validated` (boolean)
 - `branch_protection_verified` (boolean)
 - `ci_required_checks_green` (boolean)
@@ -68,21 +68,20 @@ Manifest `checks` must include all of the following common keys:
 - `history_rewrite_policy_compliant` (boolean)
 - `handles_personal_data` (boolean)
 
-Prefix-specific required keys:
-- `GIT-PRS-*`
+Profile-specific keys (recommended when applicable):
+- PR-sync profile
   - `pr_opened` (boolean)
   - `merge_sync_used` (boolean)
   - `rebase_used` (boolean)
   - `repository_merge_only_policy` (boolean)
-- `GIT-RBS-*`
+- Rebase execution profile
   - `pr_opened` (boolean)
   - `rebase_used` (boolean)
-- `GIT-REL-*`
+- Release tag profile
   - `signed_tag_verified` (boolean)
-- Other prefixes do not require the above four keys.
 
-## Privacy Evidence Requirements
-When `checks.handles_personal_data` is `true`, `privacy_evidence` is mandatory and must include:
+## Privacy Evidence Guidance
+When `checks.handles_personal_data` is `true`, include `privacy_evidence` with:
 - `lawful_basis_or_consent`
 - `pii_data_inventory`
 - `data_minimization_decision`
@@ -95,27 +94,28 @@ When `checks.handles_personal_data` is `true`, `privacy_evidence` is mandatory a
 - Required for all Git workflow artifacts:
   - Repository Owner
   - Engineering Owner
-- Required for `GIT-REL-*`, `GIT-RVT-*`, `GIT-CHP-*`:
+- Required for release tag, revert, and cherry-pick records:
   - Security Reviewer
 - Required when `checks.handles_personal_data` is `true`:
   - Privacy Reviewer
 
-## Machine Validation
-- Run `python3 scripts/validate_git_contract.py --manifest <path/to/manifest.json>` from `skills/git-branch-strategy`.
-- Manifest must include `artifact_id`, `state`, `approvers`, and `checks`.
+## Optional Consistency Check
+- Optional: `python3 scripts/validate_git_contract.py --manifest <path/to/manifest.json>` from `skills/git-branch-strategy`.
+- Recommended structured fields: `state`, `approvers`, and `checks`.
+- `artifact_id` is optional. If present, keep it non-empty.
 
-## Gate Policy
-- Block release or execution when required IDs are missing or malformed.
-- Block release or execution when lifecycle state is invalid for the artifact type.
-- Block release or execution when required approvers are missing.
-- Block release or execution when required checks fail.
-- When `state` is `invalid`, prefix-specific execution checks are not enforced.
-- For `GIT-PRS-*` artifacts:
-  - `checks.pr_opened` must be `true`.
-  - Exactly one of `checks.merge_sync_used` or `checks.rebase_used` must be `true`.
-  - When `checks.repository_merge_only_policy` is `true`, `checks.rebase_used` must be `false`.
-- For `GIT-RBS-*` artifacts:
-  - `checks.pr_opened` must be `false`.
-  - `checks.rebase_used` must be `true`.
-- For `GIT-REL-*` artifacts:
-  - `checks.signed_tag_verified` must be `true`.
+## Operational Handling (Recommended)
+- Escalate when identifier policy checks fail (`checks.id_format_validated=false`).
+- Escalate when lifecycle state is invalid.
+- Escalate when required approvers are missing.
+- Escalate when critical checks fail.
+- When `state` is `invalid`, context-specific execution checks are not enforced.
+- For `pr_sync_record` artifacts:
+  - `checks.pr_opened` should be `true`.
+  - Prefer exactly one of `checks.merge_sync_used` or `checks.rebase_used` as `true`.
+  - When `checks.repository_merge_only_policy` is `true`, `checks.rebase_used` should be `false`.
+- For `rebase_execution_record` artifacts:
+  - `checks.pr_opened` should be `false`.
+  - `checks.rebase_used` should be `true`.
+- For `release_tag_record` artifacts:
+  - `checks.signed_tag_verified` should be `true`.

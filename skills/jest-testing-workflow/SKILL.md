@@ -1,41 +1,60 @@
 ---
 name: jest-testing-workflow
-description: "Jest testing workflow for JavaScript/TypeScript projects. Use when test or evidence artifacts are the primary output for verification; do not use for product requirement prioritization or architecture topology selection."
+description: "Jest verification workflow for JavaScript/TypeScript codebases with deterministic tests, explicit mock boundaries, and actionable CI evidence. Use when JS/TS changes need executable Jest evidence before merge; do not use for browser-level E2E or language-agnostic policy design."
 ---
 
 # Jest Testing Workflow
 
-## Trigger Boundary
-- Use when JS/TS test implementation relies on Jest.
-- Do not use for end-to-end browser runs; use `playwright` or `testing-e2e`.
-- Do not use for language-agnostic testing policy only.
+## Overview
+Use this skill to design and run Jest suites that are stable, meaningful, and decision-ready for merge gates.
 
-## Goal
-Deliver maintainable Jest suites with deterministic behavior and clear failure signals.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Module behavior and test target scope
-- Mocking boundaries and dependency behavior
-- Runtime environment (node/jsdom) constraints
+## Shared References
+- Trigger examples and expected deliverables:
+  - `references/trigger-and-examples.md`
+- Mock boundary decision rules:
+  - `references/mock-boundary-decision-rules.md`
+- Determinism rules:
+  - `references/jest-determinism-rules.md`
 
-## Outputs
-- Test suite structure and mock strategy
-- Assertion plan for happy, edge, and failure paths
-- Execution profile plan (watch mode, CI mode, coverage)
+## Templates And Assets
+- Test plan template:
+  - `assets/jest-test-plan-template.md`
+- Command profile template:
+  - `assets/jest-command-profile-template.md`
+- Flake triage checklist:
+  - `assets/jest-flake-triage-checklist.md`
+
+## Inputs To Gather
+- Change scope and affected JS/TS modules.
+- Runtime assumptions (`node`/`jsdom`) and mock boundaries.
+- CI constraints for runtime and coverage gates.
+- Known flaky areas (async timers, shared state, external dependencies).
+
+## Deliverables
+- Jest test strategy with mock/timer/environment policy.
+- Assertion matrix for happy, edge, and failure paths.
+- Local-fast and CI-full command profiles.
+- Residual flakiness risk log with owner and next action.
 
 ## Workflow
-1. Define test scope by module responsibility and risk.
-2. Set environment and mocking boundaries explicitly.
-3. Write focused tests with minimal, meaningful assertions.
-4. Use fake timers and async controls intentionally.
-5. Keep coverage goals aligned to behavior risk, not raw percentages.
+1. Clarify decision question and mandatory quality constraints.
+2. Draft strategy using `assets/jest-test-plan-template.md`.
+3. Decide mock boundaries with `references/mock-boundary-decision-rules.md`.
+4. Define execution profiles in `assets/jest-command-profile-template.md`.
+5. Stabilize async/timer behavior with `references/jest-determinism-rules.md`.
+6. Run checks and close with `assets/jest-flake-triage-checklist.md`.
 
-## Quality Gates
-- Mock usage does not hide integration-critical behavior.
-- Async tests are stable and free from timing flakiness.
-- Assertions are specific enough to localize failures quickly.
-- CI execution settings are reproducible from local commands.
+## Quality Standard
+- Trigger fit and test depth are explicit.
+- Mock strategy preserves behavior confidence for critical paths.
+- Async/timer behavior is deterministic in local and CI runs.
+- Evidence is reproducible with exact commands and artifacts.
 
-## Failure Handling
-- Stop when mock strategy breaks behavior realism.
-- Escalate when flakiness persists despite deterministic controls.
+## Failure Conditions
+- Stop when mock strategy hides behavior that must be integration-visible.
+- Stop when command profile is not reproducible across local/CI.
+- Escalate when flakiness persists after deterministic controls.

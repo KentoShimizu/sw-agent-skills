@@ -1,41 +1,49 @@
 ---
 name: testing-integration
-description: Specialized workflow for component and service interaction correctness at integration boundaries. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: "Integration-boundary testing for component and service collaboration correctness. Use when modules interact via APIs, queues, databases, or adapters and boundary behavior must be verified; do not use for full UI journey validation or pure unit isolation work."
 ---
 
 # Testing Integration
 
-## Trigger Boundary
-- Use when verification strategy or release confidence evidence must be designed.
-- Do not use for production observability ownership; use `observability-*`.
-- Do not use for architecture topology selection.
+## Overview
+Use this skill to verify boundary behavior where independently correct units may still fail in combination.
 
-## Goal
-Build sufficient verification evidence to prevent regressions.
+## Scope Boundaries
+- Use when correctness depends on integration seams.
+- Typical requests:
+  - `Validate repository-to-database behavior including failure paths.`
+  - `Test timeout and retry handling between services.`
+  - `Verify adapter replacement does not break boundary contracts.`
+- Do not use when:
+  - The goal is full browser journey validation (`testing-e2e`/`playwright`).
+  - The goal is pure isolated unit checks (`testing-unit`).
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for component and service interaction correctness at integration boundaries
-- Operational, compliance, and rollout constraints
+- Integration seams and dependency topology
+- Failure-mode expectations (timeout, retry, partial failure)
+- Fixture/environment constraints
 
 ## Outputs
-- Integration boundary test matrix
-- Decision log for component and service interaction correctness at integration boundaries
-- Verification checklist with measurable pass-fail criteria
+- Boundary test matrix with dependency strategy
+- Decision record for integration depth and tooling choices
+- Verification checklist for success and failure semantics
 
 ## Workflow
-1. Clarify outcomes and hard constraints for component and service interaction correctness at integration boundaries.
-2. Produce options and select an approach for component and service interaction correctness at integration boundaries.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using dependency and interface integration test runs.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Enumerate high-risk seams and boundary contracts.
+2. Define required behaviors for success, timeout, and error cases.
+3. Compare fixture strategies and choose one with rationale.
+4. Execute focused integration tests with reproducible setup.
+5. Publish coverage gaps, residual risks, and ownership.
 
 ## Quality Gates
-- Scope and assumptions for component and service interaction correctness at integration boundaries are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Critical seams include failure-path coverage.
+- Boundary expectations are explicit and deterministic.
+- Evidence can be replayed in CI.
+- Dependency assumptions are documented.
 
 ## Failure Handling
-- Stop when integration seams are unverified for failure and timeout paths.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when critical boundaries lack failure-path tests.
+- Escalate when dependency ownership blocks reliable fixtures.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.

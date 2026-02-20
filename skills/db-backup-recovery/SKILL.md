@@ -1,41 +1,44 @@
 ---
 name: db-backup-recovery
-description: Specialized workflow for backup retention, restore reliability, and recovery time objectives. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: "Database backup and recovery workflow for defining RPO/RTO-aligned retention, restore strategy, and disaster readiness. Use when data durability and recovery guarantees are in scope; do not use for query-only tuning tasks."
 ---
 
-# Db Backup Recovery
+# DB Backup Recovery
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to define backup and restore behavior that is credible under incident pressure, not only compliant on paper.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Scope Boundaries
+- Data loss tolerance and recovery time objectives must be formalized.
+- Backup policy is changing due to scale, compliance, or architecture change.
+- Teams need confidence that restore procedures actually work.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for backup retention, restore reliability, and recovery time objectives
-- Operational, compliance, and rollout constraints
+## Core Judgments
+- RPO/RTO targets per data class and business workflow.
+- Backup modality: full, incremental, log-based, snapshot, or hybrid.
+- Retention and immutability policy by legal and business requirements.
+- Restore topology: point-in-time restore, region restore, partial table restore.
 
-## Outputs
-- Backup and recovery verification matrix
-- Decision log for backup retention, restore reliability, and recovery time objectives
-- Verification checklist with measurable pass-fail criteria
+## Practitioner Heuristics
+- Start from restore requirements, then derive backup schedule.
+- Separate operational backups from archival/legal-retention copies.
+- Encryption, key rotation, and access logging apply to backups too.
+- Recovery procedures must assume partial infrastructure outage, not ideal environment.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for backup retention, restore reliability, and recovery time objectives.
-2. Produce options and select an approach for backup retention, restore reliability, and recovery time objectives.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using periodic restore drills with RPO/RTO evidence.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define data criticality tiers and required RPO/RTO per tier.
+2. Select backup mechanisms and cadence aligned to write patterns.
+3. Define retention lifecycle and deletion rules.
+4. Design restore paths for common and worst-case incident scenarios.
+5. Establish ownership and escalation for recovery execution.
+6. Document assumptions that invalidate the current strategy.
 
-## Quality Gates
-- Scope and assumptions for backup retention, restore reliability, and recovery time objectives are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Common Failure Modes
+- Backup success is monitored but restore path is untested.
+- One global retention policy ignores data criticality differences.
+- Recovery relies on undocumented manual knowledge.
 
-## Failure Handling
-- Stop when restore procedures are untested or RPO/RTO targets are unmet.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when RPO/RTO cannot be mapped to concrete mechanisms.
+- Stop when backup policy has no feasible restore path.
+- Escalate when recovery guarantees exceed infrastructure capability.

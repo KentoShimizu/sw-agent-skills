@@ -1,0 +1,47 @@
+{
+  "artifact_id": "AB-DEC-20260216-001",
+  "state": "finalized",
+  "approvers": [
+    "Experiment Owner",
+    "Data Science Reviewer"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "pre_registration_complete": true,
+    "randomization_plan_defined": true,
+    "assignment_unit_defined": true,
+    "instrumentation_validated": true,
+    "srm_monitor_defined": true,
+    "guardrail_policy_defined": true,
+    "one_primary_metric_defined": true,
+    "no_posthoc_decision_rule_changes": true,
+    "external_user_impact": false
+  },
+  "decision_context": {
+    "decision_question": "Should the new recommendation ranker replace the baseline ranker?",
+    "primary_decision_metric": "weekly_retained_users",
+    "false_positive_cost": "high",
+    "false_negative_cost": "medium",
+    "allowed_actions": [
+      "ship",
+      "iterate",
+      "rollback",
+      "hold"
+    ],
+    "assignment_unit": "user",
+    "randomization_method": "hash(user_id) modulo 100",
+    "contamination_risk_mitigation": "Treatment assignment is shared across app and web to avoid cross-surface spillover."
+  },
+  "result": {
+    "decision_outcome": "iterate",
+    "primary_metric_effect_pct": 0.4,
+    "uncertainty_interval": "[-0.3%, +1.1%]",
+    "guardrail_status": "pass",
+    "interpretation": "Observed effect is directionally positive but below the pre-registered material threshold.",
+    "complies_with_pre_registered_rules": true,
+    "follow_up_actions": [
+      "Increase experiment runtime by seven days for tighter precision.",
+      "Refine ranking feature weights and rerun with the same guardrails."
+    ]
+  }
+}

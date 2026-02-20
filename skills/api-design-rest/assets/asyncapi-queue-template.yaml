@@ -1,0 +1,82 @@
+asyncapi: 2.6.0
+info:
+  title: Example Queue/Event Contract
+  version: 1.0.0
+  description: >
+    Async API template for queue-based producer-consumer integration.
+
+defaultContentType: application/json
+
+channels:
+  resource.created.v1:
+    description: Resource creation events emitted by producer service.
+    publish:
+      operationId: publishResourceCreated
+      summary: Producer emits when resource creation is committed.
+      message:
+        $ref: "#/components/messages/ResourceCreated"
+    subscribe:
+      operationId: consumeResourceCreated
+      summary: Consumer processes created resource events.
+      message:
+        $ref: "#/components/messages/ResourceCreated"
+
+components:
+  messages:
+    ResourceCreated:
+      name: ResourceCreated
+      title: Resource Created Event
+      payload:
+        type: object
+        required:
+          - eventId
+          - eventType
+          - eventVersion
+          - occurredAt
+          - traceId
+          - producer
+          - idempotencyKey
+          - data
+        properties:
+          eventId:
+            type: string
+            description: Unique event envelope ID.
+          eventType:
+            type: string
+            enum: [resource.created]
+          eventVersion:
+            type: string
+            enum: [v1]
+          occurredAt:
+            type: string
+            format: date-time
+          traceId:
+            type: string
+          producer:
+            type: string
+          idempotencyKey:
+            type: string
+            description: Used by consumers for deduplication.
+          data:
+            type: object
+            required:
+              - resourceId
+            properties:
+              resourceId:
+                type: string
+              name:
+                type: string
+
+x-delivery-policy:
+  semantics: at_least_once
+  ordering: per_resource_key
+  retry:
+    maxAttempts: "<set>"
+    backoff: "<set>"
+  deadLetterQueue: "<set>"
+  replayPolicy: "<set>"
+
+x-consumer-controls:
+  backpressureStrategy: "<set>"
+  lagAlertThreshold: "<set>"
+  visibilityTimeoutPolicy: "<set>"

@@ -1,41 +1,44 @@
 ---
 name: db-transaction-design
-description: Specialized workflow for transaction boundaries, isolation levels, and contention control. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: "Transaction design workflow for boundary definition, isolation-level choice, and contention control under real workload behavior. Use when correctness depends on concurrent read/write semantics; do not use for schema-only tasks that do not affect transaction behavior."
 ---
 
-# Db Transaction Design
+# DB Transaction Design
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to design transaction behavior that protects invariants while avoiding avoidable contention and deadlocks.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Scope Boundaries
+- Concurrent workflows must preserve business invariants.
+- Anomalies (lost update, write skew, phantom) are possible.
+- Lock contention or deadlocks are degrading reliability.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for transaction boundaries, isolation levels, and contention control
-- Operational, compliance, and rollout constraints
+## Core Judgments
+- Transaction boundary: what must be atomic versus eventually consistent.
+- Isolation level per workflow and anomaly tolerance.
+- Locking strategy: optimistic, pessimistic, or hybrid.
+- Retry/idempotency behavior under deadlock/timeouts.
 
-## Outputs
-- Transaction design specification by use case
-- Decision log for transaction boundaries, isolation levels, and contention control
-- Verification checklist with measurable pass-fail criteria
+## Practitioner Heuristics
+- Keep transactions as short as possible while preserving invariants.
+- Choose isolation by anomaly risk, not blanket highest level.
+- Model retries as business behavior with idempotent operations.
+- External network calls inside DB transactions are a major anti-pattern.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for transaction boundaries, isolation levels, and contention control.
-2. Produce options and select an approach for transaction boundaries, isolation levels, and contention control.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using concurrency test scenarios for deadlock and anomaly detection.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Identify critical invariants and concurrent access patterns.
+2. Define transaction boundaries per use case.
+3. Map anomaly risks and select isolation/locking strategy.
+4. Design timeout, retry, and deadlock-handling behavior.
+5. Evaluate contention hotspots and redesign access ordering if needed.
+6. Record assumptions and triggers for revisiting transaction policy.
 
-## Quality Gates
-- Scope and assumptions for transaction boundaries, isolation levels, and contention control are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Common Failure Modes
+- Broad transaction scopes serialize unrelated work.
+- Retry logic replays side effects without idempotency guard.
+- Isolation is changed to fix symptoms without invariant analysis.
 
-## Failure Handling
-- Stop when transaction boundaries allow data anomalies or deadlocks.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when invariants cannot be mapped to transaction boundaries.
+- Stop when retry behavior can duplicate irreversible side effects.
+- Escalate when contention cannot be controlled without workflow redesign.

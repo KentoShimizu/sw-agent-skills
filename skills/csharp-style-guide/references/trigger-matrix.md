@@ -7,7 +7,10 @@ When multiple rows match in a single pull request, activate all matched skills.
 ## Primary Mapping
 | Changed artifacts | Trigger skill(s) | Notes |
 | --- | --- | --- |
-| `.sh` files, or files with `#!/usr/bin/env bash` / `#!/bin/bash` shebang | `bash-style-guide` | Do not infer Bash from directory names alone. |
+| `.sh` files without explicit shebang, files with `#!/usr/bin/env bash` / `#!/bin/bash`, or workflow files containing `shell: bash` | `bash-style-guide` | Do not infer Bash from directory names alone. |
+| Files with `#!/usr/bin/env sh` / `#!/bin/sh`, or workflow files containing `shell: sh` | `sh-style-guide` | Use for POSIX `sh` compatibility and portability-focused checks. |
+| `.zsh`, `.zshrc`, `.zprofile`, `.zshenv`, `.zlogin`, `.zlogout`, files with `#!/usr/bin/env zsh` / `#!/bin/zsh`, or workflow files containing `shell: zsh` | `zsh-style-guide` | Use for Zsh-specific syntax and behavior. |
+| `.ps1`, `.psm1`, `.psd1`, or workflow files containing `shell: pwsh` / `shell: powershell` | `powershell-style-guide` | Scope is PowerShell syntax and runtime behavior. |
 | `.cs`, `.csproj`, `.sln`, `.props`, `.targets`, `.razor` | `csharp-style-guide` | Applies to C#/.NET source and build artifacts. |
 | `.go`, `go.mod`, `go.sum`, `go.work` | `go-style-guide` | Applies to Go modules and workspace config. |
 | `.java`, Java modules in `pom.xml` / `build.gradle` / `build.gradle.kts` | `java-style-guide` | Java scope only; Kotlin-only modules are out of scope. |

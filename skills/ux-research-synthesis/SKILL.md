@@ -1,49 +1,47 @@
 ---
 name: ux-research-synthesis
-description: "UX research synthesis workflow for translating qualitative and quantitative findings into prioritized design actions. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "UX research synthesis workflow for turning mixed evidence into prioritized design actions. Use when multiple qualitative and quantitative inputs must be consolidated into clear design implications; do not use for backend architecture or deployment planning."
 ---
 
 # UX Research Synthesis
 
-## Trigger Boundary
-- Use when research data exists but design implications are unclear.
-- Do not use for running stakeholder interviews; use `stakeholder-interview`.
-- Do not use for direct interface handoff packaging; use `figma-handoff`.
+## Overview
+Use this skill to transform fragmented research inputs into coherent and prioritized product/design direction.
 
-## Goal
-Turn research evidence into high-confidence, actionable design direction.
+## Scope Boundaries
+- Multiple research sources exist but implications are unclear or conflicting.
+- Teams need to prioritize design actions using evidence, not intuition.
+- Product or design planning requires confidence-weighted insight summaries.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track synthesis packages with `UX-RSR-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- Synthesis mapping template:
+  - `assets/ux-synthesis-mapping-template.md`
 
-## Inputs
-- Research transcripts, notes, analytics, and observations
-- Product goals and known design hypotheses
-- Segment definitions and sampling limitations
+## Inputs To Gather
+- Research transcripts, usability findings, analytics, and support signals.
+- Product goals, current hypotheses, and design constraints.
+- Segment definitions and sampling limitations.
 
-## Outputs
-- Synthesized findings package with `UX-RSR-*` ID
-- Prioritized design implications and risk notes
-- Confidence level and evidence traceability map
-- Privacy evidence package for research handling decisions
+## Deliverables
+- Insight clusters with evidence links and confidence level.
+- Prioritized design implications with expected user impact.
+- Open questions and follow-up research recommendations.
 
 ## Workflow
-1. Normalize research inputs and remove duplicate signals.
-2. Cluster findings by user goal and failure pattern.
-3. Distinguish observed facts from hypotheses.
-4. Map findings to design implications and priority.
-5. Publish synthesis with confidence, limitations, and privacy evidence.
+1. Normalize incoming evidence and remove duplicate observations.
+2. Cluster findings by user goal, failure pattern, and context.
+3. Separate facts, interpretations, and assumptions.
+4. Resolve contradictions by checking source quality and representativeness.
+5. Rank implications by severity, frequency, and strategic impact.
+6. Publish synthesis with confidence, limitations, and recommended actions.
 
-## Quality Gates
-- Every implication links back to evidence.
-- Confidence level and sampling limits are explicit.
-- Contradictory signals are surfaced, not hidden.
-- Privacy Reviewer approval is always present.
-- Contract validation passes including privacy evidence requirements.
+## Quality Standard
+- Each implication is linked to evidence and confidence level.
+- Contradictions are documented with explicit uncertainty.
+- Prioritization logic is transparent and repeatable.
+- Output is actionable for design and product planning.
 
-## Failure Handling
+## Failure Conditions
 - Stop when evidence traceability is missing.
-- Stop when Privacy Reviewer approval is missing.
-- Escalate when synthesis relies on non-representative samples.
+- Stop when confidence cannot be estimated due to weak data quality.
+- Escalate when synthesis results conflict with critical business constraints.

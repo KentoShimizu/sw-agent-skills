@@ -1,41 +1,60 @@
 ---
 name: documentation-architecture
-description: Specialized workflow for architecture documentation clarity for boundaries and dependencies. Use when documentation artifacts are the primary deliverable; do not use for writing production feature logic unless documenting already-approved outcomes.
+description: "Author architecture documentation that explains boundaries, dependencies, and operational constraints for engineering decision-making. Use when architecture docs are primary deliverables or must be updated after structural changes; do not use for implementing production feature logic."
 ---
 
 # Documentation Architecture
 
-## Trigger Boundary
-- Use when engineering knowledge must be captured in durable, reviewable documents.
-- Do not use for source code implementation tasks.
-- Do not use for runtime production alert tuning; use `observability-*`.
+## Overview
+Use this skill to produce architecture documents that improve shared understanding and reduce design/review ambiguity.
 
-## Goal
-Create clear documentation that supports execution and auditability.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for architecture documentation clarity for boundaries and dependencies
-- Operational, compliance, and rollout constraints
+## Shared References
+- Review checklist:
+  - `references/architecture-doc-review-checklist.md`
 
-## Outputs
-- Architecture documentation map
-- Decision log for architecture documentation clarity for boundaries and dependencies
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Architecture document template:
+  - `assets/architecture-doc-template.md`
+- Risk register template:
+  - `assets/architecture-risk-register-template.csv`
+
+## Inputs To Gather
+- System boundary and component inventory.
+- Dependency relationships and data/control flows.
+- Key constraints (security, reliability, compliance, cost).
+- Existing ADRs and known architecture risks.
+
+## Deliverables
+- Architecture narrative and structural views.
+- Boundary and dependency explanations.
+- Constraint and tradeoff summary.
+- Open risks/assumptions and follow-up items.
+
+## Quick Structure Template
+1. Context and goals.
+2. System boundaries and major components.
+3. Interaction/data flow and trust boundaries.
+4. Operational constraints and failure behavior.
+5. Known risks and decision links.
+
+## Quality Standard
+- Audience can answer "what talks to what" and "why" quickly.
+- Boundaries and ownership are explicit.
+- Constraints and tradeoffs are concrete.
+- Document links to decisions and unresolved risks.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for architecture documentation clarity for boundaries and dependencies.
-2. Produce options and select an approach for architecture documentation clarity for boundaries and dependencies.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using dependency-direction and ownership consistency review.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Identify target audience and key questions.
+2. Build boundary/dependency narrative and diagrams using `assets/architecture-doc-template.md`.
+3. Capture constraints and tradeoffs, and track open risks in `assets/architecture-risk-register-template.csv`.
+4. Validate against current implementation and decisions with `references/architecture-doc-review-checklist.md`.
+5. Publish with ownership and update cadence.
 
-## Quality Gates
-- Scope and assumptions for architecture documentation clarity for boundaries and dependencies are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when architecture docs do not match implemented boundaries.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when architecture boundaries remain ambiguous.
+- Stop when documentation omits critical operational constraints.
+- Escalate when docs conflict with accepted architecture decisions.

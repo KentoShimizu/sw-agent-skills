@@ -1,34 +1,43 @@
 ---
 name: github-codeowners-management
-description: "CODEOWNERS governance process. Use when GitHub-native workflows, review routing, checks, or releases are the primary scope; do not use for non-GitHub runtime architecture or data-layer design."
+description: "Govern CODEOWNERS rules so review routing reflects real ownership and risk boundaries on GitHub. Use when repository ownership mapping or mandatory reviewer rules must be defined, updated, or audited; do not use for non-GitHub runtime architecture or data-layer design."
 ---
 
 # Github Codeowners Management
 
-## Trigger Boundary
-- Use when CODEOWNERS rules must be created, updated, or audited.
-- Do not use for individual PR comment handling; use `github-address-comments`.
-- Do not use for organization-wide access policy outside repository scope.
+## Overview
+Use this skill to keep CODEOWNERS enforceable, low-noise, and aligned with actual maintainer responsibility.
 
-## Goal
-Ensure ownership mapping routes reviews to the correct maintainers with minimal ambiguity.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Repository directory ownership map
-- Team boundaries and backup owners
-- Required reviewer policy by path sensitivity
+## Shared References
+- CODEOWNERS pattern guidance:
+  - `references/codeowners-patterns.md`
 
-## Outputs
-- CODEOWNERS mapping proposal
-- Ownership conflict and gap report
-- Review routing verification checklist
+## Templates And Assets
+- CODEOWNERS change plan:
+  - `assets/codeowners-change-plan-template.md`
+
+## Inputs To Gather
+- Repository ownership map by criticality and change frequency.
+- Team boundaries, backup owners, and staffing constraints.
+- Required reviewer policy for sensitive paths.
+- Recent PR routing pain points (over-review, no-owner paths, stale owners).
+
+## Deliverables
+- CODEOWNERS update plan with rationale.
+- Ownership gap/overlap report.
+- Verification results for routing behavior.
+- Maintenance plan for owner lifecycle changes.
 
 ## Workflow
-1. Map high-change and high-risk paths to explicit owners.
-2. Define primary and secondary reviewers for critical areas.
-3. Detect overlaps, uncovered paths, and noisy wildcard rules.
-4. Validate routing against recent PR samples.
-5. Publish update with maintenance and escalation rules.
+1. Capture proposed changes in `assets/codeowners-change-plan-template.md`.
+2. Map high-risk paths to explicit primary and backup owners.
+3. Resolve overlap and wildcard precedence issues.
+4. Validate with lint scripts and sample PR routing.
+5. Publish changes with ownership maintenance rules.
 
 ## Scripts
 - Lint CODEOWNERS:
@@ -38,15 +47,13 @@ Ensure ownership mapping routes reviews to the correct maintainers with minimal 
 - GitHub semantics mode (without strict team catch-all ordering):
   - `python3 scripts/lint_codeowners.py --path .github/CODEOWNERS --policy github`
 
-## Quality Gates
-- Critical paths have explicit, active owners.
-- Wildcard rules do not override sensitive path ownership unintentionally.
-- Ownership map is maintainable as teams evolve.
-- Review routing matches expected maintainers in practice.
+## Quality Standard
+- Critical paths always have active owners and backup coverage.
+- Wildcards do not mask sensitive-path ownership.
+- Rules are maintainable and avoid unnecessary reviewer fan-out.
+- Routing behavior matches expected maintainers on real PR samples.
 
-## Failure Handling
-- Stop when ownership is unresolved for critical paths.
-- Escalate when staffing gaps prevent enforceable ownership.
-
-## References
-- `references/codeowners-patterns.md`
+## Failure Conditions
+- Stop when critical paths are left without accountable owners.
+- Stop when CODEOWNERS rules cannot be validated by lint and sample checks.
+- Escalate when staffing gaps prevent enforceable ownership policy.

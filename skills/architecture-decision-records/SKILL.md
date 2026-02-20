@@ -1,52 +1,44 @@
 ---
 name: architecture-decision-records
-description: "Architecture Decision Record authoring and lifecycle governance for significant technical decisions. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Architecture Decision Record workflow for capturing technical decisions, alternatives, trade-offs, and revision triggers over time. Use when decisions materially affect system behavior, cost, or team workflow; do not use for trivial implementation choices."
 ---
 
 # Architecture Decision Records
 
-## Trigger Boundary
-- Use when a significant architecture decision must be recorded or revised.
-- Do not use to evaluate alternatives from scratch; use `architecture-tradeoff-analysis` first.
-- Do not use to model runtime structure visually; use `architecture-c4-modeling`.
+## Overview
+Use this skill to make architecture decisions auditable, reversible when possible, and maintainable as constraints evolve.
 
-## Goal
-Maintain auditable and current decision history for architecture evolution.
+## Scope Boundaries
+- A technical decision changes long-term system direction.
+- Multiple viable options exist and trade-offs must be explicit.
+- Teams need a durable rationale for future reviewers.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Do not define local ID formats or alternate state machines.
+## Core Judgments
+- Decision scope: what is affected and what is intentionally out of scope.
+- Option set quality: whether alternatives are truly viable.
+- Reversibility: cost and risk if the decision is later changed.
+- Expiry/revisit trigger: what future signal should force reevaluation.
 
-## Compliance & Governance Baseline (US, Japan, EU)
-- Capture compliance and privacy rationale in each relevant ADR.
-- Preserve change history and approval traceability for audits.
-- Prepare or reference an `ARC-CMP-*` evidence package for each high-impact decision.
-
-## Inputs
-- Decision statement and context
-- Evaluated options and tradeoff evidence
-- Risks, constraints, and stakeholder approvals
-
-## Outputs
-- ADR documents with status lifecycle
-- Supersession links between related ADRs
-- Decision consequences and follow-up actions
+## Practitioner Heuristics
+- Record decisions at the same abstraction level as the problem; avoid mixing architecture and local code style debates.
+- Rejected options are as important as selected ones for future context.
+- State assumptions explicitly, especially around traffic, team capacity, and compliance constraints.
+- Include consequences for operations and developer workflow, not only runtime behavior.
 
 ## Workflow
-1. Create ADR with context, decision, options, and consequences.
-2. Reference related drivers, risks, diagrams, and evidence package IDs.
-3. Set status: proposed, accepted, rejected, or superseded.
-4. Record approvers and decision date.
-5. Update or supersede ADR when assumptions change.
+1. Define decision question and non-negotiable constraints.
+2. Enumerate realistic options and decision criteria.
+3. Analyze trade-offs including failure modes and operational impact.
+4. Select a decision and capture why alternatives were rejected.
+5. Define measurable revisit triggers and ownership.
+6. Link the record to affected architecture artifacts and implementation work.
 
-## Quality Gates
-- Every major decision has an ADR identifier.
-- ADR rationale includes rejected options.
-- `ARC-CMP-*` evidence package is complete and approved.
-- High-impact decisions have required approver matrix.
+## Common Failure Modes
+- ADRs describe outcomes after the fact without real alternative analysis.
+- Decision records never revisit invalidated assumptions.
+- Records duplicate design docs and lose decision focus.
 
-## Failure Handling
-- Stop when decision rationale lacks option evidence.
-- Stop when canonical contract validation fails.
-- Escalate when high-impact ADRs lack explicit approval ownership.
+## Failure Conditions
+- Stop when constraints are incomplete or contradictory.
+- Stop when no meaningful alternatives are considered.
+- Escalate when decision ownership and revisit triggers are undefined.

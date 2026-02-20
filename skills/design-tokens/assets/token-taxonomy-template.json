@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "artifact_id": "DSN-TOK-YYYYMMDD-NNN",
+    "owner": "design-system-team",
+    "state": "draft",
+    "surfaces": [
+      "web"
+    ],
+    "theme_modes": [
+      "light",
+      "dark"
+    ]
+  },
+  "layers": {
+    "core": [
+      {
+        "id": "color.blue.600",
+        "type": "color",
+        "value": "#0057D9",
+        "notes": "brand primary base"
+      },
+      {
+        "id": "space.200",
+        "type": "dimension",
+        "value": "8px",
+        "notes": "base spacing unit"
+      }
+    ],
+    "semantic": [
+      {
+        "id": "color.action.primary.default",
+        "type": "color",
+        "ref": "{color.blue.600}",
+        "states": [
+          "default",
+          "hover",
+          "active",
+          "disabled"
+        ]
+      },
+      {
+        "id": "space.layout.section.gap",
+        "type": "dimension",
+        "ref": "{space.200}"
+      }
+    ],
+    "component": [
+      {
+        "id": "button.primary.background.default",
+        "type": "color",
+        "ref": "{color.action.primary.default}",
+        "component": "button",
+        "variant": "primary"
+      }
+    ]
+  },
+  "governance_rules": {
+    "core_is_not_consumed_directly": true,
+    "semantic_tokens_are_default_in_product_code": true,
+    "component_tokens_require_stability_or_accessibility_justification": true
+  }
+}

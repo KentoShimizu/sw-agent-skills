@@ -1,41 +1,50 @@
 ---
 name: data-structures
-description: Specialized workflow for data structure selection by access pattern and mutation profile. Use when implementation risk depends on algorithm correctness, complexity, or state-coordination tradeoffs; do not use for persistence schema design or deployment topology choices.
+description: "Select data structures using explicit access patterns, mutation behavior, memory limits, and concurrency constraints. Use when implementation correctness or performance depends on choosing between alternatives (array/map/heap/tree/queue/set) under real workload assumptions; do not use for persistence schema or deployment topology decisions."
 ---
 
 # Data Structures
 
-## Trigger Boundary
-- Use when algorithmic correctness or complexity drives implementation risk.
-- Do not use for persistence-schema decisions; use `db-*`.
-- Do not use for runtime deployment topology; use `deployment-*` or `kubernetes-*`.
+## Overview
+Use this skill to choose data structures with explicit tradeoffs, then justify the choice with workload assumptions and failure modes.
 
-## Goal
-Deliver correct and efficient computational designs with clear tradeoffs.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for data structure selection by access pattern and mutation profile
-- Operational, compliance, and rollout constraints
+## Inputs To Gather
+- Required operations (`lookup`, `insert`, `delete`, `scan`, `range`, `top-k`).
+- Read/write ratio and mutation frequency.
+- Data volume now and forecast at peak.
+- Latency/memory constraints and concurrency model.
 
-## Outputs
-- Data structure decision matrix
-- Decision log for data structure selection by access pattern and mutation profile
-- Verification checklist with measurable pass-fail criteria
+## Deliverables
+- Candidate structure comparison with tradeoffs.
+- Selected structure and rationale tied to workload.
+- Risk list (memory blowup, contention, degeneration cases).
+- Verification plan (microbenchmarks and edge-case tests).
+
+## Quick Decision Examples
+- Frequent key lookup + updates: `hash map` (+ collision strategy).
+- Sorted range queries: `balanced tree` or ordered index.
+- Top-N / priority scheduling: `heap`.
+- FIFO work pipeline: `queue` (bounded if backpressure is needed).
+- Membership checks with low memory: `bitset`/Bloom filter (with false-positive caveat).
+
+## Quality Standard
+- Choice is tied to actual operation mix, not preference.
+- Complexity claims include worst/average behavior assumptions.
+- Memory growth and peak usage are estimated.
+- Concurrency implications are explicit (lock scope, contention hotspots).
 
 ## Workflow
-1. Clarify outcomes and hard constraints for data structure selection by access pattern and mutation profile.
-2. Produce options and select an approach for data structure selection by access pattern and mutation profile.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using operation-cost benchmark for target workloads.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define workload model and required guarantees.
+2. Enumerate feasible structures at the same abstraction level.
+3. Compare complexity, memory, and concurrency behavior.
+4. Select one and document rejection reasons for others.
+5. Define benchmark and edge-case validation plan.
 
-## Quality Gates
-- Scope and assumptions for data structure selection by access pattern and mutation profile are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when chosen structure does not fit dominant access patterns.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when workload assumptions are missing or contradictory.
+- Stop when chosen structure cannot satisfy mandatory operations.
+- Escalate when memory or contention risk is unbounded at target scale.

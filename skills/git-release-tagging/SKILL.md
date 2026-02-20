@@ -1,47 +1,53 @@
 ---
 name: git-release-tagging
-description: "Specialized workflow for creating immutable release tags and traceable release notes from Git history. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Create immutable release tags and traceable release notes from Git history. Use when release cuts require consistent tag naming, immutability guarantees, and bounded changelog traceability; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Release Tagging
 
-## Trigger Boundary
-- Use when shipping a release candidate or production release from Git.
-- Do not use for deployment runtime orchestration; use `ci-cd-pipeline-design`.
-- Do not use for sprint planning or roadmap updates; use `technical-roadmapping`.
+## Overview
+Use this skill to cut releases with immutable tags and auditable change boundaries.
 
-## Goal
-Produce auditable, immutable release markers with clear change traceability.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track release tagging artifacts with `GIT-REL-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Versioning and immutability rules:
+  - `references/tag-versioning-and-immutability.md`
 
-## Inputs
-- Release branch or commit SHA to tag
-- Versioning policy and naming convention
-- Release notes source and approval requirements
+## Templates And Assets
+- Release tagging runbook:
+  - `assets/release-tagging-runbook-template.md`
+- Release notes template:
+  - `assets/release-notes-template.md`
 
-## Outputs
-- `GIT-REL-*` signed annotated release tag record
-- Release notes linked to commit range
-- Verification checklist for tagged artifact
+## Inputs To Gather
+- Target release commit SHA and readiness evidence.
+- Versioning policy and reserved tag namespace.
+- Approval requirements and release communication needs.
+- Rollback strategy if release validation fails post-cut.
+
+## Deliverables
+- Annotated release tag bound to a specific commit.
+- Release notes mapped to bounded commit range.
+- Verification record for tag integrity and publication status.
+- Traceable release artifact metadata for audit.
 
 ## Workflow
-1. Validate release commit readiness and required approvals.
-2. Create signed annotated tag with version and summary metadata.
-3. Verify signature and confirm tag points to intended immutable commit.
-4. Generate release notes from bounded commit range.
-5. Publish tag and notes with distribution and verification record.
+1. Validate preconditions using `assets/release-tagging-runbook-template.md`.
+2. Confirm naming and immutability constraints from `references/tag-versioning-and-immutability.md`.
+3. Create annotated release tag and verify target commit binding.
+4. Draft and publish release notes with `assets/release-notes-template.md`.
+5. Record post-cut verification and handoff artifacts.
 
-## Quality Gates
-- Tag naming follows repository versioning policy.
-- Tag is signed, signature verification passes, and protected tag policy is enforced.
-- Release notes map clearly to included changes.
-- Security Reviewer approval is present for `GIT-REL-*` artifacts.
+## Quality Standard
+- Tag naming follows one consistent policy.
+- Published tag is immutable and never re-pointed.
+- Release notes are bounded, accurate, and actionable.
+- Release cut can be traced from tag -> commit range -> notes.
 
-## Failure Handling
-- Stop when release commit is not fully validated.
-- Stop when tag signature cannot be verified.
-- Escalate when version naming conflicts with existing tags.
+## Failure Conditions
+- Stop when release commit readiness is not proven.
+- Stop when tag naming collides with existing published tags.
+- Escalate when immutability cannot be guaranteed on current hosting setup.

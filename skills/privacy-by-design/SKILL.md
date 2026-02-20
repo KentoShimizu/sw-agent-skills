@@ -1,41 +1,52 @@
 ---
 name: privacy-by-design
-description: "Privacy-by-design workflow for embedding data minimization, lawful basis, and user-rights readiness into feature and UX design decisions. Use when privacy controls must be embedded in product and UX decisions before implementation; do not use for narrow infrastructure tuning that does not affect personal-data handling."
+description: "Privacy-by-design workflow for embedding data minimization, lawful basis, retention, and user-rights readiness into product decisions. Use when a feature touches personal data and privacy controls must be defined before implementation; do not use for narrow infrastructure tuning that does not affect personal-data handling."
 ---
 
 # Privacy By Design
 
-## Trigger Boundary
-- Use when user data is collected, transformed, or exposed by a feature.
-- Do not use for low-level vulnerability triage only; use `security-*`.
-- Do not use for post-incident retrospective artifacts; use `incident-postmortem`.
+## Overview
+Use this skill to make privacy requirements explicit, enforceable, and testable before implementation.
 
-## Goal
-Make privacy controls explicit and enforceable before implementation.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Feature scope and data-flow summary
-- Data categories, storage paths, and transfer boundaries
-- Regulatory obligations for US, Japan, and EU markets
+## Shared References
+- Lawful basis and minimization rules:
+  - `references/lawful-basis-and-minimization-rules.md`
 
-## Outputs
-- Privacy control matrix with ownership
-- Data minimization and retention decisions
-- User-rights and consent handling requirements
+## Templates And Assets
+- Privacy control matrix template:
+  - `assets/privacy-control-matrix-template.csv`
+- Data lifecycle map template:
+  - `assets/data-lifecycle-map-template.md`
+
+## Inputs To Gather
+- Feature scope and personal-data touchpoints.
+- Applicable legal/policy obligations for target markets.
+- Data flow boundaries and third-party transfers.
+- Retention and user-rights operational capabilities.
+
+## Deliverables
+- Privacy control matrix with ownership.
+- Data lifecycle map from collection to deletion.
+- Consent/notice and user-rights requirements.
+- Residual privacy risk and approval record.
 
 ## Workflow
-1. Map data lifecycle from collection to deletion.
-2. Define lawful basis and consent handling rules.
-3. Minimize collected data and remove unnecessary identifiers.
-4. Define retention, deletion, and access-control policies.
-5. Validate cross-border transfer and audit requirements.
+1. Map lifecycle with `assets/data-lifecycle-map-template.md`.
+2. Define controls in `assets/privacy-control-matrix-template.csv`.
+3. Validate decisions against `references/lawful-basis-and-minimization-rules.md`.
+4. Confirm operational feasibility for retention/deletion/rights handling.
+5. Publish controls and unresolved risks.
 
-## Quality Gates
-- Every personal data element has explicit purpose and lawful basis.
-- Retention/deletion behavior is defined and testable.
-- User-rights request flow is operationally feasible.
-- Required privacy approvals are documented.
+## Quality Standard
+- Every data element has explicit purpose and legal basis/authorization.
+- Data collection is minimized and retention is bounded.
+- User-rights handling is operationally executable.
 
-## Failure Handling
+## Failure Conditions
 - Stop when lawful basis or purpose limitation is undefined.
-- Escalate when cross-border transfer safeguards are missing.
+- Stop when retention/deletion controls cannot be enforced.
+- Escalate when transfer safeguards or approvals are missing.

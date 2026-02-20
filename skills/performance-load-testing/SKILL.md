@@ -1,41 +1,51 @@
 ---
 name: performance-load-testing
-description: Specialized workflow for load profile realism, bottleneck detection, and saturation behavior. Use when throughput, latency, or resource-efficiency bottlenecks must be measured and mitigated; do not use for non-performance functional acceptance decisions.
+description: "Performance load testing workflow for realistic workload simulation, bottleneck detection, and saturation behavior analysis. Use when systems need throughput/latency validation before rollout; do not use for non-performance functional acceptance decisions."
 ---
 
 # Performance Load Testing
 
-## Trigger Boundary
-- Use when latency, throughput, or resource saturation must be measured and improved.
-- Do not use for product roadmap prioritization; use `project-estimation` or `technical-roadmapping`.
-- Do not use for compliance control reviews alone; use `security-*`.
+## Overview
+Use this skill to validate performance under realistic and stress conditions before production risk increases.
 
-## Goal
-Improve system performance with measurable and sustainable gains.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for load profile realism, bottleneck detection, and saturation behavior
-- Operational, compliance, and rollout constraints
+## Shared References
+- Workload realism rules:
+  - `references/workload-realism-rules.md`
 
-## Outputs
-- Load test plan with target workload profiles
-- Decision log for load profile realism, bottleneck detection, and saturation behavior
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Load profile template:
+  - `assets/load-profile-template.md`
+- Load test report template:
+  - `assets/load-test-report-template.md`
+
+## Inputs To Gather
+- Critical user flows and traffic distribution.
+- Target latency/throughput/error thresholds.
+- Environment and dependency readiness.
+- Saturation and recovery expectations.
+
+## Deliverables
+- Load profile and execution plan.
+- Bottleneck evidence and saturation points.
+- Release readiness recommendation and fixes.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for load profile realism, bottleneck detection, and saturation behavior.
-2. Produce options and select an approach for load profile realism, bottleneck detection, and saturation behavior.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using load-test execution and bottleneck evidence.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define workload in `assets/load-profile-template.md`.
+2. Validate realism using `references/workload-realism-rules.md`.
+3. Execute baseline/peak/stress phases.
+4. Document outcomes in `assets/load-test-report-template.md`.
+5. Publish remediation and retest plan.
 
-## Quality Gates
-- Scope and assumptions for load profile realism, bottleneck detection, and saturation behavior are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Load profiles represent production-critical behavior.
+- Bottlenecks are evidenced and prioritized.
+- Saturation behavior and failure modes are understood.
 
-## Failure Handling
-- Stop when load test does not cover production-critical traffic patterns.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when test profile misses critical production traffic patterns.
+- Stop when results cannot be reproduced or interpreted confidently.
+- Escalate when unresolved bottlenecks threaten SLOs.

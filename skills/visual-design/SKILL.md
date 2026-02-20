@@ -1,46 +1,48 @@
 ---
 name: visual-design
-description: "Visual design workflow for defining color, typography, spacing, and compositional language aligned with product and brand goals. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Visual design workflow for defining coherent color, typography, spacing, and composition systems. Use when teams need implementation-ready visual direction for product surfaces; do not use for backend architecture, data modeling, or deployment policy."
 ---
 
 # Visual Design
 
-## Trigger Boundary
-- Use when visual hierarchy, consistency, or brand alignment is unclear.
-- Do not use for interaction flow state logic; use `interaction-design`.
-- Do not use for accessibility audit execution only; use `accessibility-design`.
+## Overview
+Use this skill to create visual systems that are consistent, accessible, and implementation-ready.
 
-## Goal
-Deliver coherent visual language that improves clarity and trust.
+## Scope Boundaries
+- Product surfaces need a coherent visual language or redesign.
+- Teams must align brand expression with usability and accessibility constraints.
+- Implementation teams need explicit visual rules rather than isolated mockups.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track visual specs with `VIS-SPEC-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- Visual spec template:
+  - `assets/visual-spec-template.md`
 
-## Inputs
-- Brand direction and product context
-- Existing UI artifacts and inconsistency reports
-- Accessibility contrast and readability constraints
+## Inputs To Gather
+- Brand and product positioning goals.
+- Existing UI inconsistencies and readability issues.
+- Accessibility requirements (contrast, legibility, scaling).
+- Platform constraints (web/mobile/native, theming model).
 
-## Outputs
-- Visual spec set with `VIS-SPEC-*` IDs
-- Typography, color, spacing, and hierarchy rules
-- Component-level visual usage guidance
+## Deliverables
+- Visual specification covering color roles, typography, spacing, and hierarchy.
+- Component-level visual usage guidelines and anti-pattern notes.
+- Accessibility validation notes for key visual decisions.
 
 ## Workflow
-1. Define visual hierarchy objectives by task criticality.
-2. Build typography and spacing scales.
-3. Define color role system and usage constraints.
-4. Apply rules to representative screens.
-5. Validate readability and contrast compliance.
+1. Define hierarchy goals by task criticality and information density.
+2. Build typography and spacing scales with explicit rationale.
+3. Define semantic color roles and permitted usage boundaries.
+4. Apply rules to representative screens and states.
+5. Validate readability/contrast and adjust conflicting decisions.
+6. Deliver implementation-ready specs and examples.
 
-## Quality Gates
-- Visual hierarchy supports task prioritization.
-- Spec set is consistent and reusable.
-- Contrast and legibility pass required thresholds.
-- Visual decisions map to principle and token systems.
+## Quality Standard
+- Visual system supports content hierarchy and task focus.
+- Rules are reusable across pages and components.
+- Accessibility checks are integrated into visual decisions.
+- Spec quality is high enough to reduce interpretation drift in implementation.
 
-## Failure Handling
-- Stop when visual rules rely on one-off overrides.
-- Escalate when contrast or readability fails baseline gates.
+## Failure Conditions
+- Stop when specs rely on one-off exceptions as default behavior.
+- Stop when contrast or legibility fails baseline requirements.
+- Escalate when brand constraints conflict with accessibility requirements.

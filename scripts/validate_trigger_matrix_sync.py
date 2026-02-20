@@ -20,16 +20,19 @@ SKILLS_ROOT = Path("skills")
 TRIGGER_MATRIX_RELATIVE = Path("references/trigger-matrix.md")
 
 EXPECTED_DESCRIPTION_TOKENS: dict[str, tuple[str, ...]] = {
-    "bash-style-guide": (".sh", "#!/usr/bin/env bash", "#!/bin/bash"),
+    "bash-style-guide": (".sh", "#!/usr/bin/env bash", "#!/bin/bash", "shell: bash"),
     "csharp-style-guide": (".cs", ".csproj", ".sln", ".props", ".targets", ".razor"),
     "go-style-guide": (".go", "go.mod", "go.sum", "go.work"),
     "java-style-guide": (".java", "pom.xml", "build.gradle", "build.gradle.kts"),
     "javascript-style-guide": (".js", ".jsx", ".mjs", ".cjs", "typescript-style-guide"),
+    "powershell-style-guide": (".ps1", ".psm1", ".psd1", "shell: pwsh", "shell: powershell"),
     "python-style-guide": (".py", "pyproject.toml", "requirements*.txt", "uv.lock"),
     "rust-style-guide": (".rs", "Cargo.toml", "Cargo.lock"),
+    "sh-style-guide": (".sh", "#!/usr/bin/env sh", "#!/bin/sh", "shell: sh"),
     "sql-style-guide": (".sql",),
     "terraform-style-guide": (".tf", ".tfvars"),
     "typescript-style-guide": (".ts", ".tsx", ".d.ts", "tsconfig*.json", "javascript-style-guide"),
+    "zsh-style-guide": (".zsh", "#!/usr/bin/env zsh", "#!/bin/zsh", "shell: zsh"),
 }
 
 MATRIX_SKILL_PATTERN = re.compile(r"\|[^|]+\|\s*`([a-z0-9-]+-style-guide)`\s*\|")

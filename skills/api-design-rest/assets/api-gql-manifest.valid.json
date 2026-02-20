@@ -1,0 +1,53 @@
+{
+  "artifact_id": "API-GQL-20260215-001",
+  "state": "reviewed",
+  "approvers": [
+    "API Owner",
+    "Engineering Owner",
+    "Security Reviewer"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "backward_compatibility_reviewed": true,
+    "transport_selection_documented": true,
+    "naming_convention_defined": true,
+    "authz_modeled": true,
+    "error_contract_defined": true,
+    "observability_fields_defined": true,
+    "runbook_updated": true,
+    "timeout_budget_defined": true,
+    "delivery_semantics_defined": true,
+    "backpressure_strategy_defined": false,
+    "connection_lifecycle_defined": false,
+    "consumer_idempotency_defined": false,
+    "no_fallback_logic": true,
+    "rate_limit_policy_defined": false,
+    "handles_sensitive_data": true,
+    "external_public_api": false,
+    "regulated_jurisdiction_impact": false,
+    "query_cost_limits_defined": true,
+    "n_plus_one_guard_defined": true
+  },
+  "decision_context": {
+    "api_audience": "internal",
+    "interaction_mode": "sync",
+    "primary_transport": "graphql",
+    "selection_rationale": "Internal product clients need flexible aggregation over multiple domain entities with schema-governed evolution.",
+    "alternatives_considered": [
+      "rest",
+      "grpc"
+    ],
+    "naming_convention_summary": "GraphQL types use PascalCase, fields and args use camelCase, and mutation names are domain-intent based.",
+    "threshold_method_summary": "Complexity and resolver latency limits are derived from p95 SLO budget and datastore fan-out constraints."
+  },
+  "threshold_policy": {
+    "latency_target_derivation": "Set p95 resolver latency target from end-user interaction budget for aggregation-heavy screens.",
+    "availability_target_derivation": "Set availability by product criticality and internal error-budget allocation.",
+    "timeout_budget_derivation": "Distribute timeout budget across gateway, resolver execution, and backend dependencies.",
+    "capacity_headroom_derivation": "Set headroom from peak query complexity distribution and release-event traffic spikes.",
+    "payload_limit_derivation": "Bound response size from client rendering cost and network transfer budget.",
+    "concurrency_limit_derivation": "Set concurrent query limits from GraphQL gateway worker utilization targets.",
+    "retry_backoff_derivation": "Retry budget is constrained by mutation idempotency and downstream contention risk.",
+    "delivery_semantics_derivation": "Read and mutation semantics are defined per field, including nullability and partial failure handling."
+  }
+}

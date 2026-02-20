@@ -1,52 +1,44 @@
 ---
 name: architecture-event-driven
-description: "Event-driven architecture design for asynchronous workflows, decoupled integration, and scalable domain event propagation. Use when system boundaries, module relationships, and architecture-level constraints are being defined; do not use for single-module implementation refactors without architecture impact."
+description: "Event-driven architecture workflow for asynchronous integration, decoupled workflows, and failure-tolerant event propagation. Use when temporal decoupling and independent evolution are required; do not use when strict synchronous consistency is mandatory across all steps."
 ---
 
 # Architecture Event Driven
 
-## Trigger Boundary
-- Use when asynchronous integration and loose coupling are required.
-- Do not use for request-response dominant topology design; use `architecture-microservices` or `architecture-monolith`.
-- Do not use to document final decision history; use `architecture-decision-records`.
+## Overview
+Use this skill to design event-driven systems that remain correct under retries, delays, and partial failures.
 
-## Goal
-Define event model, schema governance, and runtime guarantees for asynchronous systems.
+## Scope Boundaries
+- Workflows span multiple bounded contexts or services asynchronously.
+- Temporal decoupling is needed to improve autonomy or resilience.
+- Integration churn is high and direct RPC coupling causes fragility.
 
-## Shared Architecture Contract (Canonical)
-- Use `skills/architecture-principles/references/architecture-governance-contract.md` as the only schema source.
-- Validate all IDs, lifecycle states, and gate rules against the canonical contract.
-- Do not define local ID formats or alternate state machines.
+## Core Judgments
+- Event semantics: fact versus command and ownership of meaning.
+- Delivery guarantees: at-most-once, at-least-once, effectively-once patterns.
+- Ordering strategy: global ordering, per-key ordering, or order independence.
+- Recovery model: replay, dead-letter, compensating actions, and backfill.
 
-## Compliance & Governance Baseline (US, Japan, EU)
-- Classify event payload sensitivity and minimize personal data fields.
-- Enforce retention and replay policy under jurisdictional constraints.
-- Prepare an `ARC-CMP-*` evidence package for governance review.
-
-## Inputs
-- Domain events and producer/consumer candidates
-- Latency and durability requirements
-- Ordering, duplication, and consistency constraints
-
-## Outputs
-- Event catalog with schema ownership and versioning rules
-- Delivery semantics and retry/dead-letter policy
-- Consistency and compensating-action strategy
+## Practitioner Heuristics
+- Publish events as immutable domain facts from the source of truth.
+- Never rely on "exactly-once" assumptions; design idempotent consumers.
+- Partition keys must align with business consistency boundaries.
+- Version event contracts with additive evolution first; reserve breaking changes for controlled migrations.
 
 ## Workflow
-1. Identify domain events and bounded payload contracts.
-2. Define event schema lifecycle and compatibility policy.
-3. Specify delivery guarantees and idempotency requirements.
-4. Design dead-letter handling and replay procedures.
-5. Record eventual consistency behavior and compensations.
+1. Define domain events and ownership boundaries.
+2. Specify producer guarantees and consumer idempotency requirements.
+3. Choose ordering and partitioning strategies by business invariant.
+4. Design failure-handling paths for retry storms, poison messages, and replay.
+5. Align observability with event lifecycle (published, consumed, failed, compensated).
+6. Document contract evolution and deprecation strategy.
 
-## Quality Gates
-- Every event has owner, schema, and versioning policy.
-- Consumers can handle duplicates and out-of-order messages.
-- `ARC-CMP-*` evidence package is complete and approved.
-- Greenfield designs exclude fallback paths; brownfield rollback requires trigger and runbook.
+## Common Failure Modes
+- Events used as remote procedure calls in disguise.
+- Shared event schema controlled by consumers instead of producers.
+- Unbounded retry loops causing downstream saturation.
 
-## Failure Handling
-- Stop when event ownership or schema governance is undefined.
-- Stop when canonical contract validation fails.
-- Escalate when consistency gaps cannot be compensated safely.
+## Failure Conditions
+- Stop when event ownership or semantics are ambiguous.
+- Stop when consumer correctness depends on fragile global ordering.
+- Escalate when replay/compensation behavior is undefined for critical flows.

@@ -1,41 +1,51 @@
 ---
 name: security-incident-response
-description: Specialized workflow for detection-to-containment response workflow and evidence handling. Use when security controls, abuse-path analysis, or vulnerability treatment are central; do not use for non-security quality optimization.
+description: "Security incident workflow for triage, containment, eradication, and recovery evidence handling. Use when suspected or confirmed security incidents require coordinated response actions; do not use for proactive threat modeling or routine vulnerability backlog grooming."
 ---
 
 # Security Incident Response
 
-## Trigger Boundary
-- Use when security controls, abuse paths, or compliance obligations must be defined.
-- Do not use for non-security product prioritization; use requirement or roadmap skills.
-- Do not use for purely aesthetic UI decisions.
+## Overview
+Use this skill to run a structured response that minimizes blast radius, preserves evidence, and restores service safely.
 
-## Goal
-Reduce exploitable risk with verifiable security controls.
+## Scope Boundaries
+- Indicators of compromise or security alerts require investigation.
+- Active abuse is suspected and containment decisions are needed.
+- Security incident communications and recovery criteria must be formalized.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for detection-to-containment response workflow and evidence handling
-- Operational, compliance, and rollout constraints
+## Templates And Assets
+- Incident timeline template:
+  - `assets/security-incident-timeline-template.md`
 
-## Outputs
-- Incident response playbook and escalation matrix
-- Decision log for detection-to-containment response workflow and evidence handling
-- Verification checklist with measurable pass-fail criteria
+## Inputs To Gather
+- Detection source, initial evidence, and confidence level.
+- Affected systems, data classes, and business criticality.
+- Available responders and escalation contacts.
+- Legal/compliance notification obligations and time limits.
+
+## Deliverables
+- Incident timeline with key decisions and evidence references.
+- Containment and eradication action plan with owner and deadline.
+- Stakeholder communication record and regulatory decision log.
+- Recovery validation checklist and follow-up prevention actions.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for detection-to-containment response workflow and evidence handling.
-2. Produce options and select an approach for detection-to-containment response workflow and evidence handling.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using response drill with timeline and communication checkpoints.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Classify severity using impact, exploitability, and blast-radius evidence.
+2. Start timeline capture with `assets/security-incident-timeline-template.md`.
+3. Establish a command structure (incident lead, forensic owner, comms owner).
+4. Contain actively exploited paths first, preserving forensic artifacts before destructive cleanup when feasible.
+5. Scope affected identities, services, data stores, and downstream dependencies.
+6. Eradicate root access path, rotate exposed credentials, and patch exploited weaknesses.
+7. Recover in staged rollout with explicit rollback criteria and heightened monitoring.
+8. Publish a post-incident action list with prevention owners and due dates.
 
-## Quality Gates
-- Scope and assumptions for detection-to-containment response workflow and evidence handling are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Severity classification is evidence-based and revisited as facts evolve.
+- Containment actions are traceable and reversible when possible.
+- Evidence handling preserves chain-of-custody requirements.
+- Recovery criteria include security validation, not only availability checks.
 
-## Failure Handling
-- Stop when containment or communication responsibilities are undefined.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when roles and decision authority are unclear.
+- Stop when evidence is being destroyed without explicit incident lead approval.
+- Escalate when potential legal notification thresholds are crossed.

@@ -1,0 +1,2 @@
+evidence_id,source_type,source_ref,statement,confidence,owner,next_action
+EVD-001,interview,INT-001,user reports checkout confusion,medium,pm,verify with analytics

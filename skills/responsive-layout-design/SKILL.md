@@ -1,46 +1,51 @@
 ---
 name: responsive-layout-design
-description: "Responsive layout design workflow for defining adaptive structure and component behavior across screen sizes and device contexts. Use when UX, interaction, visual, or design-governance artifacts are the primary deliverable; do not use for backend data-model or deployment pipeline decisions."
+description: "Responsive layout design workflow for defining adaptive structure and component behavior across viewport ranges. Use when UI layouts must remain usable and readable across device contexts; do not use for backend data modeling or deployment pipeline decisions."
 ---
 
 # Responsive Layout Design
 
-## Trigger Boundary
-- Use when layouts break or become unusable across device sizes.
-- Do not use for visual token definition; use `design-tokens`.
-- Do not use for end-to-end handoff packaging; use `figma-handoff`.
+## Overview
+Use this skill to define responsive behavior that keeps critical workflows usable across supported screen sizes.
 
-## Goal
-Ensure layouts remain usable, readable, and consistent across screen contexts.
+## Scope Boundaries
+- Layouts break, overflow, or lose usability across devices.
+- Teams need explicit breakpoint and adaptation rules before implementation.
+- Localization/content growth increases truncation and wrapping risk.
 
-## Shared Design Contract (Canonical)
-- Use `../design-principles/references/design-governance-contract.md` as the single schema and gate source.
-- Track responsive rules with `RESP-RUL-*` IDs.
-- Run machine validation: `python3 ../design-principles/scripts/validate_design_contract.py --manifest <path/to/manifest.json>`.
+## Templates And Assets
+- Responsive rule template:
+  - `assets/responsive-rule-template.md`
+- Breakpoint test checklist:
+  - `assets/breakpoint-test-checklist.md`
 
-## Inputs
-- Breakpoint requirements and device usage data
-- Current layout failures and overflow risks
-- Content constraints and localization expansion risk
+## Inputs To Gather
+- Device and viewport support matrix.
+- Critical tasks and layout priority by context.
+- Content constraints including localization expansion risk.
+- Interaction modality requirements (touch, pointer, keyboard).
 
-## Outputs
-- Responsive rule set with `RESP-RUL-*` IDs
-- Breakpoint behavior and component adaptation specs
-- Risk list for overflow, truncation, and interaction issues
+## Deliverables
+- Responsive rule set with breakpoint-specific behavior.
+- Component adaptation guidance for each viewport range.
+- Risk list for overflow, truncation, and interaction regressions.
+- Verification checklist for critical screens.
 
 ## Workflow
-1. Define breakpoint model and layout priorities.
-2. Specify component adaptation per breakpoint.
-3. Validate text expansion and localization stress cases.
-4. Define interaction affordance changes for touch and pointer contexts.
-5. Document regression checkpoints for critical screens.
+1. Define viewport model and breakpoint rationale.
+2. Specify component behavior per breakpoint (reflow, collapse, hide, or transform).
+3. Validate text expansion, dynamic data density, and media constraints.
+4. Define interaction affordance adjustments by modality.
+5. Verify critical workflows at each supported viewport range.
+6. Publish responsive rules with ownership and review cadence.
 
-## Quality Gates
-- Core tasks remain usable at all supported breakpoints.
-- Overflow and truncation are controlled for long localized strings.
-- Interaction targets remain accessible on touch devices.
-- Responsive rules are traceable and non-conflicting.
+## Quality Standard
+- Core tasks remain usable at all supported viewport ranges.
+- Overflow and truncation risks are addressed explicitly.
+- Interactive targets remain accessible and operable.
+- Rules are consistent and do not conflict across breakpoints.
 
-## Failure Handling
-- Stop when breakpoints are chosen without user/device evidence.
-- Escalate when critical flows fail on supported viewport ranges.
+## Failure Conditions
+- Stop when breakpoint choices lack user/device evidence.
+- Stop when critical workflows fail in supported viewport ranges.
+- Escalate when responsive constraints conflict with required functionality.

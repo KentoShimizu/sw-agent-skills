@@ -1,41 +1,44 @@
 ---
 name: db-index-strategy
-description: Specialized workflow for index selection for critical read and write access paths. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: "Index strategy workflow for balancing read latency, write amplification, and plan stability on critical query paths. Use when query performance depends on index design trade-offs; do not use for high-level conceptual modeling."
 ---
 
-# Db Index Strategy
+# DB Index Strategy
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to choose indexes that improve real workloads while controlling write and storage costs.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Scope Boundaries
+- Query latency hotspots are driven by access-path inefficiency.
+- New query patterns or sort requirements are introduced.
+- Existing indexes show redundancy, bloat, or unstable plans.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for index selection for critical read and write access paths
-- Operational, compliance, and rollout constraints
+## Core Judgments
+- Query-path priority by business impact and frequency.
+- Composite key order by filter selectivity and sort usage.
+- Covering/partial/functional index suitability by engine capability.
+- Write amplification and maintenance cost tolerance.
 
-## Outputs
-- Index strategy plan per high-volume query
-- Decision log for index selection for critical read and write access paths
-- Verification checklist with measurable pass-fail criteria
+## Practitioner Heuristics
+- Indexes should be justified by concrete query families, not single ad hoc queries.
+- Composite index order follows filter-first then sort semantics.
+- Prefer fewer high-value indexes over broad index proliferation.
+- Consider plan stability across parameter distribution, not one explain sample.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for index selection for critical read and write access paths.
-2. Produce options and select an approach for index selection for critical read and write access paths.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using execution plan review and index impact measurement.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Rank critical queries by frequency, latency impact, and SLA relevance.
+2. Inspect current plans and identify scans, misestimation, and sort spills.
+3. Propose candidate indexes with expected plan effects.
+4. Evaluate write/maintenance/storage impact for each candidate.
+5. Decide new, modified, and removable indexes as one portfolio.
+6. Record assumptions that require re-evaluation as data distribution changes.
 
-## Quality Gates
-- Scope and assumptions for index selection for critical read and write access paths are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Common Failure Modes
+- Indexes tuned for one tenant or parameter pattern only.
+- Redundant indexes remain after query evolution.
+- Index design ignores heavy write paths and causes throughput collapse.
 
-## Failure Handling
-- Stop when hot queries lack index coverage or write amplification risk is unknown.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when index choices are not tied to prioritized workload.
+- Stop when write amplification risk is unbounded.
+- Escalate when plan stability remains poor after viable candidates.

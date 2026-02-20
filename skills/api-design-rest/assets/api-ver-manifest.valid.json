@@ -1,0 +1,69 @@
+{
+  "artifact_id": "API-VER-20260215-001",
+  "state": "approved",
+  "approvers": [
+    "API Owner",
+    "Engineering Owner",
+    "API Governance Reviewer"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "backward_compatibility_reviewed": true,
+    "transport_selection_documented": true,
+    "naming_convention_defined": true,
+    "authz_modeled": true,
+    "error_contract_defined": true,
+    "observability_fields_defined": true,
+    "runbook_updated": true,
+    "timeout_budget_defined": true,
+    "delivery_semantics_defined": true,
+    "backpressure_strategy_defined": false,
+    "connection_lifecycle_defined": false,
+    "consumer_idempotency_defined": false,
+    "no_fallback_logic": true,
+    "rate_limit_policy_defined": true,
+    "handles_sensitive_data": false,
+    "external_public_api": true,
+    "regulated_jurisdiction_impact": false,
+    "compatibility_matrix_updated": true,
+    "deprecation_policy_defined": true,
+    "has_breaking_change": true
+  },
+  "decision_context": {
+    "api_audience": "both",
+    "interaction_mode": "sync",
+    "primary_transport": "rest",
+    "selection_rationale": "Version governance applies to both internal and public REST consumers during staged migration.",
+    "alternatives_considered": [
+      "graphql",
+      "grpc"
+    ],
+    "naming_convention_summary": "Version labels and deprecation headers follow one policy across all endpoints.",
+    "threshold_method_summary": "Version support windows and operational thresholds are derived from consumer adoption telemetry and support cost."
+  },
+  "threshold_policy": {
+    "latency_target_derivation": "Latency targets are inherited from current SLO and adjusted for dual-version overhead.",
+    "availability_target_derivation": "Availability target is set by highest criticality consumer still on supported versions.",
+    "timeout_budget_derivation": "Timeout budgets include version-routing overhead and dependency variance.",
+    "capacity_headroom_derivation": "Capacity headroom accounts for overlap period where multiple versions run concurrently.",
+    "payload_limit_derivation": "Payload limits are fixed by backwards-compat payload envelope guarantees.",
+    "concurrency_limit_derivation": "Concurrency limits are derived from canary traffic split and rollback surge scenarios.",
+    "retry_backoff_derivation": "Retry policy is derived from cross-version idempotency guarantees and dependency backpressure.",
+    "delivery_semantics_derivation": "Delivery semantics must remain consistent during version overlap to prevent client divergence."
+  },
+  "compatibility_matrix": {
+    "supported_producer_versions": [
+      "v1",
+      "v2"
+    ],
+    "tested_consumers": [
+      "web-app",
+      "mobile-app"
+    ]
+  },
+  "deprecation_plan": {
+    "target_version": "v2",
+    "deprecation_window_days": 120,
+    "migration_guide_link": "https://example.com/migrations/v2"
+  }
+}

@@ -1,41 +1,43 @@
 ---
 name: db-normalization
-description: Specialized workflow for normal form decisions and update anomaly prevention. Use when schema, indexing, query planning, transaction semantics, migration safety, or durability behavior is in scope; do not use for API boundary design or infrastructure provisioning.
+description: "Normalization workflow for reducing update anomalies while balancing query practicality and domain invariants. Use when schema redundancy and inconsistency risk need deliberate trade-off decisions; do not use for physical indexing-only tasks."
 ---
 
-# Db Normalization
+# DB Normalization
 
-## Trigger Boundary
-- Use when schema, indexing, transaction, migration, or durability behavior is in scope.
-- Do not use for HTTP/API boundary design; use `api-*`.
-- Do not use for cluster provisioning details; use `infrastructure-as-code` or `kubernetes-*`.
+## Overview
+Use this skill to decide normalization depth intentionally, preserving integrity without ignoring workload realities.
 
-## Goal
-Ensure data correctness, performance, and lifecycle reliability.
+## Scope Boundaries
+- Duplicate mutable data causes inconsistency bugs.
+- Schema design needs explicit normalization versus denormalization trade-offs.
+- Teams are preparing for domain growth and evolving query patterns.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for normal form decisions and update anomaly prevention
-- Operational, compliance, and rollout constraints
+## Core Judgments
+- Normal form target per entity group (3NF/BCNF and justified deviations).
+- Redundancy acceptance criteria and ownership.
+- Denormalization scope and refresh semantics.
+- Constraint placement for anomaly prevention.
 
-## Outputs
-- Normalization decision record with trade-off rationale
-- Decision log for normal form decisions and update anomaly prevention
-- Verification checklist with measurable pass-fail criteria
+## Practitioner Heuristics
+- Normalize data that changes frequently or has strict consistency needs.
+- Denormalize only for measured read-path benefit with explicit maintenance strategy.
+- Prefer derived data pipelines over ad hoc duplicated writable columns.
+- Document who repairs divergence when denormalized copies drift.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for normal form decisions and update anomaly prevention.
-2. Produce options and select an approach for normal form decisions and update anomaly prevention.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using anomaly analysis for insert, update, and delete operations.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Identify update anomalies and redundancy hotspots.
+2. Model normalized alternatives and expected consistency behavior.
+3. Evaluate read/write trade-offs for selective denormalization.
+4. Define synchronization semantics for intentional redundancy.
+5. Document accepted anomalies and mitigation mechanisms.
 
-## Quality Gates
-- Scope and assumptions for normal form decisions and update anomaly prevention are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Common Failure Modes
+- Denormalization introduced without ownership of refresh logic.
+- Over-normalization creates excessive joins for latency-critical paths.
+- Hidden duplicated columns diverge silently over time.
 
-## Failure Handling
-- Stop when normalization gaps cause unresolved integrity anomalies.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when anomaly prevention responsibilities are undefined.
+- Stop when denormalization has no measurable performance rationale.
+- Escalate when required consistency cannot be maintained at chosen form.

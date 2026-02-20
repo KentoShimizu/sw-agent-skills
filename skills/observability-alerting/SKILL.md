@@ -1,41 +1,51 @@
 ---
 name: observability-alerting
-description: Specialized workflow for alert signal quality, routing policy, and actionable thresholds. Use when telemetry signal design, alertability, and operational detection policy are in scope; do not use for business-feature implementation logic.
+description: "Observability alerting workflow for signal quality, routing policy, and actionable thresholds. Use when alert rules need design or tuning to detect incidents with clear ownership and noise control; do not use for business-feature implementation logic."
 ---
 
 # Observability Alerting
 
-## Trigger Boundary
-- Use when production visibility, reliability targets, or incident response workflows are needed.
-- Do not use for feature-level functional spec writing; use `requirements-*`.
-- Do not use for pure code-style conformance checks.
+## Overview
+Use this skill to design alerting that catches real incidents quickly without overwhelming responders.
 
-## Goal
-Maintain production reliability through measurable operational controls.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for alert signal quality, routing policy, and actionable thresholds
-- Operational, compliance, and rollout constraints
+## Shared References
+- Alert threshold actionability rules:
+  - `references/alert-threshold-actionability-rules.md`
 
-## Outputs
-- Alert rule catalog with severity routing
-- Decision log for alert signal quality, routing policy, and actionable thresholds
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Alert catalog template:
+  - `assets/alert-catalog-template.csv`
+- Alert noise review checklist:
+  - `assets/alert-noise-review-checklist.md`
+
+## Inputs To Gather
+- Critical user/system failure modes.
+- Available telemetry signals and quality.
+- On-call routing and escalation policy.
+- Historical false-positive/false-negative patterns.
+
+## Deliverables
+- Alert catalog with severity, owner, and runbook linkage.
+- Threshold and routing policy.
+- Noise-control and tuning plan.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for alert signal quality, routing policy, and actionable thresholds.
-2. Produce options and select an approach for alert signal quality, routing policy, and actionable thresholds.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using alert precision and noise ratio review.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Build initial alert catalog in `assets/alert-catalog-template.csv`.
+2. Set thresholds using `references/alert-threshold-actionability-rules.md`.
+3. Define routing/escalation by severity.
+4. Validate with `assets/alert-noise-review-checklist.md`.
+5. Publish tuning backlog and ownership.
 
-## Quality Gates
-- Scope and assumptions for alert signal quality, routing policy, and actionable thresholds are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Alerts are actionable and owned.
+- Critical paths have coverage with bounded noise.
+- Paging vs non-paging intent is explicit.
 
-## Failure Handling
-- Stop when alerts are noisy, non-actionable, or missing critical paths.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when alerts are noisy, non-actionable, or ownerless.
+- Stop when critical failure modes lack alert coverage.
+- Escalate when alert quality risks SLO breach response.

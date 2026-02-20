@@ -1,41 +1,60 @@
 ---
 name: ci-cd-pipeline-design
-description: Specialized workflow for pipeline stage design, gate sequencing, and build reproducibility. Use when build, test, release, and rollout gates must be designed or changed; do not use for application-domain algorithm or schema decisions.
+description: "Design CI/CD pipelines with explicit stage order, quality gates, artifact traceability, and rollback safety. Use when build/test/release flow is being created or changed and teams need deterministic release controls before adoption; do not use for application-domain algorithm or schema design."
 ---
 
-# Ci Cd Pipeline Design
+# CI CD Pipeline Design
 
-## Trigger Boundary
-- Use when release safety, deployment sequencing, or rollback controls are required.
-- Do not use for business-priority ranking of requirements; use `requirement-prioritization`.
-- Do not use for runtime incident retrospectives; use `incident-postmortem`.
+## Overview
+Use this skill to design delivery pipelines that are deterministic, auditable, and safe under both success and failure paths.
 
-## Goal
-Deliver changes safely with repeatable, auditable release mechanics.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for pipeline stage design, gate sequencing, and build reproducibility
-- Operational, compliance, and rollout constraints
+## Inputs To Gather
+- Repository topology (mono-repo/multi-repo), services affected, and deployment targets.
+- Required checks (lint, test, security, compliance, performance) and risk tolerance.
+- Artifact model (build outputs, provenance, signing, retention).
+- Rollout model (blue/green, canary, phased, manual approvals).
 
-## Outputs
-- CI/CD stage and gate specification
-- Decision log for pipeline stage design, gate sequencing, and build reproducibility
-- Verification checklist with measurable pass-fail criteria
+## Deliverables
+- Pipeline stage blueprint with gate criteria and ownership.
+- Artifact traceability model (source -> build -> deployable -> environment).
+- Failure-path policy (auto-stop, rollback, manual override policy).
+- Verification checklist for rollout and rollback readiness.
+
+## Quick Start Blueprint
+
+### Baseline stage order
+1. `validate` (format/lint/static checks)
+2. `test` (unit/integration)
+3. `package` (immutable artifact creation)
+4. `security` (SCA, secrets, policy checks)
+5. `pre-release` (staging deploy + smoke)
+6. `release` (progressive production rollout)
+
+### Example gate policy
+- No deploy if unit tests, integration tests, or security checks fail.
+- Deploy only immutable artifacts produced by current commit.
+- Rollback trigger: SLO breach or error-rate threshold breach during rollout window.
+
+## Quality Standard
+- Stage order is deterministic and enforces risk reduction early.
+- Each gate has binary pass/fail criteria and named owner.
+- Artifacts are immutable and traceable to source commit.
+- Rollback path is validated, not assumed.
+- Manual approvals are explicit and auditable where required.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for pipeline stage design, gate sequencing, and build reproducibility.
-2. Produce options and select an approach for pipeline stage design, gate sequencing, and build reproducibility.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using pipeline dry-runs across success and failure paths.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define delivery risks and non-negotiable release constraints.
+2. Design stage sequence from fastest/high-signal checks to rollout.
+3. Define gate criteria and failure behavior per stage.
+4. Define artifact lineage and environment promotion rules.
+5. Validate success and failure paths with dry-runs.
+6. Publish operating policy and handoff guidance.
 
-## Quality Gates
-- Scope and assumptions for pipeline stage design, gate sequencing, and build reproducibility are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
-
-## Failure Handling
-- Stop when release-critical gates are missing or non-deterministic.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when release-critical gates are undefined or non-deterministic.
+- Stop when rollback path cannot be executed within required recovery time.
+- Escalate when policy/compliance gates are bypassed without approved exception.

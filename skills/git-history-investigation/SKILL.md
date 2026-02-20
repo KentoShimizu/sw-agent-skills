@@ -1,46 +1,52 @@
 ---
 name: git-history-investigation
-description: "Specialized workflow for reconstructing change history using log, show, diff, and blame evidence. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Reconstruct change history using log/show/diff/blame evidence to explain when and why behavior changed. Use when teams need evidence-based history analysis for regressions or ownership questions; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git History Investigation
 
-## Trigger Boundary
-- Use when regressions, ownership questions, or behavioral drift require historical analysis.
-- Do not use for binary-search regression isolation; use `git-bisect-debugging`.
-- Do not use for security-only threat analysis; use `security-threat-modeling`.
+## Overview
+Use this skill to produce an auditable evidence chain from symptom to likely root-cause commits.
 
-## Goal
-Find the commit-level root cause and decision context behind observed behavior.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track investigation artifacts with `GIT-HIS-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Evidence quality rules:
+  - `references/history-evidence-quality-rules.md`
 
-## Inputs
-- Reproducible symptom or unexpected behavior
-- Candidate file paths, modules, or time window
-- Available issue, PR, or review metadata
+## Templates And Assets
+- Investigation log:
+  - `assets/history-investigation-log-template.md`
+- Root-cause hypothesis template:
+  - `assets/root-cause-hypothesis-template.md`
 
-## Outputs
-- `GIT-HIS-*` chronological evidence trail
-- Root-cause candidate commit set with rationale
-- Follow-up remediation recommendation
+## Inputs To Gather
+- Reproducible symptom or unexpected behavior.
+- Candidate paths/modules and relevant time window.
+- Issue/PR/review metadata for context.
+- Required confidence threshold for decision-making.
+
+## Deliverables
+- Chronological evidence trail.
+- Root-cause hypothesis with alternative hypotheses.
+- Confidence-rated conclusion and next action recommendation.
 
 ## Workflow
-1. Narrow scope by file path, author, and date window.
-2. Inspect commit diffs and messages for behavioral shifts.
-3. Cross-reference blame data with review and issue context.
-4. Validate candidate root cause against symptom timeline.
-5. Publish findings with confidence level and contract validation evidence.
+1. Define scope and symptom timeline in `assets/history-investigation-log-template.md`.
+2. Gather direct evidence from log/show/diff/blame.
+3. Form and test hypotheses with `assets/root-cause-hypothesis-template.md`.
+4. Apply `references/history-evidence-quality-rules.md` to validate claim strength.
+5. Publish findings and root-cause-oriented follow-up actions.
 
-## Quality Gates
-- Evidence chain links symptom to specific commit behavior.
-- Root-cause claim includes reproducible supporting data.
-- Alternative hypotheses are documented and ruled out.
-- Follow-up actions target root causes, not only symptoms.
+## Quality Standard
+- Evidence chain links symptom timeline to concrete commit behavior.
+- Root-cause claim includes supporting and disconfirming evidence.
+- Alternatives are explicitly considered and resolved.
+- Follow-up actions address cause, not just surface symptoms.
 
-## Failure Handling
-- Stop when symptom cannot be reproduced or scoped.
-- Escalate when history evidence is insufficient for a high-confidence claim.
+## Failure Conditions
+- Stop when symptom cannot be scoped to a meaningful history window.
+- Stop when evidence is mostly inferential without diff-level support.
+- Escalate when confidence is too low for production-impacting decisions.

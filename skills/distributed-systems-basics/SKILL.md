@@ -1,41 +1,52 @@
 ---
 name: distributed-systems-basics
-description: Specialized workflow for distributed failure modes, consistency models, and reliability primitives. Use when multi-node consistency, partition tolerance, and fault-handling semantics are central; do not use for single-process application implementation details.
+description: "Distributed-systems workflow for failure-mode analysis, consistency choices, and reliability primitive selection across networked components. Use when correctness depends on partitions, retries, timeouts, ordering, or partial failures; do not use for single-process implementation details only."
 ---
 
 # Distributed Systems Basics
 
-## Trigger Boundary
-- Use when parallel execution, coordination, or distributed failure semantics are central.
-- Do not use for UX interaction design concerns; use design-related skills.
-- Do not use for single-query database tuning only; use `db-query-optimization`.
+## Overview
+Use this skill to reason about correctness and reliability in systems where network faults and partial failures are normal.
 
-## Goal
-Ensure correctness and resilience under concurrency and partial failures.
+## Scope Boundaries
+- Multi-service workflows require explicit consistency and ordering guarantees.
+- Retry/timeout/duplicate-message behavior can change business correctness.
+- Teams need to define reliability primitives before implementation or rollout.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for distributed failure modes, consistency models, and reliability primitives
-- Operational, compliance, and rollout constraints
+## Shared References
+- Failure mode and consistency rules:
+  - `references/failure-mode-consistency-rules.md`
 
-## Outputs
-- Distributed system baseline design notes
-- Decision log for distributed failure modes, consistency models, and reliability primitives
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Distributed flow risk template:
+  - `assets/distributed-flow-risk-template.md`
+
+## Inputs To Gather
+- Component boundaries and communication patterns.
+- Consistency and ordering requirements per workflow.
+- Failure scenarios (partition, timeout, duplicate, out-of-order, stale read).
+- Recovery and observability capabilities.
+
+## Deliverables
+- Failure-mode map and risk ranking.
+- Consistency decision record per critical flow.
+- Reliability mechanism selection (retry, idempotency, backoff, timeout).
+- Validation plan (fault injection and invariant checks).
 
 ## Workflow
-1. Clarify outcomes and hard constraints for distributed failure modes, consistency models, and reliability primitives.
-2. Produce options and select an approach for distributed failure modes, consistency models, and reliability primitives.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using failure-mode walkthrough across network and node faults.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Capture critical flows with `assets/distributed-flow-risk-template.md`.
+2. Map failure assumptions and consistency requirements per flow.
+3. Select reliability primitives using `references/failure-mode-consistency-rules.md`.
+4. Define observability and recovery behavior.
+5. Validate assumptions with targeted failure tests and invariant checks.
 
-## Quality Gates
-- Scope and assumptions for distributed failure modes, consistency models, and reliability primitives are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Critical flows have explicit consistency and ordering rules.
+- Retry/timeout semantics are bounded and intentional.
+- Idempotency strategy exists where at-least-once delivery is possible.
+- Failure handling is observable and testable.
 
-## Failure Handling
-- Stop when core distributed assumptions are undefined or contradictory.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when consistency assumptions are implicit or contradictory.
+- Stop when retries/timeouts can amplify failure unboundedly.
+- Escalate when critical failure modes have no mitigation path.

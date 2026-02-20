@@ -1,48 +1,53 @@
 ---
 name: git-pr-sync-workflow
-description: "Specialized workflow for keeping pull request branches synchronized with target branch changes and review expectations. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Keep pull request branches synchronized with target branch updates using a safe, policy-aligned strategy. Use when a PR branch diverges from base and merge-vs-rebase plus conflict handling must be chosen safely; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Pr Sync Workflow
 
-## Trigger Boundary
-- Use when an open PR drifts from its target branch.
-- Do not use for selective emergency backports; use `git-cherry-pick-hotfix`.
-- Do not use for pre-PR local history cleanup; use `git-rebase-workflow`.
+## Overview
+Use this skill to synchronize open PR branches with minimal review disruption and predictable risk control.
 
-## Goal
-Keep open PR branches merge-ready with minimal integration surprises.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track PR sync artifacts with `GIT-PRS-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Merge vs rebase decision guidance:
+  - `references/sync-strategy-selection.md`
 
-## Inputs
-- Current PR branch divergence and target branch status
-- Required checks and review policies
-- Repository synchronization policy for open PRs
+## Templates And Assets
+- Sync decision log:
+  - `assets/pr-sync-decision-log-template.md`
+- Sync verification checklist:
+  - `assets/pr-sync-checklist.md`
 
-## Outputs
-- `GIT-PRS-*` synchronized PR branch record
-- Conflict and resolution notes for reviewers
-- Updated validation evidence after synchronization
+## Inputs To Gather
+- Current PR divergence and base branch update scope.
+- Repository policy for open-PR synchronization.
+- CI requirements and review continuity expectations.
+- Conflict complexity and affected critical files.
+
+## Deliverables
+- Chosen synchronization strategy with rationale.
+- Conflict resolution notes for reviewers.
+- Post-sync verification results.
+- Updated PR context for review continuity.
 
 ## Workflow
-1. Confirm the PR is open and synchronization is required.
-2. Apply the repository-approved synchronization strategy (merge or rebase) to the PR branch.
-3. Resolve conflicts and preserve review context.
-4. Re-run required CI and targeted manual checks.
-5. Update PR notes with sync rationale, risk impact, and contract validation evidence.
+1. Confirm sync necessity and policy constraints.
+2. Choose strategy using `references/sync-strategy-selection.md`.
+3. Execute sync and record rationale in `assets/pr-sync-decision-log-template.md`.
+4. Resolve conflicts with reviewer-facing notes.
+5. Re-run checks and verify completion via `assets/pr-sync-checklist.md`.
 
-## Quality Gates
-- `checks.pr_opened=true` for synchronization records.
-- Exactly one synchronization strategy is recorded (`checks.merge_sync_used` xor `checks.rebase_used`).
-- Selected synchronization strategy complies with repository policy.
-- Required checks pass after synchronization.
-- Conflict decisions are documented for reviewers.
+## Quality Standard
+- Strategy choice is policy-compliant and explicitly justified.
+- Conflict resolutions preserve intended behavior, not just clean merge state.
+- Required checks are rerun after sync.
+- Reviewer context is updated to avoid hidden history changes.
 
-## Failure Handling
-- Stop when synchronization strategy violates repository policy.
-- Stop when sync introduces unresolved semantic conflicts.
-- Escalate when branch drift repeatedly breaks required checks.
+## Failure Conditions
+- Stop when selected strategy violates repository policy.
+- Stop when semantic conflicts remain unresolved after sync.
+- Escalate when repeated drift indicates base-branch integration process issues.

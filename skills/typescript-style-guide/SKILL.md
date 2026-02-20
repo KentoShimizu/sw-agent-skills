@@ -1,9 +1,13 @@
 ---
 name: typescript-style-guide
-description: "Style, review, and refactoring standards for TypeScript codebases. Use when editing or reviewing `.ts`, `.tsx`, `.d.ts`, `tsconfig*.json`, or TypeScript tooling/config files compiled or type-checked by `tsc`. Do not use for JavaScript-only modules that are outside TypeScript type-check scope. In mixed JS/TS repositories, this skill owns `tsconfig`-scoped modules. For shared JS/TS configuration files (for example `package.json`, shared lint/test config), run together with `javascript-style-guide` when both JS and TS artifacts change in the same pull request."
+description: "Style, review, and refactoring standards for TypeScript codebases. Trigger when `.ts`, `.tsx`, `.d.ts`, or `tsconfig*.json` files are created, changed, or reviewed and TS-specific quality rules (type safety, narrowing, async/error handling, module boundaries) must be enforced. Do not use for JavaScript-only modules that are outside TypeScript type-check scope. In mixed JS/TS repositories, this skill owns `tsconfig`-scoped modules. For shared JS/TS configuration files (for example `package.json`, shared lint/test config), run together with `javascript-style-guide` when both JS and TS artifacts change in the same pull request."
 ---
 
 # Typescript Style Guide
+
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
 Apply this checklist when writing or reviewing TypeScript code.
 
@@ -36,6 +40,9 @@ Apply this checklist when writing or reviewing TypeScript code.
 2. Prefer explicit `type`/`interface`/discriminated unions over loose object bags.
 3. Avoid `any`; use `unknown` plus narrowing when dynamic input is unavoidable.
 4. Model boundary contracts with explicit request/response types.
+5. Treat `object` and broad `Record<string, unknown>` as temporary boundary types, not domain model types.
+6. Prefer parser/type-guard refinement over `as Foo` casts; repeated casts are usually a contract-design smell.
+7. Use `satisfies` for config/static objects to preserve literal precision without unsafe widening.
 
 ## Runtime validation and error handling
 

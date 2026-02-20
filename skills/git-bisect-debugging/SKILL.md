@@ -1,46 +1,52 @@
 ---
 name: git-bisect-debugging
-description: "Specialized workflow for locating regression-introducing commits with git bisect and deterministic checks. Use when Git history, branching, synchronization, or recovery workflows are the core concern; do not use for CI workflow design or application behavior implementation."
+description: "Locate regression-introducing commits using git bisect with deterministic classification. Use when a reproducible regression exists but the introducing commit is unknown; do not use for CI workflow design or application behavior implementation."
 ---
 
 # Git Bisect Debugging
 
-## Trigger Boundary
-- Use when there is a known good revision and known bad revision.
-- Do not use when no deterministic pass-fail check exists.
-- Do not use for dependency vulnerability triage; use `security-vulnerability-management`.
+## Overview
+Use this skill to isolate first-bad commits quickly and reproducibly, so fixes target root cause instead of symptoms.
 
-## Goal
-Isolate the first bad commit with objective pass-fail evidence.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Shared Git Contract (Canonical)
-- Use `../git-branch-strategy/references/git-governance-contract.md` as the single schema and gate source.
-- Track bisect artifacts with `GIT-BIS-*` IDs.
-- Run machine validation: `python3 ../git-branch-strategy/scripts/validate_git_contract.py --manifest <path/to/manifest.json>`.
+## Shared References
+- Determinism guidance:
+  - `references/bisect-determinism-guidance.md`
 
-## Inputs
-- Known good commit and known bad commit
-- Deterministic test or script for bisect classification
-- Environment requirements for reproducible execution
+## Templates And Assets
+- Session log template:
+  - `assets/bisect-session-log-template.md`
+- Verification checklist:
+  - `assets/bisect-checklist.md`
 
-## Outputs
-- `GIT-BIS-*` culprit commit evidence
-- Bisect log with classified steps
-- Next-step fix or revert recommendation
+## Inputs To Gather
+- Known good commit and known bad commit.
+- Deterministic pass/fail command for classification.
+- Environment requirements for reproducible execution.
+- Evidence expectations for culprit validation.
+
+## Deliverables
+- Culprit commit candidate with evidence trail.
+- Bisect session log with classified steps.
+- Confidence statement and next action recommendation.
 
 ## Workflow
-1. Confirm deterministic reproduction with good and bad endpoints.
-2. Start bisect and classify midpoint commits.
-3. Automate classification when possible for consistency.
-4. Validate culprit commit by replaying test around boundary.
-5. Publish culprit evidence with contract validation record.
+1. Validate good/bad endpoints and deterministic classifier command.
+2. Run bisect and classify commits consistently.
+3. Capture classifications in `assets/bisect-session-log-template.md`.
+4. Re-validate candidate culprit around boundary commits.
+5. Close with `assets/bisect-checklist.md` and next-step recommendation.
 
-## Quality Gates
-- Good/bad endpoints are validated before bisect starts.
-- Classification command is deterministic and documented.
-- Culprit commit is confirmed by repeatable verification.
-- Bisect session log is preserved for auditability.
+## Quality Standard
+- Good/bad endpoints are verified before bisect begins.
+- Classification is deterministic and repeatable.
+- Culprit claim is supported by reproducible evidence.
+- Session records are sufficient for peer audit.
 
-## Failure Handling
+## Failure Conditions
 - Stop when classification is flaky or environment-dependent.
-- Escalate when multiple interacting commits mask single-commit isolation.
+- Stop when no reliable good/bad endpoints can be identified.
+- Escalate when interacting commits prevent single-commit isolation.

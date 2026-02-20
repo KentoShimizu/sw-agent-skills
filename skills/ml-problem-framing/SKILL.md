@@ -1,41 +1,50 @@
 ---
 name: ml-problem-framing
-description: Specialized workflow for objective definition, target variable design, and success metrics. Use when model, data, feature, or training decisions for ML systems are in scope; do not use for generic API-layer or infrastructure-only changes.
+description: "ML problem framing workflow for objective definition, target variable design, and success criteria. Use when translating business problems into ML tasks and objective/label/metric definitions are still ambiguous; do not use for generic API-layer or infrastructure-only changes."
 ---
 
 # Ml Problem Framing
 
-## Trigger Boundary
-- Use when ML data, model, training, evaluation, or serving choices are being made.
-- Do not use for generic API lifecycle governance; use `api-*`.
-- Do not use for non-ML database administration concerns.
+## Overview
+Use this skill to define an ML problem that supports a real product decision with measurable outcomes.
 
-## Goal
-Produce reliable ML lifecycle decisions from data to production monitoring.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for objective definition, target variable design, and success metrics
-- Operational, compliance, and rollout constraints
+## Shared References
+- Objective and labeling rules:
+  - `references/objective-and-labeling-rules.md`
 
-## Outputs
-- Problem framing document with measurable objective
-- Decision log for objective definition, target variable design, and success metrics
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Problem framing template:
+  - `assets/problem-framing-template.md`
+
+## Inputs To Gather
+- Business decision to support and value target.
+- Candidate prediction target and labeling source.
+- Risk constraints (fairness, latency, compliance).
+- Baseline process and non-ML alternatives.
+
+## Deliverables
+- Framed ML objective with explicit non-goals.
+- Label definition and prediction unit.
+- Success metrics and decision thresholds.
+- Risks and assumptions log.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for objective definition, target variable design, and success metrics.
-2. Produce options and select an approach for objective definition, target variable design, and success metrics.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using objective-review against business and user constraints.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Define decision context with `assets/problem-framing-template.md`.
+2. Validate objective/label choices using `references/objective-and-labeling-rules.md`.
+3. Align metric choices to business and user outcomes.
+4. Document assumptions, constraints, and alternatives.
+5. Publish go/no-go framing decision.
 
-## Quality Gates
-- Scope and assumptions for objective definition, target variable design, and success metrics are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Objective is measurable and decision-relevant.
+- Label definition is leakage-safe and reproducible.
+- Metrics and thresholds are operationally actionable.
 
-## Failure Handling
-- Stop when problem statement is not measurable or decision-relevant.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when objective does not map to a concrete decision.
+- Stop when label quality/timing cannot be validated.
+- Escalate when framing risks exceed policy tolerance.

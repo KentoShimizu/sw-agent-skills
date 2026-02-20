@@ -1,41 +1,55 @@
 ---
 name: incident-postmortem
-description: Specialized workflow for incident root cause analysis and systemic prevention actions. Use after incidents to capture root cause, impact, and prevention actions; do not use for active incident command and real-time mitigation.
+description: "Incident postmortem workflow for evidence-backed root cause analysis and systemic prevention actions. Use after incident stabilization when teams need timeline, root-cause chain, contributing factors, and owned prevention actions; do not use for active incident command and real-time mitigation."
 ---
 
 # Incident Postmortem
 
-## Trigger Boundary
-- Use when production visibility, reliability targets, or incident response workflows are needed.
-- Do not use for feature-level functional spec writing; use `requirements-*`.
-- Do not use for pure code-style conformance checks.
+## Overview
+Use this skill to turn incidents into concrete learning and prevention changes, not just narrative summaries.
 
-## Goal
-Maintain production reliability through measurable operational controls.
+## Scope Boundaries
+- Use this skill when the task matches the trigger condition described in `description`.
+- Do not use this skill when the primary task falls outside this skill's domain.
 
-## Inputs
-- Change scope and risk profile
-- Domain evidence for incident root cause analysis and systemic prevention actions
-- Operational, compliance, and rollout constraints
+## Shared References
+- Root-cause evidence rules:
+  - `references/root-cause-evidence-rules.md`
 
-## Outputs
-- Postmortem report with corrective action owners
-- Decision log for incident root cause analysis and systemic prevention actions
-- Verification checklist with measurable pass-fail criteria
+## Templates And Assets
+- Postmortem report template:
+  - `assets/postmortem-report-template.md`
+- Incident timeline template:
+  - `assets/incident-timeline-template.csv`
+- Corrective action tracker:
+  - `assets/corrective-action-tracker-template.csv`
+
+## Inputs To Gather
+- Incident timeline signals and operational evidence.
+- Customer/business impact and severity context.
+- Mitigation and recovery actions taken.
+- Known system/process constraints.
+
+## Deliverables
+- Evidence-backed postmortem report.
+- Timeline artifact linking events to signals.
+- Corrective action plan with owner, due date, and verification.
+- Residual risk statement and follow-up tracking.
 
 ## Workflow
-1. Clarify outcomes and hard constraints for incident root cause analysis and systemic prevention actions.
-2. Produce options and select an approach for incident root cause analysis and systemic prevention actions.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using evidence-backed timeline and five-whys consistency check.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Build timeline in `assets/incident-timeline-template.csv`.
+2. Analyze trigger, root causes, and contributors using `references/root-cause-evidence-rules.md`.
+3. Draft report in `assets/postmortem-report-template.md`.
+4. Track prevention actions in `assets/corrective-action-tracker-template.csv`.
+5. Publish and align owners on verification timelines.
 
-## Quality Gates
-- Scope and assumptions for incident root cause analysis and systemic prevention actions are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+## Quality Standard
+- Root cause is evidence-backed, not speculative.
+- Timeline and impact statements are explicit and auditable.
+- Corrective actions are specific, owned, and verifiable.
+- System/process improvements are prioritized over blame narratives.
 
-## Failure Handling
-- Stop when root cause remains speculative without supporting evidence.
-- Escalate when accepted risk exceeds team policy thresholds.
+## Failure Conditions
+- Stop when root-cause claims lack supporting evidence.
+- Stop when action items have no owner or verification method.
+- Escalate when residual risk exceeds accepted reliability policy.

@@ -1,41 +1,49 @@
 ---
 name: testing-unit
-description: Specialized workflow for small-scope deterministic unit behavior validation. Use when designing verification strategy and evidence at this test level; do not use for observability ownership or release scheduling policy.
+description: "Deterministic unit-test strategy for isolated logic and fast feedback. Use when core logic branches, error paths, and edge conditions need low-latency regression evidence with controlled dependencies; do not use for browser-flow or cross-service compatibility validation."
 ---
 
 # Testing Unit
 
-## Trigger Boundary
-- Use when verification strategy or release confidence evidence must be designed.
-- Do not use for production observability ownership; use `observability-*`.
-- Do not use for architecture topology selection.
+## Overview
+Use this skill to validate small-scope logic quickly and deterministically with strong failure localization.
 
-## Goal
-Build sufficient verification evidence to prevent regressions.
+## Scope Boundaries
+- Use when correctness can be validated within isolated units.
+- Typical requests:
+  - `Harden branch and edge-case logic with fast deterministic tests.`
+  - `Verify exception paths and guard-rail behavior.`
+  - `Isolate dependencies to pinpoint failure causes.`
+- Do not use when:
+  - Cross-service compatibility is the core risk (`testing-contract`/`testing-integration`).
+  - Full UI journey behavior is needed (`testing-e2e`/`playwright`).
 
 ## Inputs
-- Change scope and risk profile
-- Domain evidence for small-scope deterministic unit behavior validation
-- Operational, compliance, and rollout constraints
+- Unit boundaries and behavior expectations
+- Mock/stub strategy and dependency seams
+- Runtime constraints for fast feedback loops
 
 ## Outputs
-- Unit test suite with isolation strategy
-- Decision log for small-scope deterministic unit behavior validation
-- Verification checklist with measurable pass-fail criteria
+- Unit suite with fixture and isolation strategy
+- Decision record for scope and assertion depth
+- Verification checklist for edge/failure coverage
 
 ## Workflow
-1. Clarify outcomes and hard constraints for small-scope deterministic unit behavior validation.
-2. Produce options and select an approach for small-scope deterministic unit behavior validation.
-3. Evaluate trade-offs across security, performance, operability, and maintainability.
-4. Verify decisions using fast deterministic execution with dependency isolation.
-5. Publish decisions, residual risks, and accountable follow-up actions.
+1. Identify unit boundaries and observable contracts.
+2. Define edge and failure conditions before implementation.
+3. Compare isolation strategies and choose one with rationale.
+4. Implement deterministic tests with explicit assertions.
+5. Publish residual risks and uncovered dependency behaviors.
 
 ## Quality Gates
-- Scope and assumptions for small-scope deterministic unit behavior validation are explicit and reviewable.
-- Decision rationale is backed by evidence instead of preference.
-- Rollout and rollback criteria are defined when production impact exists.
-- Residual risks have owners, due dates, and verification steps.
+- Unit scope is explicit and dependency control is intentional.
+- Edge and failure cases are covered for critical logic.
+- Tests are deterministic and fast enough for frequent execution.
+- Evidence is reproducible and actionable.
 
 ## Failure Handling
-- Stop when core units lack deterministic tests for edge and failure paths.
-- Escalate when accepted risk exceeds team policy thresholds.
+- Stop when critical units lack edge/failure coverage.
+- Escalate when isolation requires architectural refactoring.
+
+## Bundled Resources
+- `references/trigger-and-examples.md`: trigger patterns, anti-patterns, and deliverable expectations.

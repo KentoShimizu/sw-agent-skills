@@ -1,0 +1,63 @@
+{
+  "artifact_id": "API-CDC-20260215-001",
+  "state": "active",
+  "approvers": [
+    "API Owner",
+    "Engineering Owner"
+  ],
+  "checks": {
+    "id_format_validated": true,
+    "backward_compatibility_reviewed": true,
+    "transport_selection_documented": true,
+    "naming_convention_defined": true,
+    "authz_modeled": true,
+    "error_contract_defined": true,
+    "observability_fields_defined": true,
+    "runbook_updated": true,
+    "timeout_budget_defined": true,
+    "delivery_semantics_defined": true,
+    "backpressure_strategy_defined": true,
+    "connection_lifecycle_defined": false,
+    "consumer_idempotency_defined": true,
+    "no_fallback_logic": true,
+    "rate_limit_policy_defined": false,
+    "handles_sensitive_data": false,
+    "external_public_api": false,
+    "regulated_jurisdiction_impact": false,
+    "consumer_matrix_current": true,
+    "ci_blocking_enabled": true
+  },
+  "decision_context": {
+    "api_audience": "internal",
+    "interaction_mode": "async",
+    "primary_transport": "queue",
+    "selection_rationale": "Inter-service integrations require decoupled retries and delayed processing tolerance, favoring queued async delivery.",
+    "alternatives_considered": [
+      "rest",
+      "grpc",
+      "websocket"
+    ],
+    "naming_convention_summary": "Contract names and event subjects are stable nouns with version suffixes managed by compatibility policy.",
+    "threshold_method_summary": "Consumer lag, retry, and queue depth thresholds are derived from end-to-end SLA and recovery-time objectives."
+  },
+  "threshold_policy": {
+    "latency_target_derivation": "End-to-end latency target is derived from business process SLA, not single request time.",
+    "availability_target_derivation": "Availability is defined as successful eventual processing within SLA window.",
+    "timeout_budget_derivation": "Producer timeout and consumer visibility timeout are derived from processing time distribution.",
+    "capacity_headroom_derivation": "Queue headroom is set using peak event burst and replay/recovery traffic assumptions.",
+    "payload_limit_derivation": "Message size limits are derived from broker constraints and serialization overhead.",
+    "concurrency_limit_derivation": "Consumer concurrency is set by downstream throughput and lock/contention profiles.",
+    "retry_backoff_derivation": "Retry and dead-letter thresholds are derived from transient failure probability and idempotency guarantees.",
+    "delivery_semantics_derivation": "Delivery semantics define at-least-once behavior with explicit deduplication strategy."
+  },
+  "compatibility_matrix": {
+    "supported_producer_versions": [
+      "v1",
+      "v2"
+    ],
+    "tested_consumers": [
+      "billing-service",
+      "notification-service"
+    ]
+  }
+}

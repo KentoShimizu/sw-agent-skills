@@ -1,41 +1,46 @@
 ---
 name: screenshot
-description: "Visual evidence capture workflow for software development. Use when test or evidence artifacts are the primary output for verification; do not use for product requirement prioritization or architecture topology selection."
+description: "Visual evidence capture workflow for reproducible screenshots in engineering and QA tasks. Use when bug reports, regression checks, or implementation proof require stable screenshot artifacts; do not use for design-source extraction or architecture documentation."
 ---
 
 # Screenshot
 
-## Trigger Boundary
-- Use when visual proof is required for engineering decisions or review comments.
-- Do not use for DOM-level automation artifacts if browser tooling already captures equivalent evidence.
-- Do not use for source design extraction from Figma files.
+## Overview
+Use this skill to capture reproducible screenshot evidence that is easy to review and trace back to exact system state.
 
-## Goal
-Capture reproducible visual artifacts that make issues understandable without additional context.
+## Scope Boundaries
+- Bugs or regressions need visual evidence for triage.
+- Before/after comparison is required for implementation validation.
+- QA or review comments require precise state capture.
 
-## Inputs
-- Capture target (display, app window, active window, region)
-- Evidence intent (regression proof, before/after comparison, bug report)
-- Storage path and sharing requirements
+## Templates And Assets
+- Screenshot evidence template:
+  - `assets/screenshot-evidence-template.md`
 
-## Outputs
-- Screenshot artifact set with stable naming
-- Capture metadata (what, where, when, and why)
-- Optional comparison pair for change validation
+## Inputs To Gather
+- Capture intent (bug, regression, implementation proof).
+- Exact target state (environment, route, data fixture, viewport, locale).
+- Storage location and sharing audience.
+
+## Deliverables
+- Screenshot set with stable names and reproducible capture context.
+- Metadata log (state, environment, timestamp, operator).
+- Optional before/after pair for direct comparison.
 
 ## Workflow
-1. Define the exact UI state that must be captured.
-2. Capture at the smallest scope that still preserves diagnostic value.
-3. Verify legibility of key evidence (labels, errors, version/state markers).
-4. Store artifacts under predictable paths for PR/issue references.
-5. For external sharing, attach capture context so reviewers can reproduce the same state.
+1. Define the minimum state required to prove the target issue or behavior.
+2. Set deterministic capture conditions (viewport, theme, locale, seed data).
+3. Capture screenshots at the smallest useful scope while preserving diagnostic context.
+4. Verify key evidence is legible (labels, errors, indicators, timestamps if relevant).
+5. Store artifacts under predictable naming and attach reproduction steps.
 
-## Quality Gates
-- Captures include enough context to identify app state and scenario.
-- Local debug capture remains lightweight; apply masking only when artifacts are shared externally.
-- Artifact paths and names are consistent across updates.
-- Reviewer can map each screenshot to a concrete reproduction step.
+## Quality Standard
+- Reviewers can reproduce the captured state from metadata.
+- Artifact names encode purpose and scenario.
+- Sensitive data is masked before external sharing.
+- Comparison captures use consistent viewport and state conditions.
 
-## Failure Handling
-- Stop when screen-capture permissions are unavailable.
-- Stop external sharing when required masking cannot be completed safely.
+## Failure Conditions
+- Stop when screenshot permissions are unavailable.
+- Stop when required masking cannot be completed safely.
+- Escalate when capture conditions are non-deterministic and evidence is unreliable.

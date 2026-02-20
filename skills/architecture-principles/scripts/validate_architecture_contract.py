@@ -5,30 +5,27 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 
-ID_PATTERNS: dict[str, re.Pattern[str]] = {
-    "ARC-DRV": re.compile(r"^ARC-DRV-[0-9]{3,}$"),
-    "ARC-PRN": re.compile(r"^ARC-PRN-[0-9]{3,}$"),
-    "ARC-OPT": re.compile(r"^ARC-OPT-[0-9]{3,}$"),
-    "ADR": re.compile(r"^ADR-[0-9]{8}-[0-9]{3,}$"),
-    "ARC-RSK": re.compile(r"^ARC-RSK-[0-9]{3,}$"),
-    "C4-CTX": re.compile(r"^C4-CTX-[A-Z0-9_]+-v[0-9]+$"),
-    "C4-CTR": re.compile(r"^C4-CTR-[A-Z0-9_]+-v[0-9]+$"),
-    "C4-CMP": re.compile(r"^C4-CMP-[A-Z0-9_]+-v[0-9]+$"),
-    "ARC-CMP": re.compile(r"^ARC-CMP-[0-9]{8}-[0-9]{3,}$"),
+STATELESS_STATES = {None}
+STATEFUL_STATES = {
+    "proposed",
+    "accepted",
+    "rejected",
+    "deprecated",
+    "superseded",
+    "open",
+    "mitigating",
+    "closed",
+    "draft",
+    "reviewed",
+    "approved",
+    "expired",
 }
 
-VALID_STATES: dict[str, set[str]] = {
-    "ARC-DRV": {"proposed", "accepted", "rejected", "deprecated"},
-    "ARC-PRN": {"proposed", "accepted", "rejected", "deprecated"},
-    "ARC-OPT": {"proposed", "accepted", "rejected", "deprecated"},
-    "ADR": {"proposed", "accepted", "rejected", "superseded"},
-    "ARC-RSK": {"open", "mitigating", "accepted", "closed"},
-    "ARC-CMP": {"draft", "reviewed", "approved", "expired"},
-}
+RISK_ONLY_STATES = {"open", "mitigating", "closed"}
+CMP_STATES = {"draft", "reviewed", "approved", "expired"}
 
 SYSTEM_TYPES = {"greenfield", "brownfield"}
 ALWAYS_REQUIRED_APPROVERS = {"Architecture Owner", "Security Reviewer"}
@@ -59,13 +56,6 @@ def load_manifest(path: Path) -> dict[str, object]:
     if not isinstance(data, dict):
         raise SystemExit("manifest root must be an object")
     return data
-
-
-def artifact_prefix(artifact_id: str) -> str | None:
-    for prefix, pattern in ID_PATTERNS.items():
-        if pattern.match(artifact_id):
-            return prefix
-    return None
 
 
 def require_bool_true(checks: dict[str, object], key: str, errors: list[str]) -> None:
@@ -106,21 +96,11 @@ def validate_manifest(manifest: dict[str, object]) -> list[str]:
     checks = manifest.get("checks")
     compliance_evidence = manifest.get("compliance_evidence")
 
-    if not isinstance(artifact_id, str):
-        errors.append("artifact_id must be a string")
-        return errors
+    if artifact_id is not None and (not isinstance(artifact_id, str) or not artifact_id.strip()):
+        errors.append("artifact_id must be a non-empty string when present")
 
-    prefix = artifact_prefix(artifact_id)
-    if prefix is None:
-        errors.append("artifact_id does not match any allowed ID schema")
-        return errors
-
-    allowed_states = VALID_STATES.get(prefix)
-    if allowed_states is not None:
-        if not isinstance(state, str) or state not in allowed_states:
-            errors.append(f"state must be one of {sorted(allowed_states)}")
-    elif state is not None:
-        errors.append("state is not defined for this artifact type in the canonical contract")
+    if state is not None and (not isinstance(state, str) or state not in STATEFUL_STATES):
+        errors.append(f"state must be one of {sorted(STATEFUL_STATES)} when present")
 
     if not isinstance(approvers, list) or not all(isinstance(x, str) for x in approvers):
         errors.append("approvers must be an array of strings")
@@ -158,11 +138,19 @@ def validate_manifest(manifest: dict[str, object]) -> list[str]:
     if eu_high_risk_processing is True and not EU_HIGH_RISK_APPROVERS.intersection(approver_set):
         errors.append("DPO or Delegated DPO Approver is required when checks.eu_high_risk_processing is true")
 
-    if prefix == "ARC-CMP":
+    if compliance_evidence is not None:
+        if state not in CMP_STATES:
+            errors.append("state must be one of draft/reviewed/approved/expired when compliance_evidence is present")
         if not isinstance(compliance_evidence, dict):
-            errors.append("compliance_evidence must be an object for ARC-CMP artifacts")
+            errors.append("compliance_evidence must be an object when present")
         else:
             require_non_empty_string_map(compliance_evidence, COMPLIANCE_EVIDENCE_KEYS, errors, "compliance_evidence")
+    elif isinstance(state, str) and state in CMP_STATES:
+        errors.append("compliance_evidence is required when using compliance package states")
+
+    # Guard against obvious state misuse for risk-only states.
+    if isinstance(state, str) and state in RISK_ONLY_STATES and compliance_evidence is not None:
+        errors.append("risk-only states cannot be combined with compliance_evidence")
 
     return errors
 
