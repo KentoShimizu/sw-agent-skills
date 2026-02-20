@@ -35,7 +35,7 @@ cd "sw-agent-skills-${TAG#v}"
 
 ### エージェント別セットアップ（公式リファレンス）
 
-1. Codex（[openai/skills](https://github.com/openai/skills)、[Codex settings: Skills](https://developers.openai.com/codex/settings#skills)）
+1. Codex（[openai/skills](https://github.com/openai/skills)、[Codex Skills docs](https://developers.openai.com/codex/skills)）
    - 個人スキル: `~/.agents/skills/<skill-name>/SKILL.md`
    - プロジェクト単位: `<project>/.agents/skills/<skill-name>/SKILL.md`
    - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
@@ -61,7 +61,7 @@ python3 scripts/validate_no_absolute_paths.py
 - [Releases](https://github.com/KentoShimizu/sw-agent-skills/releases)
 - [Agent Skills](https://agentskills.io/home)
 - [Codex Skills (openai/skills)](https://github.com/openai/skills)
-- [Codex Settings: Skills](https://developers.openai.com/codex/settings#skills)
+- [Codex Skills docs](https://developers.openai.com/codex/skills)
 - [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)
 - [OpenCode Skills](https://open-code.ai/en/docs/skills)
 
