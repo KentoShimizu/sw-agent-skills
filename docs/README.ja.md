@@ -34,11 +34,11 @@ cd "sw-agent-skills-${TAG#v}"
 
 ### エージェント別セットアップ（公式リファレンス）
 
-1. Codex（[openai/skills](https://github.com/openai/skills)、[Codex Skills docs](https://developers.openai.com/codex/skills)）
+1. Codex（[Codex Skills docs](https://developers.openai.com/codex/skills)、[openai/skills](https://github.com/openai/skills)）
    - 個人スキル: `~/.agents/skills/<skill-name>/SKILL.md`
    - プロジェクト単位: `<project>/.agents/skills/<skill-name>/SKILL.md`
    - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
-2. Claude Code（[Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)）
+2. Claude Code（[Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)、[anthropics/skills](https://github.com/anthropics/skills)）
    - グローバル: `~/.claude/skills/<skill-name>/SKILL.md`
    - プロジェクト単位: `<project>/.claude/skills/<skill-name>/SKILL.md`
    - `SKILL.md` には最低限 `name` と `description` の frontmatter が必要です。
@@ -52,9 +52,10 @@ cd "sw-agent-skills-${TAG#v}"
 
 - [Releases](https://github.com/KentoShimizu/sw-agent-skills/releases)
 - [Agent Skills](https://agentskills.io/home)
-- [Codex Skills (openai/skills)](https://github.com/openai/skills)
 - [Codex Skills docs](https://developers.openai.com/codex/skills)
+- [Codex Skills リポジトリ（openai/skills）](https://github.com/openai/skills)
 - [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)
+- [Claude Skills リポジトリ（anthropics/skills）](https://github.com/anthropics/skills)
 - [OpenCode Skills](https://open-code.ai/en/docs/skills)
 
 ## ライセンス
