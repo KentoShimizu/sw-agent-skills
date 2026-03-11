@@ -34,11 +34,11 @@ After extraction, pick the skill directories you need (for example `skills/testi
 
 ### Agent Setup (Official References)
 
-1. Codex ([openai/skills](https://github.com/openai/skills), [Codex Skills docs](https://developers.openai.com/codex/skills))
+1. Codex ([Codex Skills docs](https://developers.openai.com/codex/skills), [openai/skills](https://github.com/openai/skills))
    - Personal skills: `~/.agents/skills/<skill-name>/SKILL.md`
    - Project skills: `<project>/.agents/skills/<skill-name>/SKILL.md`
    - `SKILL.md` must include frontmatter with at least `name` and `description`.
-2. Claude Code ([Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills))
+2. Claude Code ([Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills), [anthropics/skills](https://github.com/anthropics/skills))
    - Global skills: `~/.claude/skills/<skill-name>/SKILL.md`
    - Project skills: `<project>/.claude/skills/<skill-name>/SKILL.md`
    - `SKILL.md` must include frontmatter with at least `name` and `description`.
@@ -52,7 +52,8 @@ After extraction, pick the skill directories you need (for example `skills/testi
 
 - [Releases](https://github.com/KentoShimizu/sw-agent-skills/releases)
 - [Agent Skills](https://agentskills.io/home)
-- [Codex Skills (openai/skills)](https://github.com/openai/skills)
 - [Codex Skills docs](https://developers.openai.com/codex/skills)
+- [Codex Skills repository (openai/skills)](https://github.com/openai/skills)
 - [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills)
+- [Claude Skills repository (anthropics/skills)](https://github.com/anthropics/skills)
 - [OpenCode Skills](https://open-code.ai/en/docs/skills)
